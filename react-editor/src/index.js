@@ -42,7 +42,7 @@ import SimpleButton from "./components/SimpleButton";
 import { NAVBAR_ITEMS, TOOLBAR_ITEMS } from "./components/constant";
 import ViewLoadingModel from "./components/ViewLoadingModel";
 
-export default function TextField(props) {
+export default function ReactEditor(props) {
   let {
     theme_config,
     toolbar,

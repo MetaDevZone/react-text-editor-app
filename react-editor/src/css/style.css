@@ -55,10 +55,12 @@ body {
   color: var(--editor-toolbar-text-color);
   /* border-bottom: 1px solid var(--editor-border-color); */
 }
-.wysiwyg-editor__toolbar button:disabled {
+.wysiwyg-editor__toolbar button:disabled,
+.wysiwyg-editor__toolbar button.disabled {
   cursor: not-allowed;
 }
-.wysiwyg-editor__toolbar button:disabled svg {
+.wysiwyg-editor__toolbar button:disabled svg,
+.wysiwyg-editor__toolbar button.disabled svg {
   fill: #9fa2a6;
 }
 
