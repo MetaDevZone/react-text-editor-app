@@ -48,7 +48,7 @@ export default function ReactEditor(props) {
     toolbar,
     navbar,
     value,
-    setValue,
+    onChange,
     getEditorRef,
     mainProps,
     ...others
@@ -69,11 +69,12 @@ export default function ReactEditor(props) {
     if (!content.startsWith("<p>") || !content.endsWith("</p>")) {
       document.execCommand("formatBlock", false, "<p>");
     }
-    setValue(content);
+    if (onChange) {
+      onChange(content);
+    }
   };
 
   const handleOpenModel = (type, item) => {
-    console.log(item, "itemhandleOpenModel");
     setIsOpenModel(type);
     setSelectedItem(item);
   };
@@ -116,7 +117,6 @@ export default function ReactEditor(props) {
   };
 
   const handleImageInsert = (data) => {
-    console.log(data, "handleImageInsert");
     let { link, height, width } = data;
     let imgElement = `<img src="${link}" alt="Image"`;
     if (height) {
@@ -417,17 +417,18 @@ export default function ReactEditor(props) {
     if (editorRef.current && value) {
       // Set initial value when editorRef is available
       editorRef.current.innerHTML = value;
-      getEditorRef(editorRef);
     }
   }, []);
 
   useEffect(() => {
-    getEditorRef(editorRef);
+    if (getEditorRef) {
+      getEditorRef(editorRef);
+    }
   }, [editorRef]);
 
   return (
     <>
-      <div {...mainProps} className="react-editor-main mt-5">
+      <div {...mainProps} className="react-editor-main">
         <div className="wysiwyg-editor__toolbar">
           {navbar.map((item, index) => {
             let is_line = Boolean(item === "|");
@@ -773,6 +774,7 @@ export default function ReactEditor(props) {
           previewContent={previewContent}
         />
       )}
+      <div id="modal-root"></div>
     </>
   );
 }
