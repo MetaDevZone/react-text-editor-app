@@ -48,7 +48,7 @@ export default function ReactEditor(props) {
     toolbar,
     navbar,
     value,
-    setValue,
+    onChange,
     getEditorRef,
     mainProps,
     ...others
@@ -69,7 +69,7 @@ export default function ReactEditor(props) {
     if (!content.startsWith("<p>") || !content.endsWith("</p>")) {
       document.execCommand("formatBlock", false, "<p>");
     }
-    setValue(content);
+    onChange(content);
   };
 
   const handleOpenModel = (type, item) => {

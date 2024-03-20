@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { TextColorUpperIcon } from "./components";
-import ReactEditor from "react-editor";
+import ReactEditor from "./ReactEditor";
 
 function App() {
   const [value, setValue] = useState("");
