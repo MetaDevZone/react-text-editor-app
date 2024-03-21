@@ -3,7 +3,7 @@
 is a customizable rich text editor component for React applications. It provides a flexible and easy-to-use interface for users to create and edit content with various formatting options. And also easy to integrate in react applications.
 
 ```sh
-npm i -S react-text-editor-kit
+npm i react-text-editor-kit
 ```
 
 ## Simple Usage
@@ -20,7 +20,7 @@ const get_editor_ref = (value) => {
   value={value}
   onChange={setValue}
   getEditorRef={get_editor_ref}
-  mainProps={{ className: "editor-container" }} // mainProps will be use to most parenet div of the editor
+  mainProps={{ className: "editor-container" }} // mainProps will be use to most parent div of the editor
 />;
 ```
 
@@ -123,7 +123,7 @@ const navbar = [
 ];
 
 // Or So simple like
-const navbar = ["file"]; // if you not need to customise title of icon
+const navbar = ["file"]; // if you not need to customise title or icon
 ```
 
 if you need customization in toolbar you can also do that just like
