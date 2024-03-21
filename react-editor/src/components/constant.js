@@ -45,6 +45,10 @@ export const NAVBAR_ITEMS = [
   "link",
   "video",
   "|",
+  "copy",
+  "cut",
+  "paste",
+  "|",
 ];
 
 export const FORMAT_OPTIONS = [

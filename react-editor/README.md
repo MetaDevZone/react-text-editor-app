@@ -67,6 +67,10 @@ const navbar = [
   "link",
   "video",
   "|",
+  "copy",
+  "cut",
+  "paste",
+  "|",
 ];
 
 const toolbar = [

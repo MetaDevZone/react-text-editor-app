@@ -19,6 +19,10 @@ body {
   font-family: none !important;
 }
 
+img {
+  max-width: 100% !important;
+}
+
 .select-option p,
 .select-option pre,
 .select-option h2,
@@ -43,6 +47,7 @@ body {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  padding: 0 5px;
 }
 .wysiwyg-editor__toolbar .button-group {
   display: inline-block;
@@ -154,7 +159,7 @@ body {
 }
 
 .modal-popup {
-  background-color: var(--editor-background-color);
+  background-color: #fff;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 400px;
@@ -306,13 +311,13 @@ body {
 
 .select-type button {
   padding: 6px 20px;
-  background-color: var(--editor-background-color);
+  background-color: #fff;
   border: 1px solid var(--editor-border-color);
   cursor: pointer;
 }
 
 .select-type button.selected-type {
-  background-color: var(--editor-toolbar-button-hover-background);
+  background-color: #efefef;
 }
 
 .special-char-box {

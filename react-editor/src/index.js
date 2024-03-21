@@ -41,6 +41,9 @@ import ManageColors from "./components/ManageColors";
 import SimpleButton from "./components/SimpleButton";
 import { NAVBAR_ITEMS, TOOLBAR_ITEMS } from "./components/constant";
 import ViewLoadingModel from "./components/ViewLoadingModel";
+import PasteIcon from "./components/SVGImages/PasteIcon";
+import CutIcon from "./components/SVGImages/CutIcon";
+import CopyIcon from "./components/SVGImages/CopyIcon";
 
 export default function ReactEditor(props) {
   let {
@@ -179,7 +182,7 @@ export default function ReactEditor(props) {
     return cleanedHTML;
   };
 
-  const handlePaste = (event) => {
+  const onPaste = (event) => {
     event.preventDefault(); // Prevent default paste behavior
     const html = event.clipboardData.getData("text/html"); // Get HTML content from clipboard
     const cleanedHTML = cleanHTML(html);
@@ -426,6 +429,27 @@ export default function ReactEditor(props) {
     }
   }, [editorRef]);
 
+  const handleCopy = () => {
+    document.execCommand("copy");
+  };
+
+  const handlePaste = () => {
+    editorRef.current.focus();
+    navigator.clipboard
+      .readText()
+      .then((text) => {
+        if (editorRef.current) {
+          const selection = window.getSelection();
+          const range = selection.getRangeAt(0);
+          range.deleteContents();
+          range.insertNode(document.createTextNode(text));
+        }
+      })
+      .catch((error) => {
+        console.error("Error reading clipboard:", error);
+      });
+  };
+
   return (
     <>
       <div {...mainProps} className="react-editor-main">
@@ -436,6 +460,9 @@ export default function ReactEditor(props) {
             let is_view = item === "view" || item.name === "view";
             let is_format = item === "format" || item.name === "format";
             let is_insert = item === "insert" || item.name === "insert";
+            let is_copy = item === "copy" || item.name === "copy";
+            let is_cut = item === "cut" || item.name === "cut";
+            let is_paste = item === "paste" || item.name === "paste";
             let is_select_all =
               item === "select_all" || item.name === "select_all";
             let is_image = item === "image" || item.name === "image";
@@ -511,6 +538,36 @@ export default function ReactEditor(props) {
                       title={item?.title ? item.title : "Upload Video"}
                     >
                       {item?.icon ? item.icon : <VideoIcon />}
+                    </button>
+                  </div>
+                )}
+                {is_copy && (
+                  <div className="increase-icon-size">
+                    <ButtonFunction
+                      name="copy"
+                      icon={<CopyIcon />}
+                      title="Copy"
+                      item={item}
+                    />
+                  </div>
+                )}
+                {is_cut && (
+                  <div className="increase-icon-size">
+                    <ButtonFunction
+                      name="cut"
+                      icon={<CutIcon />}
+                      title="Cut"
+                      item={item}
+                    />
+                  </div>
+                )}
+                {is_paste && (
+                  <div className="increase-icon-size">
+                    <button
+                      onClick={handlePaste}
+                      title={item?.title ? item.title : "Paste"}
+                    >
+                      {item?.icon ? item.icon : <PasteIcon />}
                     </button>
                   </div>
                 )}
@@ -732,7 +789,7 @@ export default function ReactEditor(props) {
           autoFocus={isFullScreen}
           contentEditable
           ref={editorRef}
-          onPaste={handlePaste}
+          onPaste={onPaste}
           spellCheck="true"
           onInput={handleInput}
           onBlur={handleBlur}

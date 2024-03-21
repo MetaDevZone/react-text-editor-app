@@ -104,7 +104,6 @@ function App() {
   return (
     <div className="App">
       <ReactEditor
-        navbar={navbar}
         value={value}
         setValue={setValue}
         getEditorRef={get_editor_ref}
