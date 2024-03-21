@@ -184,10 +184,34 @@ export default function ReactEditor(props) {
 
   const onPaste = (event) => {
     event.preventDefault(); // Prevent default paste behavior
-    const html = event.clipboardData.getData("text/html"); // Get HTML content from clipboard
-    const cleanedHTML = cleanHTML(html);
-    const withoutComments = cleanedHTML.replace(/<!--[\s\S]*?-->/g, ""); // Remove HTML comments
-    document.execCommand("insertHTML", false, withoutComments); // Insert HTML content into editor
+
+    const items = (event.clipboardData || event.originalEvent.clipboardData)
+      .items;
+
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      if (item.type.indexOf("image") !== -1) {
+        // Handle image paste
+        const blob = item.getAsFile();
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          // Once the image is loaded, create an img element and append it to the editor
+          const imgElement = document.createElement("img");
+          imgElement.src = event.target.result;
+          editorRef.current.appendChild(imgElement);
+        };
+
+        reader.readAsDataURL(blob);
+      } else if (item.type === "text/html") {
+        // Handle HTML paste
+        const html = event.clipboardData.getData("text/html");
+        const cleanedHTML = cleanHTML(html);
+        const withoutComments = cleanedHTML.replace(/<!--[\s\S]*?-->/g, "");
+        document.execCommand("insertHTML", false, withoutComments);
+      } else {
+        console.warn("Unsupported clipboard item type:", item.type);
+      }
+    }
   };
 
   const focusCursorAtPosition = (position) => {
@@ -429,21 +453,53 @@ export default function ReactEditor(props) {
     }
   }, [editorRef]);
 
-  const handleCopy = () => {
-    document.execCommand("copy");
-  };
-
   const handlePaste = () => {
     editorRef.current.focus();
     navigator.clipboard
-      .readText()
-      .then((text) => {
-        if (editorRef.current) {
-          const selection = window.getSelection();
-          const range = selection.getRangeAt(0);
-          range.deleteContents();
-          range.insertNode(document.createTextNode(text));
-        }
+      .read()
+      .then((clipboardItems) => {
+        clipboardItems.forEach((item) => {
+          if (
+            item.types.includes("image/png") ||
+            item.types.includes("image/jpeg")
+          ) {
+            item
+              .getType(item.types[0])
+              .then((imageBlob) => {
+                // Now you have the image blob, you can create an <img> element and append it to your editor
+                const imgElement = document.createElement("img");
+                imgElement.src = URL.createObjectURL(imageBlob);
+                editorRef.current.appendChild(imgElement);
+              })
+              .catch((error) => {
+                console.error("Error reading image content:", error);
+              });
+          } else if (item.types.includes("text/html")) {
+            item
+              .getType("text/html")
+              .then((htmlBlob) => {
+                htmlBlob
+                  .text()
+                  .then((htmlContent) => {
+                    const cleanedHTML = cleanHTML(htmlContent);
+                    const withoutComments = cleanedHTML.replace(
+                      /<!--[\s\S]*?-->/g,
+                      ""
+                    );
+                    editorRef.current.innerHTML += withoutComments;
+                  })
+                  .catch((error) => {
+                    console.error("Error reading HTML content:", error);
+                  });
+              })
+              .catch((error) => {
+                console.error(
+                  "Error getting HTML type from ClipboardItem:",
+                  error
+                );
+              });
+          }
+        });
       })
       .catch((error) => {
         console.error("Error reading clipboard:", error);
