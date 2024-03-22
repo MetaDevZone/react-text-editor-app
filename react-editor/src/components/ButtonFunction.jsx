@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 export default function ButtonFunction(props) {
-  const { name, icon, title, item } = props;
+  const { name, icon, title, item, disabled } = props;
   const [isSelected, setIsSelected] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -49,6 +49,7 @@ export default function ButtonFunction(props) {
       onClick={handleClick}
       className={handle_classes()}
       title={item?.title ? item.title : title}
+      disabled={disabled}
     >
       {item?.icon ? item.icon : icon}
     </button>

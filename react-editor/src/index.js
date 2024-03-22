@@ -54,6 +54,7 @@ export default function ReactEditor(props) {
     onChange,
     getEditorRef,
     mainProps,
+    placeholder,
     ...others
   } = props;
   const editorRef = useRef(null);
@@ -64,6 +65,7 @@ export default function ReactEditor(props) {
   const [isOpenModel, setIsOpenModel] = useState("");
   const [previewContent, setPreviewContent] = useState("");
   const [isFullScreen, setIsFullScreen] = useState(false);
+  const [isPlaceholder, setIsPlaceholder] = useState(true);
   const [cursorPosition, setCursorPosition] = useState(0);
   const [selectedItem, setSelectedItem] = useState({});
 
@@ -78,6 +80,7 @@ export default function ReactEditor(props) {
   };
 
   const handleOpenModel = (type, item) => {
+    setIsPlaceholder(false);
     setIsOpenModel(type);
     setSelectedItem(item);
   };
@@ -303,9 +306,15 @@ export default function ReactEditor(props) {
   };
 
   const handleBlur = (event) => {
+    const textContent =
+      editorRef.current?.textContent || editorRef.current?.innerText;
+    const htmlContent = editorRef.current?.innerHTML;
     const caretPos = getCaretCharacterOffsetWithin(event.target);
     console.log("Caret position:", caretPos);
     setCursorPosition(caretPos);
+    if (placeholder && !textContent.trim() && !htmlContent.trim()) {
+      setIsPlaceholder(true);
+    }
   };
 
   const handleNewDocument = () => {
@@ -408,6 +417,13 @@ export default function ReactEditor(props) {
     //   // Insert the line break at the current cursor position instead
     //   document.execCommand("insertHTML", false, "<br>");
     // }
+  };
+
+  const handleHidePlaceholder = () => {
+    setIsPlaceholder(false);
+    setTimeout(() => {
+      editorRef.current.focus();
+    }, 10);
   };
 
   useEffect(() => {
@@ -533,6 +549,9 @@ export default function ReactEditor(props) {
                     handlePreview={handlePreview}
                     handlePrint={handlePrint}
                     item={item}
+                    isPlaceholder={isPlaceholder}
+                    placeholder={placeholder}
+                    value={value}
                   />
                 )}
                 {is_view && (
@@ -541,6 +560,9 @@ export default function ReactEditor(props) {
                     handleViewSource={handleViewSource}
                     toggleFullScreen={toggleFullScreen}
                     item={item}
+                    isPlaceholder={isPlaceholder}
+                    placeholder={placeholder}
+                    value={value}
                   />
                 )}
                 {is_insert && (
@@ -562,6 +584,7 @@ export default function ReactEditor(props) {
                     <button
                       onClick={handleSelectAll}
                       title={item?.title ? item.title : "Select All"}
+                      disabled={isPlaceholder && placeholder && !value}
                     >
                       {item?.icon ? item.icon : <SelectAll />}
                     </button>
@@ -604,6 +627,7 @@ export default function ReactEditor(props) {
                       icon={<CopyIcon />}
                       title="Copy"
                       item={item}
+                      disabled={isPlaceholder && placeholder && !value}
                     />
                   </div>
                 )}
@@ -614,6 +638,7 @@ export default function ReactEditor(props) {
                       icon={<CutIcon />}
                       title="Cut"
                       item={item}
+                      disabled={isPlaceholder && placeholder && !value}
                     />
                   </div>
                 )}
@@ -622,6 +647,7 @@ export default function ReactEditor(props) {
                     <button
                       onClick={handlePaste}
                       title={item?.title ? item.title : "Paste"}
+                      disabled={isPlaceholder && placeholder && !value}
                     >
                       {item?.icon ? item.icon : <PasteIcon />}
                     </button>
@@ -837,21 +863,30 @@ export default function ReactEditor(props) {
             );
           })}
         </div>
-        <div
-          {...others}
-          className={`ml-main-content-box print-only ${
-            isFullScreen ? "fill-screen-view" : ""
-          }`}
-          autoFocus={isFullScreen}
-          contentEditable
-          ref={editorRef}
-          onPaste={onPaste}
-          spellCheck="true"
-          onInput={handleInput}
-          onBlur={handleBlur}
-          onKeyDown={handleKeyPress}
-          id="editable"
-        ></div>
+        {isPlaceholder && placeholder && !value ? (
+          <div
+            className="ml-main-content-box placeholder-text"
+            onClick={handleHidePlaceholder}
+          >
+            {placeholder}
+          </div>
+        ) : (
+          <div
+            {...others}
+            className={`ml-main-content-box print-only ${
+              isFullScreen ? "fill-screen-view" : ""
+            }`}
+            autoFocus={isFullScreen}
+            contentEditable
+            ref={editorRef}
+            onPaste={onPaste}
+            spellCheck="true"
+            onInput={handleInput}
+            onBlur={handleBlur}
+            onKeyDown={handleKeyPress}
+            id="editable"
+          ></div>
+        )}
       </div>
       {isOpenModel && (
         <Modal

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { TextColorUpperIcon } from "./components";
-import ReactEditor from "./ReactEditor";
+import ReactEditor from "react-text-editor-kit";
 
 function App() {
   const [value, setValue] = useState("");
@@ -109,6 +109,7 @@ function App() {
         getEditorRef={get_editor_ref}
         onChange={handleChange}
         mainProps={{ className: "red" }}
+        placeholder="Write your text here"
       />
     </div>
   );

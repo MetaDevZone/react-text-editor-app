@@ -2,7 +2,15 @@ import React, { useState } from "react";
 import { EmptyFileIcon, FileUploadIcon, PreviewIcon, PrintIcon } from ".";
 
 export default function SelectFileOptions(props) {
-  const { handleNewDocument, handlePreview, handlePrint, item } = props;
+  const {
+    handleNewDocument,
+    handlePreview,
+    handlePrint,
+    item,
+    isPlaceholder,
+    placeholder,
+    value,
+  } = props;
   const [isShow, setIsShow] = useState(false);
 
   const handleSelect = (type, option) => {
@@ -52,7 +60,7 @@ export default function SelectFileOptions(props) {
                     <span>{option?.title ? option.title : "New Document"}</span>
                   </div>
                 )}
-                {is_preview && (
+                {is_preview && !(isPlaceholder && placeholder && !value) && (
                   <div
                     className="select-insert"
                     onClick={() => handleSelect("preview", option)}
@@ -84,30 +92,34 @@ export default function SelectFileOptions(props) {
           })
         ) : (
           <>
-            <div
-              className="select-insert"
-              onClick={() => handleSelect("new_document")}
-            >
-              <EmptyFileIcon /> <span>New Document</span>
-            </div>
-            <div
-              className="select-insert"
-              onClick={() => handleSelect("preview")}
-            >
-              <PreviewIcon /> <span>Preview</span>
-            </div>
-            <div
-              className="select-insert"
-              onClick={() => handleSelect("print")}
-            >
-              <PrintIcon /> <span>Print</span>
-            </div>
-            <div
+            {!(isPlaceholder && placeholder && !value) && (
+              <>
+                <div
+                  className="select-insert"
+                  onClick={() => handleSelect("new_document")}
+                >
+                  <EmptyFileIcon /> <span>New Document</span>
+                </div>
+                <div
+                  className="select-insert"
+                  onClick={() => handleSelect("preview")}
+                >
+                  <PreviewIcon /> <span>Preview</span>
+                </div>
+                <div
+                  className="select-insert"
+                  onClick={() => handleSelect("print")}
+                >
+                  <PrintIcon /> <span>Print</span>
+                </div>
+              </>
+            )}
+            {/* <div
               className="select-insert"
               onClick={() => handleSelect("screen")}
             >
               <FileUploadIcon /> <span>Upload File</span>
-            </div>
+            </div> */}
           </>
         )}
       </div>

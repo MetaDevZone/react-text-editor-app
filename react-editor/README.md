@@ -20,6 +20,7 @@ const get_editor_ref = (value) => {
   value={value}
   onChange={setValue}
   getEditorRef={get_editor_ref}
+  placeholder="Write your text here"
   mainProps={{ className: "editor-container" }} // mainProps will be use to most parent div of the editor
 />;
 ```

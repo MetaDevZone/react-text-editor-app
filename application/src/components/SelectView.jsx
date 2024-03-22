@@ -2,7 +2,15 @@ import React, { useState } from "react";
 import { CodeIcon, FullscreenExit, FullscreenIcon } from ".";
 
 export default function SelectFileOptions(props) {
-  const { handleViewSource, isFullScreen, toggleFullScreen, item } = props;
+  const {
+    handleViewSource,
+    isFullScreen,
+    toggleFullScreen,
+    item,
+    isPlaceholder,
+    placeholder,
+    value,
+  } = props;
   const [isShow, setIsShow] = useState(false);
 
   const handleSelect = (type, option) => {
@@ -35,15 +43,18 @@ export default function SelectFileOptions(props) {
 
             return (
               <div key={`key${index}`}>
-                {is_source_code && (
-                  <div
-                    className="select-insert"
-                    onClick={() => handleSelect("code", option)}
-                  >
-                    {option?.icon ? option.icon : <CodeIcon />}
-                    <span>{option?.title ? option.title : "Source Code"}</span>
-                  </div>
-                )}
+                {is_source_code &&
+                  !(isPlaceholder && placeholder && !value) && (
+                    <div
+                      className="select-insert"
+                      onClick={() => handleSelect("code", option)}
+                    >
+                      {option?.icon ? option.icon : <CodeIcon />}
+                      <span>
+                        {option?.title ? option.title : "Source Code"}
+                      </span>
+                    </div>
+                  )}
                 {is_full_screen && (
                   <div
                     className="select-insert"
@@ -73,9 +84,14 @@ export default function SelectFileOptions(props) {
           })
         ) : (
           <>
-            <div className="select-insert" onClick={() => handleSelect("code")}>
-              <CodeIcon /> <span>Source Code</span>
-            </div>
+            {!(isPlaceholder && placeholder && !value) && (
+              <div
+                className="select-insert"
+                onClick={() => handleSelect("code")}
+              >
+                <CodeIcon /> <span>Source Code</span>
+              </div>
+            )}
             <div
               className="select-insert"
               onClick={() => handleSelect("screen")}
