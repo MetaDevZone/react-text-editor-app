@@ -12,7 +12,7 @@ export default function PreviewModel(props) {
         className="full-screen-model"
       >
         <div
-          className="react-editor-mt-50"
+          className="react-editor-mt-10"
           dangerouslySetInnerHTML={{ __html: previewContent }}
         ></div>
       </Modal>

@@ -68,6 +68,9 @@ export default function ReactEditor(props) {
   const [isPlaceholder, setIsPlaceholder] = useState(true);
   const [cursorPosition, setCursorPosition] = useState(0);
   const [selectedItem, setSelectedItem] = useState({});
+  const [showHR1, setShowHR1] = useState(false);
+  const [showHR2, setShowHR2] = useState(false);
+  const [showHR3, setShowHR3] = useState(false);
 
   const handleInput = () => {
     const content = editorRef.current.innerHTML;
@@ -310,7 +313,6 @@ export default function ReactEditor(props) {
       editorRef.current?.textContent || editorRef.current?.innerText;
     const htmlContent = editorRef.current?.innerHTML;
     const caretPos = getCaretCharacterOffsetWithin(event.target);
-    console.log("Caret position:", caretPos);
     setCursorPosition(caretPos);
     if (placeholder && !textContent.trim() && !htmlContent.trim()) {
       setIsPlaceholder(true);
@@ -522,10 +524,31 @@ export default function ReactEditor(props) {
       });
   };
 
+  const handle_resize = () => {
+    const hr_1 = document.getElementsByClassName("wysiwyg-editor__toolbar")[0];
+    setShowHR1(hr_1.offsetHeight > 31);
+
+    const hr_2 = document.getElementsByClassName("wysiwyg-editor__toolbar")[1];
+    setShowHR2(hr_2.offsetHeight > 31);
+    setShowHR3(hr_2.offsetHeight > 61);
+  };
+
+  useEffect(() => {
+    handle_resize();
+    window.addEventListener("resize", handle_resize);
+    return () => {
+      window.removeEventListener("resize", handle_resize);
+    };
+  }, []);
+
   return (
     <>
       <div {...mainProps} className="react-editor-main">
-        <div className="wysiwyg-editor__toolbar">
+        <div className="wysiwyg-editor__toolbar" id="editor-navbar">
+          <hr
+            className="hr-1"
+            style={{ display: showHR1 ? "block" : "none" }}
+          />
           {navbar.map((item, index) => {
             let is_line = Boolean(item === "|");
             let is_file = item === "file" || item.name === "file";
@@ -658,6 +681,14 @@ export default function ReactEditor(props) {
           })}
         </div>
         <div className="wysiwyg-editor__toolbar">
+          <hr
+            className="hr-1"
+            style={{ display: showHR2 ? "block" : "none" }}
+          />
+          <hr
+            className="hr-1 hr-2"
+            style={{ display: showHR3 ? "block" : "none" }}
+          />
           {toolbar.map((item, index) => {
             let is_line = Boolean(item === "|");
             let is_undo = item === "undo" || item.name === "undo";
@@ -865,6 +896,7 @@ export default function ReactEditor(props) {
         </div>
         {isPlaceholder && placeholder && !value ? (
           <div
+            {...others}
             className="ml-main-content-box placeholder-text"
             onClick={handleHidePlaceholder}
           >

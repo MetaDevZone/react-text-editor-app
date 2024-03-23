@@ -1,18 +1,14 @@
 import { useState } from "react";
 import { TextColorUpperIcon } from "./components";
-import ReactEditor from "react-text-editor-kit";
+import ReactEditor from "./ReactEditor";
 
 function App() {
   const [value, setValue] = useState("");
   let theme_config = { "background-color": "#fff" };
 
-  const handleClick = (item) => {
-    console.log(item, "handleClickhandleClick");
-  };
+  const handleClick = (item) => {};
 
-  const handleSubmit = async (e) => {
-    console.log(e, "handleSubmithandleSubmit");
-  };
+  const handleSubmit = async (e) => {};
 
   const toolbar = [
     { name: "undo", title: "Undo 1" },
@@ -94,12 +90,8 @@ function App() {
     "|",
   ];
 
-  const get_editor_ref = (value) => {
-    console.log(value, "valuevaluevaluevalue");
-  };
-  const handleChange = (value) => {
-    console.log(value, "handleChange");
-  };
+  const get_editor_ref = (value) => {};
+  const handleChange = (value) => {};
 
   return (
     <div className="App">

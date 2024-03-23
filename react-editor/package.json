@@ -1,6 +1,6 @@
 {
   "name": "react-text-editor-kit",
-  "version": "1.2.0",
+  "version": "1.2.3",
   "description": "",
   "main": "./build/index.js",
   "keywords": [
@@ -29,9 +29,9 @@
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
   },
-  "dependencies": {
-    "prop-types": "^15.7.2",
+  "peerDependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "prop-types": "^15.7.2"
   }
 }

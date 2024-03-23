@@ -15,23 +15,21 @@ body {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  line-height: 16px !important;
-  font-family: none !important;
 }
 
-img {
-  max-width: 100% !important;
+.react-editor-main img {
+  max-width: 60%;
 }
 
-.select-option p,
-.select-option pre,
-.select-option h2,
-.select-option h3,
-.select-option h4,
-.select-option h5,
-.select-option h6,
-.select-option blockquote,
-.select-option h1 {
+.react-editor-main .select-option p,
+.react-editor-main .select-option pre,
+.react-editor-main .select-option h2,
+.react-editor-main .select-option h3,
+.react-editor-main .select-option h4,
+.react-editor-main .select-option h5,
+.react-editor-main .select-option h6,
+.react-editor-main .select-option blockquote,
+.react-editor-main .select-option h1 {
   margin: 0;
 }
 
@@ -39,21 +37,40 @@ img {
   background-color: var(--editor-background-color);
   border: 1px solid var(--editor-border-color);
   color: var(--editor-text-color);
+  line-height: 16px !important;
+  font-family: none !important;
 }
 
-.wysiwyg-editor__toolbar {
+.react-editor-main .wysiwyg-editor__toolbar {
   border-bottom: 1px solid var(--editor-border-color);
   font-size: 18px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   padding: 0 5px;
+  position: relative;
 }
-.wysiwyg-editor__toolbar .button-group {
+
+.react-editor-main .wysiwyg-editor__toolbar .hr-1 {
+  position: absolute;
+  width: 98%;
+  border-color: var(--editor-border-color);
+  border: none;
+  border-top: 1px solid var(--editor-border-color);
+  height: 1px;
+  display: none;
+  top: 21px;
+}
+
+.react-editor-main .wysiwyg-editor__toolbar .hr-2 {
+  top: 51px;
+}
+
+.react-editor-main .wysiwyg-editor__toolbar .button-group {
   display: inline-block;
   border-right: 1px solid var(--editor-border-color);
 }
-.wysiwyg-editor__toolbar button {
+.react-editor-main .wysiwyg-editor__toolbar button {
   background: var(--editor-toolbar-button-background);
   outline: none;
   border: none;
@@ -101,11 +118,11 @@ img {
   max-width: 100% !important;
 }
 
-.placeholder-text {
+.react-editor-main .placeholder-text {
   opacity: 0.8;
   font-style: italic;
 }
-.fill-screen-view {
+.react-editor-main .fill-screen-view {
   height: 90vh;
 }
 
@@ -138,7 +155,7 @@ img {
 
 /* Modal.css */
 
-.modal-overlay {
+#modal-root .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -148,35 +165,37 @@ img {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 9999;
 }
 
-.model-title {
+#modal-root .model-title {
   display: flex;
   justify-content: space-between;
 }
 
-.model-title h2 {
+#modal-root .model-title h2 {
   margin: 0;
 }
 
-.model-title svg {
+#modal-root .model-title svg {
   font-size: 25px;
   cursor: pointer;
 }
 
-.modal-popup {
+#modal-root .modal-popup {
   background-color: #fff;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 400px;
   max-width: 85%;
+  color: #000;
 }
 
-.modal-popup hr {
+#modal-root .modal-popup hr {
   margin-bottom: 0;
 }
 
-.modal-close-btn {
+#modal-root .modal-close-btn {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -187,17 +206,13 @@ img {
   font-size: 16px;
 }
 
-.select-selected {
-  font-family: none !important;
-}
-
 .wysiwyg-editor__toolbar button svg {
   display: inline-block;
   height: 14px;
   width: 14px;
 }
 
-.custom-select {
+.react-editor-main .custom-select {
   position: relative;
   display: inline-block;
   cursor: pointer;
@@ -207,7 +222,7 @@ img {
   line-height: 16px;
 }
 
-.custom-select-format {
+.react-editor-main .custom-select-format {
   position: relative;
   display: inline-block;
   cursor: pointer;
@@ -215,7 +230,7 @@ img {
   padding: 6px;
 }
 
-.select-items {
+.react-editor-main .select-items {
   position: absolute;
   background-color: #fff;
   border: 1px solid var(--editor-border-color);
@@ -230,18 +245,18 @@ img {
   display: none;
 }
 
-.select-items button {
+.react-editor-main .select-items button {
   display: flex !important;
   width: 100%;
   padding: 7px;
   font-family: none;
 }
 
-.p-items .select-items {
+.react-editor-main .p-items .select-items {
   left: 142px;
 }
 
-.select-items-format {
+.react-editor-main .select-items-format {
   position: absolute;
   background-color: var(--editor-background-color);
   border: 1px solid var(--editor-border-color);
@@ -255,19 +270,45 @@ img {
   top: 30px;
 }
 
-.select-items.show {
+.react-editor-main .select-items-format .select-option:hover {
+  background-color: var(--editor-toolbar-button-hover-background) !important;
+}
+
+.react-editor-main .select-items-format h1 {
+  font-size: 32px;
+  font-weight: bold;
+}
+.react-editor-main .select-items-format h2 {
+  font-size: 28px;
+  font-weight: bold;
+}
+.react-editor-main .select-items-format h3 {
+  font-size: 24px;
+  font-weight: bold;
+}
+.react-editor-main .select-items-format h4 {
+  font-size: 20px;
+}
+.react-editor-main .select-items-format h5 {
+  font-size: 16px;
+}
+.react-editor-main .select-items-format h5 {
+  font-size: 14px;
+}
+
+.react-editor-main .select-items.show {
   display: block;
 }
 
-.select-items .select-option,
-.select-items-format .select-option {
+.react-editor-main .select-items .select-option,
+.react-editor-main .select-items-format .select-option {
   padding: 6px 10px;
   cursor: pointer;
   font-size: 15px;
   white-space: nowrap;
 }
 
-.select-items .select-insert svg {
+.react-editor-main .select-items .select-insert svg {
   height: 20px;
   width: 20px;
   margin-right: 7px;
@@ -275,37 +316,37 @@ img {
   fill: var(--editor-svg-color);
 }
 
-.select-items button svg {
+.react-editor-main .select-items button svg {
   height: 16px !important;
   width: 16px !important;
   margin-top: 2px;
 }
 
-.select-items .select-insert span {
+.react-editor-main .select-items .select-insert span {
   margin-top: 2px;
 }
 
-.selected-option {
+.react-editor-main .selected-option {
   background-color: var(--editor-toolbar-button-selected-background) !important;
 }
 
-.select-items .select-option:hover,
-.select-insert:hover {
+.react-editor-main .select-items .select-option:hover,
+.react-editor-main .select-insert:hover {
   background-color: var(--editor-toolbar-button-hover-background) !important;
 }
 
-.form-control-input {
+#modal-root .form-control-input {
   width: 100%;
   padding: 7px;
   border: 1px solid var(--editor-border-color);
   border-radius: 3px;
 }
 
-.form-control-input:focus-visible {
+#modal-root .form-control-input:focus-visible {
   outline: none;
 }
 
-.save-button {
+#modal-root .save-button {
   background-color: var(--editor-save-button-background);
   color: #fff;
   padding: 7px 14px;
@@ -315,23 +356,23 @@ img {
   cursor: pointer;
 }
 
-.select-type button {
+#modal-root .select-type button {
   padding: 6px 20px;
   background-color: #fff;
   border: 1px solid var(--editor-border-color);
   cursor: pointer;
 }
 
-.select-type button.selected-type {
+#modal-root .select-type button.selected-type {
   background-color: #efefef;
 }
 
-.special-char-box {
+#modal-root .special-char-box {
   display: flex;
   flex-wrap: wrap;
 }
 
-.special-char {
+#modal-root .special-char {
   width: 30px;
   height: 30px;
   display: flex;
@@ -341,11 +382,11 @@ img {
   border-radius: 2px;
 }
 
-.special-char:hover {
+#modal-root .special-char:hover {
   background-color: #dee0e2;
 }
 
-.select-insert {
+.react-editor-main .select-insert {
   min-width: 120px;
   font-size: 15px;
   text-align: left;
@@ -359,40 +400,28 @@ img {
   margin: 0 !important;
 }
 
-.source-code {
-  border: 1px solid var(--editor-border-color);
-  padding: 10px;
-  overflow-x: auto;
-}
-
-.source-code pre {
-  margin: 0;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-}
-
 /* width */
-::-webkit-scrollbar {
+.react-editor-main ::-webkit-scrollbar {
   width: 5px;
 }
 
 /* Track */
-::-webkit-scrollbar-track {
+.react-editor-main ::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
 
 /* Handle */
-::-webkit-scrollbar-thumb {
+.react-editor-main ::-webkit-scrollbar-thumb {
   background: #ccc;
 }
 
 /* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
+.react-editor-main ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
 
-.full-screen-model {
-  width: 95%;
+#modal-root .full-screen-model {
+  width: 95% !important;
   height: 85vh;
 }
 
@@ -411,7 +440,7 @@ img {
   left: -100%;
 }
 
-.select-formation-dropdown {
+.react-editor-main .select-formation-dropdown {
   position: absolute;
   background-color: var(--editor-background-color);
   border: 1px solid var(--editor-border-color);
@@ -424,11 +453,11 @@ img {
   overflow-x: hidden;
 }
 
-.font-size-dropdown {
+.react-editor-main .font-size-dropdown {
   min-width: 90px;
 }
 
-.font-size-dropdown .select-option {
+.react-editor-main .font-size-dropdown .select-option {
   padding: 7px;
   border-bottom: 1px solid var(--editor-border-color);
   font-size: 15px;
@@ -438,11 +467,11 @@ img {
   font-family: none !important;
 }
 
-.select-formation-dropdown.show {
+.react-editor-main .select-formation-dropdown.show {
   display: block;
 }
 
-.font-family-option {
+.react-editor-main .font-family-option {
   display: block;
   width: 99%;
   padding: 9px !important;
@@ -451,22 +480,22 @@ img {
   border-radius: 0 !important;
 }
 
-.font-family-option:hover {
+.react-editor-main .font-family-option:hover {
   background-color: var(--editor-toolbar-button-hover-background);
 }
 
-.bottom-colored-line {
+.react-editor-main .bottom-colored-line {
   height: 3px;
   width: 14px;
   background-color: var(--editor-svg-color);
 }
 
-.main-color-component {
+.react-editor-main .main-color-component {
   position: relative;
   display: inline-block;
 }
 
-.open-color-box {
+.react-editor-main .open-color-box {
   position: absolute;
   height: 140px;
   width: 140px;
@@ -477,49 +506,49 @@ img {
   display: none;
 }
 
-.color-box-grid button {
+.react-editor-main .color-box-grid button {
   padding: 0 !important;
   margin: 0 !important;
   border-radius: 0 !important;
 }
 
-.open-color-box.show {
+.react-editor-main .open-color-box.show {
   display: block;
 }
 
-.color-box {
+.react-editor-main .color-box {
   height: 28px;
   width: 28px;
   cursor: pointer;
   background-color: var(--editor-background-color);
 }
 
-.custom-color-picker {
+.react-editor-main .custom-color-picker {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.custom-color-picker svg {
+.react-editor-main .custom-color-picker svg {
   height: 20px;
 }
 
-.increase-icon-size svg {
+.react-editor-main .increase-icon-size svg {
   height: 17px !important;
   width: 17px !important;
   margin-top: 3px;
 }
 
-.increase-icon-size button {
+.react-editor-main .increase-icon-size button {
   padding: 3px 10px;
 }
 
-.color-box:hover {
+.react-editor-main .color-box:hover {
   transform: scale(1.2);
   transition: transform 0.5s ease;
 }
 
-.vertical-line {
+.react-editor-main .vertical-line {
   height: 29px;
   width: 1px;
   background-color: var(--editor-border-color);
@@ -543,39 +572,36 @@ img {
   }
 }
 
-.react-editor-mt-2 {
+.react-editor-main .react-editor-mt-2 {
   margin-top: 2px;
 }
-.react-editor-mt-10 {
+#modal-root .react-editor-mt-10 {
   margin-top: 10px;
 }
-.react-editor-me-5 {
+.react-editor-main .react-editor-me-5 {
   margin-right: 5px;
 }
-.react-editor-mt-50 {
-  margin-top: 10px;
-}
 
-.react-editor-text-end {
+.react-editor-main .react-editor-text-end {
   text-align: right;
 }
 
-.react-editor-text-left {
+.react-editor-main .react-editor-text-left {
   text-align: left;
 }
 
-.react-editor-d-flex {
+.react-editor-main .react-editor-d-flex {
   display: flex;
 }
 
-.react-editor-w-47 {
+.react-editor-main .react-editor-w-47 {
   width: 47%;
 }
 
-.justify-content-between {
+.react-editor-main .justify-content-between {
   justify-content: space-between;
 }
 
-.react-editor-flex-column {
+.react-editor-main .react-editor-flex-column {
   flex-direction: column;
 }

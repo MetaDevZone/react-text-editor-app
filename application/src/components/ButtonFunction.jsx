@@ -18,7 +18,6 @@ export default function ButtonFunction(props) {
     const is_selected = document.queryCommandState(name);
     const isRedoEnabled = document.queryCommandEnabled(name);
     setIsDisabled(!isRedoEnabled);
-    console.log("isRedoEnabled=>", isRedoEnabled, "name=>", name);
     setIsSelected(is_selected);
   };
 
