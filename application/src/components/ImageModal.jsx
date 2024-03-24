@@ -38,7 +38,7 @@ export default function ImageModal(props) {
           item
         );
       } else {
-        inputs.link = URL.createObjectURL(inputs.link);
+        inputs.link = URL.createObjectURL(inputs.image);
       }
       if (!inputs.link) {
         setIsLoading(false);
