@@ -591,18 +591,26 @@ body {
   text-align: left;
 }
 
-.react-editor-main .react-editor-d-flex {
+.react-editor-main .react-editor-d-flex,
+#modal-root .react-editor-d-flex {
   display: flex;
 }
 
-.react-editor-main .react-editor-w-47 {
+.react-editor-main .react-editor-w-47,
+#modal-root .react-editor-w-47 {
   width: 47%;
 }
 
-.react-editor-main .justify-content-between {
+.react-editor-main .justify-content-between,
+#modal-root .justify-content-between {
   justify-content: space-between;
 }
 
-.react-editor-main .react-editor-flex-column {
+.react-editor-main .react-editor-flex-column,
+#modal-root .react-editor-flex-column {
   flex-direction: column;
+}
+
+.editor-error-messsage {
+  color: red;
 }

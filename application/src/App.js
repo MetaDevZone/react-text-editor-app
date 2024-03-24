@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { TextColorUpperIcon } from "./components";
-import ReactEditor from "./ReactEditor";
+import ReactEditor from "react-text-editor-kit";
 
 function App() {
   const [value, setValue] = useState("");
@@ -8,7 +8,13 @@ function App() {
 
   const handleClick = (item) => {};
 
-  const handleSubmit = async (e) => {};
+  const handleSubmit = async (e) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve("");
+      }, 100000);
+    });
+  };
 
   const toolbar = [
     { name: "undo", title: "Undo 1" },
@@ -91,18 +97,24 @@ function App() {
   ];
 
   const get_editor_ref = (value) => {};
+  const onSubmit = (value) => {
+    console.log(value, "valuevaluevaluevaluevalue");
+  };
   const handleChange = (value) => {};
 
   return (
     <div className="App">
-      <ReactEditor
-        value={value}
-        setValue={setValue}
-        getEditorRef={get_editor_ref}
-        onChange={handleChange}
-        mainProps={{ className: "red" }}
-        placeholder="Write your text here"
-      />
+      <form onSubmit={onSubmit}>
+        <ReactEditor
+          value={value}
+          setValue={setValue}
+          getEditorRef={get_editor_ref}
+          onChange={handleChange}
+          mainProps={{ className: "red" }}
+          placeholder="Write your text here"
+          image_handler={handleSubmit}
+        />
+      </form>
     </div>
   );
 }

@@ -16,12 +16,19 @@ const get_editor_ref = (value) => {
   console.log(value, "value");
 };
 
+const image_handler = async (e) => {
+  //Call api and return url
+  // if there's any error from api you need to return empty string as path
+  return api_path;
+};
+
 <ReactEditor
   value={value}
   onChange={setValue}
   getEditorRef={get_editor_ref}
   placeholder="Write your text here"
   mainProps={{ className: "editor-container" }} // mainProps will be use to most parent div of the editor
+  image_handler={image_handler}
 />;
 ```
 

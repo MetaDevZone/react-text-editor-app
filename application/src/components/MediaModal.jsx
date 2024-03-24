@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 export default function MediaModal({ onMediaInsert }) {
+  const [errorMessage, setErrorMessage] = useState("");
   const [inputs, setInputs] = useState({
     link: "",
     height: "",
@@ -16,6 +17,19 @@ export default function MediaModal({ onMediaInsert }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (inputs.type === "general" && !inputs.link) {
+      let error_message = "Video source is required";
+      setErrorMessage(error_message);
+      return;
+    } else if (inputs.type === "upload" && !inputs.link) {
+      let error_message = "Please upload media file";
+      setErrorMessage(error_message);
+      return;
+    } else if (inputs.type === "embed" && !inputs.embed_code) {
+      let error_message = "Please add video embed code";
+      setErrorMessage(error_message);
+      return;
+    }
     onMediaInsert(inputs);
   };
 
@@ -27,6 +41,7 @@ export default function MediaModal({ onMediaInsert }) {
   const handleChangeType = (e, value) => {
     e.preventDefault();
     setInputs((old) => ({ ...old, type: value }));
+    setErrorMessage("");
   };
 
   return (
@@ -51,7 +66,7 @@ export default function MediaModal({ onMediaInsert }) {
           Upload
         </button> */}
       </div>
-      <form onSubmit={handleSubmit}>
+      <>
         {inputs.type === "general" ? (
           <>
             <div className="react-editor-mt-10">
@@ -65,30 +80,11 @@ export default function MediaModal({ onMediaInsert }) {
                 value={inputs.link}
                 onChange={handleChange}
               />
-            </div>
-            <div className="react-editor-d-flex justify-content-between">
-              <div className="react-editor-mt-10 react-editor-w-47">
-                <label htmlFor="height">Height</label>
-                <input
-                  id="height"
-                  type="text"
-                  name="height"
-                  value={inputs.height}
-                  onChange={handleChange}
-                  className="form-control-input"
-                />
-              </div>
-              <div className="react-editor-mt-10 react-editor-w-47">
-                <label htmlFor="width">Width</label>
-                <input
-                  id="width"
-                  type="text"
-                  name="width"
-                  value={inputs.width}
-                  onChange={handleChange}
-                  className="form-control-input"
-                />
-              </div>
+              {errorMessage && (
+                <div className="editor-error-messsage">
+                  *{`${errorMessage}`}
+                </div>
+              )}
             </div>
           </>
         ) : inputs.type === "embed" ? (
@@ -104,28 +100,63 @@ export default function MediaModal({ onMediaInsert }) {
                 value={inputs.embed_code}
                 onChange={handleChange}
               />
+              {errorMessage && (
+                <div className="editor-error-messsage">
+                  *{`${errorMessage}`}
+                </div>
+              )}
             </div>
           </>
         ) : (
           <>
             <div className="react-editor-mt-10">
-              <label htmlFor="image">Choose File</label>
+              <label htmlFor="link">Choose File</label>
               <input
                 type="file"
-                id="image"
-                name="image"
+                id="link"
+                name="link"
                 className="form-control-input"
                 accept="video/*"
                 onChange={handleChangeFile}
               />
+              {errorMessage && (
+                <div className="editor-error-messsage">
+                  *{`${errorMessage}`}
+                </div>
+              )}
             </div>
           </>
         )}
-
-        <div className="react-editor-text-end">
-          <button className="save-button">Save</button>
+        <div className="react-editor-d-flex justify-content-between">
+          <div className="react-editor-mt-10 react-editor-w-47">
+            <label htmlFor="height">Height</label>
+            <input
+              id="height"
+              type="text"
+              name="height"
+              value={inputs.height}
+              onChange={handleChange}
+              className="form-control-input"
+            />
+          </div>
+          <div className="react-editor-mt-10 react-editor-w-47">
+            <label htmlFor="width">Width</label>
+            <input
+              id="width"
+              type="text"
+              name="width"
+              value={inputs.width}
+              onChange={handleChange}
+              className="form-control-input"
+            />
+          </div>
         </div>
-      </form>
+        <div className="react-editor-text-end">
+          <button className="save-button" onClick={handleSubmit}>
+            Save
+          </button>
+        </div>
+      </>
     </div>
   );
 }

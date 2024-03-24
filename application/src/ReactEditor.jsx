@@ -55,6 +55,7 @@ export default function ReactEditor(props) {
     getEditorRef,
     mainProps,
     placeholder,
+    image_handler,
     ...others
   } = props;
   const editorRef = useRef(null);
@@ -120,7 +121,10 @@ export default function ReactEditor(props) {
   };
 
   const handleLinkInsert = (props) => {
-    const { text, link, open_new_tab } = props;
+    let { text, link, open_new_tab } = props;
+    if (!text) {
+      text = link;
+    }
     let linkHTML = `<a href="${link}"`;
     if (open_new_tab) {
       linkHTML += ' target="_blank"';
@@ -403,6 +407,7 @@ export default function ReactEditor(props) {
             item={selectedItem}
             setIsLoading={setIsLoading}
             setIsOpenModel={setIsOpenModel}
+            image_handler={image_handler}
           />
         ),
         title: "Insert Image",

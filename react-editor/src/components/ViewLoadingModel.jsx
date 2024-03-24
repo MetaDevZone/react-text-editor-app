@@ -7,13 +7,7 @@ const ViewLoadingModel = () => {
   return ReactDOM.createPortal(
     <div className="modal-overlay">
       <div onClick={(e) => e.stopPropagation()}>
-        <img
-          src={loader_img}
-          alt=""
-          style={{
-            height: "80px",
-          }}
-        />
+        <img src={loader_img} alt="" />
       </div>
     </div>,
     document.getElementById("modal-root")
