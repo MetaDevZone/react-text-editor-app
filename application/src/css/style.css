@@ -216,7 +216,7 @@ body {
   position: relative;
   display: inline-block;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 16px;
   padding: 6px;
   color: var(--editor-toolbar-text-color);
   line-height: 16px;
@@ -226,7 +226,7 @@ body {
   position: relative;
   display: inline-block;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 16px;
   padding: 6px;
 }
 
@@ -304,7 +304,7 @@ body {
 .react-editor-main .select-items-format .select-option {
   padding: 6px 10px;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 16px;
   white-space: nowrap;
 }
 
@@ -388,7 +388,7 @@ body {
 
 .react-editor-main .select-insert {
   min-width: 120px;
-  font-size: 15px;
+  font-size: 16px;
   text-align: left;
   padding: 8px 10px;
   white-space: nowrap;
@@ -458,9 +458,9 @@ body {
 }
 
 .react-editor-main .font-size-dropdown .select-option {
-  padding: 7px;
+  padding: 10px;
   border-bottom: 1px solid var(--editor-border-color);
-  font-size: 15px;
+  font-size: 16px;
   width: 98%;
   margin: 0;
   border-radius: 0 !important;

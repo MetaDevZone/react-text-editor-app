@@ -5,7 +5,8 @@ export default function ButtonFunction(props) {
   const [isSelected, setIsSelected] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
 
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.preventDefault();
     if (item?.handleClick) {
       item.handleClick(item);
       if (!item.add_functionality) return;

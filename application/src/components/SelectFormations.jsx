@@ -39,7 +39,8 @@ export default function SelectFileOptions({ item }) {
     setShowChildOptions(0);
   };
 
-  const handleClick = (name, option) => {
+  const handleClick = (e, name, option) => {
+    e.preventDefault();
     if (option?.handleClick) {
       option.handleClick(option, item);
       if (!option.add_functionality) return;
@@ -77,7 +78,7 @@ export default function SelectFileOptions({ item }) {
                 {is_bold && (
                   <button
                     className="select-insert"
-                    onClick={() => handleClick("bold", option)}
+                    onClick={(e) => handleClick(e, "bold", option)}
                   >
                     {option?.icon ? option.icon : <BoldIcon />}
                     <span>{option?.title ? option.title : "Bold"}</span>
@@ -86,7 +87,7 @@ export default function SelectFileOptions({ item }) {
                 {is_italic && (
                   <button
                     className="select-insert"
-                    onClick={() => handleClick("italic", option)}
+                    onClick={(e) => handleClick(e, "italic", option)}
                   >
                     {option?.icon ? option.icon : <ItalicIcon />}
                     <span>{option?.title ? option.title : "Italic"}</span>
@@ -95,7 +96,7 @@ export default function SelectFileOptions({ item }) {
                 {is_underline && (
                   <button
                     className="select-insert"
-                    onClick={() => handleClick("underline", option)}
+                    onClick={(e) => handleClick(e, "underline", option)}
                   >
                     {option?.icon ? option.icon : <UnderlineIcon />}
                     <span>{option?.title ? option.title : "Underline"}</span>
@@ -104,7 +105,7 @@ export default function SelectFileOptions({ item }) {
                 {is_superscript && (
                   <button
                     className="select-insert"
-                    onClick={() => handleClick("superscript", option)}
+                    onClick={(e) => handleClick(e, "superscript", option)}
                   >
                     {option?.icon ? option.icon : <SuperscriptIcon />}
                     <span>{option?.title ? option.title : "Superscript"}</span>
@@ -113,7 +114,7 @@ export default function SelectFileOptions({ item }) {
                 {is_subscript && (
                   <button
                     className="select-insert"
-                    onClick={() => handleClick("subscript", option)}
+                    onClick={(e) => handleClick(e, "subscript", option)}
                   >
                     {option?.icon ? option.icon : <SubscriptIcon />}
                     <span>{option?.title ? option.title : "Subscript"}</span>

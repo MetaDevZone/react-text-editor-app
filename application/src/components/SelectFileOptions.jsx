@@ -13,7 +13,8 @@ export default function SelectFileOptions(props) {
   } = props;
   const [isShow, setIsShow] = useState(false);
 
-  const handleSelect = (type, option) => {
+  const handleSelect = (e, type, option) => {
+    e.preventDefault();
     setIsShow(false);
     if (option?.handleClick) {
       option.handleClick(option, item);
@@ -54,7 +55,7 @@ export default function SelectFileOptions(props) {
                 {is_new_document && (
                   <div
                     className="select-insert"
-                    onClick={() => handleSelect("new_document", option)}
+                    onClick={(e) => handleSelect(e, "new_document", option)}
                   >
                     {option?.icon ? option.icon : <EmptyFileIcon />}
                     <span>{option?.title ? option.title : "New Document"}</span>
@@ -63,7 +64,7 @@ export default function SelectFileOptions(props) {
                 {is_preview && !(isPlaceholder && placeholder && !value) && (
                   <div
                     className="select-insert"
-                    onClick={() => handleSelect("preview", option)}
+                    onClick={(e) => handleSelect(e, "preview", option)}
                   >
                     {option?.icon ? option.icon : <PreviewIcon />}
                     <span>{option?.title ? option.title : "Preview"}</span>
@@ -72,7 +73,7 @@ export default function SelectFileOptions(props) {
                 {is_print && (
                   <div
                     className="select-insert"
-                    onClick={() => handleSelect("print", option)}
+                    onClick={(e) => handleSelect(e, "print", option)}
                   >
                     {option?.icon ? option.icon : <PrintIcon />}
                     <span>{option?.title ? option.title : "Print"}</span>
@@ -81,7 +82,7 @@ export default function SelectFileOptions(props) {
                 {/* {is_upload_file && (
                   <div
                     className="select-insert"
-                    onClick={() => handleSelect("screen", option)}
+                    onClick={(e) => handleSelect(e,"screen", option)}
                   >
                     {option?.icon ? option.icon : <FileUploadIcon />}
                     <span>{option?.title ? option.title : "Upload File"}</span>
@@ -96,19 +97,19 @@ export default function SelectFileOptions(props) {
               <>
                 <div
                   className="select-insert"
-                  onClick={() => handleSelect("new_document")}
+                  onClick={(e) => handleSelect(e, "new_document")}
                 >
                   <EmptyFileIcon /> <span>New Document</span>
                 </div>
                 <div
                   className="select-insert"
-                  onClick={() => handleSelect("preview")}
+                  onClick={(e) => handleSelect(e, "preview")}
                 >
                   <PreviewIcon /> <span>Preview</span>
                 </div>
                 <div
                   className="select-insert"
-                  onClick={() => handleSelect("print")}
+                  onClick={(e) => handleSelect(e, "print")}
                 >
                   <PrintIcon /> <span>Print</span>
                 </div>
@@ -116,7 +117,7 @@ export default function SelectFileOptions(props) {
             )}
             {/* <div
               className="select-insert"
-              onClick={() => handleSelect("screen")}
+              onClick={(e) => handleSelect(e,"screen")}
             >
               <FileUploadIcon /> <span>Upload File</span>
             </div> */}

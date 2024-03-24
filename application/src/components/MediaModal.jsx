@@ -24,7 +24,8 @@ export default function MediaModal({ onMediaInsert }) {
     setInputs((old) => ({ ...old, [name]: value }));
   };
 
-  const handleChangeType = (value) => {
+  const handleChangeType = (e, value) => {
+    e.preventDefault();
     setInputs((old) => ({ ...old, type: value }));
   };
 
@@ -33,19 +34,19 @@ export default function MediaModal({ onMediaInsert }) {
       <div className="select-type">
         <button
           className={`${inputs.type === "general" ? "selected-type" : ""}`}
-          onClick={() => handleChangeType("general")}
+          onClick={(e) => handleChangeType(e, "general")}
         >
           General
         </button>
         <button
           className={`${inputs.type === "embed" ? "selected-type" : ""}`}
-          onClick={() => handleChangeType("embed")}
+          onClick={(e) => handleChangeType(e, "embed")}
         >
           Embed
         </button>
         {/* <button
           className={`${inputs.type === "upload" ? "selected-type" : ""}`}
-          onClick={() => handleChangeType("upload")}
+          onClick={(e) => handleChangeType(e,"upload")}
         >
           Upload
         </button> */}

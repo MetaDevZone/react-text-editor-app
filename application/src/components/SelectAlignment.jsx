@@ -25,7 +25,8 @@ function SelectAlignment({ handleHideChildOptions }) {
     },
   ];
 
-  const handleOptionClick = (option) => {
+  const handleOptionClick = (e, option) => {
+    e.preventDefault();
     document.execCommand(option.type);
     handleHideChildOptions();
   };
@@ -35,7 +36,7 @@ function SelectAlignment({ handleHideChildOptions }) {
       {alignments.map((option, index) => (
         <button
           key={`key${index}`}
-          onClick={() => handleOptionClick(option)}
+          onClick={(e) => handleOptionClick(e, option)}
           className="select-option react-editor-text-left"
         >
           <span className="react-editor-me-5">{option.icon}</span>

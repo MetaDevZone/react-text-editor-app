@@ -153,7 +153,7 @@ export default function SpecialChars({ handleCharSelect }) {
       {specialCharacters.map((char, index) => (
         <div
           key={`key${index}`}
-          onClick={() => handleCharSelect(char)}
+          onClick={(e) => handleCharSelect(e, char)}
           className="special-char"
         >
           {char}

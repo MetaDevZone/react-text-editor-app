@@ -16,12 +16,13 @@ export default function SelectFileOptions(props) {
   }
   const [isShow, setIsShow] = useState(false);
 
-  const handleSelect = (type) => {
+  const handleSelect = (e, type) => {
+    e.preventDefault();
     setIsShow(false);
     if (type === "hr_line") {
-      handleInsertHR();
+      handleInsertHR(e);
     } else {
-      onSelectOption(type);
+      onSelectOption(e, type);
     }
   };
 
@@ -47,7 +48,7 @@ export default function SelectFileOptions(props) {
                 {is_image && (
                   <div
                     className="select-insert"
-                    onClick={() => handleSelect("image")}
+                    onClick={(e) => handleSelect(e, "image")}
                   >
                     {option?.icon ? option.icon : <ImageIcon />}
                     <span>{option?.title ? option.title : "Image"}</span>
@@ -56,7 +57,7 @@ export default function SelectFileOptions(props) {
                 {is_link && (
                   <div
                     className="select-insert"
-                    onClick={() => handleSelect("link")}
+                    onClick={(e) => handleSelect(e, "link")}
                   >
                     {option?.icon ? option.icon : <LinkIcon />}
                     <span>{option?.title ? option.title : "Link"}</span>
@@ -65,7 +66,7 @@ export default function SelectFileOptions(props) {
                 {is_video && (
                   <div
                     className="select-insert"
-                    onClick={() => handleSelect("video")}
+                    onClick={(e) => handleSelect(e, "video")}
                   >
                     {option?.icon ? option.icon : <VideoIcon />}
                     <span>{option?.title ? option.title : "Video"}</span>
@@ -74,7 +75,7 @@ export default function SelectFileOptions(props) {
                 {is_hr_line && (
                   <div
                     className="select-insert"
-                    onClick={() => handleSelect("hr_line")}
+                    onClick={(e) => handleSelect(e, "hr_line")}
                   >
                     {option?.icon ? option.icon : <HorizontalLineIcon />}
                     <span>
@@ -85,7 +86,7 @@ export default function SelectFileOptions(props) {
                 {is_special_char && (
                   <div
                     className="select-insert"
-                    onClick={() => handleSelect("special_char")}
+                    onClick={(e) => handleSelect(e, "special_char")}
                   >
                     {option?.icon ? option.icon : <SpecialCharIcon />}
                     <span>{option?.title ? option.title : "Special Char"}</span>
