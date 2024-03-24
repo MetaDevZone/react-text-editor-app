@@ -33,10 +33,7 @@ export default function ImageModal(props) {
       }
       if (image_handler) {
         setIsLoading(true);
-        inputs.link = await image_handler(
-          { ...inputs, file: inputs.image },
-          item
-        );
+        inputs.link = await image_handler({ ...inputs }, item);
       } else {
         inputs.link = URL.createObjectURL(inputs.image);
       }

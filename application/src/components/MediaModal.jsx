@@ -86,6 +86,30 @@ export default function MediaModal({ onMediaInsert }) {
                 </div>
               )}
             </div>
+            <div className="react-editor-d-flex justify-content-between">
+              <div className="react-editor-mt-10 react-editor-w-47">
+                <label htmlFor="height">Height</label>
+                <input
+                  id="height"
+                  type="text"
+                  name="height"
+                  value={inputs.height}
+                  onChange={handleChange}
+                  className="form-control-input"
+                />
+              </div>
+              <div className="react-editor-mt-10 react-editor-w-47">
+                <label htmlFor="width">Width</label>
+                <input
+                  id="width"
+                  type="text"
+                  name="width"
+                  value={inputs.width}
+                  onChange={handleChange}
+                  className="form-control-input"
+                />
+              </div>
+            </div>
           </>
         ) : inputs.type === "embed" ? (
           <>
@@ -127,30 +151,7 @@ export default function MediaModal({ onMediaInsert }) {
             </div>
           </>
         )}
-        <div className="react-editor-d-flex justify-content-between">
-          <div className="react-editor-mt-10 react-editor-w-47">
-            <label htmlFor="height">Height</label>
-            <input
-              id="height"
-              type="text"
-              name="height"
-              value={inputs.height}
-              onChange={handleChange}
-              className="form-control-input"
-            />
-          </div>
-          <div className="react-editor-mt-10 react-editor-w-47">
-            <label htmlFor="width">Width</label>
-            <input
-              id="width"
-              type="text"
-              name="width"
-              value={inputs.width}
-              onChange={handleChange}
-              className="form-control-input"
-            />
-          </div>
-        </div>
+
         <div className="react-editor-text-end">
           <button className="save-button" onClick={handleSubmit}>
             Save

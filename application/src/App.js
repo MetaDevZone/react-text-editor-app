@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { TextColorUpperIcon } from "./components";
-import ReactEditor from "react-text-editor-kit";
+import ReactEditor from "./ReactEditor";
+import axios from "axios";
 
 function App() {
   const [value, setValue] = useState("");
@@ -102,6 +103,41 @@ function App() {
   };
   const handleChange = (value) => {};
 
+  const image_handler = async (e) => {
+    console.log(e, "eeeeeeeeeeee");
+    let requestObj = {
+      method: "POST",
+      url: "https://apidev.dynamitelifestyle.com/app/update_image_on_s3/",
+      headers: {
+        "x-sh-auth":
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWJiNDZkMzA4MzNkMDk0NzFjY2IzNTIiLCJsb2dpbl9ieSI6ImFkbWluX3VzZXIiLCJsb2dpbl90b2tlbiI6IjJlOGY1MTAwLWRhZWUtMTFlZS05OTY0LWI5NzkwNWU0MzE1ZiIsImlhdCI6MTcwOTY0MjcwMX0.17pW_cXfCBoE6qNzPAQTS5Urg9VZ7J6LBSn-w1ahLXs",
+        "Content-Type": "multipart/form-data",
+      },
+    };
+
+    let formData = new FormData();
+    formData.append("image", e.image); // Assuming e is an event object from an input file element
+    formData.append("width", "600");
+    requestObj["data"] = formData;
+    console.log(...formData, "formDataformData");
+    console.log(requestObj, "requestObjrequestObj");
+    try {
+      let results = await axios(requestObj);
+      console.log(results, "resultsresultsresults");
+      if (results.data.code === 200) {
+        return (
+          "https://dynamite-lifestyle-dev-app-bucket.s3.amazonaws.com/" +
+          results.data.image_path
+        );
+      } else {
+        return "";
+      }
+    } catch (error) {
+      console.error("Error occurred:", error);
+      return "";
+    }
+  };
+
   return (
     <div className="App">
       <form onSubmit={onSubmit}>
@@ -112,7 +148,7 @@ function App() {
           onChange={handleChange}
           mainProps={{ className: "red" }}
           placeholder="Write your text here"
-          image_handler={handleSubmit}
+          // image_handler={image_handler}
         />
       </form>
     </div>

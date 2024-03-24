@@ -154,30 +154,50 @@ export default function ReactEditor(props) {
   const handleMediaInsert = (data) => {
     let { link, height, width, type, embed_code } = data;
     const editorNode = editorRef.current;
-    if (type === "general") {
-      let iframeElement = `<iframe src="${link}"`;
-      if (!height) {
-        height = "360";
-      }
-      if (!width) {
-        width = "640";
-      }
-      iframeElement += ` height="${height}"`;
-      iframeElement += ` width="${width}"`;
-      iframeElement += ` frameborder="0"`;
-      iframeElement += ` allow="autoplay" allowfullscreen`;
-      iframeElement += `></iframe>`;
 
-      // Insert the iframe HTML into the editor content
-      focusCursorAtPosition(cursorPosition);
-      document.execCommand("insertHTML", false, iframeElement);
-    } else if (type === "embed") {
-      if (embed_code && editorNode) {
-        // Insert the provided embed code HTML into the editor content
-        focusCursorAtPosition(cursorPosition);
-        document.execCommand("insertHTML", false, embed_code);
+    if (type === "general") {
+      let iframeElement = "";
+
+      // Check if it's a direct video link
+      if (link.match(/\.(mp4|mov|avi|wmv)$/)) {
+        iframeElement = `<video width="${width || "640"}" height="${
+          height || "360"
+        }" controls><source src="${link}" type="video/mp4"></video>`;
+      } else {
+        // Check for specific video platforms
+        const youtubeRegex =
+          /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+        const vimeoRegex = /(?:https?:\/\/)?(?:www\.)?vimeo.com\/(\d+)/;
+
+        if (link.match(youtubeRegex)) {
+          const videoId = link.match(youtubeRegex)[1];
+          iframeElement = `<iframe width="${width || "640"}" height="${
+            height || "360"
+          }" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+        } else if (link.match(vimeoRegex)) {
+          const videoId = link.match(vimeoRegex)[1];
+          iframeElement = `<iframe src="https://player.vimeo.com/video/${videoId}" width="${
+            width || "640"
+          }" height="${
+            height || "360"
+          }" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+        } else {
+          // Insert custom embed code if available
+          iframeElement = embed_code || "";
+        }
       }
+
+      if (editorNode && iframeElement) {
+        // Insert the iframe HTML into the editor content
+        focusCursorAtPosition(cursorPosition);
+        document.execCommand("insertHTML", false, iframeElement);
+      }
+    } else if (type === "embed" && embed_code && editorNode) {
+      // Insert the provided embed code HTML into the editor content
+      focusCursorAtPosition(cursorPosition);
+      document.execCommand("insertHTML", false, embed_code);
     }
+
     setIsOpenModel(""); // Assuming this is setting some state related to the modal
   };
 
