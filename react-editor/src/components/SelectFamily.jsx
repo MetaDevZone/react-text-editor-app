@@ -30,7 +30,8 @@ function SelectFamily({ handleHideChildOptions }) {
     // Add more font families as needed
   ];
 
-  const handleOptionClick = (option) => {
+  const handleOptionClick = (e, option) => {
+    e.preventDefault();
     const selection = window.getSelection();
     if (!selection.isCollapsed) {
       document.execCommand("styleWithCSS", false, true);
@@ -48,7 +49,7 @@ function SelectFamily({ handleHideChildOptions }) {
             fontFamily: option.style,
           }}
           className="font-family-option"
-          onClick={() => handleOptionClick(option)}
+          onClick={(e) => handleOptionClick(e, option)}
         >
           {option.name}
         </button>

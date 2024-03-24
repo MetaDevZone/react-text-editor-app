@@ -17,11 +17,13 @@ function SelectFormat() {
     { label: "Preformatted", value: "pre" },
   ];
 
-  const toggleSelect = () => {
+  const toggleSelect = (e) => {
+    e.preventDefault();
     setIsOpen(!isOpen);
   };
 
-  const handleOptionClick = (option) => {
+  const handleOptionClick = (e, option) => {
+    e.preventDefault();
     document.execCommand("formatBlock", false, option.value);
     setSelectedOption(option.label);
     setIsOpen(false);
@@ -84,7 +86,7 @@ function SelectFormat() {
           {formats.map((option, index) => (
             <div
               key={`key${index}`}
-              onClick={() => handleOptionClick(option)}
+              onClick={(e) => handleOptionClick(e, option)}
               className="select-option"
             >
               <option.value>{option.label}</option.value>

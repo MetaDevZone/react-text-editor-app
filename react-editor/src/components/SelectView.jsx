@@ -13,7 +13,8 @@ export default function SelectFileOptions(props) {
   } = props;
   const [isShow, setIsShow] = useState(false);
 
-  const handleSelect = (type, option) => {
+  const handleSelect = (e, type, option) => {
+    e.preventDefault();
     setIsShow(false);
     if (option?.handleClick) {
       option.handleClick(option, item);
@@ -47,7 +48,7 @@ export default function SelectFileOptions(props) {
                   !(isPlaceholder && placeholder && !value) && (
                     <div
                       className="select-insert"
-                      onClick={() => handleSelect("code", option)}
+                      onClick={(e) => handleSelect(e, "code", option)}
                     >
                       {option?.icon ? option.icon : <CodeIcon />}
                       <span>
@@ -58,7 +59,7 @@ export default function SelectFileOptions(props) {
                 {is_full_screen && (
                   <div
                     className="select-insert"
-                    onClick={() => handleSelect("screen", option)}
+                    onClick={(e) => handleSelect(e, "screen", option)}
                   >
                     {option?.icon ? (
                       option.icon
@@ -87,14 +88,14 @@ export default function SelectFileOptions(props) {
             {!(isPlaceholder && placeholder && !value) && (
               <div
                 className="select-insert"
-                onClick={() => handleSelect("code")}
+                onClick={(e) => handleSelect(e, "code")}
               >
                 <CodeIcon /> <span>Source Code</span>
               </div>
             )}
             <div
               className="select-insert"
-              onClick={() => handleSelect("screen")}
+              onClick={(e) => handleSelect(e, "screen")}
             >
               {isFullScreen ? (
                 <>

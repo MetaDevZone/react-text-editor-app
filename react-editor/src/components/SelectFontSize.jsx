@@ -17,7 +17,8 @@ function SelectFontSize({ handleHideChildOptions }) {
     "72",
   ];
 
-  const handleOptionClick = (option) => {
+  const handleOptionClick = (e, option) => {
+    e.preventDefault();
     const selection = window.getSelection();
     if (!selection.isCollapsed) {
       document.execCommand("styleWithCSS", false, true);
@@ -35,7 +36,7 @@ function SelectFontSize({ handleHideChildOptions }) {
       {fontSizes.map((option, index) => (
         <button
           key={`key${index}`}
-          onClick={() => handleOptionClick(option)}
+          onClick={(e) => handleOptionClick(e, option)}
           className="select-option"
         >
           {`${option}px`}

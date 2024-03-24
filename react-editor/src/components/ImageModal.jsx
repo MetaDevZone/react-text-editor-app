@@ -44,7 +44,8 @@ export default function ImageModal(props) {
     setInputs((old) => ({ ...old, [name]: value }));
   };
 
-  const handleChangeType = (value) => {
+  const handleChangeType = (e, value) => {
+    e.preventDefault();
     setInputs((old) => ({ ...old, type: value }));
   };
 
@@ -53,13 +54,13 @@ export default function ImageModal(props) {
       <div className="select-type">
         <button
           className={`${inputs.type === "general" ? "selected-type" : ""}`}
-          onClick={() => handleChangeType("general")}
+          onClick={(e) => handleChangeType(e, "general")}
         >
           General
         </button>
         <button
           className={`${inputs.type === "upload" ? "selected-type" : ""}`}
-          onClick={() => handleChangeType("upload")}
+          onClick={(e) => handleChangeType(e, "upload")}
         >
           Upload
         </button>

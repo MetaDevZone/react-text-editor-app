@@ -82,21 +82,27 @@ export default function ReactEditor(props) {
     }
   };
 
-  const handleOpenModel = (type, item) => {
+  const handleOpenModel = (e, type, item) => {
+    e.preventDefault();
     setIsPlaceholder(false);
     setIsOpenModel(type);
     setSelectedItem(item);
   };
-  const handleCloseModel = () => setIsOpenModel("");
+  const handleCloseModel = (e) => {
+    e.preventDefault();
+    setIsOpenModel("");
+  };
 
-  const handleSaveSource = () => {
+  const handleSaveSource = (e) => {
+    e.preventDefault();
     if (editorRef.current) {
       editorRef.current.innerHTML = sourceCode;
       setViewSource(false);
     }
   };
 
-  const handleSelectAll = () => {
+  const handleSelectAll = (e) => {
+    e.preventDefault();
     const selection = window.getSelection();
     if (!selection.toString()) {
       const range = document.createRange();
@@ -175,7 +181,8 @@ export default function ReactEditor(props) {
     window.print();
   };
 
-  const handleCharSelect = (char) => {
+  const handleCharSelect = (e, char) => {
+    e.preventDefault();
     if (editorRef.current !== null) {
       focusCursorAtPosition(cursorPosition);
       document.execCommand("insertText", false, char); // Insert the character
@@ -421,7 +428,8 @@ export default function ReactEditor(props) {
     // }
   };
 
-  const handleHidePlaceholder = () => {
+  const handleHidePlaceholder = (e) => {
+    e.preventDefault();
     setIsPlaceholder(false);
     setTimeout(() => {
       editorRef.current.focus();
@@ -471,7 +479,8 @@ export default function ReactEditor(props) {
     }
   }, [editorRef]);
 
-  const handlePaste = () => {
+  const handlePaste = (e) => {
+    e.preventDefault();
     editorRef.current.focus();
     navigator.clipboard
       .read()
@@ -527,7 +536,6 @@ export default function ReactEditor(props) {
   const handle_resize = () => {
     const hr_1 = document.getElementsByClassName("wysiwyg-editor__toolbar")[0];
     setShowHR1(hr_1.offsetHeight > 31);
-
     const hr_2 = document.getElementsByClassName("wysiwyg-editor__toolbar")[1];
     setShowHR2(hr_2.offsetHeight > 31);
     setShowHR3(hr_2.offsetHeight > 61);
@@ -616,7 +624,7 @@ export default function ReactEditor(props) {
                 {is_image && (
                   <div className="increase-icon-size">
                     <button
-                      onClick={() => handleOpenModel("image", item)}
+                      onClick={(e) => handleOpenModel(e, "image", item)}
                       title={item?.title ? item.title : "Upload Image"}
                     >
                       {item?.icon ? item.icon : <ImageIcon />}
@@ -626,7 +634,7 @@ export default function ReactEditor(props) {
                 {is_link && (
                   <div className="increase-icon-size">
                     <button
-                      onClick={() => handleOpenModel("link", item)}
+                      onClick={(e) => handleOpenModel(e, "link", item)}
                       title={item?.title ? item.title : "Add Link"}
                     >
                       {item?.icon ? item.icon : <LinkIcon />}
@@ -636,7 +644,7 @@ export default function ReactEditor(props) {
                 {is_video && (
                   <div className="increase-icon-size">
                     <button
-                      onClick={() => handleOpenModel("video", item)}
+                      onClick={(e) => handleOpenModel(e, "video", item)}
                       title={item?.title ? item.title : "Upload Video"}
                     >
                       {item?.icon ? item.icon : <VideoIcon />}

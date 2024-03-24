@@ -3,7 +3,8 @@ import React from "react";
 export default function SimpleButton(props) {
   const { name, icon, title, item, editorRef } = props;
 
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.preventDefault();
     if (item?.handleClick) {
       item.handleClick(item);
       if (!item.add_functionality) return;
