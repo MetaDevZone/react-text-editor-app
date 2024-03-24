@@ -1,6 +1,6 @@
 # React Text Editor Kit
 
-is a customizable rich text editor component for React applications. It provides a flexible and easy-to-use interface for users to create and edit content with various formatting options. And also easy to integrate in react applications.
+React Text Editor Kit is a customizable rich text editor component for React applications. It provides a flexible and easy-to-use interface for users to create and edit content with various formatting options. And also easy to integrate in react applications.
 
 ```sh
 npm i react-text-editor-kit
