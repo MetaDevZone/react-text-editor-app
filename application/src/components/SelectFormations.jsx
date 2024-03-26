@@ -27,8 +27,10 @@ export default function SelectFileOptions({ item }) {
 
   const handleShowFamily = (option, event) => {
     if (event) {
+      let parent = document.getElementById("custom-select");
+      let parent_top = parent.getBoundingClientRect().top;
       const top = event.currentTarget.getBoundingClientRect().top;
-      setDropdownTop(top);
+      setDropdownTop(top - parent_top);
     }
     setShowFormatOptions(true);
     setShowChildOptions(option);
@@ -54,6 +56,7 @@ export default function SelectFileOptions({ item }) {
       className="custom-select"
       onMouseOver={() => setShowFormatOptions(true)}
       onMouseLeave={handleHideChildOptions}
+      id="custom-select"
     >
       {item?.title ? item.title : "Format"}
       <div className={`select-items ${showFormatOptions ? "show" : ""}`}>

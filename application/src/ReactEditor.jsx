@@ -378,23 +378,24 @@ export default function ReactEditor(props) {
   };
 
   const toggleFullScreen = () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch((err) => {
-        console.log(
-          `Error attempting to enable full-screen mode: ${err.message}`
-        );
-      });
-      setIsFullScreen(true);
-    } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen().catch((err) => {
-          console.log(
-            `Error attempting to exit full-screen mode: ${err.message}`
-          );
-        });
-        setIsFullScreen(false);
-      }
-    }
+    setIsFullScreen(!isFullScreen);
+    // if (!document.fullscreenElement) {
+    //   document.documentElement.requestFullscreen().catch((err) => {
+    //     console.log(
+    //       `Error attempting to enable full-screen mode: ${err.message}`
+    //     );
+    //   });
+    //   setIsFullScreen(true);
+    // } else {
+    //   if (document.exitFullscreen) {
+    //     document.exitFullscreen().catch((err) => {
+    //       console.log(
+    //         `Error attempting to exit full-screen mode: ${err.message}`
+    //       );
+    //     });
+    //     setIsFullScreen(false);
+    //   }
+    // }
   };
 
   useEffect(() => {
@@ -560,10 +561,12 @@ export default function ReactEditor(props) {
 
   const handle_resize = () => {
     const hr_1 = document.getElementsByClassName("wysiwyg-editor__toolbar")[0];
-    setShowHR1(hr_1.offsetHeight > 31);
+    console.log(hr_1.offsetHeight, "hr_1.offsetHeight");
+    setShowHR1(hr_1.offsetHeight > 34);
     const hr_2 = document.getElementsByClassName("wysiwyg-editor__toolbar")[1];
-    setShowHR2(hr_2.offsetHeight > 31);
-    setShowHR3(hr_2.offsetHeight > 61);
+    console.log(hr_2.offsetHeight, "hr_2.offsetHeight");
+    setShowHR2(hr_2.offsetHeight > 34);
+    setShowHR3(hr_2.offsetHeight > 65);
   };
 
   useEffect(() => {
@@ -576,7 +579,12 @@ export default function ReactEditor(props) {
 
   return (
     <>
-      <div {...mainProps} className="react-editor-main">
+      <div
+        {...mainProps}
+        className={`react-editor-main  ${
+          isFullScreen ? "fill-screen-view" : ""
+        }`}
+      >
         <div className="wysiwyg-editor__toolbar" id="editor-navbar">
           <hr
             className="hr-1"
@@ -777,7 +785,7 @@ export default function ReactEditor(props) {
                     item={item}
                   />
                 )}
-                {is_format && <SelectFormat />}
+                {is_format && <SelectFormat editorRef={editorRef} />}
 
                 {is_bold && (
                   <ButtonFunction
@@ -938,9 +946,7 @@ export default function ReactEditor(props) {
         ) : (
           <div
             {...others}
-            className={`ml-main-content-box print-only ${
-              isFullScreen ? "fill-screen-view" : ""
-            }`}
+            className={`ml-main-content-box print-only`}
             autoFocus={isFullScreen}
             contentEditable
             ref={editorRef}

@@ -13,7 +13,21 @@ export default function ImageModal(props) {
 
   const handleChangeFile = (event) => {
     const { name, files } = event.target;
-    setInputs((old) => ({ ...old, [name]: files[0] }));
+    if (files[0]) {
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        const img = new Image();
+        img.src = event.target.result;
+        img.onload = function () {
+          const width = img.width;
+          const height = img.height;
+          setInputs((old) => ({ ...old, height, width }));
+        };
+      };
+      reader.readAsDataURL(files[0]); // Use files[0] instead of undefined 'file'
+    }
+
+    setInputs((oldInputs) => ({ ...oldInputs, [name]: files[0] })); // Update inputs with the selected file
   };
 
   const handleLinkInsert = async (e) => {
@@ -33,7 +47,12 @@ export default function ImageModal(props) {
       }
       if (image_handler) {
         setIsLoading(true);
-        inputs.link = await image_handler({ ...inputs }, item);
+        let image_path = await image_handler({ ...inputs }, item);
+        if (image_path) {
+          setInputs((old) => ({ ...old, type: "general", link: image_path }));
+        }
+        setIsLoading(false);
+        return;
       } else {
         inputs.link = URL.createObjectURL(inputs.image);
       }
@@ -52,7 +71,7 @@ export default function ImageModal(props) {
 
   const handleChangeType = (e, value) => {
     e.preventDefault();
-    setInputs((old) => ({ ...old, type: value }));
+    setInputs((old) => ({ ...old, type: value, image: null }));
     setErrorMessage("");
   };
 
@@ -74,21 +93,49 @@ export default function ImageModal(props) {
       </div>
       <>
         {inputs.type === "general" ? (
-          <div className="react-editor-mt-10">
-            <label htmlFor="link">Source</label>
-            <input
-              id="link"
-              type="text"
-              name="link"
-              autoFocus
-              className="form-control-input"
-              value={inputs.link}
-              onChange={handleChange}
-            />
-            {errorMessage && (
-              <div className="editor-error-messsage">*{`${errorMessage}`}</div>
-            )}
-          </div>
+          <>
+            <div className="react-editor-mt-10">
+              <label htmlFor="link">Source</label>
+              <input
+                id="link"
+                type="text"
+                name="link"
+                autoFocus
+                className="form-control-input"
+                value={inputs.link}
+                onChange={handleChange}
+              />
+              {errorMessage && (
+                <div className="editor-error-messsage">
+                  *{`${errorMessage}`}
+                </div>
+              )}
+            </div>
+            <div className="react-editor-d-flex justify-content-between">
+              <div className="react-editor-mt-10 react-editor-w-47">
+                <label htmlFor="height">Height</label>
+                <input
+                  id="height"
+                  type="text"
+                  name="height"
+                  value={inputs.height}
+                  onChange={handleChange}
+                  className="form-control-input"
+                />
+              </div>
+              <div className="react-editor-mt-10 react-editor-w-47">
+                <label htmlFor="width">Width</label>
+                <input
+                  id="width"
+                  type="text"
+                  name="width"
+                  value={inputs.width}
+                  onChange={handleChange}
+                  className="form-control-input"
+                />
+              </div>
+            </div>
+          </>
         ) : (
           <div className="react-editor-mt-10">
             <label htmlFor="image">Choose File</label>
@@ -105,30 +152,6 @@ export default function ImageModal(props) {
             )}
           </div>
         )}
-        <div className="react-editor-d-flex justify-content-between">
-          <div className="react-editor-mt-10 react-editor-w-47">
-            <label htmlFor="height">Height</label>
-            <input
-              id="height"
-              type="text"
-              name="height"
-              value={inputs.height}
-              onChange={handleChange}
-              className="form-control-input"
-            />
-          </div>
-          <div className="react-editor-mt-10 react-editor-w-47">
-            <label htmlFor="width">Width</label>
-            <input
-              id="width"
-              type="text"
-              name="width"
-              value={inputs.width}
-              onChange={handleChange}
-              className="form-control-input"
-            />
-          </div>
-        </div>
         <div className="react-editor-text-end">
           <button className="save-button" onClick={handleLinkInsert}>
             Save

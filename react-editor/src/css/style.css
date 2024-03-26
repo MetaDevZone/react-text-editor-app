@@ -31,6 +31,7 @@ body {
 .react-editor-main .select-option blockquote,
 .react-editor-main .select-option h1 {
   margin: 0;
+  color: var(--editor-toolbar-text-color) !important;
 }
 
 .react-editor-main {
@@ -38,7 +39,7 @@ body {
   border: 1px solid var(--editor-border-color);
   color: var(--editor-text-color);
   line-height: 16px !important;
-  font-family: none !important;
+  font-family: system-ui !important;
 }
 
 .react-editor-main .wysiwyg-editor__toolbar {
@@ -59,12 +60,12 @@ body {
   border-top: 1px solid var(--editor-border-color);
   height: 1px;
   display: none;
-  top: 29px;
+  top: 32px;
   margin: 0;
 }
 
 .react-editor-main .wysiwyg-editor__toolbar .hr-2 {
-  top: 60px;
+  top: 64px;
 }
 
 .react-editor-main .wysiwyg-editor__toolbar .button-group {
@@ -87,11 +88,6 @@ body {
 .wysiwyg-editor__toolbar button:disabled svg,
 .wysiwyg-editor__toolbar button.disabled svg {
   fill: #9fa2a6;
-}
-
-.wysiwyg-editor__toolbar button svg {
-  fill: var(--editor-svg-color);
-  color: var(--editor-svg-color);
 }
 
 .wysiwyg-editor__toolbar button:hover {
@@ -123,8 +119,12 @@ body {
   opacity: 0.8;
   font-style: italic;
 }
-.react-editor-main .fill-screen-view {
-  height: 90vh;
+.react-editor-main.fill-screen-view {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  top: 0;
 }
 
 .ml-main-content-box h1,
@@ -157,6 +157,7 @@ body {
 /* Modal.css */
 
 #modal-root .modal-overlay {
+  font-family: system-ui !important;
   position: fixed;
   top: 0;
   left: 0;
@@ -208,8 +209,10 @@ body {
 }
 
 .wysiwyg-editor__toolbar button svg {
+  fill: var(--editor-svg-color);
+  color: var(--editor-svg-color);
   display: inline-block;
-  height: 14px;
+  height: 15px;
   width: 14px;
 }
 
@@ -231,17 +234,25 @@ body {
   padding: 6px;
 }
 
+.react-editor-main .main-color-component svg {
+  height: 13px !important;
+}
+
+.editor-modal-open {
+  overflow: hidden;
+}
+
 .react-editor-main .select-items {
   position: absolute;
   background-color: #fff;
   border: 1px solid var(--editor-border-color);
   border-radius: 2px;
   z-index: 1;
-  width: 145px;
+  width: 160px;
   max-height: 200px;
   overflow-y: auto;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  top: 28px;
+  top: 29px;
   left: 0;
   display: none;
 }
@@ -250,7 +261,7 @@ body {
   display: flex !important;
   width: 100%;
   padding: 7px;
-  font-family: none;
+  font-family: system-ui !important;
 }
 
 .react-editor-main .p-items .select-items {
@@ -337,6 +348,7 @@ body {
 }
 
 #modal-root .form-control-input {
+  font-family: system-ui !important;
   width: 100%;
   padding: 7px;
   border: 1px solid var(--editor-border-color);
@@ -446,7 +458,7 @@ body {
   background-color: var(--editor-background-color);
   border: 1px solid var(--editor-border-color);
   border-radius: 4px;
-  left: 140px;
+  left: 156px;
   display: none;
   min-width: 140px;
   z-index: 1;
@@ -465,7 +477,7 @@ body {
   width: 98%;
   margin: 0;
   border-radius: 0 !important;
-  font-family: none !important;
+  font-family: system-ui !important;
 }
 
 .react-editor-main .select-formation-dropdown.show {
@@ -502,9 +514,10 @@ body {
   width: 140px;
   background-color: var(--editor-background-color);
   border: 1px solid var(--editor-border-color);
-  top: 33px;
+  top: 30px;
   left: -1px;
   display: none;
+  z-index: 1;
 }
 
 .react-editor-main .color-box-grid button {
@@ -535,7 +548,7 @@ body {
 }
 
 .react-editor-main .increase-icon-size svg {
-  height: 17px !important;
+  height: 20px !important;
   width: 17px !important;
   margin-top: 3px;
 }
@@ -550,7 +563,7 @@ body {
 }
 
 .react-editor-main .vertical-line {
-  height: 29px;
+  height: 32px;
   width: 1px;
   background-color: var(--editor-border-color);
 }

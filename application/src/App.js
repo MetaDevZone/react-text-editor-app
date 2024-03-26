@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { TextColorUpperIcon } from "./components";
-import ReactEditor from "./ReactEditor";
+import ReactEditor from "react-text-editor-kit";
 import axios from "axios";
 
 function App() {
@@ -140,6 +140,9 @@ function App() {
 
   return (
     <div className="App">
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+      Lorem Ipsum has been the industry's standard dummy text ever since the
+      1500s
       <form onSubmit={onSubmit}>
         <ReactEditor
           value={value}
@@ -148,7 +151,7 @@ function App() {
           onChange={handleChange}
           mainProps={{ className: "red" }}
           placeholder="Write your text here"
-          // image_handler={image_handler}
+          image_handler={image_handler}
         />
       </form>
     </div>

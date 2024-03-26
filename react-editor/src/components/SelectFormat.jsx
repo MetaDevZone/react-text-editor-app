@@ -54,11 +54,14 @@ function SelectFormat() {
     };
 
     const handleSelectionChange = () => {
-      const formatBlock = getClosestBlockElement();
-      if (formatBlock) {
-        let find = formats.find((format) => format.value === formatBlock);
-        if (find) {
-          setSelectedOption(find.label);
+      const editor = document.getElementById("editable");
+      if (editor && editor.contains(window.getSelection().anchorNode)) {
+        const formatBlock = getClosestBlockElement();
+        if (formatBlock) {
+          let find = formats.find((format) => format.value === formatBlock);
+          if (find) {
+            setSelectedOption(find.label);
+          }
         }
       }
     };
