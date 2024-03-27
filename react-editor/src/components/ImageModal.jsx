@@ -13,21 +13,7 @@ export default function ImageModal(props) {
 
   const handleChangeFile = (event) => {
     const { name, files } = event.target;
-    if (files[0]) {
-      const reader = new FileReader();
-      reader.onload = function (event) {
-        const img = new Image();
-        img.src = event.target.result;
-        img.onload = function () {
-          const width = img.width;
-          const height = img.height;
-          setInputs((old) => ({ ...old, height, width }));
-        };
-      };
-      reader.readAsDataURL(files[0]); // Use files[0] instead of undefined 'file'
-    }
-
-    setInputs((oldInputs) => ({ ...oldInputs, [name]: files[0] })); // Update inputs with the selected file
+    setInputs((oldInputs) => ({ ...oldInputs, [name]: files[0] }));
   };
 
   const handleLinkInsert = async (e) => {
@@ -49,6 +35,24 @@ export default function ImageModal(props) {
         setIsLoading(true);
         let image_path = await image_handler({ ...inputs }, item);
         if (image_path) {
+          let img_width = 0;
+          let img_height = 0;
+          setTimeout(() => {
+            const img = new Image();
+            img.onload = function () {
+              img_width = img.width;
+              img_height = img.height;
+              setInputs((old) => ({
+                ...old,
+                width: img_width,
+                height: img_height,
+              }));
+            };
+            img.onerror = function () {
+              console.error("Failed to load image from URL:", image_path);
+            };
+            img.src = image_path;
+          }, 0);
           setInputs((old) => ({ ...old, type: "general", link: image_path }));
         }
         setIsLoading(false);

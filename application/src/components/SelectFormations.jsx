@@ -16,7 +16,7 @@ import SelectAlignment from "./SelectAlignment";
 import SelectLineHeight from "./SelectLineHeight";
 import { FORMAT_OPTIONS } from "./constant";
 
-export default function SelectFileOptions({ item }) {
+export default function SelectFileOptions({ item, isFullScreen }) {
   let options = item.options;
   if (!options) {
     options = FORMAT_OPTIONS;
@@ -30,7 +30,7 @@ export default function SelectFileOptions({ item }) {
       let parent = document.getElementById("custom-select");
       let parent_top = parent.getBoundingClientRect().top;
       const top = event.currentTarget.getBoundingClientRect().top;
-      setDropdownTop(top - parent_top);
+      setDropdownTop(isFullScreen ? top : top - parent_top);
     }
     setShowFormatOptions(true);
     setShowChildOptions(option);

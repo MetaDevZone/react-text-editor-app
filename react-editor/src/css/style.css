@@ -119,13 +119,6 @@ body {
   opacity: 0.8;
   font-style: italic;
 }
-.react-editor-main.fill-screen-view {
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1;
-  top: 0;
-}
 
 .ml-main-content-box h1,
 .ml-main-content-box h2,
@@ -167,7 +160,15 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 9998;
+}
+
+.image-model-overly {
   z-index: 9999;
+}
+
+.fill-screen-view {
+  z-index: 9997;
 }
 
 #modal-root .model-title {
@@ -191,6 +192,15 @@ body {
   width: 400px;
   max-width: 85%;
   color: #000;
+}
+
+.fill-screen-view .modal-popup {
+  max-width: 100% !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 1;
+  padding: 0 !important;
+  overflow: hidden;
 }
 
 #modal-root .modal-popup hr {

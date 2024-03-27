@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { CrossImage } from ".";
 
 const Modal = (props) => {
-  const { onClose, children, title, className } = props;
+  const { onClose, children, title, className, isFullScreen } = props;
 
   useEffect(() => {
     document.body.classList.add("editor-modal-open");
@@ -13,18 +13,25 @@ const Modal = (props) => {
   }, []);
 
   return ReactDOM.createPortal(
-    <div className="modal-overlay" onClick={onClose}>
+    <div
+      onClick={onClose}
+      className={`modal-overlay  ${isFullScreen ? "fill-screen-view" : ""}`}
+    >
       <div
         className={`modal-popup ${className ? className : ""}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="model-title">
-          <h2>{title}</h2>
-          <div className="cross" onClick={onClose}>
-            <CrossImage />
-          </div>
-        </div>
-        <hr />
+        {!isFullScreen && (
+          <>
+            <div className="model-title">
+              <h2>{title}</h2>
+              <div className="cross" onClick={onClose}>
+                <CrossImage />
+              </div>
+            </div>
+            <hr />
+          </>
+        )}
         {children}
       </div>
     </div>,
