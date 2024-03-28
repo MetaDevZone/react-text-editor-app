@@ -487,9 +487,7 @@ export default function ReactEditorComponent(props) {
   }
 
   useEffect(() => {
-    console.log(value, "valuevaluevalue");
     if (editorRef.current && value) {
-      console.log(editorRef.current, value, "valuevaluevalue");
       editorRef.current.innerHTML = value;
     }
   }, [isFullScreen]);
@@ -556,10 +554,8 @@ export default function ReactEditorComponent(props) {
 
   const handle_resize = () => {
     const hr_1 = document.getElementsByClassName("wysiwyg-editor__toolbar")[0];
-    console.log(hr_1.offsetHeight, "hr_1.offsetHeight");
     setShowHR1(hr_1.offsetHeight > 34);
     const hr_2 = document.getElementsByClassName("wysiwyg-editor__toolbar")[1];
-    console.log(hr_2.offsetHeight, "hr_2.offsetHeight");
     setShowHR2(hr_2.offsetHeight > 34);
     setShowHR3(hr_2.offsetHeight > 65);
   };
@@ -580,9 +576,6 @@ export default function ReactEditorComponent(props) {
           }px - 22px)`,
         }
       : {};
-
-  console.log(style, "stylestylestylestyle");
-  console.log({ ...style, ...dynamicStyle }, "{ ...style, ...dynamicStyle }");
 
   return (
     <>
