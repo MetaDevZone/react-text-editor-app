@@ -9,27 +9,56 @@ npm i react-text-editor-kit
 ## Simple Usage
 
 ```tsx
-import { ReactEditor } from "react-text-editor-kit";
-const [value, setValue] = useState("");
+import { useState } from "react";
+import { TextColorUpperIcon } from "./components";
+import ReactEditor from "react-text-editor-kit";
 
-const get_editor_ref = (value) => {
-  console.log(value, "value");
-};
+function App() {
+  const [value, setValue] = useState("");
 
-const image_handler = async (e) => {
-  //Call api and return url
-  // if there's any error from api you need to return empty string as path
-  return api_path;
-};
+  const handleChange = (value) => {
+    setValue(value);
+  };
 
-<ReactEditor
-  value={value}
-  onChange={setValue}
-  getEditorRef={get_editor_ref}
-  placeholder="Write your text here"
-  mainProps={{ className: "editor-container" }} // mainProps will be use to most parent div of the editor
-  image_handler={image_handler}
-/>;
+  const image_handler = async (e) => {
+    // let requestObj = {
+    //   method: "POST",
+    //   url: "your-api-end-point",
+    //   headers: {}, // attach required headers
+    // };
+    // let formData = new FormData();
+    // formData.append("image", e.image);
+    // formData.append("width", "600");
+    // requestObj["data"] = formData;
+    // try {
+    //   let results = await axios(requestObj);
+    //   if (results.data.code === 200) {
+    //     return results.data.image_path;
+    //   } else {
+    //     return "";
+    //   }
+    // } catch (error) {
+    //   return "";
+    // }
+  };
+
+  const get_editor_ref = (value) => {};
+
+  return (
+    <div className="App">
+      <ReactEditor
+        value={value}
+        getEditorRef={get_editor_ref} //if you want to get ref of editor
+        onChange={handleChange}
+        mainProps={{ className: "red" }} // these props with b used to most parent div of the editor
+        placeholder="Write your text here"
+        // image_handler={image_handler} // if you want to upload image on your server
+      />
+    </div>
+  );
+}
+
+export default App;
 ```
 
 ## Toolbar and Navbar Customization

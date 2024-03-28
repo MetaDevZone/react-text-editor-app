@@ -456,18 +456,18 @@ export default function ReactEditorComponent(props) {
     }, 10);
   };
 
-  useEffect(() => {
-    if (isFullScreen && editorRef.current) {
-      const range = document.createRange();
-      const selection = window.getSelection();
-      const editorNode = editorRef.current;
-      range.selectNodeContents(editorNode);
-      range.collapse(false); // Move cursor to the end
-      selection.removeAllRanges();
-      selection.addRange(range);
-      editorNode.focus();
-    }
-  }, [isFullScreen]);
+  // useEffect(() => {
+  //   if (isFullScreen && editorRef.current) {
+  //     const range = document.createRange();
+  //     const selection = window.getSelection();
+  //     const editorNode = editorRef.current;
+  //     range.selectNodeContents(editorNode);
+  //     range.collapse(false); // Move cursor to the end
+  //     selection.removeAllRanges();
+  //     selection.addRange(range);
+  //     editorNode.focus();
+  //   }
+  // }, [isFullScreen]);
 
   if (theme_config && Object.keys(theme_config).length > 0) {
     Object.keys(theme_config).forEach(function (key, index) {
@@ -487,11 +487,12 @@ export default function ReactEditorComponent(props) {
   }
 
   useEffect(() => {
+    console.log(value, "valuevaluevalue");
     if (editorRef.current && value) {
-      // Set initial value when editorRef is available
+      console.log(editorRef.current, value, "valuevaluevalue");
       editorRef.current.innerHTML = value;
     }
-  }, []);
+  }, [isFullScreen]);
 
   useEffect(() => {
     if (getEditorRef) {
@@ -961,15 +962,6 @@ export default function ReactEditorComponent(props) {
           ></div>
         )}
       </div>
-      {isOpenModel && (
-        <Modal
-          isOpen={isOpenModel}
-          onClose={handleCloseModel}
-          title={model_component().title}
-        >
-          {model_component().component}
-        </Modal>
-      )}
       {isLoading && (
         <ViewLoadingModel
           viewSource={viewSource}
@@ -979,6 +971,16 @@ export default function ReactEditorComponent(props) {
           handleSaveSource={handleSaveSource}
         />
       )}
+      {isOpenModel && (
+        <Modal
+          isOpen={isOpenModel}
+          onClose={handleCloseModel}
+          title={model_component().title}
+        >
+          {model_component().component}
+        </Modal>
+      )}
+
       {viewSource && (
         <ViewSourceModel
           viewSource={viewSource}

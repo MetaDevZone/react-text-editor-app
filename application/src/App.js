@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { TextColorUpperIcon } from "./components";
 import axios from "axios";
-import ReactEditor from "./ReactEditor";
+import ReactEditor from "react-text-editor-kit";
 
 function App() {
   const [value, setValue] = useState("");
@@ -101,7 +101,9 @@ function App() {
   const onSubmit = (value) => {
     console.log(value, "valuevaluevaluevaluevalue");
   };
-  const handleChange = (value) => {};
+  const handleChange = (value) => {
+    setValue(value);
+  };
 
   const image_handler = async (e) => {
     console.log(e, "eeeeeeeeeeee");
@@ -215,7 +217,6 @@ function App() {
       <form onSubmit={onSubmit}>
         <ReactEditor
           value={value}
-          setValue={setValue}
           getEditorRef={get_editor_ref}
           onChange={handleChange}
           mainProps={{ className: "red" }}

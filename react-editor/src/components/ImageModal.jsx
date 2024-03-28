@@ -52,7 +52,7 @@ export default function ImageModal(props) {
               console.error("Failed to load image from URL:", image_path);
             };
             img.src = image_path;
-          }, 0);
+          }, 100);
           setInputs((old) => ({ ...old, type: "general", link: image_path }));
         }
         setIsLoading(false);

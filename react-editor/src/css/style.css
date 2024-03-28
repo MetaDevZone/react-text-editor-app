@@ -109,7 +109,7 @@ body {
 
 .ml-main-content-box {
   padding: 10px;
-  height: 200px;
+  height: 250px;
   overflow: auto;
   resize: vertical;
   max-width: 100% !important;

@@ -19,7 +19,7 @@ module.exports = {
       },
       {
         test: /\.gif$/,
-        use: "file-loader",
+        use: "url-loader",
       },
       {
         test: /\.svg$/,

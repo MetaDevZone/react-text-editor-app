@@ -14,15 +14,18 @@ export default function ButtonFunction(props) {
     document.execCommand(name);
   };
 
-  // Handle selection change
-  const handleSelectionChange = () => {
-    const is_selected = document.queryCommandState(name);
-    const isRedoEnabled = document.queryCommandEnabled(name);
-    setIsDisabled(!isRedoEnabled);
-    setIsSelected(is_selected);
-  };
-
   useEffect(() => {
+    const editor = document.getElementById("editable");
+    const handleSelectionChange = () => {
+      if (!editor?.contains(window.getSelection().anchorNode)) {
+        return;
+      }
+      const is_selected = document.queryCommandState(name);
+      const isRedoEnabled = document.queryCommandEnabled(name);
+      setIsDisabled(!isRedoEnabled);
+      setIsSelected(is_selected);
+    };
+
     document.addEventListener("selectionchange", handleSelectionChange);
     document.addEventListener("input", handleSelectionChange);
     return () => {
