@@ -38,28 +38,6 @@ export default function ManageColors(props) {
     setOpenColor(true);
   };
 
-  const handleSelectionChange = () => {
-    let appliedColor = "transparent";
-    if (type === "foreColor") {
-      appliedColor = document.queryCommandValue(type);
-    } else {
-      const selection = window.getSelection();
-      if (selection.rangeCount > 0) {
-        const range = selection.getRangeAt(0);
-        const ancestor = range.commonAncestorContainer;
-        if (ancestor.nodeType === 3) {
-          const parentElement = ancestor.parentElement;
-          appliedColor = window.getComputedStyle(parentElement).backgroundColor;
-        } else {
-          appliedColor = window.getComputedStyle(ancestor).backgroundColor;
-        }
-      }
-    }
-    if (appliedColor && appliedColor !== "transparent") {
-      setValue(rgbToHex(appliedColor));
-    }
-  };
-
   const handleOutsideClick = (e) => {
     if (colorPickerRef.current && !colorPickerRef.current.contains(e.target)) {
       setOpenColor(false);
@@ -67,6 +45,33 @@ export default function ManageColors(props) {
   };
 
   useEffect(() => {
+    const editor = document.getElementById("react-editor");
+    const handleSelectionChange = () => {
+      if (!editor?.contains(window.getSelection().anchorNode)) {
+        return;
+      }
+      let appliedColor = "transparent";
+      if (type === "foreColor") {
+        appliedColor = document.queryCommandValue(type);
+      } else {
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+          const range = selection.getRangeAt(0);
+          const ancestor = range.commonAncestorContainer;
+          if (ancestor.nodeType === 3) {
+            const parentElement = ancestor.parentElement;
+            appliedColor =
+              window.getComputedStyle(parentElement).backgroundColor;
+          } else {
+            appliedColor = window.getComputedStyle(ancestor).backgroundColor;
+          }
+        }
+      }
+      if (appliedColor && appliedColor !== "transparent") {
+        setValue(rgbToHex(appliedColor));
+      }
+    };
+
     document.addEventListener("selectionchange", handleSelectionChange);
     document.addEventListener("mousedown", handleOutsideClick);
     return () => {

@@ -15,7 +15,7 @@ export default function ButtonFunction(props) {
   };
 
   useEffect(() => {
-    const editor = document.getElementById("editable");
+    const editor = document.getElementById("react-editor");
     const handleSelectionChange = () => {
       if (!editor?.contains(window.getSelection().anchorNode)) {
         return;

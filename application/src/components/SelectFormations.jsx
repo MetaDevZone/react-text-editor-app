@@ -77,7 +77,7 @@ export default function SelectFileOptions({ item, isFullScreen }) {
               option === "alignment" || option.name === "alignment";
 
             return (
-              <div key={`key${index}`}>
+              <>
                 {is_bold && (
                   <button
                     className="select-insert"
@@ -159,7 +159,7 @@ export default function SelectFileOptions({ item, isFullScreen }) {
                     <span>{option?.title ? option.title : "Align"}</span>
                   </div>
                 )}
-              </div>
+              </>
             );
           })}
 

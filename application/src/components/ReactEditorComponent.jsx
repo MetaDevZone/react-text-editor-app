@@ -579,7 +579,7 @@ export default function ReactEditorComponent(props) {
 
   return (
     <>
-      <div {...mainProps} className={`react-editor-main`}>
+      <div {...mainProps} className={`react-editor-main`} id="react-editor">
         <div id="action-components">
           <div className="wysiwyg-editor__toolbar" id="editor-navbar">
             <hr

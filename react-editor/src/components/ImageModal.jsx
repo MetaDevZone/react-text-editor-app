@@ -16,6 +16,31 @@ export default function ImageModal(props) {
     setInputs((oldInputs) => ({ ...oldInputs, [name]: files[0] }));
   };
 
+  const MAX_RETRIES = 3;
+
+  const get_image_dimentions = (image_path, retries = 0) => {
+    let img_width = 0;
+    let img_height = 0;
+    const img = new Image();
+    img.onload = function () {
+      img_width = img.width;
+      img_height = img.height;
+      setInputs((old) => ({
+        ...old,
+        width: img_width,
+        height: img_height,
+      }));
+      setIsLoading(false);
+    };
+    img.onerror = function () {
+      setIsLoading(false);
+      if (retries < MAX_RETRIES) {
+        get_image_dimentions(image_path, retries + 1);
+      }
+    };
+    img.src = image_path;
+  };
+
   const handleLinkInsert = async (e) => {
     e.preventDefault();
     if (inputs.type === "general") {
@@ -35,27 +60,11 @@ export default function ImageModal(props) {
         setIsLoading(true);
         let image_path = await image_handler({ ...inputs }, item);
         if (image_path) {
-          let img_width = 0;
-          let img_height = 0;
-          setTimeout(() => {
-            const img = new Image();
-            img.onload = function () {
-              img_width = img.width;
-              img_height = img.height;
-              setInputs((old) => ({
-                ...old,
-                width: img_width,
-                height: img_height,
-              }));
-            };
-            img.onerror = function () {
-              console.error("Failed to load image from URL:", image_path);
-            };
-            img.src = image_path;
-          }, 100);
+          get_image_dimentions(image_path);
           setInputs((old) => ({ ...old, type: "general", link: image_path }));
+        } else {
+          setIsLoading(false);
         }
-        setIsLoading(false);
         return;
       } else {
         inputs.link = URL.createObjectURL(inputs.image);

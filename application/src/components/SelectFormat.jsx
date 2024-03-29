@@ -48,7 +48,7 @@ function SelectFormat() {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (selectRef.current && !selectRef.current.contains(event.target)) {
+      if (!selectRef.current.contains(event.target)) {
         setIsOpen(false);
       }
     };
