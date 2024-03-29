@@ -125,38 +125,43 @@ export default function SelectFileOptions({ item, isFullScreen }) {
                 )}
                 {is_font && (
                   <div
-                    className="select-insert"
                     onMouseOver={(e) => {
                       handleShowFamily(1, e);
                     }}
                     onMouseLeave={handleHideChildOptions}
                   >
-                    {option?.icon ? option.icon : <FontFamilyIcon />}
-                    <span>{option?.title ? option.title : "Font Family"}</span>
+                    <div className="select-insert">
+                      {option?.icon ? option.icon : <FontFamilyIcon />}
+                      <span>
+                        {option?.title ? option.title : "Font Family"}
+                      </span>
+                    </div>
                   </div>
                 )}
                 {is_font_size && (
                   <div
-                    className="select-insert"
                     onMouseOver={(e) => {
                       handleShowFamily(2, e);
                     }}
                     onMouseLeave={handleHideChildOptions}
                   >
-                    {option?.icon ? option.icon : <FontSizeIcon />}
-                    <span>{option?.title ? option.title : "Font Size"}</span>
+                    <div className="select-insert">
+                      {option?.icon ? option.icon : <FontSizeIcon />}
+                      <span>{option?.title ? option.title : "Font Size"}</span>
+                    </div>
                   </div>
                 )}
                 {is_alignment && (
                   <div
-                    className="select-insert"
                     onMouseOver={(e) => {
                       handleShowFamily(3, e);
                     }}
                     onMouseLeave={handleHideChildOptions}
                   >
-                    {option?.icon ? option.icon : <AlignLeft />}
-                    <span>{option?.title ? option.title : "Align"}</span>
+                    <div className="select-insert">
+                      {option?.icon ? option.icon : <AlignLeft />}
+                      <span>{option?.title ? option.title : "Align"}</span>
+                    </div>
                   </div>
                 )}
               </>
