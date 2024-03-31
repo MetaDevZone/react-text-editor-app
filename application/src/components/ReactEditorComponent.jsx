@@ -168,8 +168,17 @@ export default function ReactEditorComponent(props) {
   };
 
   const handleInsertHRClick = () => {
-    focusCursorAtPosition(cursorPosition);
-    document.execCommand("insertHorizontalRule");
+    if (!editorRef.current) {
+      setIsPlaceholder(false);
+      setTimeout(() => {
+        editorRef.current.focus();
+      }, 0);
+    } else {
+      focusCursorAtPosition(cursorPosition);
+    }
+    setTimeout(() => {
+      document.execCommand("insertHorizontalRule");
+    }, 10);
   };
 
   const handleLinkInsert = (props) => {
