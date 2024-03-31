@@ -113,6 +113,7 @@ body {
   overflow: auto;
   resize: vertical;
   max-width: 100% !important;
+  line-height: normal;
 }
 
 .react-editor-main .placeholder-text {
@@ -468,7 +469,7 @@ body {
   background-color: var(--editor-background-color);
   border: 1px solid var(--editor-border-color);
   border-radius: 4px;
-  left: 153px;
+  left: 154px;
   display: none;
   min-width: 140px;
   z-index: 1;

@@ -222,7 +222,7 @@ function App() {
           onChange={handleChange}
           mainProps={{ className: "red" }}
           placeholder="Write your text here"
-          image_handler={image_handler}
+          // image_handler={image_handler}
         />
       </form>
       1500s Lorem Ipsum is simply dummy text of the printing and typesetting

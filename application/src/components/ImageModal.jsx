@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function ImageModal(props) {
-  const { onImageInsert, item, setIsLoading, image_handler } = props;
+  const { onImageInsert, item, setIsLoading, image_handler, selectedData } =
+    props;
   const [errorMessage, setErrorMessage] = useState("");
   const [inputs, setInputs] = useState({
     link: "",
@@ -68,6 +69,8 @@ export default function ImageModal(props) {
         return;
       } else {
         inputs.link = URL.createObjectURL(inputs.image);
+        inputs.width = "";
+        inputs.height = "";
       }
       if (!inputs.link) {
         setIsLoading(false);
@@ -87,6 +90,12 @@ export default function ImageModal(props) {
     setInputs((old) => ({ ...old, type: value, image: null }));
     setErrorMessage("");
   };
+
+  useEffect(() => {
+    if (selectedData) {
+      setInputs({ ...inputs, ...selectedData });
+    }
+  }, []);
 
   return (
     <div className="link-modal">

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-export default function LinkModal({ onLinkInsert, item, setIsOpenModel }) {
+export default function LinkModal(props) {
+  const { onLinkInsert, item, setIsOpenModel, selectedData } = props;
   const [errorMessage, setErrorMessage] = useState("");
   const [inputs, setInputs] = useState({
     text: "",
@@ -29,6 +30,12 @@ export default function LinkModal({ onLinkInsert, item, setIsOpenModel }) {
     const { name, value } = event.target;
     setInputs((old) => ({ ...old, [name]: value }));
   };
+
+  useEffect(() => {
+    if (selectedData) {
+      setInputs(selectedData);
+    }
+  }, []);
 
   return (
     <div className="link-modal">

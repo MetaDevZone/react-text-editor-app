@@ -69,6 +69,8 @@ export default function ReactEditorComponent(props) {
   const [sourceCode, setSourceCode] = useState("");
   const [isOpenModel, setIsOpenModel] = useState("");
   const [previewContent, setPreviewContent] = useState("");
+  const [selectedData, setSelectedData] = useState(null);
+  const [selectedEvent, setSelectedEvent] = useState({});
   const [isPlaceholder, setIsPlaceholder] = useState(true);
   const [cursorPosition, setCursorPosition] = useState(0);
   const [selectedItem, setSelectedItem] = useState({});
@@ -93,8 +95,12 @@ export default function ReactEditorComponent(props) {
     setSelectedItem(item);
   };
   const handleCloseModel = (e) => {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
     setIsOpenModel("");
+    setSelectedData(null);
+    setSelectedEvent({});
   };
 
   const handleSaveSource = (e) => {
@@ -129,13 +135,19 @@ export default function ReactEditorComponent(props) {
       text = link;
     }
     let linkHTML = `<a href="${link}"`;
-    if (open_new_tab) {
+    if (open_new_tab && open_new_tab !== "false") {
       linkHTML += ' target="_blank"';
     }
     linkHTML += `>${text}</a>`;
+    if (selectedEvent && selectedData) {
+      const parentElement = selectedEvent.parentElement;
+      if (parentElement) {
+        parentElement.removeChild(selectedEvent);
+      }
+    }
     focusCursorAtPosition(cursorPosition);
     document.execCommand("insertHTML", false, linkHTML);
-    setIsOpenModel("");
+    handleCloseModel();
   };
 
   const handleImageInsert = (data) => {
@@ -148,10 +160,16 @@ export default function ReactEditorComponent(props) {
       imgElement += ` width="${width}"`;
     }
     imgElement += `/>`;
+    if (selectedEvent && selectedData) {
+      const parentElement = selectedEvent.parentElement;
+      if (parentElement) {
+        parentElement.removeChild(selectedEvent);
+      }
+    }
     focusCursorAtPosition(cursorPosition);
     document.execCommand("insertHTML", false, imgElement);
     setIsLoading(false);
-    setIsOpenModel("");
+    handleCloseModel();
   };
 
   const handleMediaInsert = (data) => {
@@ -224,10 +242,8 @@ export default function ReactEditorComponent(props) {
 
   const onPaste = (event) => {
     event.preventDefault(); // Prevent default paste behavior
-
     const items = (event.clipboardData || event.originalEvent.clipboardData)
       .items;
-
     for (let i = 0; i < items.length; i++) {
       const item = items[i];
       if (item.type.indexOf("image") !== -1) {
@@ -235,12 +251,9 @@ export default function ReactEditorComponent(props) {
         const blob = item.getAsFile();
         const reader = new FileReader();
         reader.onload = (event) => {
-          // Once the image is loaded, create an img element and append it to the editor
-          const imgElement = document.createElement("img");
-          imgElement.src = event.target.result;
-          editorRef.current.appendChild(imgElement);
+          const imgElement = `<img src="${event.target.result}" alt="Image">`;
+          document.execCommand("insertHTML", false, imgElement);
         };
-
         reader.readAsDataURL(blob);
       } else if (item.type === "text/html") {
         // Handle HTML paste
@@ -258,12 +271,9 @@ export default function ReactEditorComponent(props) {
     const editorNode = editorRef.current;
     const selection = window.getSelection();
     const range = document.createRange();
-
     if (!editorNode) return;
-
     let currentPosition = 0;
     let found = false;
-
     const traverseNodes = (node) => {
       if (node.nodeType === Node.TEXT_NODE) {
         const textLength = node.textContent.length;
@@ -410,9 +420,10 @@ export default function ReactEditorComponent(props) {
             onLinkInsert={handleLinkInsert}
             item={selectedItem}
             setIsOpenModel={setIsOpenModel}
+            selectedData={selectedData}
           />
         ),
-        title: "Insert Link",
+        title: `${selectedData ? "Update" : "Insert"} Link`,
       };
     } else if (isOpenModel === "image") {
       return {
@@ -423,14 +434,15 @@ export default function ReactEditorComponent(props) {
             setIsLoading={setIsLoading}
             setIsOpenModel={setIsOpenModel}
             image_handler={image_handler}
+            selectedData={selectedData}
           />
         ),
-        title: "Insert Image",
+        title: `${selectedData ? "Update" : "Insert"} Image`,
       };
     } else if (isOpenModel === "video") {
       return {
         component: <MediaModal onMediaInsert={handleMediaInsert} />,
-        title: "Insert Video",
+        title: `${selectedData ? "Update" : "Insert"} Video`,
       };
     } else if (isOpenModel === "special_char") {
       return {
@@ -500,7 +512,14 @@ export default function ReactEditorComponent(props) {
 
   const handlePaste = (e) => {
     e.preventDefault();
-    editorRef.current.focus();
+    if (!editorRef.current) {
+      setIsPlaceholder(false);
+      setTimeout(() => {
+        editorRef.current.focus();
+      }, 0);
+    } else {
+      focusCursorAtPosition(cursorPosition);
+    }
     navigator.clipboard
       .read()
       .then((clipboardItems) => {
@@ -512,10 +531,10 @@ export default function ReactEditorComponent(props) {
             item
               .getType(item.types[0])
               .then((imageBlob) => {
-                // Now you have the image blob, you can create an <img> element and append it to your editor
-                const imgElement = document.createElement("img");
-                imgElement.src = URL.createObjectURL(imageBlob);
-                editorRef.current.appendChild(imgElement);
+                const imgElement = `<img src="${URL.createObjectURL(
+                  imageBlob
+                )}" alt="Image">`;
+                document.execCommand("insertHTML", false, imgElement);
               })
               .catch((error) => {
                 console.error("Error reading image content:", error);
@@ -532,7 +551,7 @@ export default function ReactEditorComponent(props) {
                       /<!--[\s\S]*?-->/g,
                       ""
                     );
-                    editorRef.current.innerHTML += withoutComments;
+                    document.execCommand("insertHTML", false, withoutComments);
                   })
                   .catch((error) => {
                     console.error("Error reading HTML content:", error);
@@ -560,13 +579,41 @@ export default function ReactEditorComponent(props) {
     setShowHR3(hr_2.offsetHeight > 65);
   };
 
+  const handleDoubleClick = (event) => {
+    const target = event.target;
+    if (target.tagName === "IMG") {
+      setIsOpenModel("image");
+      setSelectedData({
+        link: target.src,
+        height: target.offsetHeight,
+        width: target.offsetWidth,
+      });
+      setSelectedEvent(target);
+    } else if (target.tagName === "A") {
+      setIsOpenModel("link");
+      setSelectedData({
+        link: target.href,
+        text: target.textContent.trim(),
+        open_new_tab: target.target === "_blank",
+      });
+      setSelectedEvent(target);
+    }
+  };
+
   useEffect(() => {
     handle_resize();
+    const editor = document.getElementById("editable");
+    if (editor) {
+      editor.addEventListener("dblclick", handleDoubleClick);
+    }
     window.addEventListener("resize", handle_resize);
     return () => {
       window.removeEventListener("resize", handle_resize);
+      if (editor) {
+        editor.removeEventListener("dblclick", handleDoubleClick);
+      }
     };
-  }, []);
+  }, [isPlaceholder]);
 
   const dynamicStyle =
     isFullScreen && document.getElementById("action-components")
@@ -704,7 +751,6 @@ export default function ReactEditorComponent(props) {
                       <button
                         onClick={handlePaste}
                         title={item?.title ? item.title : "Paste"}
-                        disabled={isPlaceholder && placeholder && !value}
                       >
                         {item?.icon ? item.icon : <PasteIcon />}
                       </button>
