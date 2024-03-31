@@ -97,8 +97,6 @@ const navbar = [
     ],
   },
   "|",
-  "source_code",
-  "full_screen",
   "select_all",
   "|",
   "image",
@@ -185,6 +183,25 @@ const navbar = [
   },
   //  ...Other optiosn
 ];
+```
+
+## Removing options from toolbar and navbar
+
+if you want to remove some of the options you can use remove_from_toolbar and remove_from_navbar as given below
+
+```tsx
+<ReactEditor
+  value={value}
+  onChange={setValue}
+  remove_from_toolbar={[
+    "bold",
+    { name: "format", options: ["h1"] }, //options you want to remove from format dropdown
+  ]}
+  remove_from_navbar={[
+    "select_all", //options you want to remove
+    { name: "view", options: ["source_code"] }, //options you want to remove from view dropdown
+  ]}
+/>
 ```
 
 ## Theme Configuration

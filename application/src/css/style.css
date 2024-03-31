@@ -193,6 +193,7 @@ body {
   width: 400px;
   max-width: 85%;
   color: #000;
+  border-radius: 5px;
 }
 
 .fill-screen-view .modal-popup {

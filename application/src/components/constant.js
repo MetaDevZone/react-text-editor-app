@@ -37,8 +37,6 @@ export const NAVBAR_ITEMS = [
   "insert",
   "format",
   "|",
-  "source_code",
-  "full_screen",
   "select_all",
   "|",
   "image",
@@ -69,3 +67,6 @@ export const INSER_OPTIONS = [
   "hr_line",
   "special_char",
 ];
+
+export const FILE_OPTIONS = ["new_document", "preview", "print"];
+export const VIEW_OPTIONS = ["source_code", "full_screen"];

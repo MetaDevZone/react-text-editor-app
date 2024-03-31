@@ -16,11 +16,13 @@ import SelectAlignment from "./SelectAlignment";
 import SelectLineHeight from "./SelectLineHeight";
 import { FORMAT_OPTIONS } from "./constant";
 
-export default function SelectFileOptions({ item, isFullScreen }) {
+export default function SelectFileOptions(props) {
+  let { item, isFullScreen, remove_from_navbar } = props;
   let options = item.options;
   if (!options) {
     options = FORMAT_OPTIONS;
   }
+
   const [showFormatOptions, setShowFormatOptions] = useState(false);
   const [showChildOptions, setShowChildOptions] = useState(0);
   const [dropdownTop, setDropdownTop] = useState(0);
@@ -50,6 +52,15 @@ export default function SelectFileOptions({ item, isFullScreen }) {
     document.execCommand(name);
     handleHideChildOptions();
   };
+  if (remove_from_navbar?.length > 0) {
+    let find_remove = remove_from_navbar.find(
+      (toolbar) => toolbar.name === "format"
+    );
+
+    if (find_remove?.options?.length > 0) {
+      options = options.filter((item) => !find_remove?.options.includes(item));
+    }
+  }
 
   return (
     <div

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { EmptyFileIcon, FileUploadIcon, PreviewIcon, PrintIcon } from ".";
+import { FILE_OPTIONS } from "./constant";
 
 export default function SelectFileOptions(props) {
   const {
@@ -9,8 +10,10 @@ export default function SelectFileOptions(props) {
     item,
     isPlaceholder,
     placeholder,
+    remove_from_navbar,
     value,
   } = props;
+  let options = item.options;
   const [isShow, setIsShow] = useState(false);
 
   const handleSelect = (e, type, option) => {
@@ -33,6 +36,20 @@ export default function SelectFileOptions(props) {
     }
   };
 
+  if (!options) {
+    options = FILE_OPTIONS;
+  }
+
+  if (remove_from_navbar?.length > 0) {
+    let find_remove = remove_from_navbar.find(
+      (toolbar) => toolbar.name === "file"
+    );
+
+    if (find_remove?.options?.length > 0) {
+      options = options.filter((item) => !find_remove?.options.includes(item));
+    }
+  }
+
   return (
     <div
       className="custom-select"
@@ -41,8 +58,8 @@ export default function SelectFileOptions(props) {
     >
       {item?.title ? item.title : "File"}
       <div className={`select-items ${isShow ? "show" : ""}`}>
-        {item.options?.length > 0 ? (
-          item.options.map((option, index) => {
+        {!(isPlaceholder && placeholder && !value) &&
+          options.map((option, index) => {
             let is_new_document =
               option === "new_document" || option.name === "new_document";
             let is_preview = option === "preview" || option.name === "preview";
@@ -61,7 +78,7 @@ export default function SelectFileOptions(props) {
                     <span>{option?.title ? option.title : "New Document"}</span>
                   </div>
                 )}
-                {is_preview && !(isPlaceholder && placeholder && !value) && (
+                {is_preview && (
                   <div
                     className="select-insert"
                     onClick={(e) => handleSelect(e, "preview", option)}
@@ -90,39 +107,7 @@ export default function SelectFileOptions(props) {
                 )} */}
               </div>
             );
-          })
-        ) : (
-          <>
-            {!(isPlaceholder && placeholder && !value) && (
-              <>
-                <div
-                  className="select-insert"
-                  onClick={(e) => handleSelect(e, "new_document")}
-                >
-                  <EmptyFileIcon /> <span>New Document</span>
-                </div>
-                <div
-                  className="select-insert"
-                  onClick={(e) => handleSelect(e, "preview")}
-                >
-                  <PreviewIcon /> <span>Preview</span>
-                </div>
-                <div
-                  className="select-insert"
-                  onClick={(e) => handleSelect(e, "print")}
-                >
-                  <PrintIcon /> <span>Print</span>
-                </div>
-              </>
-            )}
-            {/* <div
-              className="select-insert"
-              onClick={(e) => handleSelect(e,"screen")}
-            >
-              <FileUploadIcon /> <span>Upload File</span>
-            </div> */}
-          </>
-        )}
+          })}
       </div>
     </div>
   );

@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 
-function SelectFormat() {
+function SelectFormat({ remove_from_toolbar }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Paragraph");
   const selectRef = useRef(null);
 
-  const formats = [
+  let formats = [
     { label: "Paragraph", value: "p" },
     { label: "Heading 1", value: "h1" },
     { label: "Heading 2", value: "h2" },
@@ -16,6 +16,17 @@ function SelectFormat() {
     { label: "Blockquote", value: "blockquote" },
     { label: "Preformatted", value: "pre" },
   ];
+  if (remove_from_toolbar?.length > 0) {
+    let find_remove = remove_from_toolbar.find(
+      (toolbar) => toolbar.name === "format"
+    );
+
+    if (find_remove?.options?.length > 0) {
+      formats = formats.filter(
+        (item) => !find_remove?.options.includes(item.value)
+      );
+    }
+  }
 
   const toggleSelect = (e) => {
     e.preventDefault();

@@ -45,6 +45,40 @@ import PasteIcon from "./SVGImages/PasteIcon";
 import CutIcon from "./SVGImages/CutIcon";
 import CopyIcon from "./SVGImages/CopyIcon";
 
+const show_final_options = (options, remove, all_options) => {
+  if (!options) {
+    options = all_options;
+  }
+  if (remove) {
+    options = options.filter((item) => {
+      if (typeof item === "string") {
+        return !remove.includes(item);
+      } else {
+        return !remove.includes(item.name);
+      }
+    });
+    // remove | dublication
+    options = options.filter((item, index) => {
+      return item !== "|" || index === 0 || options[index - 1] !== "|";
+    });
+  }
+  return options;
+};
+
+const isValidURL = (str) => {
+  // Regular expression to check if the string is a valid URL
+  const pattern = new RegExp(
+    "^(https?:\\/\\/)?" + // protocol
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+      "(\\#[-a-z\\d_]*)?$",
+    "i"
+  ); // fragment locator
+  return pattern.test(str);
+};
+
 export default function ReactEditorComponent(props) {
   let {
     theme_config,
@@ -59,6 +93,8 @@ export default function ReactEditorComponent(props) {
     handleFullScreen,
     setIsFullScreen,
     isFullScreen,
+    remove_from_toolbar,
+    remove_from_navbar,
     style,
     ...others
   } = props;
@@ -69,7 +105,14 @@ export default function ReactEditorComponent(props) {
   const [sourceCode, setSourceCode] = useState("");
   const [isOpenModel, setIsOpenModel] = useState("");
   const [previewContent, setPreviewContent] = useState("");
-  const [selectedData, setSelectedData] = useState(null);
+  const [selectedData, setSelectedData] = useState({
+    link: "",
+    height: "",
+    width: "",
+    type: "general",
+    text: "",
+    open_new_tab: false,
+  });
   const [selectedEvent, setSelectedEvent] = useState({});
   const [isPlaceholder, setIsPlaceholder] = useState(true);
   const [cursorPosition, setCursorPosition] = useState(0);
@@ -99,7 +142,7 @@ export default function ReactEditorComponent(props) {
       e.preventDefault();
     }
     setIsOpenModel("");
-    setSelectedData(null);
+    setSelectedData({});
     setSelectedEvent({});
   };
 
@@ -261,6 +304,13 @@ export default function ReactEditorComponent(props) {
         const cleanedHTML = cleanHTML(html);
         const withoutComments = cleanedHTML.replace(/<!--[\s\S]*?-->/g, "");
         document.execCommand("insertHTML", false, withoutComments);
+      } else if (item.type === "text/plain") {
+        // Handle text/plain paste (likely a link)
+        const text = event.clipboardData.getData("text/plain");
+        if (isValidURL(text)) {
+          const linkElement = `<a href="${text}" target="_blank">${text}</a>`;
+          document.execCommand("insertHTML", false, linkElement);
+        }
       } else {
         console.warn("Unsupported clipboard item type:", item.type);
       }
@@ -423,7 +473,7 @@ export default function ReactEditorComponent(props) {
             selectedData={selectedData}
           />
         ),
-        title: `${selectedData ? "Update" : "Insert"} Link`,
+        title: `${selectedData?.link ? "Update" : "Insert"} Link`,
       };
     } else if (isOpenModel === "image") {
       return {
@@ -437,12 +487,12 @@ export default function ReactEditorComponent(props) {
             selectedData={selectedData}
           />
         ),
-        title: `${selectedData ? "Update" : "Insert"} Image`,
+        title: `${selectedData?.link ? "Update" : "Insert"} Image`,
       };
     } else if (isOpenModel === "video") {
       return {
         component: <MediaModal onMediaInsert={handleMediaInsert} />,
-        title: `${selectedData ? "Update" : "Insert"} Video`,
+        title: `${selectedData?.link ? "Update" : "Insert"} Video`,
       };
     } else if (isOpenModel === "special_char") {
       return {
@@ -468,19 +518,6 @@ export default function ReactEditorComponent(props) {
     }, 10);
   };
 
-  // useEffect(() => {
-  //   if (isFullScreen && editorRef.current) {
-  //     const range = document.createRange();
-  //     const selection = window.getSelection();
-  //     const editorNode = editorRef.current;
-  //     range.selectNodeContents(editorNode);
-  //     range.collapse(false); // Move cursor to the end
-  //     selection.removeAllRanges();
-  //     selection.addRange(range);
-  //     editorNode.focus();
-  //   }
-  // }, [isFullScreen]);
-
   if (theme_config && Object.keys(theme_config).length > 0) {
     Object.keys(theme_config).forEach(function (key, index) {
       document.documentElement.style.setProperty(
@@ -490,13 +527,8 @@ export default function ReactEditorComponent(props) {
     });
   }
 
-  if (!toolbar) {
-    toolbar = TOOLBAR_ITEMS;
-  }
-
-  if (!navbar) {
-    navbar = NAVBAR_ITEMS;
-  }
+  toolbar = show_final_options(toolbar, remove_from_toolbar, TOOLBAR_ITEMS);
+  navbar = show_final_options(navbar, remove_from_navbar, NAVBAR_ITEMS);
 
   useEffect(() => {
     if (editorRef.current && value) {
@@ -560,6 +592,32 @@ export default function ReactEditorComponent(props) {
               .catch((error) => {
                 console.error(
                   "Error getting HTML type from ClipboardItem:",
+                  error
+                );
+              });
+          } else if (item.types.includes("text/plain")) {
+            item
+              .getType("text/plain")
+              .then((textBlob) => {
+                textBlob
+                  .text()
+                  .then((text) => {
+                    if (isValidURL(text)) {
+                      // Insert the URL as a link
+                      const linkElement = `<a href="${text}" target="_blank">${text}</a>`;
+                      document.execCommand("insertHTML", false, linkElement);
+                    } else {
+                      // Insert plain text
+                      document.execCommand("insertText", false, text);
+                    }
+                  })
+                  .catch((error) => {
+                    console.error("Error reading text content:", error);
+                  });
+              })
+              .catch((error) => {
+                console.error(
+                  "Error getting text type from ClipboardItem:",
                   error
                 );
               });
@@ -659,6 +717,7 @@ export default function ReactEditorComponent(props) {
                       isPlaceholder={isPlaceholder}
                       placeholder={placeholder}
                       value={value}
+                      remove_from_navbar={remove_from_navbar}
                     />
                   )}
                   {is_view && (
@@ -670,6 +729,7 @@ export default function ReactEditorComponent(props) {
                       isPlaceholder={isPlaceholder}
                       placeholder={placeholder}
                       value={value}
+                      remove_from_navbar={remove_from_navbar}
                     />
                   )}
                   {is_insert && (
@@ -677,10 +737,15 @@ export default function ReactEditorComponent(props) {
                       onSelectOption={handleOpenModel}
                       handleInsertHR={handleInsertHRClick}
                       item={item}
+                      remove_from_navbar={remove_from_navbar}
                     />
                   )}
                   {is_format && (
-                    <SelectFormations item={item} isFullScreen={isFullScreen} />
+                    <SelectFormations
+                      item={item}
+                      isFullScreen={isFullScreen}
+                      remove_from_navbar={remove_from_navbar}
+                    />
                   )}
 
                   {is_select_all && (
@@ -824,7 +889,9 @@ export default function ReactEditorComponent(props) {
                       item={item}
                     />
                   )}
-                  {is_format && <SelectFormat editorRef={editorRef} />}
+                  {is_format && (
+                    <SelectFormat remove_from_toolbar={remove_from_toolbar} />
+                  )}
 
                   {is_bold && (
                     <ButtonFunction

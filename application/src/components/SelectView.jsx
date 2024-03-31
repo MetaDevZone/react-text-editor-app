@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { CodeIcon, FullscreenExit, FullscreenIcon } from ".";
+import { VIEW_OPTIONS } from "./constant";
 
 export default function SelectFileOptions(props) {
   const {
@@ -10,7 +11,10 @@ export default function SelectFileOptions(props) {
     isPlaceholder,
     placeholder,
     value,
+    remove_from_navbar,
   } = props;
+  let options = item.options;
+
   const [isShow, setIsShow] = useState(false);
 
   const handleSelect = (e, type, option) => {
@@ -27,6 +31,20 @@ export default function SelectFileOptions(props) {
     }
   };
 
+  if (!options) {
+    options = VIEW_OPTIONS;
+  }
+
+  if (remove_from_navbar?.length > 0) {
+    let find_remove = remove_from_navbar.find(
+      (toolbar) => toolbar.name === "view"
+    );
+
+    if (find_remove?.options?.length > 0) {
+      options = options.filter((item) => !find_remove?.options.includes(item));
+    }
+  }
+
   return (
     <div
       className="custom-select"
@@ -35,80 +53,50 @@ export default function SelectFileOptions(props) {
     >
       {item?.title ? item.title : "View"}
       <div className={`select-items ${isShow ? "show" : ""}`}>
-        {item.options?.length > 0 ? (
-          item.options.map((option, index) => {
-            let is_source_code =
-              option === "source_code" || option.name === "source_code";
-            let is_full_screen =
-              option === "full_screen" || option.name === "full_screen";
+        {options.map((option, index) => {
+          let is_source_code =
+            option === "source_code" || option.name === "source_code";
+          let is_full_screen =
+            option === "full_screen" || option.name === "full_screen";
 
-            return (
-              <div key={`key${index}`}>
-                {is_source_code &&
-                  !(isPlaceholder && placeholder && !value) && (
-                    <div
-                      className="select-insert"
-                      onClick={(e) => handleSelect(e, "code", option)}
-                    >
-                      {option?.icon ? option.icon : <CodeIcon />}
+          return (
+            <div key={`key${index}`}>
+              {is_source_code && !(isPlaceholder && placeholder && !value) && (
+                <div
+                  className="select-insert"
+                  onClick={(e) => handleSelect(e, "code", option)}
+                >
+                  {option?.icon ? option.icon : <CodeIcon />}
+                  <span>{option?.title ? option.title : "Source Code"}</span>
+                </div>
+              )}
+              {is_full_screen && (
+                <div
+                  className="select-insert"
+                  onClick={(e) => handleSelect(e, "screen", option)}
+                >
+                  {option?.icon ? (
+                    option.icon
+                  ) : isFullScreen ? (
+                    <>
+                      <FullscreenExit />{" "}
                       <span>
-                        {option?.title ? option.title : "Source Code"}
+                        {option?.title ? option.title : "Exit Full Screen"}
                       </span>
-                    </div>
+                    </>
+                  ) : (
+                    <>
+                      <FullscreenIcon />{" "}
+                      <span>
+                        {option?.title ? option.title : "Full Screen"}
+                      </span>
+                    </>
                   )}
-                {is_full_screen && (
-                  <div
-                    className="select-insert"
-                    onClick={(e) => handleSelect(e, "screen", option)}
-                  >
-                    {option?.icon ? (
-                      option.icon
-                    ) : isFullScreen ? (
-                      <>
-                        <FullscreenExit />{" "}
-                        <span>
-                          {option?.title ? option.title : "Exit Full Screen"}
-                        </span>
-                      </>
-                    ) : (
-                      <>
-                        <FullscreenIcon />{" "}
-                        <span>
-                          {option?.title ? option.title : "Exit Full"}
-                        </span>
-                      </>
-                    )}
-                  </div>
-                )}
-              </div>
-            );
-          })
-        ) : (
-          <>
-            {!(isPlaceholder && placeholder && !value) && (
-              <div
-                className="select-insert"
-                onClick={(e) => handleSelect(e, "code")}
-              >
-                <CodeIcon /> <span>Source Code</span>
-              </div>
-            )}
-            <div
-              className="select-insert"
-              onClick={(e) => handleSelect(e, "screen")}
-            >
-              {isFullScreen ? (
-                <>
-                  <FullscreenExit /> <span>Exit Full Screen </span>
-                </>
-              ) : (
-                <>
-                  <FullscreenIcon /> <span>Full Screen </span>
-                </>
+                </div>
               )}
             </div>
-          </>
-        )}
+          );
+        })}
       </div>
     </div>
   );

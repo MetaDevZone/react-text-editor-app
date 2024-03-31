@@ -87,8 +87,6 @@ function App() {
       ],
     },
     "|",
-    "source_code",
-    "full_screen",
     "select_all",
     "|",
     { name: "image", handleSubmit: handleSubmit },
@@ -219,7 +217,16 @@ function App() {
           value={value}
           setValue={setValue}
           getEditorRef={get_editor_ref}
+          // navbar={navbar}
           onChange={handleChange}
+          // remove_from_toolbar={["bold", { name: "format", options: ["h1"] }]}
+          // remove_from_navbar={[
+          //   "image",
+          //   "select_all",
+          //   { name: "view", options: ["source_code"] },
+          //   { name: "insert", options: ["image"] },
+          //   { name: "format", options: ["bold"] },
+          // ]}
           mainProps={{ className: "red" }}
           placeholder="Write your text here"
           // image_handler={image_handler}

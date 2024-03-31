@@ -9,7 +9,7 @@ import {
 import { INSER_OPTIONS } from "./constant";
 
 export default function SelectFileOptions(props) {
-  const { onSelectOption, handleInsertHR, item } = props;
+  const { onSelectOption, handleInsertHR, item, remove_from_navbar } = props;
   let options = item.options;
   if (!options) {
     options = INSER_OPTIONS;
@@ -25,6 +25,15 @@ export default function SelectFileOptions(props) {
       onSelectOption(e, type);
     }
   };
+  if (remove_from_navbar?.length > 0) {
+    let find_remove = remove_from_navbar.find(
+      (toolbar) => toolbar.name === "insert"
+    );
+
+    if (find_remove?.options?.length > 0) {
+      options = options.filter((item) => !find_remove?.options.includes(item));
+    }
+  }
 
   return (
     <div

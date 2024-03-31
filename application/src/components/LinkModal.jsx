@@ -32,7 +32,7 @@ export default function LinkModal(props) {
   };
 
   useEffect(() => {
-    if (selectedData) {
+    if (selectedData?.link) {
       setInputs(selectedData);
     }
   }, []);
