@@ -92,10 +92,10 @@ export default function ImageModal(props) {
   };
 
   useEffect(() => {
-    if (selectedData?.link && selectedData?.link !== "") {
+    if (selectedData?.link) {
       setInputs({ ...inputs, ...selectedData });
     }
-  }, []);
+  }, [selectedData]);
 
   return (
     <div className="link-modal">

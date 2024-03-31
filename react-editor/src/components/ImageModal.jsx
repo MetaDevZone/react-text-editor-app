@@ -95,7 +95,7 @@ export default function ImageModal(props) {
     if (selectedData?.link) {
       setInputs({ ...inputs, ...selectedData });
     }
-  }, []);
+  }, [selectedData]);
 
   return (
     <div className="link-modal">

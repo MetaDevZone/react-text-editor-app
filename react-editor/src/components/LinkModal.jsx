@@ -35,7 +35,7 @@ export default function LinkModal(props) {
     if (selectedData?.link) {
       setInputs(selectedData);
     }
-  }, []);
+  }, [selectedData]);
 
   return (
     <div className="link-modal">

@@ -105,7 +105,14 @@ export default function ReactEditorComponent(props) {
   const [sourceCode, setSourceCode] = useState("");
   const [isOpenModel, setIsOpenModel] = useState("");
   const [previewContent, setPreviewContent] = useState("");
-  const [selectedData, setSelectedData] = useState({});
+  const [selectedData, setSelectedData] = useState({
+    link: "",
+    height: "",
+    width: "",
+    type: "general",
+    text: "",
+    open_new_tab: false,
+  });
   const [selectedEvent, setSelectedEvent] = useState({});
   const [isPlaceholder, setIsPlaceholder] = useState(true);
   const [cursorPosition, setCursorPosition] = useState(0);
@@ -161,8 +168,17 @@ export default function ReactEditorComponent(props) {
   };
 
   const handleInsertHRClick = () => {
-    focusCursorAtPosition(cursorPosition);
-    document.execCommand("insertHorizontalRule");
+    if (!editorRef.current) {
+      setIsPlaceholder(false);
+      setTimeout(() => {
+        editorRef.current.focus();
+      }, 0);
+    } else {
+      focusCursorAtPosition(cursorPosition);
+    }
+    setTimeout(() => {
+      document.execCommand("insertHorizontalRule");
+    }, 10);
   };
 
   const handleLinkInsert = (props) => {
@@ -466,7 +482,7 @@ export default function ReactEditorComponent(props) {
             selectedData={selectedData}
           />
         ),
-        title: `${selectedData ? "Update" : "Insert"} Link`,
+        title: `${selectedData?.link ? "Update" : "Insert"} Link`,
       };
     } else if (isOpenModel === "image") {
       return {
@@ -480,12 +496,12 @@ export default function ReactEditorComponent(props) {
             selectedData={selectedData}
           />
         ),
-        title: `${selectedData ? "Update" : "Insert"} Image`,
+        title: `${selectedData?.link ? "Update" : "Insert"} Image`,
       };
     } else if (isOpenModel === "video") {
       return {
         component: <MediaModal onMediaInsert={handleMediaInsert} />,
-        title: `${selectedData ? "Update" : "Insert"} Video`,
+        title: `${selectedData?.link ? "Update" : "Insert"} Video`,
       };
     } else if (isOpenModel === "special_char") {
       return {
