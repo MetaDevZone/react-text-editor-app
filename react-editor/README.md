@@ -16,6 +16,7 @@ yarn add react-text-editor-kit
 
 ## Support
 
+- [Stack Overflow](https://stackoverflowteams.com/c/meta-dev-zone)
 - [Bug Reports](https://github.com/MetaDevZone/react-text-editor-app/issues)
 
 ## Simple Usage
