@@ -540,9 +540,11 @@ export default function ReactEditorComponent(props) {
   navbar = show_final_options(navbar, remove_from_navbar, NAVBAR_ITEMS);
 
   useEffect(() => {
-    if (editorRef.current && value) {
-      editorRef.current.innerHTML = value;
-    }
+    setTimeout(() => {
+      if (editorRef.current && value) {
+        editorRef.current.innerHTML = value;
+      }
+    }, 10);
   }, [isFullScreen]);
 
   useEffect(() => {
