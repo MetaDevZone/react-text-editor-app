@@ -299,24 +299,28 @@ body {
 }
 
 .react-editor-main .select-items-format h1 {
-  font-size: 32px;
-  font-weight: bold;
+  font-size: 32px !important;
+  font-weight: 600;
+  line-height: 32px;
 }
 .react-editor-main .select-items-format h2 {
-  font-size: 28px;
-  font-weight: bold;
+  font-size: 28px !important;
+  font-weight: 600;
+  line-height: 28px;
 }
 .react-editor-main .select-items-format h3 {
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 24px !important;
+  font-weight: 600;
+  line-height: 24px;
 }
 .react-editor-main .select-items-format h4 {
-  font-size: 20px;
+  font-size: 20px !important;
+  line-height: 20px;
 }
 .react-editor-main .select-items-format h5 {
-  font-size: 16px;
+  font-size: 16px !important;
 }
-.react-editor-main .select-items-format h5 {
+.react-editor-main .select-items-format h6 {
   font-size: 14px;
 }
 
