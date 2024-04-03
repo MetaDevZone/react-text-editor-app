@@ -212,7 +212,7 @@ if you want to remove some of the options you can use remove_from_toolbar and re
 
 ## Theme Configuration
 
-if you want to change it theme you can use give css variables
+if you want to change it's theme you can use given css variables
 
 ```tsx
 let theme_config = {
