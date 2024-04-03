@@ -14,11 +14,6 @@ Or Using Yarn
 yarn add react-text-editor-kit
 ```
 
-## Support
-
-- [Stack Overflow](https://stackoverflowteams.com/c/meta-dev-zone)
-- [Bug Reports](https://github.com/MetaDevZone/react-text-editor-app/issues)
-
 ## Simple Usage
 
 ```tsx
@@ -233,6 +228,11 @@ let theme_config = {
 };
 <ReactEditor value={value} onChange={setValue} theme_config={theme_config} />;
 ```
+
+## Support
+
+- [Stack Overflow](https://stackoverflowteams.com/c/meta-dev-zone)
+- [Bug Reports](https://github.com/MetaDevZone/react-text-editor-app/issues)
 
 ## Author
 
