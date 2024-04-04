@@ -14,6 +14,10 @@ Or Using Yarn
 yarn add react-text-editor-kit
 ```
 
+## Live Demo
+
+To test React Text Editor Kit on CodeSandbox, click [here](https://codesandbox.io/p/devbox/q9gvwt?file=%2Fsrc%2FApp.jsx%3A8%2C11).
+
 ## Simple Usage
 
 ```tsx
