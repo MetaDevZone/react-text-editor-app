@@ -264,6 +264,26 @@ function App() {
       industry's standard dummy text ever since the 1500s Lorem Ipsum is simply
       dummy text of the printing and typesetting industry. Lorem Ipsum has been
       the industry's standard dummy text ever since the 1500s Lorem Ipsum is
+      <form onSubmit={onSubmit}>
+        <ReactEditor
+          value={value}
+          setValue={setValue}
+          getEditorRef={get_editor_ref}
+          // navbar={navbar}
+          onChange={handleChange}
+          // remove_from_toolbar={["bold", { name: "format", options: ["h1"] }]}
+          // remove_from_navbar={[
+          //   "image",
+          //   "select_all",
+          //   { name: "view", options: ["source_code"] },
+          //   { name: "insert", options: ["image"] },
+          //   { name: "format", options: ["bold"] },
+          // ]}
+          mainProps={{ className: "red" }}
+          placeholder="Write your text here"
+          // image_handler={image_handler}
+        />
+      </form>
       simply dummy text of the printing and typesetting industry. Lorem Ipsum
       has been the industry's standard dummy text ever since the 1500s Lorem
       Ipsum is simply dummy text of the printing and typesetting industry. Lorem

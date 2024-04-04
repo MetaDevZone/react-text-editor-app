@@ -14,7 +14,7 @@ import SelectFamily from "./SelectFamily";
 import SelectFontSize from "./SelectFontSize";
 import SelectAlignment from "./SelectAlignment";
 import SelectLineHeight from "./SelectLineHeight";
-import { FORMAT_OPTIONS } from "./constant";
+import { FORMAT_OPTIONS, generateRandomID } from "./constant";
 
 export default function SelectFileOptions(props) {
   let { item, isFullScreen, remove_from_navbar } = props;
@@ -26,10 +26,11 @@ export default function SelectFileOptions(props) {
   const [showFormatOptions, setShowFormatOptions] = useState(false);
   const [showChildOptions, setShowChildOptions] = useState(0);
   const [dropdownTop, setDropdownTop] = useState(0);
+  const random_id = generateRandomID(16);
 
   const handleShowFamily = (option, event) => {
     if (event) {
-      let parent = document.getElementById("custom-select");
+      let parent = document.getElementById(random_id);
       let parent_top = parent.getBoundingClientRect().top;
       const top = event.currentTarget.getBoundingClientRect().top;
       setDropdownTop(isFullScreen ? top : top - parent_top);
@@ -67,7 +68,7 @@ export default function SelectFileOptions(props) {
       className="custom-select"
       onMouseOver={() => setShowFormatOptions(true)}
       onMouseLeave={handleHideChildOptions}
-      id="custom-select"
+      id={random_id}
     >
       {item?.title ? item.title : "Format"}
       <div className={`select-items ${showFormatOptions ? "show" : ""}`}>

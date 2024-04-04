@@ -151,6 +151,9 @@ export default function ReactEditorComponent(props) {
     if (editorRef.current) {
       editorRef.current.innerHTML = sourceCode;
       setViewSource(false);
+      if (onChange) {
+        onChange(sourceCode);
+      }
     }
   };
 
@@ -308,17 +311,17 @@ export default function ReactEditorComponent(props) {
         };
         reader.readAsDataURL(blob);
       } else if (item.type === "text/html") {
-        // Handle HTML paste
         const html = event.clipboardData.getData("text/html");
         const cleanedHTML = cleanHTML(html);
         const withoutComments = cleanedHTML.replace(/<!--[\s\S]*?-->/g, "");
         document.execCommand("insertHTML", false, withoutComments);
       } else if (item.type === "text/plain") {
-        // Handle text/plain paste (likely a link)
         const text = event.clipboardData.getData("text/plain");
         if (isValidURL(text)) {
           const linkElement = `<a href="${text}" target="_blank">${text}</a>`;
           document.execCommand("insertHTML", false, linkElement);
+        } else {
+          document.execCommand("insertText", false, text);
         }
       } else {
         console.warn("Unsupported clipboard item type:", item.type);

@@ -70,3 +70,14 @@ export const INSER_OPTIONS = [
 
 export const FILE_OPTIONS = ["new_document", "preview", "print"];
 export const VIEW_OPTIONS = ["source_code", "full_screen"];
+
+export function generateRandomID(length) {
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let id = "";
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    id += characters.charAt(randomIndex);
+  }
+  return id;
+}
