@@ -7,9 +7,19 @@
     "react-editor",
     "react-text-editor",
     "react-js-editor",
+    "editor",
     "rich-editor",
+    "rich-text-editor",
+    "simple-text-editor-react",
     "WYSIWYG",
-    "text-editor"
+    "react-wysiwyg-editor",
+    "wysiwyg-editor",
+    "textarea",
+    "contenteditable",
+    "textarea-editor",
+    "text-editor",
+    "reacthighlighttext",
+    "highlight-text-react"
   ],
   "scripts": {
     "build": "webpack"
