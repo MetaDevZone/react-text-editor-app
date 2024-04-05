@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 export default function ButtonFunction(props) {
-  const { name, icon, title, item, disabled } = props;
+  const { name, icon, title, item, disabled, editorRef } = props;
   const [isSelected, setIsSelected] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -15,9 +15,8 @@ export default function ButtonFunction(props) {
   };
 
   useEffect(() => {
-    const editor = document.getElementById("react-editor");
     const handleSelectionChange = () => {
-      if (!editor?.contains(window.getSelection().anchorNode)) {
+      if (!editorRef?.current?.contains(window.getSelection().anchorNode)) {
         return;
       }
       const is_selected = document.queryCommandState(name);
@@ -32,7 +31,7 @@ export default function ButtonFunction(props) {
       document.removeEventListener("selectionchange", handleSelectionChange);
       document.removeEventListener("input", handleSelectionChange);
     };
-  }, []);
+  }, [editorRef]);
 
   const handle_classes = () => {
     let className = "";

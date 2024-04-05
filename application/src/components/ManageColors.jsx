@@ -11,7 +11,7 @@ function rgbToHex(rgb) {
 }
 
 export default function ManageColors(props) {
-  const { type, item, title } = props;
+  const { type, item, title, editorRef } = props;
 
   const [value, setValue] = useState("#000");
   const [openColor, setOpenColor] = useState(false);
@@ -45,9 +45,8 @@ export default function ManageColors(props) {
   };
 
   useEffect(() => {
-    const editor = document.getElementById("react-editor");
     const handleSelectionChange = () => {
-      if (!editor?.contains(window.getSelection().anchorNode)) {
+      if (!editorRef?.current?.contains(window.getSelection().anchorNode)) {
         return;
       }
       let appliedColor = "transparent";
@@ -78,7 +77,7 @@ export default function ManageColors(props) {
       document.removeEventListener("selectionchange", handleSelectionChange);
       document.addEventListener("mousedown", handleOutsideClick);
     };
-  }, []);
+  }, [editorRef]);
 
   // document.documentElement.style.setProperty(variable, newColor);
 

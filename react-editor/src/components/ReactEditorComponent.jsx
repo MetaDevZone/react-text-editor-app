@@ -79,6 +79,25 @@ const isValidURL = (str) => {
   return pattern.test(str);
 };
 
+const generatePrintContent = (editorContent) => {
+  // For demonstration purposes, let's say we just want to wrap the editor content in a simple HTML structure for printing
+  return `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <title>Print Content</title>
+      <style>
+        /* Add any additional styles for printing */
+      </style>
+    </head>
+    <body>
+      ${editorContent}
+    </body>
+    </html>
+  `;
+};
+
 export default function ReactEditorComponent(props) {
   let {
     theme_config,
@@ -278,7 +297,17 @@ export default function ReactEditorComponent(props) {
   };
 
   const handlePrint = () => {
-    window.print();
+    let data = editorRef.current.innerHTML;
+    const iframe = document.createElement("iframe");
+    iframe.style.display = "none";
+    document.body.appendChild(iframe);
+    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+    iframeDoc.write(data);
+    iframeDoc.close();
+    iframe.contentWindow.print();
+    setTimeout(() => {
+      document.body.removeChild(iframe);
+    }, 100);
   };
 
   const handleCharSelect = (e, char) => {
@@ -806,6 +835,7 @@ export default function ReactEditorComponent(props) {
                   {is_copy && (
                     <div className="increase-icon-size">
                       <ButtonFunction
+                        editorRef={editorRef}
                         name="copy"
                         icon={<CopyIcon />}
                         title="Copy"
@@ -817,6 +847,7 @@ export default function ReactEditorComponent(props) {
                   {is_cut && (
                     <div className="increase-icon-size">
                       <ButtonFunction
+                        editorRef={editorRef}
                         name="cut"
                         icon={<CutIcon />}
                         title="Cut"
@@ -889,6 +920,7 @@ export default function ReactEditorComponent(props) {
                   {is_line && <div className="vertical-line"></div>}
                   {is_undo && (
                     <ButtonFunction
+                      editorRef={editorRef}
                       name="undo"
                       icon={<UndoIcon />}
                       title={item.title ? item.title : "Undo"}
@@ -897,6 +929,7 @@ export default function ReactEditorComponent(props) {
                   )}
                   {is_redo && (
                     <ButtonFunction
+                      editorRef={editorRef}
                       name="redo"
                       icon={<RedoIcon />}
                       title="Redo"
@@ -904,11 +937,15 @@ export default function ReactEditorComponent(props) {
                     />
                   )}
                   {is_format && (
-                    <SelectFormat remove_from_toolbar={remove_from_toolbar} />
+                    <SelectFormat
+                      remove_from_toolbar={remove_from_toolbar}
+                      editorRef={editorRef}
+                    />
                   )}
 
                   {is_bold && (
                     <ButtonFunction
+                      editorRef={editorRef}
                       name="bold"
                       icon={<BoldIcon />}
                       title="Bold"
@@ -917,6 +954,7 @@ export default function ReactEditorComponent(props) {
                   )}
                   {is_italic && (
                     <ButtonFunction
+                      editorRef={editorRef}
                       name="italic"
                       icon={<ItalicIcon />}
                       title="Italic"
@@ -925,6 +963,7 @@ export default function ReactEditorComponent(props) {
                   )}
                   {is_underline && (
                     <ButtonFunction
+                      editorRef={editorRef}
                       name="underline"
                       icon={<UnderlineIcon />}
                       title="Underline"
@@ -933,6 +972,7 @@ export default function ReactEditorComponent(props) {
                   )}
                   {is_superscript && (
                     <ButtonFunction
+                      editorRef={editorRef}
                       name="superscript"
                       icon={<SuperscriptIcon />}
                       title="Superscript"
@@ -941,6 +981,7 @@ export default function ReactEditorComponent(props) {
                   )}
                   {is_subscript && (
                     <ButtonFunction
+                      editorRef={editorRef}
                       name="subscript"
                       icon={<SubscriptIcon />}
                       title="Subscript"
@@ -949,6 +990,7 @@ export default function ReactEditorComponent(props) {
                   )}
                   {is_alignLeft && (
                     <ButtonFunction
+                      editorRef={editorRef}
                       name="justifyLeft"
                       icon={<AlignLeft />}
                       title="Align Left"
@@ -957,6 +999,7 @@ export default function ReactEditorComponent(props) {
                   )}
                   {is_alignCenter && (
                     <ButtonFunction
+                      editorRef={editorRef}
                       name="justifyCenter"
                       icon={<AlignCenter />}
                       title="Align Center"
@@ -965,6 +1008,7 @@ export default function ReactEditorComponent(props) {
                   )}
                   {is_alignRight && (
                     <ButtonFunction
+                      editorRef={editorRef}
                       name="justifyRight"
                       icon={<AlignRight />}
                       title="Align Right"
@@ -973,6 +1017,7 @@ export default function ReactEditorComponent(props) {
                   )}
                   {is_alignJustify && (
                     <ButtonFunction
+                      editorRef={editorRef}
                       name="justifyFull"
                       icon={<AlignJustify />}
                       title="Align Justify"
@@ -981,6 +1026,7 @@ export default function ReactEditorComponent(props) {
                   )}
                   {is_indent && (
                     <ButtonFunction
+                      editorRef={editorRef}
                       name="indent"
                       icon={<IncreaseIndentIcon />}
                       title="Increase IndentIcon"
@@ -989,6 +1035,7 @@ export default function ReactEditorComponent(props) {
                   )}
                   {is_outdent && (
                     <ButtonFunction
+                      editorRef={editorRef}
                       name="outdent"
                       icon={<DecreaseIndentIcon />}
                       title="Decrease IndentIcon"
@@ -997,6 +1044,7 @@ export default function ReactEditorComponent(props) {
                   )}
                   {is_orderedList && (
                     <ButtonFunction
+                      editorRef={editorRef}
                       name="insertOrderedList"
                       icon={<OrderdList />}
                       title="Insert/Remove Numbered List"
@@ -1005,6 +1053,7 @@ export default function ReactEditorComponent(props) {
                   )}
                   {is_unorderedList && (
                     <ButtonFunction
+                      editorRef={editorRef}
                       name="insertUnorderedList"
                       icon={<UnorderdList />}
                       title="Insert/Remove Bulleted List"
@@ -1013,6 +1062,7 @@ export default function ReactEditorComponent(props) {
                   )}
                   {is_removeFormat && (
                     <ButtonFunction
+                      editorRef={editorRef}
                       name="removeFormat"
                       icon={<ClearFormatting />}
                       title="Remove Format"
@@ -1024,6 +1074,7 @@ export default function ReactEditorComponent(props) {
                       type="foreColor"
                       title="Text Color"
                       item={item}
+                      editorRef={editorRef}
                     />
                   )}
                   {is_backgroundColor && (
@@ -1031,6 +1082,7 @@ export default function ReactEditorComponent(props) {
                       type="hiliteColor"
                       title="Background Color"
                       item={item}
+                      editorRef={editorRef}
                     />
                   )}
                   {is_ltr && (

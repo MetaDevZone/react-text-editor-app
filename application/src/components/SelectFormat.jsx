@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-function SelectFormat({ remove_from_toolbar }) {
+function SelectFormat({ remove_from_toolbar, editorRef }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Paragraph");
   const selectRef = useRef(null);
@@ -65,8 +65,7 @@ function SelectFormat({ remove_from_toolbar }) {
     };
 
     const handleSelectionChange = () => {
-      const editor = document.getElementById("editable");
-      if (editor && editor.contains(window.getSelection().anchorNode)) {
+      if (editorRef?.current?.contains(window.getSelection().anchorNode)) {
         const formatBlock = getClosestBlockElement();
         if (formatBlock) {
           let find = formats.find((format) => format.value === formatBlock);
@@ -83,7 +82,7 @@ function SelectFormat({ remove_from_toolbar }) {
       document.removeEventListener("click", handleClickOutside);
       document.removeEventListener("selectionchange", handleSelectionChange);
     };
-  }, []);
+  }, [editorRef]);
 
   return (
     <button
