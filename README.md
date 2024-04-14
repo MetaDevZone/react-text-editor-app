@@ -235,7 +235,8 @@ let theme_config = {
 
 ## Support
 
-- [Stack Overflow](https://stackoverflowteams.com/c/meta-dev-zone)
+<!-- - [Stack Overflow](https://stackoverflowteams.com/c/meta-dev-zone) -->
+
 - [Bug Reports](https://github.com/MetaDevZone/react-text-editor-app/issues)
 
 ## Author

@@ -79,25 +79,6 @@ const isValidURL = (str) => {
   return pattern.test(str);
 };
 
-const generatePrintContent = (editorContent) => {
-  // For demonstration purposes, let's say we just want to wrap the editor content in a simple HTML structure for printing
-  return `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <title>Print Content</title>
-      <style>
-        /* Add any additional styles for printing */
-      </style>
-    </head>
-    <body>
-      ${editorContent}
-    </body>
-    </html>
-  `;
-};
-
 export default function ReactEditorComponent(props) {
   let {
     theme_config,
@@ -487,7 +468,7 @@ export default function ReactEditorComponent(props) {
 
   const handleKeyDown = (event) => {
     if (event.key === "Escape") {
-      toggleFullScreen();
+      setIsFullScreen(false);
     }
   };
 

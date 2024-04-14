@@ -5,6 +5,8 @@ import ReactEditor from "./ReactEditor";
 
 function App() {
   const [value, setValue] = useState("");
+  const [value1, setValue1] = useState("");
+  const [value2, setValue2] = useState("");
   let theme_config = { "background-color": "#fff" };
 
   const handleClick = (item) => {};
@@ -101,6 +103,12 @@ function App() {
   };
   const handleChange = (value) => {
     setValue(value);
+  };
+  const handleChange1 = (value) => {
+    setValue1(value);
+  };
+  const handleChange2 = (value) => {
+    setValue2(value);
   };
 
   const image_handler = async (e) => {
@@ -215,7 +223,6 @@ function App() {
       <form onSubmit={onSubmit}>
         <ReactEditor
           value={value}
-          setValue={setValue}
           getEditorRef={get_editor_ref}
           // navbar={navbar}
           onChange={handleChange}
@@ -266,11 +273,29 @@ function App() {
       the industry's standard dummy text ever since the 1500s Lorem Ipsum is
       <form onSubmit={onSubmit}>
         <ReactEditor
-          value={value}
-          setValue={setValue}
+          value={value1}
           getEditorRef={get_editor_ref}
           // navbar={navbar}
-          onChange={handleChange}
+          onChange={handleChange1}
+          // remove_from_toolbar={["bold", { name: "format", options: ["h1"] }]}
+          // remove_from_navbar={[
+          //   "image",
+          //   "select_all",
+          //   { name: "view", options: ["source_code"] },
+          //   { name: "insert", options: ["image"] },
+          //   { name: "format", options: ["bold"] },
+          // ]}
+          mainProps={{ className: "red" }}
+          placeholder="Write your text here"
+          // image_handler={image_handler}
+        />
+      </form>
+      <form onSubmit={onSubmit}>
+        <ReactEditor
+          value={value2}
+          getEditorRef={get_editor_ref}
+          // navbar={navbar}
+          onChange={handleChange2}
           // remove_from_toolbar={["bold", { name: "format", options: ["h1"] }]}
           // remove_from_navbar={[
           //   "image",
