@@ -309,23 +309,12 @@ export default function ReactEditorComponent(props) {
     event.preventDefault(); // Prevent default paste behavior
     const items = (event.clipboardData || event.originalEvent.clipboardData)
       .items;
+    const hasPlainText = Array.from(items).some(
+      (item) => item.type === "text/plain"
+    );
     for (let i = 0; i < items.length; i++) {
       const item = items[i];
-      if (item.type.indexOf("image") !== -1) {
-        // Handle image paste
-        const blob = item.getAsFile();
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          const imgElement = `<img src="${event.target.result}" alt="Image">`;
-          document.execCommand("insertHTML", false, imgElement);
-        };
-        reader.readAsDataURL(blob);
-      } else if (item.type === "text/html") {
-        const html = event.clipboardData.getData("text/html");
-        const cleanedHTML = cleanHTML(html);
-        const withoutComments = cleanedHTML.replace(/<!--[\s\S]*?-->/g, "");
-        document.execCommand("insertHTML", false, withoutComments);
-      } else if (item.type === "text/plain") {
+      if (item.type === "text/plain" && !hasPlainText) {
         const text = event.clipboardData.getData("text/plain");
         if (isValidURL(text)) {
           const linkElement = `<a href="${text}" target="_blank">${text}</a>`;
@@ -333,6 +322,19 @@ export default function ReactEditorComponent(props) {
         } else {
           document.execCommand("insertText", false, text);
         }
+      } else if (item.type === "text/html") {
+        const html = event.clipboardData.getData("text/html");
+        const cleanedHTML = cleanHTML(html);
+        const withoutComments = cleanedHTML.replace(/<!--[\s\S]*?-->/g, "");
+        document.execCommand("insertHTML", false, withoutComments);
+      } else if (item.type.indexOf("image") !== -1) {
+        const blob = item.getAsFile();
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const imgElement = `<img src="${event.target.result}" alt="Image">`;
+          document.execCommand("insertHTML", false, imgElement);
+        };
+        reader.readAsDataURL(blob);
       } else {
         console.warn("Unsupported clipboard item type:", item.type);
       }
