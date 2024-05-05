@@ -5,7 +5,10 @@ import ReactEditor from "./ReactEditor";
 
 function App() {
   const [value, setValue] = useState("");
-  const [value1, setValue1] = useState("");
+  const [open, setOpen] = useState(false);
+  const [value1, setValue1] = useState(
+    `Add Template ##<p><img src="http://localhost:1200/uploads/general/1713802363960_bc16c689-bc8d-4c9e-b5f3-954a6911b8b8.jpeg" alt="Image" height="500" width="500"><br></p>`
+  );
   const [value2, setValue2] = useState("");
   let theme_config = { "background-color": "#fff" };
 
@@ -148,6 +151,7 @@ function App() {
 
   return (
     <div className="App">
+      <button onClick={() => setOpen(true)}>Click</button>
       Lorem Ipsum is simply dummy text of the printing and typesetting industry.
       Lorem Ipsum has been the industry's standard dummy text ever since the
       1500s Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -290,25 +294,27 @@ function App() {
           // image_handler={image_handler}
         />
       </form>
-      <form onSubmit={onSubmit}>
-        <ReactEditor
-          value={value2}
-          getEditorRef={get_editor_ref}
-          // navbar={navbar}
-          onChange={handleChange2}
-          // remove_from_toolbar={["bold", { name: "format", options: ["h1"] }]}
-          // remove_from_navbar={[
-          //   "image",
-          //   "select_all",
-          //   { name: "view", options: ["source_code"] },
-          //   { name: "insert", options: ["image"] },
-          //   { name: "format", options: ["bold"] },
-          // ]}
-          mainProps={{ className: "red" }}
-          placeholder="Write your text here"
-          // image_handler={image_handler}
-        />
-      </form>
+      {open && (
+        <form onSubmit={onSubmit}>
+          <ReactEditor
+            value={value2}
+            getEditorRef={get_editor_ref}
+            // navbar={navbar}
+            onChange={handleChange2}
+            // remove_from_toolbar={["bold", { name: "format", options: ["h1"] }]}
+            // remove_from_navbar={[
+            //   "image",
+            //   "select_all",
+            //   { name: "view", options: ["source_code"] },
+            //   { name: "insert", options: ["image"] },
+            //   { name: "format", options: ["bold"] },
+            // ]}
+            mainProps={{ className: "red" }}
+            placeholder="Write your text here"
+            // image_handler={image_handler}
+          />
+        </form>
+      )}
       simply dummy text of the printing and typesetting industry. Lorem Ipsum
       has been the industry's standard dummy text ever since the 1500s Lorem
       Ipsum is simply dummy text of the printing and typesetting industry. Lorem

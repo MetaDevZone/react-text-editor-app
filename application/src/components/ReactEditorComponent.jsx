@@ -556,17 +556,16 @@ export default function ReactEditorComponent(props) {
 
   useEffect(() => {
     setTimeout(() => {
+      console.log(value, "valuevaluevalue");
+      console.log(editorRef, "editorRefeditorRef");
       if (editorRef.current && value) {
         editorRef.current.innerHTML = value;
       }
-    }, 10);
-  }, [isFullScreen]);
-
-  useEffect(() => {
-    if (getEditorRef) {
-      getEditorRef(editorRef);
-    }
-  }, [editorRef]);
+      if (getEditorRef) {
+        getEditorRef(editorRef);
+      }
+    }, 200);
+  }, [isFullScreen, editorRef]);
 
   const handlePaste = (e) => {
     e.preventDefault();
