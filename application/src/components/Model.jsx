@@ -12,8 +12,6 @@ const Modal = (props) => {
     };
   }, []);
 
-  console.log(isFullScreen, "isFullScreenisFullScreen");
-
   return ReactDOM.createPortal(
     <div
       onClick={onClose}

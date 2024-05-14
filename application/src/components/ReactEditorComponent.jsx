@@ -102,6 +102,7 @@ export default function ReactEditorComponent(props) {
   const [viewSource, setViewSource] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [openPreview, setOpenPreview] = useState(false);
+  const [init, setInit] = useState(false);
   const [sourceCode, setSourceCode] = useState("");
   const [isOpenModel, setIsOpenModel] = useState("");
   const [previewContent, setPreviewContent] = useState("");
@@ -526,14 +527,6 @@ export default function ReactEditorComponent(props) {
     }
   };
 
-  const handleKeyPress = (event) => {
-    // if (event.key === "Enter") {
-    //   event.preventDefault();
-    //   // Insert the line break at the current cursor position instead
-    //   document.execCommand("insertHTML", false, "<br>");
-    // }
-  };
-
   const handleHidePlaceholder = (e) => {
     e.preventDefault();
     setIsPlaceholder(false);
@@ -555,17 +548,16 @@ export default function ReactEditorComponent(props) {
   navbar = show_final_options(navbar, remove_from_navbar, NAVBAR_ITEMS);
 
   useEffect(() => {
-    setTimeout(() => {
-      console.log(value, "valuevaluevalue");
-      console.log(editorRef, "editorRefeditorRef");
+    if (!init) {
       if (editorRef.current && value) {
         editorRef.current.innerHTML = value;
+        setInit(true);
       }
-      if (getEditorRef) {
-        getEditorRef(editorRef);
-      }
-    }, 200);
-  }, [isFullScreen, editorRef]);
+    }
+    if (getEditorRef) {
+      getEditorRef(editorRef);
+    }
+  }, [isFullScreen, editorRef, value]);
 
   const handlePaste = (e) => {
     e.preventDefault();
@@ -1110,7 +1102,6 @@ export default function ReactEditorComponent(props) {
             spellCheck="true"
             onInput={handleInput}
             onBlur={handleBlur}
-            onKeyDown={handleKeyPress}
             id="editable"
             style={{ ...style, ...dynamicStyle }}
           ></div>
