@@ -123,6 +123,7 @@ export default function ReactEditorComponent(props) {
   const [showHR3, setShowHR3] = useState(false);
 
   const handleInput = () => {
+    setInit(true);
     const content = editorRef.current.innerHTML;
     if (!content.startsWith("<p>") || !content.endsWith("</p>")) {
       document.execCommand("formatBlock", false, "<p>");
@@ -310,12 +311,9 @@ export default function ReactEditorComponent(props) {
     event.preventDefault(); // Prevent default paste behavior
     const items = (event.clipboardData || event.originalEvent.clipboardData)
       .items;
-    const hasPlainText = Array.from(items).some(
-      (item) => item.type === "text/plain"
-    );
     for (let i = 0; i < items.length; i++) {
       const item = items[i];
-      if (item.type === "text/plain" && !hasPlainText) {
+      if (item.type === "text/plain") {
         const text = event.clipboardData.getData("text/plain");
         if (isValidURL(text)) {
           const linkElement = `<a href="${text}" target="_blank">${text}</a>`;
@@ -341,7 +339,6 @@ export default function ReactEditorComponent(props) {
       }
     }
   };
-
   const focusCursorAtPosition = (position) => {
     const editorNode = editorRef.current;
     const selection = window.getSelection();
@@ -688,7 +685,7 @@ export default function ReactEditorComponent(props) {
         editor.removeEventListener("dblclick", handleDoubleClick);
       }
     };
-  }, [isPlaceholder]);
+  }, [isPlaceholder, isFullScreen, editorRef]);
 
   const dynamicStyle =
     isFullScreen && document.getElementById("action-components")
