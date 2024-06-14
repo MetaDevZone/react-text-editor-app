@@ -32,25 +32,25 @@ function App() {
   };
 
   const image_handler = async (e) => {
-    // let requestObj = {
-    //   method: "POST",
-    //   url: "your-api-end-point",
-    //   headers: {}, // attach required headers
-    // };
-    // let formData = new FormData();
-    // formData.append("image", e.image);
-    // formData.append("width", "600");
-    // requestObj["data"] = formData;
-    // try {
-    //   let results = await axios(requestObj);
-    //   if (results.data.code === 200) {
-    //     return results.data.image_path;
-    //   } else {
-    //     return "";
-    //   }
-    // } catch (error) {
-    //   return "";
-    // }
+    let requestObj = {
+      method: "POST",
+      url: "your-api-end-point",
+      headers: {}, // attach required headers
+    };
+    let formData = new FormData();
+    formData.append("image", e.image);
+    formData.append("width", "600");
+    requestObj["data"] = formData;
+    try {
+      let results = await axios(requestObj);
+      if (results.data.code === 200) {
+        return results.data.image_path;
+      } else {
+        return "";
+      }
+    } catch (error) {
+      return "";
+    }
   };
 
   const get_editor_ref = (value) => {};
