@@ -627,3 +627,9 @@ body {
 .editor-error-messsage {
   color: red;
 }
+
+.ml-main-content-box:empty:before {
+  content: attr(data-placeholder);
+  color: #aaa;
+  pointer-events: none;
+}

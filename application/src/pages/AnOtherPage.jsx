@@ -22,7 +22,7 @@ export default function AnOtherPage() {
         mainProps={{ className: "red" }}
         placeholder="Write your text here 1"
       />
-      <ReactEditor
+      {/* <ReactEditor
         value={value1}
         onChange={setValue1}
         mainProps={{ className: "red" }}
@@ -33,7 +33,7 @@ export default function AnOtherPage() {
         onChange={setValue2}
         mainProps={{ className: "red" }}
         placeholder="Write your text here 3"
-      />
+      /> */}
     </>
   );
 }

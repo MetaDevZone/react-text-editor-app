@@ -135,7 +135,6 @@ export default function ReactEditorComponent(props) {
 
   const handleOpenModel = (e, type, item) => {
     e.preventDefault();
-    setIsPlaceholder(false);
     setIsOpenModel(type);
     setSelectedItem(item);
   };
@@ -174,7 +173,6 @@ export default function ReactEditorComponent(props) {
 
   const handleInsertHRClick = () => {
     if (!editorRef.current) {
-      setIsPlaceholder(false);
       setTimeout(() => {
         editorRef.current.focus();
       }, 0);
@@ -472,14 +470,8 @@ export default function ReactEditorComponent(props) {
   };
 
   const handleBlur = (event) => {
-    const textContent =
-      editorRef.current?.textContent || editorRef.current?.innerText;
-    const htmlContent = editorRef.current?.innerHTML;
     const caretPos = getCaretCharacterOffsetWithin(event.target);
     setCursorPosition(caretPos);
-    if (placeholder && !textContent.trim() && !htmlContent.trim()) {
-      setIsPlaceholder(true);
-    }
   };
 
   const handleNewDocument = () => {
@@ -519,14 +511,34 @@ export default function ReactEditorComponent(props) {
     }
   };
 
+  const handlePlaceholder = () => {
+    const editor = editorRef.current;
+    if (!editor) {
+      // editorRef.current is null, so we return early
+      return;
+    }
+
+    if (editor.innerText.trim() === "") {
+      editor.classList.add("empty");
+      setIsPlaceholder(true);
+    } else {
+      editor.classList.remove("empty");
+      setIsPlaceholder(false);
+    }
+  };
+
   useEffect(() => {
     const handleFullScreenChange = () => {
       setIsFullScreen(document.fullscreenElement !== null);
     };
+
+    handlePlaceholder();
     document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("input", handlePlaceholder);
     document.addEventListener("fullscreenchange", handleFullScreenChange);
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
+      document.addEventListener("input", handlePlaceholder);
       document.removeEventListener("fullscreenchange", handleFullScreenChange);
     };
   }, []);
@@ -571,14 +583,6 @@ export default function ReactEditorComponent(props) {
     }
   };
 
-  const handleHidePlaceholder = (e) => {
-    e.preventDefault();
-    setIsPlaceholder(false);
-    setTimeout(() => {
-      editorRef.current.focus();
-    }, 10);
-  };
-
   if (theme_config && Object.keys(theme_config).length > 0) {
     Object.keys(theme_config).forEach(function (key, index) {
       document.documentElement.style.setProperty(
@@ -606,7 +610,6 @@ export default function ReactEditorComponent(props) {
   const handlePaste = (e) => {
     e.preventDefault();
     if (!editorRef.current) {
-      setIsPlaceholder(false);
       setTimeout(() => {
         editorRef.current.focus();
       }, 0);
@@ -1126,30 +1129,20 @@ export default function ReactEditorComponent(props) {
             })}
           </div>
         </div>
-        {isPlaceholder && placeholder && !value ? (
-          <div
-            {...others}
-            className="ml-main-content-box placeholder-text"
-            onClick={handleHidePlaceholder}
-            style={{ ...style, ...dynamicStyle }}
-          >
-            {placeholder}
-          </div>
-        ) : (
-          <div
-            {...others}
-            className={`ml-main-content-box print-only `}
-            autoFocus={isFullScreen}
-            contentEditable
-            ref={editorRef}
-            onPaste={onPaste}
-            spellCheck="true"
-            onInput={handleInput}
-            onBlur={handleBlur}
-            id="editable"
-            style={{ ...style, ...dynamicStyle }}
-          ></div>
-        )}
+        <div
+          {...others}
+          className={`ml-main-content-box print-only `}
+          autoFocus={isFullScreen}
+          contentEditable
+          ref={editorRef}
+          onPaste={onPaste}
+          spellCheck="true"
+          onInput={handleInput}
+          onBlur={handleBlur}
+          data-placeholder={placeholder}
+          id="editable"
+          style={{ ...style, ...dynamicStyle }}
+        ></div>
       </div>
       {isLoading && (
         <ViewLoadingModel
