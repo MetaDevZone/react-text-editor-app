@@ -125,9 +125,9 @@ export default function ReactEditorComponent(props) {
   const handleInput = () => {
     setInit(true);
     const content = editorRef.current.innerHTML;
-    if (!content.startsWith("<p>") || !content.endsWith("</p>")) {
-      document.execCommand("formatBlock", false, "<p>");
-    }
+    // if (!content.startsWith("<p>") || !content.endsWith("</p>")) {
+    //   document.execCommand("formatBlock", false, "<p>");
+    // }
     if (onChange) {
       onChange(content);
     }
@@ -308,37 +308,84 @@ export default function ReactEditorComponent(props) {
   };
 
   const onPaste = (event) => {
-    event.preventDefault(); // Prevent default paste behavior
-    const items = (event.clipboardData || event.originalEvent.clipboardData)
-      .items;
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i];
-      if (item.type === "text/plain") {
-        const text = event.clipboardData.getData("text/plain");
-        if (isValidURL(text)) {
-          const linkElement = `<a href="${text}" target="_blank">${text}</a>`;
-          document.execCommand("insertHTML", false, linkElement);
-        } else {
-          document.execCommand("insertText", false, text);
-        }
-      } else if (item.type === "text/html") {
-        const html = event.clipboardData.getData("text/html");
-        const cleanedHTML = cleanHTML(html);
-        const withoutComments = cleanedHTML.replace(/<!--[\s\S]*?-->/g, "");
-        document.execCommand("insertHTML", false, withoutComments);
-      } else if (item.type.indexOf("image") !== -1) {
-        const blob = item.getAsFile();
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          const imgElement = `<img src="${event.target.result}" alt="Image">`;
-          document.execCommand("insertHTML", false, imgElement);
-        };
-        reader.readAsDataURL(blob);
-      } else {
-        console.warn("Unsupported clipboard item type:", item.type);
-      }
-    }
+    event.preventDefault();
+    navigator.clipboard
+      .read()
+      .then((clipboardItems) => {
+        clipboardItems.forEach((item) => {
+          if (
+            item.types.includes("image/png") ||
+            item.types.includes("image/jpeg")
+          ) {
+            item
+              .getType(item.types[0])
+              .then((imageBlob) => {
+                const imgElement = `<img src="${URL.createObjectURL(
+                  imageBlob
+                )}" alt="Image">`;
+                document.execCommand("insertHTML", false, imgElement);
+              })
+              .catch((error) => {
+                console.error("Error reading image content:", error);
+              });
+          } else if (item.types.includes("text/html")) {
+            item
+              .getType("text/html")
+              .then((htmlBlob) => {
+                htmlBlob
+                  .text()
+                  .then((htmlContent) => {
+                    const cleanedHTML = cleanHTML(htmlContent);
+                    const withoutComments = cleanedHTML.replace(
+                      /<!--[\s\S]*?-->/g,
+                      ""
+                    );
+                    document.execCommand("insertHTML", false, withoutComments);
+                  })
+                  .catch((error) => {
+                    console.error("Error reading HTML content:", error);
+                  });
+              })
+              .catch((error) => {
+                console.error(
+                  "Error getting HTML type from ClipboardItem:",
+                  error
+                );
+              });
+          } else if (item.types.includes("text/plain")) {
+            item
+              .getType("text/plain")
+              .then((textBlob) => {
+                textBlob
+                  .text()
+                  .then((text) => {
+                    if (isValidURL(text)) {
+                      // Insert the URL as a link
+                      const linkElement = `<a href="${text}" target="_blank">${text}</a>`;
+                      document.execCommand("insertHTML", false, linkElement);
+                    } else {
+                      // Insert plain text
+                      document.execCommand("insertText", false, text);
+                    }
+                  })
+                  .catch((error) => {
+                    console.error("Error reading text content:", error);
+                  });
+              })
+              .catch((error) => {
+                console.error(
+                  "Error getting text type from ClipboardItem:",
+                  error
+                );
+              });
+          }
+        });
+      })
+      .catch((error) => {
+        console.error("Error reading clipboard:", error);
+      });
   };
+
   const focusCursorAtPosition = (position) => {
     const editorNode = editorRef.current;
     const selection = window.getSelection();

@@ -34,6 +34,7 @@ module.exports = {
   externals: {
     react: "react",
     "react-dom": "react-dom",
+    "babel-loader": "babel-loader",
   },
   resolve: {
     extensions: [".js", ".jsx"],
