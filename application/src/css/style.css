@@ -130,6 +130,35 @@ body {
 .ml-main-content-box h6,
 .ml-main-content-box p {
   margin-top: 0;
+  color: var(--editor-text-color);
+}
+
+.ml-main-content-box h1 {
+  font-size: 2em;
+}
+
+.ml-main-content-box h2 {
+  font-size: 1.5em;
+}
+
+.ml-main-content-box h3 {
+  font-size: 1.17em;
+}
+
+.ml-main-content-box h4 {
+  font-size: 1em;
+}
+
+.ml-main-content-box h5 {
+  font-size: 0.83em;
+}
+
+.ml-main-content-box h6 {
+  font-size: 0.67em;
+}
+
+.ml-main-content-box p {
+  font-size: 1em;
 }
 
 .ml-main-content-box:focus-visible {
