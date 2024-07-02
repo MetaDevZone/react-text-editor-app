@@ -1,9 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import "../css/style.css";
-import LinkModal from "./LinkModal";
-import ImageModal from "./ImageModal";
-import MediaModal from "./MediaModal";
-import Modal from "./Model";
+import "./css/style.css";
 import {
   AlignCenter,
   AlignJustify,
@@ -27,23 +23,27 @@ import {
   UndoIcon,
   UnorderdList,
   VideoIcon,
-} from ".";
-import SpecialChars from "./SpecialChars";
-import SelectFormat from "./SelectFormat";
-import ButtonFunction from "./ButtonFunction";
-import SelectInsert from "./SelectInsert";
-import SelectView from "./SelectView";
-import SelectFileOptions from "./SelectFileOptions";
-import ViewSourceModel from "./ViewSourceModel";
-import PreviewModel from "./PreviewModel";
-import SelectFormations from "./SelectFormations";
-import ManageColors from "./ManageColors";
-import SimpleButton from "./SimpleButton";
-import { NAVBAR_ITEMS, TOOLBAR_ITEMS } from "./constant";
-import ViewLoadingModel from "./ViewLoadingModel";
-import PasteIcon from "./SVGImages/PasteIcon";
-import CutIcon from "./SVGImages/CutIcon";
-import CopyIcon from "./SVGImages/CopyIcon";
+} from "./components";
+import SpecialChars from "./components/SpecialChars";
+import SelectFormat from "./components/SelectFormat";
+import ButtonFunction from "./components/ButtonFunction";
+import SelectInsert from "./components/SelectInsert";
+import SelectView from "./components/SelectView";
+import SelectFileOptions from "./components/SelectFileOptions";
+import ViewSourceModel from "./components/ViewSourceModel";
+import PreviewModel from "./components/PreviewModel";
+import SelectFormations from "./components/SelectFormations";
+import ManageColors from "./components/ManageColors";
+import SimpleButton from "./components/SimpleButton";
+import { NAVBAR_ITEMS, TOOLBAR_ITEMS } from "./components/constant";
+import ViewLoadingModel from "./components/ViewLoadingModel";
+import PasteIcon from "./components/SVGImages/PasteIcon";
+import CutIcon from "./components/SVGImages/CutIcon";
+import CopyIcon from "./components/SVGImages/CopyIcon";
+import LinkModal from "./components/LinkModal";
+import ImageModal from "./components/ImageModal";
+import MediaModal from "./components/MediaModal";
+import Modal from "./components/Model";
 
 const show_final_options = (options, remove, all_options) => {
   if (!options) {
@@ -79,7 +79,7 @@ const isValidURL = (str) => {
   return pattern.test(str);
 };
 
-export default function ReactEditorComponent(props) {
+export default function ReactEditorKit(props) {
   let {
     theme_config,
     toolbar,
@@ -91,8 +91,6 @@ export default function ReactEditorComponent(props) {
     placeholder,
     image_handler,
     handleFullScreen,
-    setIsFullScreen,
-    isFullScreen,
     remove_from_toolbar,
     remove_from_navbar,
     style,
@@ -104,6 +102,7 @@ export default function ReactEditorComponent(props) {
   const [openPreview, setOpenPreview] = useState(false);
   const [init, setInit] = useState(false);
   const [sourceCode, setSourceCode] = useState("");
+  const [isFullScreen, setIsFullScreen] = useState(false);
   const [isOpenModel, setIsOpenModel] = useState("");
   const [previewContent, setPreviewContent] = useState("");
   const [selectedData, setSelectedData] = useState({
@@ -125,9 +124,9 @@ export default function ReactEditorComponent(props) {
   const handleInput = () => {
     setInit(true);
     const content = editorRef.current.innerHTML;
-    if (!content.startsWith("<p>") || !content.endsWith("</p>")) {
-      document.execCommand("formatBlock", false, "<p>");
-    }
+    // if (!content.startsWith("<p>") || !content.endsWith("</p>")) {
+    //   document.execCommand("formatBlock", false, "<p>");
+    // }
     if (onChange) {
       onChange(content);
     }
@@ -135,7 +134,6 @@ export default function ReactEditorComponent(props) {
 
   const handleOpenModel = (e, type, item) => {
     e.preventDefault();
-    setIsPlaceholder(false);
     setIsOpenModel(type);
     setSelectedItem(item);
   };
@@ -174,7 +172,6 @@ export default function ReactEditorComponent(props) {
 
   const handleInsertHRClick = () => {
     if (!editorRef.current) {
-      setIsPlaceholder(false);
       setTimeout(() => {
         editorRef.current.focus();
       }, 0);
@@ -308,37 +305,84 @@ export default function ReactEditorComponent(props) {
   };
 
   const onPaste = (event) => {
-    event.preventDefault(); // Prevent default paste behavior
-    const items = (event.clipboardData || event.originalEvent.clipboardData)
-      .items;
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i];
-      if (item.type === "text/plain") {
-        const text = event.clipboardData.getData("text/plain");
-        if (isValidURL(text)) {
-          const linkElement = `<a href="${text}" target="_blank">${text}</a>`;
-          document.execCommand("insertHTML", false, linkElement);
-        } else {
-          document.execCommand("insertText", false, text);
-        }
-      } else if (item.type === "text/html") {
-        const html = event.clipboardData.getData("text/html");
-        const cleanedHTML = cleanHTML(html);
-        const withoutComments = cleanedHTML.replace(/<!--[\s\S]*?-->/g, "");
-        document.execCommand("insertHTML", false, withoutComments);
-      } else if (item.type.indexOf("image") !== -1) {
-        const blob = item.getAsFile();
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          const imgElement = `<img src="${event.target.result}" alt="Image">`;
-          document.execCommand("insertHTML", false, imgElement);
-        };
-        reader.readAsDataURL(blob);
-      } else {
-        console.warn("Unsupported clipboard item type:", item.type);
-      }
-    }
+    event.preventDefault();
+    navigator.clipboard
+      .read()
+      .then((clipboardItems) => {
+        clipboardItems.forEach((item) => {
+          if (
+            item.types.includes("image/png") ||
+            item.types.includes("image/jpeg")
+          ) {
+            item
+              .getType(item.types[0])
+              .then((imageBlob) => {
+                const imgElement = `<img src="${URL.createObjectURL(
+                  imageBlob
+                )}" alt="Image">`;
+                document.execCommand("insertHTML", false, imgElement);
+              })
+              .catch((error) => {
+                console.error("Error reading image content:", error);
+              });
+          } else if (item.types.includes("text/html")) {
+            item
+              .getType("text/html")
+              .then((htmlBlob) => {
+                htmlBlob
+                  .text()
+                  .then((htmlContent) => {
+                    const cleanedHTML = cleanHTML(htmlContent);
+                    const withoutComments = cleanedHTML.replace(
+                      /<!--[\s\S]*?-->/g,
+                      ""
+                    );
+                    document.execCommand("insertHTML", false, withoutComments);
+                  })
+                  .catch((error) => {
+                    console.error("Error reading HTML content:", error);
+                  });
+              })
+              .catch((error) => {
+                console.error(
+                  "Error getting HTML type from ClipboardItem:",
+                  error
+                );
+              });
+          } else if (item.types.includes("text/plain")) {
+            item
+              .getType("text/plain")
+              .then((textBlob) => {
+                textBlob
+                  .text()
+                  .then((text) => {
+                    if (isValidURL(text)) {
+                      // Insert the URL as a link
+                      const linkElement = `<a href="${text}" target="_blank">${text}</a>`;
+                      document.execCommand("insertHTML", false, linkElement);
+                    } else {
+                      // Insert plain text
+                      document.execCommand("insertText", false, text);
+                    }
+                  })
+                  .catch((error) => {
+                    console.error("Error reading text content:", error);
+                  });
+              })
+              .catch((error) => {
+                console.error(
+                  "Error getting text type from ClipboardItem:",
+                  error
+                );
+              });
+          }
+        });
+      })
+      .catch((error) => {
+        console.error("Error reading clipboard:", error);
+      });
   };
+
   const focusCursorAtPosition = (position) => {
     const editorNode = editorRef.current;
     const selection = window.getSelection();
@@ -425,14 +469,8 @@ export default function ReactEditorComponent(props) {
   };
 
   const handleBlur = (event) => {
-    const textContent =
-      editorRef.current?.textContent || editorRef.current?.innerText;
-    const htmlContent = editorRef.current?.innerHTML;
     const caretPos = getCaretCharacterOffsetWithin(event.target);
     setCursorPosition(caretPos);
-    if (placeholder && !textContent.trim() && !htmlContent.trim()) {
-      setIsPlaceholder(true);
-    }
   };
 
   const handleNewDocument = () => {
@@ -472,14 +510,34 @@ export default function ReactEditorComponent(props) {
     }
   };
 
+  const handlePlaceholder = () => {
+    const editor = editorRef.current;
+    if (!editor) {
+      // editorRef.current is null, so we return early
+      return;
+    }
+
+    if (editor.innerText.trim() === "") {
+      editor.classList.add("empty");
+      setIsPlaceholder(true);
+    } else {
+      editor.classList.remove("empty");
+      setIsPlaceholder(false);
+    }
+  };
+
   useEffect(() => {
     const handleFullScreenChange = () => {
       setIsFullScreen(document.fullscreenElement !== null);
     };
+
+    handlePlaceholder();
     document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("input", handlePlaceholder);
     document.addEventListener("fullscreenchange", handleFullScreenChange);
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
+      document.addEventListener("input", handlePlaceholder);
       document.removeEventListener("fullscreenchange", handleFullScreenChange);
     };
   }, []);
@@ -524,14 +582,6 @@ export default function ReactEditorComponent(props) {
     }
   };
 
-  const handleHidePlaceholder = (e) => {
-    e.preventDefault();
-    setIsPlaceholder(false);
-    setTimeout(() => {
-      editorRef.current.focus();
-    }, 10);
-  };
-
   if (theme_config && Object.keys(theme_config).length > 0) {
     Object.keys(theme_config).forEach(function (key, index) {
       document.documentElement.style.setProperty(
@@ -559,7 +609,6 @@ export default function ReactEditorComponent(props) {
   const handlePaste = (e) => {
     e.preventDefault();
     if (!editorRef.current) {
-      setIsPlaceholder(false);
       setTimeout(() => {
         editorRef.current.focus();
       }, 0);
@@ -687,6 +736,14 @@ export default function ReactEditorComponent(props) {
     };
   }, [isPlaceholder, isFullScreen, editorRef]);
 
+  useEffect(() => {
+    if (isFullScreen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [isFullScreen]);
+
   const dynamicStyle =
     isFullScreen && document.getElementById("action-components")
       ? {
@@ -698,7 +755,11 @@ export default function ReactEditorComponent(props) {
 
   return (
     <>
-      <div {...mainProps} className={`react-editor-main`} id="react-editor">
+      <div
+        {...mainProps}
+        className={`react-editor-main ${isFullScreen ? "full-screen" : ""}`}
+        id="react-editor"
+      >
         <div id="action-components">
           <div className="wysiwyg-editor__toolbar" id="editor-navbar">
             <hr
@@ -1079,30 +1140,20 @@ export default function ReactEditorComponent(props) {
             })}
           </div>
         </div>
-        {isPlaceholder && placeholder && !value ? (
-          <div
-            {...others}
-            className="ml-main-content-box placeholder-text"
-            onClick={handleHidePlaceholder}
-            style={{ ...style, ...dynamicStyle }}
-          >
-            {placeholder}
-          </div>
-        ) : (
-          <div
-            {...others}
-            className={`ml-main-content-box print-only `}
-            autoFocus={isFullScreen}
-            contentEditable
-            ref={editorRef}
-            onPaste={onPaste}
-            spellCheck="true"
-            onInput={handleInput}
-            onBlur={handleBlur}
-            id="editable"
-            style={{ ...style, ...dynamicStyle }}
-          ></div>
-        )}
+        <div
+          {...others}
+          className={`ml-main-content-box print-only `}
+          autoFocus={isFullScreen}
+          contentEditable
+          ref={editorRef}
+          onPaste={onPaste}
+          spellCheck="true"
+          onInput={handleInput}
+          onBlur={handleBlur}
+          data-placeholder={placeholder}
+          id="editable"
+          style={{ ...style, ...dynamicStyle }}
+        ></div>
       </div>
       {isLoading && (
         <ViewLoadingModel
@@ -1140,6 +1191,7 @@ export default function ReactEditorComponent(props) {
         />
       )}
       <div id="modal-root"></div>
+      <div id="full-screen-overlay"></div>
     </>
   );
 }

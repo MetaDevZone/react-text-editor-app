@@ -627,3 +627,20 @@ body {
 .editor-error-messsage {
   color: red;
 }
+
+.ml-main-content-box:empty:before {
+  content: attr(data-placeholder);
+  color: #aaa;
+  pointer-events: none;
+}
+
+.full-screen {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 1000 !important;
+  background-color: white;
+  overflow: hidden;
+}
