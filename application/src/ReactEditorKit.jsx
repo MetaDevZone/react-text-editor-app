@@ -702,7 +702,9 @@ export default function ReactEditorKit(props) {
 
   const handleDoubleClick = (event) => {
     const target = event.target;
-    if (target.tagName === "IMG") {
+
+    let target_ref = editorRef.current.contains(target);
+    if (target.tagName === "IMG" && target_ref) {
       setIsOpenModel("image");
       setSelectedData({
         link: target.src,
@@ -710,7 +712,7 @@ export default function ReactEditorKit(props) {
         width: target.offsetWidth,
       });
       setSelectedEvent(target);
-    } else if (target.tagName === "A") {
+    } else if (target.tagName === "A" && target_ref) {
       setIsOpenModel("link");
       setSelectedData({
         link: target.href,
@@ -737,12 +739,12 @@ export default function ReactEditorKit(props) {
   }, [isPlaceholder, isFullScreen, editorRef]);
 
   useEffect(() => {
-    if (isFullScreen) {
+    if (isFullScreen || isOpenModel || viewSource || openPreview) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
     }
-  }, [isFullScreen]);
+  }, [isFullScreen, isOpenModel, viewSource, openPreview]);
 
   const dynamicStyle =
     isFullScreen && document.getElementById("action-components")
@@ -974,7 +976,6 @@ export default function ReactEditorKit(props) {
                       editorRef={editorRef}
                     />
                   )}
-
                   {is_bold && (
                     <ButtonFunction
                       editorRef={editorRef}
