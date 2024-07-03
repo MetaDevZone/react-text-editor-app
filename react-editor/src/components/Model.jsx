@@ -5,13 +5,6 @@ import { CrossImage } from ".";
 const Modal = (props) => {
   const { onClose, children, title, className, isFullScreen } = props;
 
-  useEffect(() => {
-    document.body.classList.add("editor-modal-open");
-    return () => {
-      document.body.classList.remove("editor-modal-open");
-    };
-  }, []);
-
   return ReactDOM.createPortal(
     <div
       onClick={onClose}

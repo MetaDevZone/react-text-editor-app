@@ -282,10 +282,6 @@ body {
   height: 13px !important;
 }
 
-.editor-modal-open {
-  overflow: hidden;
-}
-
 .react-editor-main .select-items {
   position: absolute;
   background-color: #fff;
