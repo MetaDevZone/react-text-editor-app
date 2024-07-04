@@ -35,6 +35,7 @@ function SelectFormat({ remove_from_toolbar, editorRef }) {
 
   const handleOptionClick = (e, option) => {
     e.preventDefault();
+    editorRef.current.focus();
     document.execCommand("formatBlock", false, option.value);
     setSelectedOption(option.label);
     setIsOpen(false);

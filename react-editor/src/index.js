@@ -822,6 +822,7 @@ export default function ReactEditorKit(props) {
                       item={item}
                       isFullScreen={isFullScreen}
                       remove_from_navbar={remove_from_navbar}
+                      editorRef={editorRef}
                     />
                   )}
 

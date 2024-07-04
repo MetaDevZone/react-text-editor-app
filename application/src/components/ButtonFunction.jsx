@@ -7,6 +7,7 @@ const ButtonFunction = (props) => {
 
   const handleClick = (e, ref) => {
     e.preventDefault();
+    ref.current.focus();
     if (!ref.current) return;
 
     if (!ref.current.contains(window.getSelection().anchorNode)) {
@@ -17,8 +18,7 @@ const ButtonFunction = (props) => {
       item.handleClick(item);
       if (!item.add_functionality) return;
     }
-
-    ref.current.focus();
+    setIsSelected(!isSelected);
     document.execCommand(name);
   };
 

@@ -17,7 +17,7 @@ import SelectLineHeight from "./SelectLineHeight";
 import { FORMAT_OPTIONS, generateRandomID } from "./constant";
 
 export default function SelectFileOptions(props) {
-  let { item, isFullScreen, remove_from_navbar } = props;
+  let { item, isFullScreen, remove_from_navbar, editorRef } = props;
   let options = item.options;
   if (!options) {
     options = FORMAT_OPTIONS;
@@ -46,6 +46,7 @@ export default function SelectFileOptions(props) {
 
   const handleClick = (e, name, option) => {
     e.preventDefault();
+    editorRef.current.focus();
     if (option?.handleClick) {
       option.handleClick(option, item);
       if (!option.add_functionality) return;
