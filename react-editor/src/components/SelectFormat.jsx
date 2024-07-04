@@ -58,6 +58,18 @@ function SelectFormat({ remove_from_toolbar, editorRef }) {
     return null;
   };
 
+  const handleKeyDown = () => {
+    const editor = editorRef.current;
+    if (!editor) return;
+    if (!editor.contains(window.getSelection().anchorNode)) {
+      return;
+    }
+    editor.focus();
+    if (editor.innerText.trim() === "") {
+      setSelectedOption("Paragraph");
+    }
+  };
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (!selectRef.current.contains(event.target)) {
@@ -72,6 +84,8 @@ function SelectFormat({ remove_from_toolbar, editorRef }) {
           let find = formats.find((format) => format.value === formatBlock);
           if (find) {
             setSelectedOption(find.label);
+          } else {
+            setSelectedOption("Paragraph");
           }
         }
       }
@@ -79,9 +93,11 @@ function SelectFormat({ remove_from_toolbar, editorRef }) {
 
     document.addEventListener("click", handleClickOutside);
     document.addEventListener("selectionchange", handleSelectionChange);
+    document.addEventListener("keydown", handleKeyDown);
     return () => {
       document.removeEventListener("click", handleClickOutside);
       document.removeEventListener("selectionchange", handleSelectionChange);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [editorRef]);
 
