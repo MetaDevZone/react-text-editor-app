@@ -9,6 +9,7 @@ export default function AnOtherPage() {
 
   return (
     <>
+      <input type="text" />
       <ReactEditorKit
         value={value}
         onChange={setValue}

@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from "react";
 
-export default function ButtonFunction(props) {
+const ButtonFunction = (props) => {
   const { name, icon, title, item, disabled, editorRef } = props;
   const [isSelected, setIsSelected] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
 
-  const handleClick = (e) => {
+  const handleClick = (e, ref) => {
     e.preventDefault();
+    if (!ref.current) return;
+
+    if (!ref.current.contains(window.getSelection().anchorNode)) {
+      return;
+    }
+
     if (item?.handleClick) {
       item.handleClick(item);
       if (!item.add_functionality) return;
     }
+
+    ref.current.focus();
     document.execCommand(name);
   };
 
@@ -27,33 +35,36 @@ export default function ButtonFunction(props) {
 
     document.addEventListener("selectionchange", handleSelectionChange);
     document.addEventListener("input", handleSelectionChange);
+
     return () => {
       document.removeEventListener("selectionchange", handleSelectionChange);
       document.removeEventListener("input", handleSelectionChange);
     };
-  }, [editorRef]);
+  }, [editorRef, name]);
 
-  const handle_classes = () => {
+  const handleClasses = () => {
     let className = "";
     if (isSelected) {
       className = "selected-option";
     }
     if (name === "redo" || name === "undo") {
       if (isDisabled) {
-        className = className + "disabled";
+        className += " disabled";
       }
     }
-    return className;
+    return className.trim();
   };
 
   return (
     <button
-      onClick={handleClick}
-      className={handle_classes()}
+      onClick={(e) => handleClick(e, editorRef)}
+      className={handleClasses()}
       title={item?.title ? item.title : title}
       disabled={disabled}
     >
       {item?.icon ? item.icon : icon}
     </button>
   );
-}
+};
+
+export default ButtonFunction;
