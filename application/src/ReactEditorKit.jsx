@@ -35,7 +35,11 @@ import PreviewModel from "./components/PreviewModel";
 import SelectFormations from "./components/SelectFormations";
 import ManageColors from "./components/ManageColors";
 import SimpleButton from "./components/SimpleButton";
-import { NAVBAR_ITEMS, TOOLBAR_ITEMS } from "./components/constant";
+import {
+  NAVBAR_ITEMS,
+  TOOLBAR_ITEMS,
+  transformHTML,
+} from "./components/constant";
 import ViewLoadingModel from "./components/ViewLoadingModel";
 import PasteIcon from "./components/SVGImages/PasteIcon";
 import CutIcon from "./components/SVGImages/CutIcon";
@@ -44,6 +48,7 @@ import LinkModal from "./components/LinkModal";
 import ImageModal from "./components/ImageModal";
 import MediaModal from "./components/MediaModal";
 import Modal from "./components/Model";
+import RightClickLinkPopup from "./components/RightClickLinkPopup";
 
 const show_final_options = (options, remove, all_options) => {
   if (!options) {
@@ -101,7 +106,7 @@ export default function ReactEditorKit(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [openPreview, setOpenPreview] = useState(false);
   const [init, setInit] = useState(false);
-  const [sourceCode, setSourceCode] = useState("");
+  const [sourceCode, setSourceCode] = useState(null);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isOpenModel, setIsOpenModel] = useState("");
   const [previewContent, setPreviewContent] = useState("");
@@ -482,17 +487,10 @@ export default function ReactEditorKit(props) {
     setOpenPreview(true);
   };
 
-  const formatHTMLWithLineBreaks = (html) => {
-    // Add line breaks before opening tags
-    let formattedHTML = html.replace(/<(?=[^/])/g, (match) => `\n${match}`);
-    formattedHTML = formattedHTML.trim(); // Trim leading/trailing whitespace
-    return formattedHTML;
-  };
-
   const handleViewSource = () => {
-    if (!viewSource) {
+    if (!viewSource && editorRef.current) {
       const content = editorRef.current.innerHTML;
-      const formattedContent = formatHTMLWithLineBreaks(content);
+      const formattedContent = transformHTML(content);
       setSourceCode(formattedContent);
     } else {
       setSourceCode("");
@@ -513,7 +511,6 @@ export default function ReactEditorKit(props) {
   const handlePlaceholder = () => {
     const editor = editorRef.current;
     if (!editor) {
-      // editorRef.current is null, so we return early
       return;
     }
 
@@ -791,9 +788,6 @@ export default function ReactEditorKit(props) {
                       handlePreview={handlePreview}
                       handlePrint={handlePrint}
                       item={item}
-                      isPlaceholder={isPlaceholder}
-                      placeholder={placeholder}
-                      value={value}
                       remove_from_navbar={remove_from_navbar}
                     />
                   )}
@@ -1192,6 +1186,12 @@ export default function ReactEditorKit(props) {
           previewContent={previewContent}
         />
       )}
+      <RightClickLinkPopup
+        editorRef={editorRef}
+        setIsOpenModel={setIsOpenModel}
+        setSelectedData={setSelectedData}
+        setSelectedEvent={setSelectedEvent}
+      />
       <div id="modal-root"></div>
       <div id="full-screen-overlay"></div>
     </>

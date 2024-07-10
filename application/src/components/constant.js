@@ -81,3 +81,27 @@ export function generateRandomID(length) {
   }
   return id;
 }
+
+export function transformHTML(htmlString) {
+  let parser = new DOMParser();
+  if (htmlString) {
+    let doc = parser.parseFromString(htmlString, "text/html");
+
+    doc.querySelectorAll("div").forEach((divElement) => {
+      let pElement = doc.createElement("p");
+      pElement.innerHTML = divElement.innerHTML;
+      divElement.replaceWith(pElement);
+    });
+
+    let transformedHTML = doc.body.innerHTML;
+
+    transformedHTML = transformedHTML.replace(/<br\s*\/?>/g, "&nbsp;");
+    transformedHTML = transformedHTML.replace(
+      /<(?=[^/])/g,
+      (match) => `\n${match}`
+    );
+    transformedHTML = transformedHTML.trim();
+
+    return transformedHTML;
+  }
+}
