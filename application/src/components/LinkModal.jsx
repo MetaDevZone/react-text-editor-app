@@ -8,6 +8,8 @@ export default function LinkModal(props) {
     selectedData,
     imageUrl,
     setImageUrl,
+    image_handler,
+    setIsLoading,
   } = props;
   const [errorMessage, setErrorMessage] = useState({});
   const [inputs, setInputs] = useState({
@@ -60,9 +62,26 @@ export default function LinkModal(props) {
     setImageUrl("");
   };
 
-  const handleChangeFile = (event) => {
+  const handleChangeFile = async (event) => {
     const { files } = event.target;
-    setImageUrl(URL.createObjectURL(files[0]));
+    let data = {
+      image: files[0],
+    };
+    console.log(image_handler, "image_handlerimage_handler");
+    if (image_handler) {
+      console.log(data, "datadatadatadatadata");
+      setIsLoading(true);
+      let image_path = await image_handler(data);
+      console.log(image_path, "image_pathimage_path");
+      if (image_path) {
+        setImageUrl(image_path);
+        setIsLoading(false);
+      } else {
+        setIsLoading(false);
+      }
+    } else {
+      setImageUrl(URL.createObjectURL(data.image));
+    }
   };
 
   const handleChangeType = (e, value) => {

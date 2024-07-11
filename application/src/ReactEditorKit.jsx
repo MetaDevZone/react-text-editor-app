@@ -501,6 +501,8 @@ export default function ReactEditorKit(props) {
             selectedData={selectedData}
             imageUrl={imageUrl}
             setImageUrl={setImageUrl}
+            image_handler={image_handler}
+            setIsLoading={setIsLoading}
           />
         ),
         title: `${selectedData?.link ? "Update" : "Insert"} Link`,
@@ -727,6 +729,8 @@ export default function ReactEditorKit(props) {
           }px - 22px)`,
         }
       : {};
+
+  console.log(isLoading, "isLoadingisLoadingisLoading");
 
   return (
     <>

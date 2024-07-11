@@ -445,7 +445,7 @@ body {
 
 #modal-root .select-type button {
   padding: 6px 20px;
-  background-color: #fff;
+  background-color: var(--editor-toolbar-button-background);
   border: 1px solid var(--editor-border-color);
   cursor: pointer;
 }
@@ -499,7 +499,7 @@ body {
 
 /* Handle */
 .react-editor-main ::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background: var(--editor-border-color);
 }
 
 /* Handle on hover */
@@ -696,7 +696,7 @@ body {
   left: 0;
   width: 100% !important;
   height: 100% !important;
-  background-color: white;
+  background-color: var(--editor-toolbar-button-background);
   overflow: hidden;
   z-index: 99999 !important;
 }
@@ -704,8 +704,8 @@ body {
 .right_click_popup_background {
   position: absolute;
   cursor: pointer;
-  background-color: #fff;
-  border: 1px solid #ccc;
+  background-color: var(--editor-toolbar-button-background);
+  border: 1px solid var(--editor-border-color);
   border-radius: 5px;
   z-index: 1000;
   min-width: 100px;
@@ -715,7 +715,7 @@ body {
 .right_click_popup_background hr {
   margin: 0;
   border: none;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid var(--editor-border-color);
   width: 100%;
 }
 
@@ -723,14 +723,11 @@ body {
   padding: 5px 10px;
   font-family: system-ui;
   font-size: 15px;
-}
-
-.selected {
-  background: #dee0e2;
+  color: var(--editor-text-color);
 }
 
 .right_click_popup:hover {
-  background: #dee0e2;
+  background: var(--editor-toolbar-button-hover-background);
 }
 
 .right_click_popup svg {
