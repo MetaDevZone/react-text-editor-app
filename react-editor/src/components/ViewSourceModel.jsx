@@ -1,7 +1,7 @@
 import React from "react";
 import Modal from "./Model";
 
-export default function ViewSourceModel(props) {
+export default function ViewSourceModal(props) {
   const {
     viewSource,
     setViewSource,
@@ -9,6 +9,7 @@ export default function ViewSourceModel(props) {
     setSourceCode,
     handleSaveSource,
   } = props;
+
   return (
     <div className="ml-main-content-box">
       <Modal

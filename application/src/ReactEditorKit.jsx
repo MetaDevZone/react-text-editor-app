@@ -108,6 +108,7 @@ export default function ReactEditorKit(props) {
   const [init, setInit] = useState(false);
   const [sourceCode, setSourceCode] = useState(null);
   const [isFullScreen, setIsFullScreen] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
   const [isOpenModel, setIsOpenModel] = useState("");
   const [previewContent, setPreviewContent] = useState("");
   const [selectedData, setSelectedData] = useState({
@@ -120,8 +121,8 @@ export default function ReactEditorKit(props) {
   });
   const [selectedEvent, setSelectedEvent] = useState({});
   const [isPlaceholder, setIsPlaceholder] = useState(true);
-  const [cursorPosition, setCursorPosition] = useState(0);
   const [selectedItem, setSelectedItem] = useState({});
+  const [selectedRange, setSelectedRange] = useState(null);
   const [showHR1, setShowHR1] = useState(false);
   const [showHR2, setShowHR2] = useState(false);
   const [showHR3, setShowHR3] = useState(false);
@@ -129,9 +130,6 @@ export default function ReactEditorKit(props) {
   const handleInput = () => {
     setInit(true);
     const content = editorRef.current.innerHTML;
-    // if (!content.startsWith("<p>") || !content.endsWith("</p>")) {
-    //   document.execCommand("formatBlock", false, "<p>");
-    // }
     if (onChange) {
       onChange(content);
     }
@@ -146,6 +144,7 @@ export default function ReactEditorKit(props) {
     if (e) {
       e.preventDefault();
     }
+    setImageUrl("");
     setIsOpenModel("");
     setSelectedData({});
     setSelectedEvent({});
@@ -176,20 +175,22 @@ export default function ReactEditorKit(props) {
   };
 
   const handleInsertHRClick = () => {
-    if (!editorRef.current) {
-      setTimeout(() => {
-        editorRef.current.focus();
-      }, 0);
-    } else {
-      focusCursorAtPosition(cursorPosition);
+    handleFocusEditor();
+    document.execCommand("insertHorizontalRule");
+  };
+
+  const handleFocusEditor = () => {
+    const editor = editorRef.current;
+    if (editor && selectedRange) {
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(selectedRange);
+      editor.focus(); // Focus on the editor without inserting text
     }
-    setTimeout(() => {
-      document.execCommand("insertHorizontalRule");
-    }, 10);
   };
 
   const handleLinkInsert = (props) => {
-    let { text, link, open_new_tab } = props;
+    let { text, link, open_new_tab, link_type } = props;
     if (!text) {
       text = link;
     }
@@ -197,14 +198,37 @@ export default function ReactEditorKit(props) {
     if (open_new_tab && open_new_tab !== "false") {
       linkHTML += ' target="_blank"';
     }
+    if (link_type === "image" && imageUrl) {
+      text = `<img src="${imageUrl}" alt="ImageLink" />`;
+    } else if (link_type === "button") {
+      text = `<button>${text}</button>`;
+    }
     linkHTML += `>${text}</a>`;
+
+    // Assuming selectedEvent and selectedData are correctly defined elsewhere
     if (selectedEvent && selectedData) {
       const parentElement = selectedEvent.parentElement;
       if (parentElement) {
         parentElement.removeChild(selectedEvent);
       }
     }
-    focusCursorAtPosition(cursorPosition);
+    handleFocusEditor();
+    document.execCommand("insertHTML", false, linkHTML);
+    handleCloseModel();
+  };
+
+  const handleRemoveLink = () => {
+    let linkHTML = `${selectedEvent.textContent.trim()}`;
+    if (selectedEvent.tagName === "IMG") {
+      linkHTML = `<img src="${selectedEvent.src}" alt="ImageLink" />`;
+    }
+    if (selectedEvent) {
+      const parentElement = selectedEvent.parentElement;
+      if (parentElement) {
+        parentElement.removeChild(selectedEvent);
+      }
+    }
+    handleFocusEditor();
     document.execCommand("insertHTML", false, linkHTML);
     handleCloseModel();
   };
@@ -225,7 +249,7 @@ export default function ReactEditorKit(props) {
         parentElement.removeChild(selectedEvent);
       }
     }
-    focusCursorAtPosition(cursorPosition);
+    handleFocusEditor();
     document.execCommand("insertHTML", false, imgElement);
     setIsLoading(false);
     handleCloseModel();
@@ -268,13 +292,11 @@ export default function ReactEditorKit(props) {
       }
 
       if (editorNode && iframeElement) {
-        // Insert the iframe HTML into the editor content
-        focusCursorAtPosition(cursorPosition);
+        handleFocusEditor();
         document.execCommand("insertHTML", false, iframeElement);
       }
     } else if (type === "embed" && embed_code && editorNode) {
-      // Insert the provided embed code HTML into the editor content
-      focusCursorAtPosition(cursorPosition);
+      handleFocusEditor();
       document.execCommand("insertHTML", false, embed_code);
     }
 
@@ -298,9 +320,9 @@ export default function ReactEditorKit(props) {
   const handleCharSelect = (e, char) => {
     e.preventDefault();
     if (editorRef.current !== null) {
-      focusCursorAtPosition(cursorPosition);
-      document.execCommand("insertText", false, char); // Insert the character
-      setIsOpenModel(""); // Hide the special characters box
+      handleFocusEditor();
+      document.execCommand("insertHTML", false, char);
+      setIsOpenModel("");
     }
   };
 
@@ -388,94 +410,8 @@ export default function ReactEditorKit(props) {
       });
   };
 
-  const focusCursorAtPosition = (position) => {
-    const editorNode = editorRef.current;
-    const selection = window.getSelection();
-    const range = document.createRange();
-    if (!editorNode) return;
-    let currentPosition = 0;
-    let found = false;
-    const traverseNodes = (node) => {
-      if (node.nodeType === Node.TEXT_NODE) {
-        const textLength = node.textContent.length;
-        currentPosition += textLength;
-        if (position <= currentPosition) {
-          range.setStart(node, position - (currentPosition - textLength));
-          range.collapse(true);
-          found = true;
-        }
-      } else if (node.nodeType === Node.ELEMENT_NODE) {
-        if (
-          node.nodeName === "P" &&
-          node.childNodes.length === 1 &&
-          node.firstChild.nodeName === "BR"
-        ) {
-          // If the node is an empty <p> tag with only a <br>, focus the cursor after it
-          range.setStartAfter(node.firstChild); // Focus after the <br> element inside the empty <p> tag
-          found = true;
-        } else {
-          for (let i = 0; i < node.childNodes.length; i++) {
-            if (!found) {
-              traverseNodes(node.childNodes[i]);
-            }
-          }
-        }
-      }
-    };
-
-    traverseNodes(editorNode);
-
-    if (!found) {
-      const lastChild = editorNode.lastChild;
-      if (lastChild) {
-        range.setStart(lastChild, lastChild.length);
-        range.collapse(true);
-      }
-    }
-
-    selection.removeAllRanges();
-    selection.addRange(range);
-    editorNode.focus();
-  };
-
-  const getCaretCharacterOffsetWithin = (element) => {
-    let caretOffset = 0;
-    const doc = element.ownerDocument || element.document;
-    const win = doc.defaultView || doc.parentWindow;
-    let sel;
-    if (typeof win.getSelection !== "undefined") {
-      sel = win.getSelection();
-      if (sel.rangeCount > 0) {
-        const range = win.getSelection().getRangeAt(0);
-        const preCaretRange = range.cloneRange();
-        preCaretRange.selectNodeContents(element);
-        preCaretRange.setEnd(range.endContainer, range.endOffset);
-        caretOffset = preCaretRange.toString().length;
-
-        // Adjust caretOffset for <p> tags containing only <br> tags
-        const pTags = element.querySelectorAll("p");
-        pTags.forEach((pTag) => {
-          if (
-            pTag.childNodes.length === 1 &&
-            pTag.childNodes[0].nodeName === "BR"
-          ) {
-            caretOffset += 1; // Adjust for each <p> tag containing only <br> tags
-          }
-        });
-      }
-    } else if ((sel = doc.selection) && sel.type !== "Control") {
-      const textRange = sel.createRange();
-      const preCaretTextRange = doc.body.createTextRange();
-      preCaretTextRange.moveToElementText(element);
-      preCaretTextRange.setEndPoint("EndToEnd", textRange);
-      caretOffset = preCaretTextRange.text.length;
-    }
-    return caretOffset;
-  };
-
-  const handleBlur = (event) => {
-    const caretPos = getCaretCharacterOffsetWithin(event.target);
-    setCursorPosition(caretPos);
+  const handleBlur = () => {
+    handleSelection();
   };
 
   const handleNewDocument = () => {
@@ -523,6 +459,21 @@ export default function ReactEditorKit(props) {
     }
   };
 
+  const handleSelection = () => {
+    const selection = window.getSelection();
+    if (selection.rangeCount > 0) {
+      setSelectedRange(selection.getRangeAt(0));
+    }
+  };
+
+  const restoreSelection = () => {
+    if (selectedRange) {
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(selectedRange);
+    }
+  };
+
   useEffect(() => {
     const handleFullScreenChange = () => {
       setIsFullScreen(document.fullscreenElement !== null);
@@ -534,7 +485,7 @@ export default function ReactEditorKit(props) {
     document.addEventListener("fullscreenchange", handleFullScreenChange);
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
-      document.addEventListener("input", handlePlaceholder);
+      document.removeEventListener("input", handlePlaceholder);
       document.removeEventListener("fullscreenchange", handleFullScreenChange);
     };
   }, []);
@@ -548,6 +499,8 @@ export default function ReactEditorKit(props) {
             item={selectedItem}
             setIsOpenModel={setIsOpenModel}
             selectedData={selectedData}
+            imageUrl={imageUrl}
+            setImageUrl={setImageUrl}
           />
         ),
         title: `${selectedData?.link ? "Update" : "Insert"} Link`,
@@ -610,7 +563,7 @@ export default function ReactEditorKit(props) {
         editorRef.current.focus();
       }, 0);
     } else {
-      focusCursorAtPosition(cursorPosition);
+      restoreSelection();
     }
     navigator.clipboard
       .read()
@@ -720,20 +673,43 @@ export default function ReactEditorKit(props) {
     }
   };
 
+  const setCursorAtStart = () => {
+    const editor = editorRef.current;
+    if (editor) {
+      const range = document.createRange();
+      if (editor.childNodes.length > 0) {
+        range.setStart(editor.childNodes[0], 0);
+      } else {
+        range.setStart(editor, 0);
+      }
+      range.collapse(true);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      // Update selectedRange state
+      setSelectedRange(range);
+    }
+  };
+
   useEffect(() => {
     handle_resize();
-    const editor = document.getElementById("editable");
+    setCursorAtStart();
+    const editor = editorRef.current;
     if (editor) {
       editor.addEventListener("dblclick", handleDoubleClick);
+      editor.addEventListener("mouseup", handleSelection);
+      editor.addEventListener("keyup", handleSelection);
     }
     window.addEventListener("resize", handle_resize);
     return () => {
       window.removeEventListener("resize", handle_resize);
       if (editor) {
         editor.removeEventListener("dblclick", handleDoubleClick);
+        editor.removeEventListener("mouseup", handleSelection);
+        editor.removeEventListener("keyup", handleSelection);
       }
     };
-  }, [isPlaceholder, isFullScreen, editorRef]);
+  }, [editorRef]);
 
   useEffect(() => {
     if (isFullScreen || isOpenModel || viewSource || openPreview) {
@@ -1191,6 +1167,10 @@ export default function ReactEditorKit(props) {
         setIsOpenModel={setIsOpenModel}
         setSelectedData={setSelectedData}
         setSelectedEvent={setSelectedEvent}
+        setImageUrl={setImageUrl}
+        selectedEvent={selectedEvent}
+        handleRemoveLink={handleRemoveLink}
+        selectedRange={selectedRange}
       />
       <div id="modal-root"></div>
       <div id="full-screen-overlay"></div>

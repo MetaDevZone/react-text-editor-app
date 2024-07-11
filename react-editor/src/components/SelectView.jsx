@@ -61,7 +61,7 @@ export default function SelectFileOptions(props) {
 
           return (
             <div key={`key${index}`}>
-              {is_source_code && !(isPlaceholder && placeholder && !value) && (
+              {is_source_code && (
                 <div
                   className="select-insert"
                   onClick={(e) => handleSelect(e, "code", option)}
