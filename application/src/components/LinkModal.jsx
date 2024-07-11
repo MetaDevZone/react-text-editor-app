@@ -67,12 +67,9 @@ export default function LinkModal(props) {
     let data = {
       image: files[0],
     };
-    console.log(image_handler, "image_handlerimage_handler");
     if (image_handler) {
-      console.log(data, "datadatadatadatadata");
       setIsLoading(true);
       let image_path = await image_handler(data);
-      console.log(image_path, "image_pathimage_path");
       if (image_path) {
         setImageUrl(image_path);
         setIsLoading(false);

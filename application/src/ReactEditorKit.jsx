@@ -730,8 +730,6 @@ export default function ReactEditorKit(props) {
         }
       : {};
 
-  console.log(isLoading, "isLoadingisLoadingisLoading");
-
   return (
     <>
       <div
