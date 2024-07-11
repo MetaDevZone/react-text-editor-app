@@ -201,7 +201,7 @@ export default function ReactEditorKit(props) {
     if (link_type === "image" && imageUrl) {
       text = `<img src="${imageUrl}" alt="ImageLink" />`;
     } else if (link_type === "button") {
-      text = `<button>${text}</button>`;
+      text = `<button contentEditable=false>${text}</button>`;
     }
     linkHTML += `>${text}</a>`;
 

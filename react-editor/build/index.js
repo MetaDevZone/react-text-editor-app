@@ -404,7 +404,7 @@ module.exports = function (list, options) {
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(5);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ":root {\r\n  --editor-background-color: #fff;\r\n  --editor-border-color: #c4c4c4;\r\n  --editor-text-color: #414141;\r\n  --editor-toolbar-button-background: #fff;\r\n  --editor-toolbar-text-color: #414141;\r\n  --editor-toolbar-button-hover-background: #efefef;\r\n  --editor-toolbar-button-selected-background: #dee0e2;\r\n  --editor-svg-color: #414141;\r\n  --editor-save-button-background: rgb(9, 134, 62);\r\n}\r\n\r\nhtml,\r\nbody {\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\r\n}\r\n\r\n.react-editor-main img {\r\n  max-width: 60%;\r\n  height: auto;\r\n}\r\n\r\n.react-editor-main .select-option p,\r\n.react-editor-main .select-option pre,\r\n.react-editor-main .select-option h2,\r\n.react-editor-main .select-option h3,\r\n.react-editor-main .select-option h4,\r\n.react-editor-main .select-option h5,\r\n.react-editor-main .select-option h6,\r\n.react-editor-main .select-option blockquote,\r\n.react-editor-main .select-option h1 {\r\n  margin: 0;\r\n  color: var(--editor-toolbar-text-color) !important;\r\n}\r\n\r\n.react-editor-main {\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  color: var(--editor-text-color);\r\n  line-height: 16px !important;\r\n  font-family: system-ui !important;\r\n}\r\n\r\n.react-editor-main .wysiwyg-editor__toolbar {\r\n  border-bottom: 1px solid var(--editor-border-color);\r\n  font-size: 18px;\r\n  display: flex;\r\n  align-items: center;\r\n  flex-wrap: wrap;\r\n  padding: 0 5px;\r\n  position: relative;\r\n}\r\n\r\n.react-editor-main .wysiwyg-editor__toolbar .hr-1 {\r\n  position: absolute;\r\n  width: 98%;\r\n  border-color: var(--editor-border-color);\r\n  border: none;\r\n  border-top: 1px solid var(--editor-border-color);\r\n  height: 1px;\r\n  display: none;\r\n  top: 32px;\r\n  margin: 0;\r\n}\r\n\r\n.react-editor-main .wysiwyg-editor__toolbar .hr-2 {\r\n  top: 64px;\r\n}\r\n\r\n.react-editor-main .wysiwyg-editor__toolbar .button-group {\r\n  display: inline-block;\r\n  border-right: 1px solid var(--editor-border-color);\r\n}\r\n.react-editor-main .wysiwyg-editor__toolbar button {\r\n  background: var(--editor-toolbar-button-background);\r\n  outline: none;\r\n  border: none;\r\n  cursor: pointer;\r\n  padding: 6px 10px;\r\n  color: var(--editor-toolbar-text-color);\r\n  line-height: 16px;\r\n}\r\n.wysiwyg-editor__toolbar button:disabled,\r\n.wysiwyg-editor__toolbar button.disabled {\r\n  cursor: not-allowed;\r\n}\r\n.wysiwyg-editor__toolbar button:disabled svg,\r\n.wysiwyg-editor__toolbar button.disabled svg {\r\n  fill: #9fa2a6;\r\n}\r\n\r\n.wysiwyg-editor__toolbar button:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background);\r\n}\r\n\r\n.wysiwyg-editor__toolbar input {\r\n  background-color: transparent;\r\n  border: 1px solid var(--editor-border-color);\r\n  outline: none;\r\n  cursor: pointer;\r\n}\r\n\r\n.wysiwyg-editor__toolbar select,\r\n.wysiwyg-editor__toolbar select:focus-visible {\r\n  border: none !important;\r\n  outline: none;\r\n}\r\n\r\n.ml-main-content-box {\r\n  padding: 10px;\r\n  height: 250px;\r\n  overflow: auto;\r\n  resize: vertical;\r\n  max-width: 100% !important;\r\n  line-height: normal;\r\n}\r\n\r\n.react-editor-main .placeholder-text {\r\n  opacity: 0.8;\r\n  font-style: italic;\r\n}\r\n\r\n.ml-main-content-box h1,\r\n.ml-main-content-box h2,\r\n.ml-main-content-box h3,\r\n.ml-main-content-box h4,\r\n.ml-main-content-box h5,\r\n.ml-main-content-box h6,\r\n.ml-main-content-box p {\r\n  margin-top: 0;\r\n  color: var(--editor-text-color);\r\n}\r\n\r\n.ml-main-content-box h1 {\r\n  font-size: 2em;\r\n}\r\n\r\n.ml-main-content-box h2 {\r\n  font-size: 1.5em;\r\n}\r\n\r\n.ml-main-content-box h3 {\r\n  font-size: 1.17em;\r\n}\r\n\r\n.ml-main-content-box h4 {\r\n  font-size: 1em;\r\n}\r\n\r\n.ml-main-content-box h5 {\r\n  font-size: 0.83em;\r\n}\r\n\r\n.ml-main-content-box h6 {\r\n  font-size: 0.67em;\r\n}\r\n\r\n.ml-main-content-box p {\r\n  font-size: 1em;\r\n}\r\n\r\n.ml-main-content-box:focus-visible {\r\n  outline: none;\r\n}\r\n\r\n.wysiwyg-editor__source {\r\n  width: 98%;\r\n  height: 80%;\r\n  outline: none;\r\n  padding: 10px;\r\n  font-family: \"Courier New\", Monospace !important;\r\n  font-size: small;\r\n  white-space: pre-wrap;\r\n  margin: 0;\r\n  display: block;\r\n  font-size: 16px;\r\n  resize: none;\r\n}\r\n\r\n/* Modal.css */\r\n\r\n#modal-root .modal-overlay {\r\n  font-family: system-ui !important;\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: rgba(0, 0, 0, 0.5);\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  z-index: 999999;\r\n}\r\n\r\n.image-model-overly {\r\n  z-index: 999999;\r\n}\r\n\r\n.fill-screen-view {\r\n  z-index: 999999;\r\n}\r\n\r\n#modal-root .model-title {\r\n  display: flex;\r\n  justify-content: space-between;\r\n}\r\n\r\n#modal-root .model-title h2 {\r\n  margin: 0;\r\n}\r\n\r\n#modal-root .model-title svg {\r\n  font-size: 25px;\r\n  cursor: pointer;\r\n}\r\n\r\n#modal-root .modal-popup {\r\n  background-color: #fff;\r\n  padding: 20px;\r\n  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\r\n  width: 400px;\r\n  max-width: 85%;\r\n  color: #000;\r\n  border-radius: 5px;\r\n}\r\n\r\n.fill-screen-view .modal-popup {\r\n  max-width: 100% !important;\r\n  width: 100vw !important;\r\n  height: 100vh !important;\r\n  z-index: 1;\r\n  padding: 0 !important;\r\n  overflow: hidden;\r\n  border-radius: 0 !important;\r\n}\r\n\r\n#modal-root .modal-popup hr {\r\n  margin-bottom: 0;\r\n}\r\n\r\n#modal-root .modal-close-btn {\r\n  position: absolute;\r\n  top: 10px;\r\n  right: 10px;\r\n  background: none;\r\n  border: none;\r\n  cursor: pointer;\r\n  padding: 5px 10px;\r\n  font-size: 16px;\r\n}\r\n\r\n.wysiwyg-editor__toolbar button svg {\r\n  fill: var(--editor-svg-color);\r\n  color: var(--editor-svg-color);\r\n  display: inline-block;\r\n  height: 15px;\r\n  width: 14px;\r\n}\r\n\r\n.react-editor-main .custom-select {\r\n  position: relative;\r\n  display: inline-block;\r\n  cursor: pointer;\r\n  font-size: 16px;\r\n  padding: 6px;\r\n  color: var(--editor-toolbar-text-color);\r\n  line-height: 16px;\r\n}\r\n\r\n.react-editor-main .custom-select-format {\r\n  position: relative;\r\n  display: inline-block;\r\n  cursor: pointer;\r\n  font-size: 16px;\r\n  padding: 6px;\r\n}\r\n\r\n.react-editor-main .main-color-component svg {\r\n  height: 13px !important;\r\n}\r\n\r\n.react-editor-main .select-items {\r\n  position: absolute;\r\n  background-color: #fff;\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 2px;\r\n  z-index: 2;\r\n  width: 160px;\r\n  max-height: 200px;\r\n  overflow-y: auto;\r\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\r\n  top: 29px;\r\n  left: 0;\r\n  display: none;\r\n}\r\n\r\n.react-editor-main .select-items button {\r\n  display: flex !important;\r\n  width: 100%;\r\n  padding: 7px;\r\n  font-family: system-ui !important;\r\n}\r\n\r\n.react-editor-main .p-items .select-items {\r\n  left: 142px;\r\n}\r\n\r\n.react-editor-main .select-items-format {\r\n  position: absolute;\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  border-top: none;\r\n  border-radius: 2px;\r\n  z-index: 1;\r\n  max-height: 200px;\r\n  overflow-y: auto;\r\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\r\n  left: 0;\r\n  top: 30px;\r\n}\r\n\r\n.react-editor-main .select-items-format .select-option:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background) !important;\r\n}\r\n\r\n.react-editor-main .select-items-format h1 {\r\n  font-size: 32px !important;\r\n  font-weight: 600;\r\n  line-height: 32px;\r\n}\r\n.react-editor-main .select-items-format h2 {\r\n  font-size: 28px !important;\r\n  font-weight: 600;\r\n  line-height: 28px;\r\n}\r\n.react-editor-main .select-items-format h3 {\r\n  font-size: 24px !important;\r\n  font-weight: 600;\r\n  line-height: 24px;\r\n}\r\n.react-editor-main .select-items-format h4 {\r\n  font-size: 20px !important;\r\n  line-height: 20px;\r\n}\r\n.react-editor-main .select-items-format h5 {\r\n  font-size: 16px !important;\r\n}\r\n.react-editor-main .select-items-format h6 {\r\n  font-size: 14px;\r\n}\r\n\r\n.react-editor-main .select-items.show {\r\n  display: block;\r\n}\r\n\r\n.react-editor-main .select-items .select-option,\r\n.react-editor-main .select-items-format .select-option {\r\n  padding: 6px 10px;\r\n  cursor: pointer;\r\n  font-size: 16px;\r\n  white-space: nowrap;\r\n}\r\n\r\n.react-editor-main .select-items .select-insert svg {\r\n  height: 20px;\r\n  width: 20px;\r\n  margin-right: 7px;\r\n  color: var(--editor-svg-color);\r\n  fill: var(--editor-svg-color);\r\n}\r\n\r\n.react-editor-main .select-items button svg {\r\n  height: 16px !important;\r\n  width: 16px !important;\r\n  margin-top: 2px;\r\n}\r\n\r\n.react-editor-main .select-items .select-insert span {\r\n  margin-top: 2px;\r\n}\r\n\r\n.react-editor-main .selected-option {\r\n  background-color: var(--editor-toolbar-button-selected-background) !important;\r\n}\r\n\r\n.react-editor-main .select-items .select-option:hover,\r\n.react-editor-main .select-insert:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background) !important;\r\n}\r\n\r\n#modal-root .form-control-input {\r\n  font-family: system-ui !important;\r\n  width: 100%;\r\n  padding: 7px;\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 3px;\r\n}\r\n\r\n#modal-root .form-control-input:focus-visible {\r\n  outline: none;\r\n}\r\n\r\n#modal-root .save-button {\r\n  background-color: var(--editor-save-button-background);\r\n  color: #fff;\r\n  padding: 7px 14px;\r\n  border: none;\r\n  margin-top: 10px;\r\n  border-radius: 3px;\r\n  cursor: pointer;\r\n}\r\n\r\n#modal-root .select-type button {\r\n  padding: 6px 20px;\r\n  background-color: #fff;\r\n  border: 1px solid var(--editor-border-color);\r\n  cursor: pointer;\r\n}\r\n\r\n#modal-root .select-type button.selected-type {\r\n  background-color: #efefef;\r\n}\r\n\r\n#modal-root .special-char-box {\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n}\r\n\r\n#modal-root .special-char {\r\n  width: 30px;\r\n  height: 30px;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  cursor: pointer;\r\n  border-radius: 2px;\r\n}\r\n\r\n#modal-root .special-char:hover {\r\n  background-color: #dee0e2;\r\n}\r\n\r\n.react-editor-main .select-insert {\r\n  min-width: 120px;\r\n  font-size: 16px;\r\n  text-align: left;\r\n  padding: 8px 10px;\r\n  white-space: nowrap;\r\n  display: flex;\r\n  border-top: 1px solid var(--editor-border-color) !important;\r\n  color: var(--editor-text-color) !important;\r\n  background-color: var(--editor-background-color);\r\n  border-radius: 0 !important;\r\n  margin: 0 !important;\r\n}\r\n\r\n/* width */\r\n.react-editor-main ::-webkit-scrollbar {\r\n  width: 5px;\r\n}\r\n\r\n/* Track */\r\n.react-editor-main ::-webkit-scrollbar-track {\r\n  background: #f1f1f1;\r\n}\r\n\r\n/* Handle */\r\n.react-editor-main ::-webkit-scrollbar-thumb {\r\n  background: #ccc;\r\n}\r\n\r\n/* Handle on hover */\r\n.react-editor-main ::-webkit-scrollbar-thumb:hover {\r\n  background: #555;\r\n}\r\n\r\n#modal-root .full-screen-model {\r\n  width: 95% !important;\r\n  height: 85vh;\r\n}\r\n\r\n.ml-main-content-box blockquote {\r\n  border-left: 2px solid var(--editor-border-color);\r\n  border-left-width: 5px;\r\n  margin-left: 1.5rem;\r\n  padding: 2px 0;\r\n  padding-left: 1rem;\r\n  font-style: italic;\r\n  font-family: Georgia, Times, \"Times New Roman\", serif;\r\n  color: var(--editor-text-color);\r\n}\r\n\r\n.select-items-nested.left {\r\n  left: -100%;\r\n}\r\n\r\n.react-editor-main .select-formation-dropdown {\r\n  position: absolute;\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 4px;\r\n  left: 154px;\r\n  display: none;\r\n  min-width: 140px;\r\n  z-index: 2;\r\n  max-height: 200px;\r\n  overflow-x: hidden;\r\n}\r\n\r\n.react-editor-main .font-size-dropdown {\r\n  min-width: 90px;\r\n}\r\n\r\n.react-editor-main .font-size-dropdown .select-option {\r\n  padding: 10px;\r\n  border-bottom: 1px solid var(--editor-border-color);\r\n  font-size: 16px;\r\n  width: 98%;\r\n  margin: 0;\r\n  border-radius: 0 !important;\r\n  font-family: system-ui !important;\r\n}\r\n\r\n.react-editor-main .select-formation-dropdown.show {\r\n  display: block;\r\n}\r\n\r\n.react-editor-main .font-family-option {\r\n  display: block;\r\n  width: 99%;\r\n  padding: 9px !important;\r\n  border-top: 1px solid var(--editor-border-color) !important;\r\n  margin: 0 !important;\r\n  border-radius: 0 !important;\r\n}\r\n\r\n.react-editor-main .font-family-option:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background);\r\n}\r\n\r\n.react-editor-main .bottom-colored-line {\r\n  height: 3px;\r\n  width: 14px;\r\n  background-color: var(--editor-svg-color);\r\n}\r\n\r\n.react-editor-main .main-color-component {\r\n  position: relative;\r\n  display: inline-block;\r\n}\r\n\r\n.react-editor-main .open-color-box {\r\n  position: absolute;\r\n  height: 140px;\r\n  width: 140px;\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  top: 30px;\r\n  left: -1px;\r\n  display: none;\r\n  z-index: 1;\r\n}\r\n\r\n.react-editor-main .color-box-grid button {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  border-radius: 0 !important;\r\n}\r\n\r\n.react-editor-main .open-color-box.show {\r\n  display: block;\r\n}\r\n\r\n.react-editor-main .color-box {\r\n  height: 28px;\r\n  width: 28px;\r\n  cursor: pointer;\r\n  background-color: var(--editor-background-color);\r\n}\r\n\r\n.react-editor-main .custom-color-picker {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n}\r\n\r\n.react-editor-main .custom-color-picker svg {\r\n  height: 20px;\r\n}\r\n\r\n.react-editor-main .increase-icon-size svg {\r\n  height: 20px !important;\r\n  width: 17px !important;\r\n  margin-top: 3px;\r\n}\r\n\r\n.react-editor-main .increase-icon-size button {\r\n  padding: 3px 10px;\r\n}\r\n\r\n.react-editor-main .color-box:hover {\r\n  transform: scale(1.2);\r\n  transition: transform 0.5s ease;\r\n}\r\n\r\n.react-editor-main .vertical-line {\r\n  height: 32px;\r\n  width: 1px;\r\n  background-color: var(--editor-border-color);\r\n}\r\n\r\n.react-editor-main .react-editor-mt-2 {\r\n  margin-top: 2px;\r\n}\r\n#modal-root .react-editor-mt-10 {\r\n  margin-top: 10px;\r\n}\r\n.react-editor-main .react-editor-me-5 {\r\n  margin-right: 5px;\r\n}\r\n\r\n#modal-root .react-editor-text-end {\r\n  text-align: right;\r\n}\r\n\r\n.react-editor-main .react-editor-text-left {\r\n  text-align: left;\r\n}\r\n\r\n.react-editor-main .react-editor-d-flex,\r\n#modal-root .react-editor-d-flex {\r\n  display: flex;\r\n}\r\n\r\n.react-editor-main .react-editor-w-47,\r\n#modal-root .react-editor-w-47 {\r\n  width: 47%;\r\n}\r\n\r\n.react-editor-main .justify-content-between,\r\n#modal-root .justify-content-between {\r\n  justify-content: space-between;\r\n}\r\n\r\n.react-editor-main .react-editor-flex-column,\r\n#modal-root .react-editor-flex-column {\r\n  flex-direction: column;\r\n}\r\n\r\n.editor-error-messsage {\r\n  color: red;\r\n}\r\n\r\n.ml-main-content-box:empty:before {\r\n  content: attr(data-placeholder);\r\n  color: #aaa;\r\n  pointer-events: none;\r\n}\r\n\r\n.full-screen {\r\n  position: fixed !important;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100% !important;\r\n  height: 100% !important;\r\n  background-color: white;\r\n  overflow: hidden;\r\n  z-index: 99999 !important;\r\n}\r\n", ""]);
+exports.push([module.i, ":root {\r\n  --editor-background-color: #fff;\r\n  --editor-border-color: #c4c4c4;\r\n  --editor-text-color: #414141;\r\n  --editor-toolbar-button-background: #fff;\r\n  --editor-toolbar-text-color: #414141;\r\n  --editor-toolbar-button-hover-background: #efefef;\r\n  --editor-toolbar-button-selected-background: #dee0e2;\r\n  --editor-svg-color: #414141;\r\n  --editor-save-button-background: rgb(9, 134, 62);\r\n}\r\n\r\nhtml,\r\nbody {\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\r\n}\r\n\r\n.react-editor-main img {\r\n  max-width: 60%;\r\n  height: auto;\r\n}\r\n\r\n.react-editor-main .select-option p,\r\n.react-editor-main .select-option pre,\r\n.react-editor-main .select-option h2,\r\n.react-editor-main .select-option h3,\r\n.react-editor-main .select-option h4,\r\n.react-editor-main .select-option h5,\r\n.react-editor-main .select-option h6,\r\n.react-editor-main .select-option blockquote,\r\n.react-editor-main .select-option h1 {\r\n  margin: 0;\r\n  color: var(--editor-toolbar-text-color) !important;\r\n}\r\n\r\n.react-editor-main {\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  color: var(--editor-text-color);\r\n  line-height: 16px !important;\r\n  font-family: system-ui !important;\r\n}\r\n\r\n.react-editor-main .wysiwyg-editor__toolbar {\r\n  border-bottom: 1px solid var(--editor-border-color);\r\n  font-size: 18px;\r\n  display: flex;\r\n  align-items: center;\r\n  flex-wrap: wrap;\r\n  padding: 0 5px;\r\n  position: relative;\r\n}\r\n\r\n.react-editor-main .wysiwyg-editor__toolbar .hr-1 {\r\n  position: absolute;\r\n  width: 98%;\r\n  border-color: var(--editor-border-color);\r\n  border: none;\r\n  border-top: 1px solid var(--editor-border-color);\r\n  height: 1px;\r\n  display: none;\r\n  top: 32px;\r\n  margin: 0;\r\n}\r\n\r\n.react-editor-main .wysiwyg-editor__toolbar .hr-2 {\r\n  top: 64px;\r\n}\r\n\r\n.react-editor-main .wysiwyg-editor__toolbar .button-group {\r\n  display: inline-block;\r\n  border-right: 1px solid var(--editor-border-color);\r\n}\r\n.react-editor-main .wysiwyg-editor__toolbar button {\r\n  background: var(--editor-toolbar-button-background);\r\n  outline: none;\r\n  border: none;\r\n  cursor: pointer;\r\n  padding: 6px 10px;\r\n  color: var(--editor-toolbar-text-color);\r\n  line-height: 16px;\r\n}\r\n.wysiwyg-editor__toolbar button:disabled,\r\n.wysiwyg-editor__toolbar button.disabled {\r\n  cursor: not-allowed;\r\n}\r\n.wysiwyg-editor__toolbar button:disabled svg,\r\n.wysiwyg-editor__toolbar button.disabled svg {\r\n  fill: #9fa2a6;\r\n}\r\n\r\n.wysiwyg-editor__toolbar button:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background);\r\n}\r\n\r\n.wysiwyg-editor__toolbar input {\r\n  background-color: transparent;\r\n  border: 1px solid var(--editor-border-color);\r\n  outline: none;\r\n  cursor: pointer;\r\n}\r\n\r\n.wysiwyg-editor__toolbar select,\r\n.wysiwyg-editor__toolbar select:focus-visible {\r\n  border: none !important;\r\n  outline: none;\r\n}\r\n\r\n.ml-main-content-box {\r\n  padding: 10px;\r\n  height: 250px;\r\n  overflow: auto;\r\n  resize: vertical;\r\n  max-width: 100% !important;\r\n  line-height: normal;\r\n}\r\n\r\n.react-editor-main .placeholder-text {\r\n  opacity: 0.8;\r\n  font-style: italic;\r\n}\r\n\r\n.ml-main-content-box h1,\r\n.ml-main-content-box h2,\r\n.ml-main-content-box h3,\r\n.ml-main-content-box h4,\r\n.ml-main-content-box h5,\r\n.ml-main-content-box h6,\r\n.ml-main-content-box p {\r\n  margin-top: 0;\r\n  color: var(--editor-text-color);\r\n}\r\n\r\n.ml-main-content-box h1 {\r\n  font-size: 2em;\r\n}\r\n\r\n.ml-main-content-box h2 {\r\n  font-size: 1.5em;\r\n}\r\n\r\n.ml-main-content-box h3 {\r\n  font-size: 1.17em;\r\n}\r\n\r\n.ml-main-content-box h4 {\r\n  font-size: 1em;\r\n}\r\n\r\n.ml-main-content-box h5 {\r\n  font-size: 0.83em;\r\n}\r\n\r\n.ml-main-content-box h6 {\r\n  font-size: 0.67em;\r\n}\r\n\r\n.ml-main-content-box p {\r\n  font-size: 1em;\r\n}\r\n\r\n#modal-root .link-image {\r\n  height: 80px;\r\n  width: 80px;\r\n  object-fit: cover;\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 5px;\r\n}\r\n\r\n#modal-root .link-image-box {\r\n  height: 80px;\r\n  width: 80px;\r\n  position: relative;\r\n  margin-top: 10px;\r\n}\r\n#modal-root .link-image-cross {\r\n  position: absolute;\r\n  top: -5px;\r\n  right: -7px;\r\n  height: 15px;\r\n  width: 10px;\r\n  background-color: red;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  padding: 0 5px 5px 5px;\r\n  border-radius: 50%;\r\n  color: #fff;\r\n  cursor: pointer;\r\n}\r\n\r\n.ml-main-content-box:focus-visible {\r\n  outline: none;\r\n}\r\n\r\n.wysiwyg-editor__source {\r\n  width: 98%;\r\n  height: 80%;\r\n  outline: none;\r\n  padding: 10px;\r\n  font-family: \"Courier New\", Monospace !important;\r\n  font-size: small;\r\n  white-space: pre-wrap;\r\n  margin: 0;\r\n  display: block;\r\n  font-size: 16px;\r\n  resize: none;\r\n}\r\n\r\n/* Modal.css */\r\n\r\n#modal-root .modal-overlay {\r\n  font-family: system-ui !important;\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: rgba(0, 0, 0, 0.5);\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  z-index: 999999;\r\n}\r\n\r\n.image-model-overly {\r\n  z-index: 999999;\r\n}\r\n\r\n.fill-screen-view {\r\n  z-index: 999999;\r\n}\r\n\r\n#modal-root .model-title {\r\n  display: flex;\r\n  justify-content: space-between;\r\n}\r\n\r\n#modal-root .model-title h2 {\r\n  margin: 0;\r\n}\r\n\r\n#modal-root .model-title svg {\r\n  font-size: 25px;\r\n  cursor: pointer;\r\n}\r\n\r\n#modal-root .modal-popup {\r\n  background-color: #fff;\r\n  padding: 20px;\r\n  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\r\n  width: 400px;\r\n  max-width: 85%;\r\n  color: #000;\r\n  border-radius: 5px;\r\n}\r\n\r\n.fill-screen-view .modal-popup {\r\n  max-width: 100% !important;\r\n  width: 100vw !important;\r\n  height: 100vh !important;\r\n  z-index: 1;\r\n  padding: 0 !important;\r\n  overflow: hidden;\r\n  border-radius: 0 !important;\r\n}\r\n\r\n#modal-root .modal-popup hr {\r\n  margin-bottom: 0;\r\n}\r\n\r\n#modal-root .modal-close-btn {\r\n  position: absolute;\r\n  top: 10px;\r\n  right: 10px;\r\n  background: none;\r\n  border: none;\r\n  cursor: pointer;\r\n  padding: 5px 10px;\r\n  font-size: 16px;\r\n}\r\n\r\n.wysiwyg-editor__toolbar button svg {\r\n  fill: var(--editor-svg-color);\r\n  color: var(--editor-svg-color);\r\n  display: inline-block;\r\n  height: 15px;\r\n  width: 14px;\r\n}\r\n\r\n.react-editor-main .custom-select {\r\n  position: relative;\r\n  display: inline-block;\r\n  cursor: pointer;\r\n  font-size: 16px;\r\n  padding: 6px;\r\n  color: var(--editor-toolbar-text-color);\r\n  line-height: 16px;\r\n}\r\n\r\n.react-editor-main .custom-select-format {\r\n  position: relative;\r\n  display: inline-block;\r\n  cursor: pointer;\r\n  font-size: 16px;\r\n  padding: 6px;\r\n}\r\n\r\n.react-editor-main .main-color-component svg {\r\n  height: 13px !important;\r\n}\r\n\r\n.react-editor-main .select-items {\r\n  position: absolute;\r\n  background-color: #fff;\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 2px;\r\n  z-index: 2;\r\n  width: 160px;\r\n  max-height: 200px;\r\n  overflow-y: auto;\r\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\r\n  top: 29px;\r\n  left: 0;\r\n  display: none;\r\n}\r\n\r\n.react-editor-main .select-items button {\r\n  display: flex !important;\r\n  width: 100%;\r\n  padding: 7px;\r\n  font-family: system-ui !important;\r\n}\r\n\r\n.react-editor-main .p-items .select-items {\r\n  left: 142px;\r\n}\r\n\r\n.react-editor-main .select-items-format {\r\n  position: absolute;\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  border-top: none;\r\n  border-radius: 2px;\r\n  z-index: 1;\r\n  max-height: 200px;\r\n  overflow-y: auto;\r\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\r\n  left: 0;\r\n  top: 30px;\r\n}\r\n\r\n.react-editor-main .select-items-format .select-option:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background) !important;\r\n}\r\n\r\n.react-editor-main .select-items-format h1 {\r\n  font-size: 32px !important;\r\n  font-weight: 600;\r\n  line-height: 32px;\r\n}\r\n.react-editor-main .select-items-format h2 {\r\n  font-size: 28px !important;\r\n  font-weight: 600;\r\n  line-height: 28px;\r\n}\r\n.react-editor-main .select-items-format h3 {\r\n  font-size: 24px !important;\r\n  font-weight: 600;\r\n  line-height: 24px;\r\n}\r\n.react-editor-main .select-items-format h4 {\r\n  font-size: 20px !important;\r\n  line-height: 20px;\r\n}\r\n.react-editor-main .select-items-format h5 {\r\n  font-size: 16px !important;\r\n}\r\n.react-editor-main .select-items-format h6 {\r\n  font-size: 14px;\r\n}\r\n\r\n.react-editor-main .select-items.show {\r\n  display: block;\r\n}\r\n\r\n.react-editor-main .select-items .select-option,\r\n.react-editor-main .select-items-format .select-option {\r\n  padding: 6px 10px;\r\n  cursor: pointer;\r\n  font-size: 16px;\r\n  white-space: nowrap;\r\n}\r\n\r\n.react-editor-main .select-items .select-insert svg {\r\n  height: 20px;\r\n  width: 20px;\r\n  margin-right: 7px;\r\n  color: var(--editor-svg-color);\r\n  fill: var(--editor-svg-color);\r\n}\r\n\r\n.react-editor-main .select-items button svg {\r\n  height: 16px !important;\r\n  width: 16px !important;\r\n  margin-top: 2px;\r\n}\r\n\r\n.react-editor-main .select-items .select-insert span {\r\n  margin-top: 2px;\r\n}\r\n\r\n.react-editor-main .selected-option {\r\n  background-color: var(--editor-toolbar-button-selected-background) !important;\r\n}\r\n\r\n.react-editor-main .select-items .select-option:hover,\r\n.react-editor-main .select-insert:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background) !important;\r\n}\r\n\r\n#modal-root .form-control-input {\r\n  font-family: system-ui !important;\r\n  width: 100%;\r\n  padding: 7px;\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 3px;\r\n}\r\n\r\n#modal-root .form-control-input:focus-visible {\r\n  outline: none;\r\n}\r\n\r\n#modal-root .save-button {\r\n  background-color: var(--editor-save-button-background);\r\n  color: #fff;\r\n  padding: 7px 14px;\r\n  border: none;\r\n  margin-top: 10px;\r\n  border-radius: 3px;\r\n  cursor: pointer;\r\n}\r\n\r\n#modal-root .select-type button {\r\n  padding: 6px 20px;\r\n  background-color: #fff;\r\n  border: 1px solid var(--editor-border-color);\r\n  cursor: pointer;\r\n}\r\n\r\n#modal-root .select-type button.selected-type {\r\n  background-color: #efefef;\r\n}\r\n\r\n#modal-root .special-char-box {\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n}\r\n\r\n#modal-root .special-char {\r\n  width: 30px;\r\n  height: 30px;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  cursor: pointer;\r\n  border-radius: 2px;\r\n}\r\n\r\n#modal-root .special-char:hover {\r\n  background-color: #dee0e2;\r\n}\r\n\r\n.react-editor-main .select-insert {\r\n  min-width: 120px;\r\n  font-size: 16px;\r\n  text-align: left;\r\n  padding: 8px 10px;\r\n  white-space: nowrap;\r\n  display: flex;\r\n  border-top: 1px solid var(--editor-border-color) !important;\r\n  color: var(--editor-text-color) !important;\r\n  background-color: var(--editor-background-color);\r\n  border-radius: 0 !important;\r\n  margin: 0 !important;\r\n}\r\n\r\n/* width */\r\n.react-editor-main ::-webkit-scrollbar {\r\n  width: 5px;\r\n}\r\n\r\n/* Track */\r\n.react-editor-main ::-webkit-scrollbar-track {\r\n  background: #f1f1f1;\r\n}\r\n\r\n/* Handle */\r\n.react-editor-main ::-webkit-scrollbar-thumb {\r\n  background: #ccc;\r\n}\r\n\r\n/* Handle on hover */\r\n.react-editor-main ::-webkit-scrollbar-thumb:hover {\r\n  background: #555;\r\n}\r\n\r\n#modal-root .full-screen-model {\r\n  width: 95% !important;\r\n  height: 85vh;\r\n}\r\n\r\n.ml-main-content-box blockquote {\r\n  border-left: 2px solid var(--editor-border-color);\r\n  border-left-width: 5px;\r\n  margin-left: 1.5rem;\r\n  padding: 2px 0;\r\n  padding-left: 1rem;\r\n  font-style: italic;\r\n  font-family: Georgia, Times, \"Times New Roman\", serif;\r\n  color: var(--editor-text-color);\r\n}\r\n\r\n.select-items-nested.left {\r\n  left: -100%;\r\n}\r\n\r\n.react-editor-main .select-formation-dropdown {\r\n  position: absolute;\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 4px;\r\n  left: 154px;\r\n  display: none;\r\n  min-width: 140px;\r\n  z-index: 2;\r\n  max-height: 200px;\r\n  overflow-x: hidden;\r\n}\r\n\r\n.react-editor-main .font-size-dropdown {\r\n  min-width: 90px;\r\n}\r\n\r\n.react-editor-main .font-size-dropdown .select-option {\r\n  padding: 10px;\r\n  border-bottom: 1px solid var(--editor-border-color);\r\n  font-size: 16px;\r\n  width: 98%;\r\n  margin: 0;\r\n  border-radius: 0 !important;\r\n  font-family: system-ui !important;\r\n}\r\n\r\n.react-editor-main .select-formation-dropdown.show {\r\n  display: block;\r\n}\r\n\r\n.react-editor-main .font-family-option {\r\n  display: block;\r\n  width: 99%;\r\n  padding: 9px !important;\r\n  border-top: 1px solid var(--editor-border-color) !important;\r\n  margin: 0 !important;\r\n  border-radius: 0 !important;\r\n}\r\n\r\n.react-editor-main .font-family-option:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background);\r\n}\r\n\r\n.react-editor-main .bottom-colored-line {\r\n  height: 3px;\r\n  width: 14px;\r\n  background-color: var(--editor-svg-color);\r\n}\r\n\r\n.react-editor-main .main-color-component {\r\n  position: relative;\r\n  display: inline-block;\r\n}\r\n\r\n.react-editor-main .open-color-box {\r\n  position: absolute;\r\n  height: 140px;\r\n  width: 140px;\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  top: 30px;\r\n  left: -1px;\r\n  display: none;\r\n  z-index: 1;\r\n}\r\n\r\n.react-editor-main .color-box-grid button {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  border-radius: 0 !important;\r\n}\r\n\r\n.react-editor-main .open-color-box.show {\r\n  display: block;\r\n}\r\n\r\n.react-editor-main .color-box {\r\n  height: 28px;\r\n  width: 28px;\r\n  cursor: pointer;\r\n  background-color: var(--editor-background-color);\r\n}\r\n\r\n.react-editor-main .custom-color-picker {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n}\r\n\r\n.react-editor-main .custom-color-picker svg {\r\n  height: 20px;\r\n}\r\n\r\n.react-editor-main .increase-icon-size svg {\r\n  height: 20px !important;\r\n  width: 17px !important;\r\n  margin-top: 3px;\r\n}\r\n\r\n.react-editor-main .increase-icon-size button {\r\n  padding: 3px 10px;\r\n}\r\n\r\n.react-editor-main .color-box:hover {\r\n  transform: scale(1.2);\r\n  transition: transform 0.5s ease;\r\n}\r\n\r\n.react-editor-main .vertical-line {\r\n  height: 32px;\r\n  width: 1px;\r\n  background-color: var(--editor-border-color);\r\n}\r\n\r\n.react-editor-main .react-editor-mt-2 {\r\n  margin-top: 2px;\r\n}\r\n#modal-root .react-editor-mt-10 {\r\n  margin-top: 10px;\r\n}\r\n.react-editor-main .react-editor-me-5 {\r\n  margin-right: 5px;\r\n}\r\n\r\n#modal-root .react-editor-text-end {\r\n  text-align: right;\r\n}\r\n\r\n.react-editor-main .react-editor-text-left {\r\n  text-align: left;\r\n}\r\n\r\n.react-editor-main .react-editor-d-flex,\r\n#modal-root .react-editor-d-flex {\r\n  display: flex;\r\n}\r\n\r\n.react-editor-main .react-editor-w-47,\r\n#modal-root .react-editor-w-47 {\r\n  width: 47%;\r\n}\r\n\r\n.react-editor-main .justify-content-between,\r\n#modal-root .justify-content-between {\r\n  justify-content: space-between;\r\n}\r\n\r\n.react-editor-main .react-editor-flex-column,\r\n#modal-root .react-editor-flex-column {\r\n  flex-direction: column;\r\n}\r\n\r\n.editor-error-messsage {\r\n  color: red;\r\n}\r\n\r\n.ml-main-content-box:empty:before {\r\n  content: attr(data-placeholder);\r\n  color: #aaa;\r\n  pointer-events: none;\r\n}\r\n\r\n.full-screen {\r\n  position: fixed !important;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100% !important;\r\n  height: 100% !important;\r\n  background-color: white;\r\n  overflow: hidden;\r\n  z-index: 99999 !important;\r\n}\r\n\r\n.right_click_popup_background {\r\n  position: absolute;\r\n  cursor: pointer;\r\n  background-color: #fff;\r\n  border: 1px solid #ccc;\r\n  border-radius: 5px;\r\n  z-index: 1000;\r\n  min-width: 100px;\r\n  padding: 3px 0px;\r\n}\r\n\r\n.right_click_popup_background hr {\r\n  margin: 0;\r\n  border: none;\r\n  border-top: 1px solid #ccc;\r\n  width: 100%;\r\n}\r\n\r\n.right_click_popup {\r\n  padding: 5px 10px;\r\n  font-family: system-ui;\r\n  font-size: 15px;\r\n}\r\n\r\n.selected {\r\n  background: #dee0e2;\r\n}\r\n\r\n.right_click_popup:hover {\r\n  background: #dee0e2;\r\n}\r\n\r\n.right_click_popup svg {\r\n  margin-right: 5px;\r\n  height: 20px;\r\n  width: 20px;\r\n  vertical-align: bottom;\r\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -1338,6 +1338,24 @@ function generateRandomID(length) {
   }
   return id;
 }
+function transformHTML(htmlString) {
+  var parser = new DOMParser();
+  if (htmlString) {
+    var doc = parser.parseFromString(htmlString, "text/html");
+    doc.querySelectorAll("div").forEach(function (divElement) {
+      var pElement = doc.createElement("p");
+      pElement.innerHTML = divElement.innerHTML;
+      divElement.replaceWith(pElement);
+    });
+    var transformedHTML = doc.body.innerHTML;
+    transformedHTML = transformedHTML.replace(/<br\s*\/?>/g, "&nbsp;");
+    transformedHTML = transformedHTML.replace(/<(?=[^/])/g, function (match) {
+      return "\n".concat(match);
+    });
+    transformedHTML = transformedHTML.trim();
+    return transformedHTML;
+  }
+}
 // CONCATENATED MODULE: ./src/components/SelectInsert.jsx
 function SelectInsert_slicedToArray(arr, i) { return SelectInsert_arrayWithHoles(arr) || SelectInsert_iterableToArrayLimit(arr, i) || SelectInsert_unsupportedIterableToArray(arr, i) || SelectInsert_nonIterableRest(); }
 function SelectInsert_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -1494,7 +1512,7 @@ function SelectView_SelectFileOptions(props) {
     var is_full_screen = option === "full_screen" || option.name === "full_screen";
     return /*#__PURE__*/external_react_default.a.createElement("div", {
       key: "key".concat(index)
-    }, is_source_code && !(isPlaceholder && placeholder && !value) && /*#__PURE__*/external_react_default.a.createElement("div", {
+    }, is_source_code && /*#__PURE__*/external_react_default.a.createElement("div", {
       className: "select-insert",
       onClick: function onClick(e) {
         return handleSelect(e, "code", option);
@@ -1522,10 +1540,7 @@ function SelectFileOptions_SelectFileOptions(props) {
     handlePreview = props.handlePreview,
     handlePrint = props.handlePrint,
     item = props.item,
-    isPlaceholder = props.isPlaceholder,
-    placeholder = props.placeholder,
-    remove_from_navbar = props.remove_from_navbar,
-    value = props.value;
+    remove_from_navbar = props.remove_from_navbar;
   var options = item.options;
   var _useState = Object(external_react_["useState"])(false),
     _useState2 = SelectFileOptions_slicedToArray(_useState, 2),
@@ -1574,7 +1589,7 @@ function SelectFileOptions_SelectFileOptions(props) {
     }
   }, item !== null && item !== void 0 && item.title ? item.title : "File", /*#__PURE__*/external_react_default.a.createElement("div", {
     className: "select-items ".concat(isShow ? "show" : "")
-  }, !(isPlaceholder && placeholder && !value) && options.map(function (option, index) {
+  }, options.map(function (option, index) {
     var is_new_document = option === "new_document" || option.name === "new_document";
     var is_preview = option === "preview" || option.name === "preview";
     var is_print = option === "print" || option.name === "print";
@@ -1632,7 +1647,7 @@ var Model_Modal = function Modal(props) {
 // CONCATENATED MODULE: ./src/components/ViewSourceModel.jsx
 
 
-function ViewSourceModel(props) {
+function ViewSourceModal(props) {
   var viewSource = props.viewSource,
     setViewSource = props.setViewSource,
     sourceCode = props.sourceCode,
@@ -2545,7 +2560,9 @@ function LinkModal(props) {
   var onLinkInsert = props.onLinkInsert,
     item = props.item,
     setIsOpenModel = props.setIsOpenModel,
-    selectedData = props.selectedData;
+    selectedData = props.selectedData,
+    imageUrl = props.imageUrl,
+    setImageUrl = props.setImageUrl;
   var _useState = Object(external_react_["useState"])(""),
     _useState2 = LinkModal_slicedToArray(_useState, 2),
     errorMessage = _useState2[0],
@@ -2553,7 +2570,8 @@ function LinkModal(props) {
   var _useState3 = Object(external_react_["useState"])({
       text: "",
       link: "",
-      open_new_tab: false
+      open_new_tab: false,
+      link_type: "text"
     }),
     _useState4 = LinkModal_slicedToArray(_useState3, 2),
     inputs = _useState4[0],
@@ -2582,14 +2600,52 @@ function LinkModal(props) {
       return _objectSpread(_objectSpread({}, old), {}, _defineProperty({}, name, value));
     });
   };
+  var handleCross = function handleCross() {
+    setImageUrl("");
+  };
+  var handleChangeFile = function handleChangeFile(event) {
+    var files = event.target.files;
+    setImageUrl(URL.createObjectURL(files[0]));
+  };
+  var handleChangeType = function handleChangeType(e, value) {
+    e.preventDefault();
+    setInputs(function (old) {
+      return _objectSpread(_objectSpread({}, old), {}, {
+        link_type: value
+      });
+    });
+    setErrorMessage("");
+  };
   Object(external_react_["useEffect"])(function () {
-    if (selectedData !== null && selectedData !== void 0 && selectedData.link) {
-      setInputs(selectedData);
+    if (selectedData !== null && selectedData !== void 0 && selectedData.text) {
+      var selected_data = _objectSpread({}, selectedData);
+      var type = selected_data.link_type;
+      if (!type) {
+        selected_data.link_type = "text";
+      }
+      setInputs(selected_data);
     }
   }, [selectedData]);
   return /*#__PURE__*/external_react_default.a.createElement("div", {
     className: "link-modal"
-  }, /*#__PURE__*/external_react_default.a.createElement(external_react_default.a.Fragment, null, /*#__PURE__*/external_react_default.a.createElement("div", {
+  }, /*#__PURE__*/external_react_default.a.createElement("div", {
+    className: "select-type"
+  }, /*#__PURE__*/external_react_default.a.createElement("button", {
+    className: "".concat(inputs.link_type === "text" ? "selected-type" : ""),
+    onClick: function onClick(e) {
+      return handleChangeType(e, "text");
+    }
+  }, "Text"), /*#__PURE__*/external_react_default.a.createElement("button", {
+    className: "".concat(inputs.link_type === "image" ? "selected-type" : ""),
+    onClick: function onClick(e) {
+      return handleChangeType(e, "image");
+    }
+  }, "Image"), /*#__PURE__*/external_react_default.a.createElement("button", {
+    className: "".concat(inputs.link_type === "button" ? "selected-type" : ""),
+    onClick: function onClick(e) {
+      return handleChangeType(e, "button");
+    }
+  }, "Button")), /*#__PURE__*/external_react_default.a.createElement(external_react_default.a.Fragment, null, /*#__PURE__*/external_react_default.a.createElement("div", {
     className: "react-editor-mt-10"
   }, /*#__PURE__*/external_react_default.a.createElement("label", {
     htmlFor: "link"
@@ -2603,7 +2659,29 @@ function LinkModal(props) {
     onChange: handleChange
   }), errorMessage && /*#__PURE__*/external_react_default.a.createElement("div", {
     className: "editor-error-messsage"
-  }, "*", "".concat(errorMessage))), /*#__PURE__*/external_react_default.a.createElement("div", {
+  }, "*", "".concat(errorMessage))), inputs.link_type === "image" ? /*#__PURE__*/external_react_default.a.createElement(external_react_default.a.Fragment, null, imageUrl ? /*#__PURE__*/external_react_default.a.createElement("div", {
+    className: "link-image-box"
+  }, /*#__PURE__*/external_react_default.a.createElement("span", {
+    className: "link-image-cross",
+    onClick: handleCross
+  }, "x"), /*#__PURE__*/external_react_default.a.createElement("img", {
+    src: imageUrl,
+    alt: "ImageLink",
+    className: "link-image"
+  })) : /*#__PURE__*/external_react_default.a.createElement("div", {
+    className: "react-editor-mt-10"
+  }, /*#__PURE__*/external_react_default.a.createElement("label", {
+    htmlFor: "image"
+  }, "Choose File"), /*#__PURE__*/external_react_default.a.createElement("input", {
+    type: "file",
+    id: "image",
+    name: "image",
+    className: "form-control-input",
+    accept: "image/*",
+    onChange: handleChangeFile
+  }), errorMessage && /*#__PURE__*/external_react_default.a.createElement("div", {
+    className: "editor-error-messsage"
+  }, "*", "".concat(errorMessage)))) : /*#__PURE__*/external_react_default.a.createElement("div", {
     className: "react-editor-mt-10"
   }, /*#__PURE__*/external_react_default.a.createElement("label", {
     htmlFor: "text"
@@ -3033,6 +3111,159 @@ function MediaModal(_ref) {
     onClick: handleSubmit
   }, "Save"))));
 }
+// CONCATENATED MODULE: ./src/components/RightClickLinkPopup.jsx
+function RightClickLinkPopup_slicedToArray(arr, i) { return RightClickLinkPopup_arrayWithHoles(arr) || RightClickLinkPopup_iterableToArrayLimit(arr, i) || RightClickLinkPopup_unsupportedIterableToArray(arr, i) || RightClickLinkPopup_nonIterableRest(); }
+function RightClickLinkPopup_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function RightClickLinkPopup_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return RightClickLinkPopup_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return RightClickLinkPopup_arrayLikeToArray(o, minLen); }
+function RightClickLinkPopup_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function RightClickLinkPopup_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function RightClickLinkPopup_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+var RightClickLinkPopup_RightClickLinkPopup = function RightClickLinkPopup(_ref) {
+  var _selectedEvent$parent3;
+  var editorRef = _ref.editorRef,
+    setIsOpenModel = _ref.setIsOpenModel,
+    setSelectedData = _ref.setSelectedData,
+    setSelectedEvent = _ref.setSelectedEvent,
+    selectedEvent = _ref.selectedEvent,
+    setImageUrl = _ref.setImageUrl,
+    handleRemoveLink = _ref.handleRemoveLink,
+    selectedRange = _ref.selectedRange;
+  var popupRef = Object(external_react_["useRef"])(null);
+  var _useState = Object(external_react_["useState"])({
+      x: 0,
+      y: 0
+    }),
+    _useState2 = RightClickLinkPopup_slicedToArray(_useState, 2),
+    popupPosition = _useState2[0],
+    setPopupPosition = _useState2[1];
+  var _useState3 = Object(external_react_["useState"])(false),
+    _useState4 = RightClickLinkPopup_slicedToArray(_useState3, 2),
+    popupVisible = _useState4[0],
+    setPopupVisible = _useState4[1];
+  var getSelectedText = function getSelectedText() {
+    if (selectedRange) {
+      var selectedText = selectedRange.toString();
+      return selectedText;
+    }
+    return "";
+  };
+  var handleRightClick = function handleRightClick(event) {
+    event.preventDefault();
+    var target = event.target;
+    var target_ref = editorRef.current.contains(target);
+    setPopupPosition({
+      x: event.clientX,
+      y: event.clientY
+    });
+    if (target.tagName === "IMG" || target.tagName === "A" || target.tagName === "BUTTON") {
+      setSelectedEvent(target);
+    }
+    if (target.tagName === "IMG") {
+      setPopupVisible(true);
+    } else {
+      setPopupVisible(true);
+    }
+  };
+  var handleClickOutside = function handleClickOutside(event) {
+    if (popupRef.current && !popupRef.current.contains(event.target)) {
+      setPopupVisible(false);
+    }
+  };
+  var handleOpenLinkPopup = function handleOpenLinkPopup() {
+    var open_new_tab = false;
+    var link_url = "";
+    var link_text = "";
+    var link_type = "text";
+    if ((selectedEvent === null || selectedEvent === void 0 ? void 0 : selectedEvent.tagName) === "A") {
+      link_url = selectedEvent === null || selectedEvent === void 0 ? void 0 : selectedEvent.href;
+      link_text = getSelectedText() || (selectedEvent === null || selectedEvent === void 0 ? void 0 : selectedEvent.textContent.trim());
+      open_new_tab = (selectedEvent === null || selectedEvent === void 0 ? void 0 : selectedEvent.target) === "_blank";
+    } else if ((selectedEvent === null || selectedEvent === void 0 ? void 0 : selectedEvent.tagName) === "IMG") {
+      link_text = "Image";
+      link_type = "image";
+      setImageUrl(selectedEvent === null || selectedEvent === void 0 ? void 0 : selectedEvent.src);
+    } else if ((selectedEvent === null || selectedEvent === void 0 ? void 0 : selectedEvent.tagName) === "BUTTON") {
+      link_text = selectedEvent.textContent;
+      link_type = "button";
+    }
+    var parentElement = selectedEvent === null || selectedEvent === void 0 ? void 0 : selectedEvent.parentElement;
+    if ((parentElement === null || parentElement === void 0 ? void 0 : parentElement.tagName) === "A") {
+      setSelectedEvent(parentElement);
+      link_url = parentElement === null || parentElement === void 0 ? void 0 : parentElement.href;
+      open_new_tab = (parentElement === null || parentElement === void 0 ? void 0 : parentElement.target) === "_blank";
+    }
+    var selected_object = {
+      link: link_url,
+      text: link_text,
+      open_new_tab: open_new_tab,
+      link_type: link_type
+    };
+    setSelectedData(selected_object);
+    setPopupVisible(false);
+    setIsOpenModel("link");
+  };
+  var handleOpenLink = function handleOpenLink() {
+    var _selectedEvent$parent;
+    var link = selectedEvent === null || selectedEvent === void 0 ? void 0 : selectedEvent.href;
+    if ((selectedEvent === null || selectedEvent === void 0 ? void 0 : selectedEvent.tagName) !== "A" && (selectedEvent === null || selectedEvent === void 0 ? void 0 : (_selectedEvent$parent = selectedEvent.parentElement) === null || _selectedEvent$parent === void 0 ? void 0 : _selectedEvent$parent.tagName) === "A") {
+      var _selectedEvent$parent2;
+      link = selectedEvent === null || selectedEvent === void 0 ? void 0 : (_selectedEvent$parent2 = selectedEvent.parentElement) === null || _selectedEvent$parent2 === void 0 ? void 0 : _selectedEvent$parent2.href;
+    }
+    window.open(link);
+    setPopupVisible(false);
+  };
+  var handleRemove = function handleRemove() {
+    handleRemoveLink();
+    setPopupVisible(false);
+  };
+  var handleImageLink = function handleImageLink() {
+    setPopupVisible(false);
+    setSelectedData({
+      link: selectedEvent === null || selectedEvent === void 0 ? void 0 : selectedEvent.src,
+      height: selectedEvent === null || selectedEvent === void 0 ? void 0 : selectedEvent.offsetHeight,
+      width: selectedEvent === null || selectedEvent === void 0 ? void 0 : selectedEvent.offsetWidth
+    });
+    setIsOpenModel("image");
+  };
+  Object(external_react_["useEffect"])(function () {
+    var editor = editorRef.current;
+    if (editor) {
+      editor.addEventListener("contextmenu", handleRightClick);
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return function () {
+      if (editor) {
+        editor.removeEventListener("contextmenu", handleRightClick);
+      }
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [editorRef]);
+  return /*#__PURE__*/external_react_default.a.createElement(external_react_default.a.Fragment, null, popupVisible && /*#__PURE__*/external_react_default.a.createElement("div", {
+    className: "right_click_popup_background",
+    style: {
+      top: popupPosition.y + window.scrollY,
+      left: popupPosition.x
+    },
+    ref: popupRef
+  }, /*#__PURE__*/external_react_default.a.createElement("div", {
+    className: "right_click_popup",
+    onClick: handleOpenLinkPopup
+  }, /*#__PURE__*/external_react_default.a.createElement(LinkIcon, null), " Link..."), ((selectedEvent === null || selectedEvent === void 0 ? void 0 : selectedEvent.tagName) === "A" || (selectedEvent === null || selectedEvent === void 0 ? void 0 : (_selectedEvent$parent3 = selectedEvent.parentElement) === null || _selectedEvent$parent3 === void 0 ? void 0 : _selectedEvent$parent3.tagName) === "A") && /*#__PURE__*/external_react_default.a.createElement(external_react_default.a.Fragment, null, /*#__PURE__*/external_react_default.a.createElement("div", {
+    className: "right_click_popup",
+    onClick: handleRemove
+  }, /*#__PURE__*/external_react_default.a.createElement(LinkIcon, null), " Remove Link..."), " ", /*#__PURE__*/external_react_default.a.createElement("div", {
+    className: "right_click_popup",
+    onClick: handleOpenLink
+  }, /*#__PURE__*/external_react_default.a.createElement(LinkIcon, null), " Open Link...")), (selectedEvent === null || selectedEvent === void 0 ? void 0 : selectedEvent.tagName) === "IMG" && /*#__PURE__*/external_react_default.a.createElement(external_react_default.a.Fragment, null, /*#__PURE__*/external_react_default.a.createElement("hr", null), /*#__PURE__*/external_react_default.a.createElement("div", {
+    className: "right_click_popup",
+    ref: popupRef,
+    onClick: handleImageLink
+  }, /*#__PURE__*/external_react_default.a.createElement(ImageIcon, null), " Image..."))));
+};
+/* harmony default export */ var components_RightClickLinkPopup = (RightClickLinkPopup_RightClickLinkPopup);
 // CONCATENATED MODULE: ./src/index.js
 function src_typeof(o) { "@babel/helpers - typeof"; return src_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, src_typeof(o); }
 var _excluded = ["theme_config", "toolbar", "navbar", "value", "onChange", "getEditorRef", "mainProps", "placeholder", "image_handler", "handleFullScreen", "remove_from_toolbar", "remove_from_navbar", "style"];
@@ -3050,6 +3281,7 @@ function src_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined"
 function src_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
 
 
 
@@ -3139,7 +3371,7 @@ function ReactEditorKit(props) {
     _useState8 = src_slicedToArray(_useState7, 2),
     init = _useState8[0],
     setInit = _useState8[1];
-  var _useState9 = Object(external_react_["useState"])(""),
+  var _useState9 = Object(external_react_["useState"])(null),
     _useState10 = src_slicedToArray(_useState9, 2),
     sourceCode = _useState10[0],
     setSourceCode = _useState10[1];
@@ -3149,13 +3381,17 @@ function ReactEditorKit(props) {
     setIsFullScreen = _useState12[1];
   var _useState13 = Object(external_react_["useState"])(""),
     _useState14 = src_slicedToArray(_useState13, 2),
-    isOpenModel = _useState14[0],
-    setIsOpenModel = _useState14[1];
+    imageUrl = _useState14[0],
+    setImageUrl = _useState14[1];
   var _useState15 = Object(external_react_["useState"])(""),
     _useState16 = src_slicedToArray(_useState15, 2),
-    previewContent = _useState16[0],
-    setPreviewContent = _useState16[1];
-  var _useState17 = Object(external_react_["useState"])({
+    isOpenModel = _useState16[0],
+    setIsOpenModel = _useState16[1];
+  var _useState17 = Object(external_react_["useState"])(""),
+    _useState18 = src_slicedToArray(_useState17, 2),
+    previewContent = _useState18[0],
+    setPreviewContent = _useState18[1];
+  var _useState19 = Object(external_react_["useState"])({
       link: "",
       height: "",
       width: "",
@@ -3163,43 +3399,40 @@ function ReactEditorKit(props) {
       text: "",
       open_new_tab: false
     }),
-    _useState18 = src_slicedToArray(_useState17, 2),
-    selectedData = _useState18[0],
-    setSelectedData = _useState18[1];
-  var _useState19 = Object(external_react_["useState"])({}),
     _useState20 = src_slicedToArray(_useState19, 2),
-    selectedEvent = _useState20[0],
-    setSelectedEvent = _useState20[1];
-  var _useState21 = Object(external_react_["useState"])(true),
+    selectedData = _useState20[0],
+    setSelectedData = _useState20[1];
+  var _useState21 = Object(external_react_["useState"])({}),
     _useState22 = src_slicedToArray(_useState21, 2),
-    isPlaceholder = _useState22[0],
-    setIsPlaceholder = _useState22[1];
-  var _useState23 = Object(external_react_["useState"])(0),
+    selectedEvent = _useState22[0],
+    setSelectedEvent = _useState22[1];
+  var _useState23 = Object(external_react_["useState"])(true),
     _useState24 = src_slicedToArray(_useState23, 2),
-    cursorPosition = _useState24[0],
-    setCursorPosition = _useState24[1];
+    isPlaceholder = _useState24[0],
+    setIsPlaceholder = _useState24[1];
   var _useState25 = Object(external_react_["useState"])({}),
     _useState26 = src_slicedToArray(_useState25, 2),
     selectedItem = _useState26[0],
     setSelectedItem = _useState26[1];
-  var _useState27 = Object(external_react_["useState"])(false),
+  var _useState27 = Object(external_react_["useState"])(null),
     _useState28 = src_slicedToArray(_useState27, 2),
-    showHR1 = _useState28[0],
-    setShowHR1 = _useState28[1];
+    selectedRange = _useState28[0],
+    setSelectedRange = _useState28[1];
   var _useState29 = Object(external_react_["useState"])(false),
     _useState30 = src_slicedToArray(_useState29, 2),
-    showHR2 = _useState30[0],
-    setShowHR2 = _useState30[1];
+    showHR1 = _useState30[0],
+    setShowHR1 = _useState30[1];
   var _useState31 = Object(external_react_["useState"])(false),
     _useState32 = src_slicedToArray(_useState31, 2),
-    showHR3 = _useState32[0],
-    setShowHR3 = _useState32[1];
+    showHR2 = _useState32[0],
+    setShowHR2 = _useState32[1];
+  var _useState33 = Object(external_react_["useState"])(false),
+    _useState34 = src_slicedToArray(_useState33, 2),
+    showHR3 = _useState34[0],
+    setShowHR3 = _useState34[1];
   var handleInput = function handleInput() {
     setInit(true);
     var content = editorRef.current.innerHTML;
-    // if (!content.startsWith("<p>") || !content.endsWith("</p>")) {
-    //   document.execCommand("formatBlock", false, "<p>");
-    // }
     if (onChange) {
       onChange(content);
     }
@@ -3213,6 +3446,7 @@ function ReactEditorKit(props) {
     if (e) {
       e.preventDefault();
     }
+    setImageUrl("");
     setIsOpenModel("");
     setSelectedData({});
     setSelectedEvent({});
@@ -3240,21 +3474,23 @@ function ReactEditorKit(props) {
     }
   };
   var handleInsertHRClick = function handleInsertHRClick() {
-    if (!editorRef.current) {
-      setTimeout(function () {
-        editorRef.current.focus();
-      }, 0);
-    } else {
-      focusCursorAtPosition(cursorPosition);
+    handleFocusEditor();
+    document.execCommand("insertHorizontalRule");
+  };
+  var handleFocusEditor = function handleFocusEditor() {
+    var editor = editorRef.current;
+    if (editor && selectedRange) {
+      var selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(selectedRange);
+      editor.focus(); // Focus on the editor without inserting text
     }
-    setTimeout(function () {
-      document.execCommand("insertHorizontalRule");
-    }, 10);
   };
   var handleLinkInsert = function handleLinkInsert(props) {
     var text = props.text,
       link = props.link,
-      open_new_tab = props.open_new_tab;
+      open_new_tab = props.open_new_tab,
+      link_type = props.link_type;
     if (!text) {
       text = link;
     }
@@ -3262,14 +3498,36 @@ function ReactEditorKit(props) {
     if (open_new_tab && open_new_tab !== "false") {
       linkHTML += ' target="_blank"';
     }
+    if (link_type === "image" && imageUrl) {
+      text = "<img src=\"".concat(imageUrl, "\" alt=\"ImageLink\" />");
+    } else if (link_type === "button") {
+      text = "<button>".concat(text, "</button>");
+    }
     linkHTML += ">".concat(text, "</a>");
+
+    // Assuming selectedEvent and selectedData are correctly defined elsewhere
     if (selectedEvent && selectedData) {
       var parentElement = selectedEvent.parentElement;
       if (parentElement) {
         parentElement.removeChild(selectedEvent);
       }
     }
-    focusCursorAtPosition(cursorPosition);
+    handleFocusEditor();
+    document.execCommand("insertHTML", false, linkHTML);
+    handleCloseModel();
+  };
+  var handleRemoveLink = function handleRemoveLink() {
+    var linkHTML = "".concat(selectedEvent.textContent.trim());
+    if (selectedEvent.tagName === "IMG") {
+      linkHTML = "<img src=\"".concat(selectedEvent.src, "\" alt=\"ImageLink\" />");
+    }
+    if (selectedEvent) {
+      var parentElement = selectedEvent.parentElement;
+      if (parentElement) {
+        parentElement.removeChild(selectedEvent);
+      }
+    }
+    handleFocusEditor();
     document.execCommand("insertHTML", false, linkHTML);
     handleCloseModel();
   };
@@ -3291,7 +3549,7 @@ function ReactEditorKit(props) {
         parentElement.removeChild(selectedEvent);
       }
     }
-    focusCursorAtPosition(cursorPosition);
+    handleFocusEditor();
     document.execCommand("insertHTML", false, imgElement);
     setIsLoading(false);
     handleCloseModel();
@@ -3325,13 +3583,11 @@ function ReactEditorKit(props) {
         }
       }
       if (editorNode && iframeElement) {
-        // Insert the iframe HTML into the editor content
-        focusCursorAtPosition(cursorPosition);
+        handleFocusEditor();
         document.execCommand("insertHTML", false, iframeElement);
       }
     } else if (type === "embed" && embed_code && editorNode) {
-      // Insert the provided embed code HTML into the editor content
-      focusCursorAtPosition(cursorPosition);
+      handleFocusEditor();
       document.execCommand("insertHTML", false, embed_code);
     }
     setIsOpenModel(""); // Assuming this is setting some state related to the modal
@@ -3352,9 +3608,9 @@ function ReactEditorKit(props) {
   var handleCharSelect = function handleCharSelect(e, _char) {
     e.preventDefault();
     if (editorRef.current !== null) {
-      focusCursorAtPosition(cursorPosition);
-      document.execCommand("insertText", false, _char); // Insert the character
-      setIsOpenModel(""); // Hide the special characters box
+      handleFocusEditor();
+      document.execCommand("insertHTML", false, _char);
+      setIsOpenModel("");
     }
   };
   var cleanHTML = function cleanHTML(html) {
@@ -3407,82 +3663,8 @@ function ReactEditorKit(props) {
       console.error("Error reading clipboard:", error);
     });
   };
-  var focusCursorAtPosition = function focusCursorAtPosition(position) {
-    var editorNode = editorRef.current;
-    var selection = window.getSelection();
-    var range = document.createRange();
-    if (!editorNode) return;
-    var currentPosition = 0;
-    var found = false;
-    var traverseNodes = function traverseNodes(node) {
-      if (node.nodeType === Node.TEXT_NODE) {
-        var textLength = node.textContent.length;
-        currentPosition += textLength;
-        if (position <= currentPosition) {
-          range.setStart(node, position - (currentPosition - textLength));
-          range.collapse(true);
-          found = true;
-        }
-      } else if (node.nodeType === Node.ELEMENT_NODE) {
-        if (node.nodeName === "P" && node.childNodes.length === 1 && node.firstChild.nodeName === "BR") {
-          // If the node is an empty <p> tag with only a <br>, focus the cursor after it
-          range.setStartAfter(node.firstChild); // Focus after the <br> element inside the empty <p> tag
-          found = true;
-        } else {
-          for (var i = 0; i < node.childNodes.length; i++) {
-            if (!found) {
-              traverseNodes(node.childNodes[i]);
-            }
-          }
-        }
-      }
-    };
-    traverseNodes(editorNode);
-    if (!found) {
-      var lastChild = editorNode.lastChild;
-      if (lastChild) {
-        range.setStart(lastChild, lastChild.length);
-        range.collapse(true);
-      }
-    }
-    selection.removeAllRanges();
-    selection.addRange(range);
-    editorNode.focus();
-  };
-  var getCaretCharacterOffsetWithin = function getCaretCharacterOffsetWithin(element) {
-    var caretOffset = 0;
-    var doc = element.ownerDocument || element.document;
-    var win = doc.defaultView || doc.parentWindow;
-    var sel;
-    if (typeof win.getSelection !== "undefined") {
-      sel = win.getSelection();
-      if (sel.rangeCount > 0) {
-        var range = win.getSelection().getRangeAt(0);
-        var preCaretRange = range.cloneRange();
-        preCaretRange.selectNodeContents(element);
-        preCaretRange.setEnd(range.endContainer, range.endOffset);
-        caretOffset = preCaretRange.toString().length;
-
-        // Adjust caretOffset for <p> tags containing only <br> tags
-        var pTags = element.querySelectorAll("p");
-        pTags.forEach(function (pTag) {
-          if (pTag.childNodes.length === 1 && pTag.childNodes[0].nodeName === "BR") {
-            caretOffset += 1; // Adjust for each <p> tag containing only <br> tags
-          }
-        });
-      }
-    } else if ((sel = doc.selection) && sel.type !== "Control") {
-      var textRange = sel.createRange();
-      var preCaretTextRange = doc.body.createTextRange();
-      preCaretTextRange.moveToElementText(element);
-      preCaretTextRange.setEndPoint("EndToEnd", textRange);
-      caretOffset = preCaretTextRange.text.length;
-    }
-    return caretOffset;
-  };
-  var handleBlur = function handleBlur(event) {
-    var caretPos = getCaretCharacterOffsetWithin(event.target);
-    setCursorPosition(caretPos);
+  var handleBlur = function handleBlur() {
+    handleSelection();
   };
   var handleNewDocument = function handleNewDocument() {
     editorRef.current.innerHTML = "";
@@ -3491,18 +3673,10 @@ function ReactEditorKit(props) {
     setPreviewContent(editorRef.current.innerHTML);
     setOpenPreview(true);
   };
-  var formatHTMLWithLineBreaks = function formatHTMLWithLineBreaks(html) {
-    // Add line breaks before opening tags
-    var formattedHTML = html.replace(/<(?=[^/])/g, function (match) {
-      return "\n".concat(match);
-    });
-    formattedHTML = formattedHTML.trim(); // Trim leading/trailing whitespace
-    return formattedHTML;
-  };
   var handleViewSource = function handleViewSource() {
-    if (!viewSource) {
+    if (!viewSource && editorRef.current) {
       var content = editorRef.current.innerHTML;
-      var formattedContent = formatHTMLWithLineBreaks(content);
+      var formattedContent = transformHTML(content);
       setSourceCode(formattedContent);
     } else {
       setSourceCode("");
@@ -3520,7 +3694,6 @@ function ReactEditorKit(props) {
   var handlePlaceholder = function handlePlaceholder() {
     var editor = editorRef.current;
     if (!editor) {
-      // editorRef.current is null, so we return early
       return;
     }
     if (editor.innerText.trim() === "") {
@@ -3529,6 +3702,19 @@ function ReactEditorKit(props) {
     } else {
       editor.classList.remove("empty");
       setIsPlaceholder(false);
+    }
+  };
+  var handleSelection = function handleSelection() {
+    var selection = window.getSelection();
+    if (selection.rangeCount > 0) {
+      setSelectedRange(selection.getRangeAt(0));
+    }
+  };
+  var restoreSelection = function restoreSelection() {
+    if (selectedRange) {
+      var selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(selectedRange);
     }
   };
   Object(external_react_["useEffect"])(function () {
@@ -3541,7 +3727,7 @@ function ReactEditorKit(props) {
     document.addEventListener("fullscreenchange", handleFullScreenChange);
     return function () {
       document.removeEventListener("keydown", handleKeyDown);
-      document.addEventListener("input", handlePlaceholder);
+      document.removeEventListener("input", handlePlaceholder);
       document.removeEventListener("fullscreenchange", handleFullScreenChange);
     };
   }, []);
@@ -3552,7 +3738,9 @@ function ReactEditorKit(props) {
           onLinkInsert: handleLinkInsert,
           item: selectedItem,
           setIsOpenModel: setIsOpenModel,
-          selectedData: selectedData
+          selectedData: selectedData,
+          imageUrl: imageUrl,
+          setImageUrl: setImageUrl
         }),
         title: "".concat(selectedData !== null && selectedData !== void 0 && selectedData.link ? "Update" : "Insert", " Link")
       };
@@ -3609,7 +3797,7 @@ function ReactEditorKit(props) {
         editorRef.current.focus();
       }, 0);
     } else {
-      focusCursorAtPosition(cursorPosition);
+      restoreSelection();
     }
     navigator.clipboard.read().then(function (clipboardItems) {
       clipboardItems.forEach(function (item) {
@@ -3683,20 +3871,42 @@ function ReactEditorKit(props) {
       setSelectedEvent(target);
     }
   };
+  var setCursorAtStart = function setCursorAtStart() {
+    var editor = editorRef.current;
+    if (editor) {
+      var range = document.createRange();
+      if (editor.childNodes.length > 0) {
+        range.setStart(editor.childNodes[0], 0);
+      } else {
+        range.setStart(editor, 0);
+      }
+      range.collapse(true);
+      var selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      // Update selectedRange state
+      setSelectedRange(range);
+    }
+  };
   Object(external_react_["useEffect"])(function () {
     handle_resize();
-    var editor = document.getElementById("editable");
+    setCursorAtStart();
+    var editor = editorRef.current;
     if (editor) {
       editor.addEventListener("dblclick", handleDoubleClick);
+      editor.addEventListener("mouseup", handleSelection);
+      editor.addEventListener("keyup", handleSelection);
     }
     window.addEventListener("resize", handle_resize);
     return function () {
       window.removeEventListener("resize", handle_resize);
       if (editor) {
         editor.removeEventListener("dblclick", handleDoubleClick);
+        editor.removeEventListener("mouseup", handleSelection);
+        editor.removeEventListener("keyup", handleSelection);
       }
     };
-  }, [isPlaceholder, isFullScreen, editorRef]);
+  }, [editorRef]);
   Object(external_react_["useEffect"])(function () {
     if (isFullScreen || isOpenModel || viewSource || openPreview) {
       document.body.style.overflow = "hidden";
@@ -3742,9 +3952,6 @@ function ReactEditorKit(props) {
       handlePreview: handlePreview,
       handlePrint: handlePrint,
       item: item,
-      isPlaceholder: isPlaceholder,
-      placeholder: placeholder,
-      value: value,
       remove_from_navbar: remove_from_navbar
     }), is_view && /*#__PURE__*/external_react_default.a.createElement(SelectView_SelectFileOptions, {
       isFullScreen: isFullScreen,
@@ -3999,7 +4206,7 @@ function ReactEditorKit(props) {
     isOpen: isOpenModel,
     onClose: handleCloseModel,
     title: model_component().title
-  }, model_component().component), viewSource && /*#__PURE__*/external_react_default.a.createElement(ViewSourceModel, {
+  }, model_component().component), viewSource && /*#__PURE__*/external_react_default.a.createElement(ViewSourceModal, {
     viewSource: viewSource,
     setViewSource: setViewSource,
     sourceCode: sourceCode,
@@ -4009,6 +4216,15 @@ function ReactEditorKit(props) {
     openPreview: openPreview,
     setOpenPreview: setOpenPreview,
     previewContent: previewContent
+  }), /*#__PURE__*/external_react_default.a.createElement(components_RightClickLinkPopup, {
+    editorRef: editorRef,
+    setIsOpenModel: setIsOpenModel,
+    setSelectedData: setSelectedData,
+    setSelectedEvent: setSelectedEvent,
+    setImageUrl: setImageUrl,
+    selectedEvent: selectedEvent,
+    handleRemoveLink: handleRemoveLink,
+    selectedRange: selectedRange
   }), /*#__PURE__*/external_react_default.a.createElement("div", {
     id: "modal-root"
   }), /*#__PURE__*/external_react_default.a.createElement("div", {
