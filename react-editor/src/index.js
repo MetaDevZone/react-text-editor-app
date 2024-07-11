@@ -201,7 +201,7 @@ export default function ReactEditorKit(props) {
     if (link_type === "image" && imageUrl) {
       text = `<img src="${imageUrl}" alt="ImageLink" />`;
     } else if (link_type === "button") {
-      text = `<button>${text}</button>`;
+      text = `<button contentEditable=false>${text}</button>`;
     }
     linkHTML += `>${text}</a>`;
 
@@ -501,6 +501,8 @@ export default function ReactEditorKit(props) {
             selectedData={selectedData}
             imageUrl={imageUrl}
             setImageUrl={setImageUrl}
+            image_handler={image_handler}
+            setIsLoading={setIsLoading}
           />
         ),
         title: `${selectedData?.link ? "Update" : "Insert"} Link`,
@@ -727,6 +729,8 @@ export default function ReactEditorKit(props) {
           }px - 22px)`,
         }
       : {};
+
+  console.log(isLoading, "isLoadingisLoadingisLoading");
 
   return (
     <>

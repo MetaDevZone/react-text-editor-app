@@ -8,8 +8,10 @@ export default function LinkModal(props) {
     selectedData,
     imageUrl,
     setImageUrl,
+    image_handler,
+    setIsLoading,
   } = props;
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState({});
   const [inputs, setInputs] = useState({
     text: "",
     link: "",
@@ -20,8 +22,25 @@ export default function LinkModal(props) {
   const handleLinkInsert = (e) => {
     e.preventDefault();
     if (!inputs.link) {
-      let error_message = "Please add link URL";
-      setErrorMessage(error_message);
+      let error = {
+        type: "link",
+        message: "Please add link URL",
+      };
+      setErrorMessage(error);
+      return;
+    } else if (inputs.link_type === "image" && !imageUrl) {
+      let error = {
+        type: "image",
+        message: "Please upload image",
+      };
+      setErrorMessage(error);
+      return;
+    } else if (inputs.link_type === "button" && !inputs.text) {
+      let error = {
+        type: "button",
+        message: "Please add text to display on button",
+      };
+      setErrorMessage(error);
       return;
     }
     if (item?.handleSubmit) {
@@ -43,9 +62,26 @@ export default function LinkModal(props) {
     setImageUrl("");
   };
 
-  const handleChangeFile = (event) => {
+  const handleChangeFile = async (event) => {
     const { files } = event.target;
-    setImageUrl(URL.createObjectURL(files[0]));
+    let data = {
+      image: files[0],
+    };
+    console.log(image_handler, "image_handlerimage_handler");
+    if (image_handler) {
+      console.log(data, "datadatadatadatadata");
+      setIsLoading(true);
+      let image_path = await image_handler(data);
+      console.log(image_path, "image_pathimage_path");
+      if (image_path) {
+        setImageUrl(image_path);
+        setIsLoading(false);
+      } else {
+        setIsLoading(false);
+      }
+    } else {
+      setImageUrl(URL.createObjectURL(data.image));
+    }
   };
 
   const handleChangeType = (e, value) => {
@@ -89,7 +125,7 @@ export default function LinkModal(props) {
       </div>
       <>
         <div className="react-editor-mt-10">
-          <label htmlFor="link">URL</label>
+          <label htmlFor="link">URL*</label>
           <input
             id="link"
             type="text"
@@ -99,9 +135,10 @@ export default function LinkModal(props) {
             value={inputs.link}
             onChange={handleChange}
           />
-
-          {errorMessage && (
-            <div className="editor-error-messsage">*{`${errorMessage}`}</div>
+          {errorMessage.type === "link" && (
+            <div className="editor-error-messsage">
+              *{`${errorMessage.message}`}
+            </div>
           )}
         </div>
         {inputs.link_type === "image" ? (
@@ -115,7 +152,7 @@ export default function LinkModal(props) {
               </div>
             ) : (
               <div className="react-editor-mt-10">
-                <label htmlFor="image">Choose File</label>
+                <label htmlFor="image">Choose File *</label>
                 <input
                   type="file"
                   id="image"
@@ -124,9 +161,9 @@ export default function LinkModal(props) {
                   accept="image/*"
                   onChange={handleChangeFile}
                 />
-                {errorMessage && (
+                {errorMessage.type === "image" && (
                   <div className="editor-error-messsage">
-                    *{`${errorMessage}`}
+                    *{`${errorMessage.message}`}
                   </div>
                 )}
               </div>
@@ -134,7 +171,9 @@ export default function LinkModal(props) {
           </>
         ) : (
           <div className="react-editor-mt-10">
-            <label htmlFor="text">Text to display</label>
+            <label htmlFor="text">{`Text to display ${
+              inputs.link_type === "button" ? "*" : ""
+            }`}</label>
             <input
               id="text"
               type="text"
@@ -143,6 +182,11 @@ export default function LinkModal(props) {
               onChange={handleChange}
               className="form-control-input"
             />
+            {errorMessage.type === "button" && (
+              <div className="editor-error-messsage">
+                *{`${errorMessage.message}`}
+              </div>
+            )}
           </div>
         )}
 

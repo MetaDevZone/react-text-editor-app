@@ -39,4 +39,5 @@ export { default as AlignRight } from "./SVGImages/AlignRight";
 export { default as AlignJustify } from "./SVGImages/AlignJustify";
 export { default as AlignCenter } from "./SVGImages/AlignCenter";
 export { default as AlignLeft } from "./SVGImages/AlignLeft";
+export { default as RemoveLinkIcon } from "./SVGImages/RemoveLinkIcon";
 export { default as loader_img } from "./SVGImages/loader.gif";

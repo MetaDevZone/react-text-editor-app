@@ -736,3 +736,8 @@ body {
   width: 20px;
   vertical-align: bottom;
 }
+
+.right_click_popup.open-link svg {
+  height: 15px;
+  margin-bottom: 1px;
+}

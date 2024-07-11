@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import LinkIcon from "./SVGImages/LinkIcon";
 import ImageIcon from "./SVGImages/ImageIcon";
+import RemoveLinkIcon from "./SVGImages/RemoveLinkIcon";
+import OpenLinkIcon from "./SVGImages/OpenLinkIcon";
 
 const RightClickLinkPopup = ({
   editorRef,
@@ -144,10 +146,13 @@ const RightClickLinkPopup = ({
             selectedEvent?.parentElement?.tagName === "A") && (
             <>
               <div className="right_click_popup" onClick={handleRemove}>
-                <LinkIcon /> Remove Link...
+                <RemoveLinkIcon /> Remove Link...
               </div>{" "}
-              <div className="right_click_popup" onClick={handleOpenLink}>
-                <LinkIcon /> Open Link...
+              <div
+                className="right_click_popup open-link"
+                onClick={handleOpenLink}
+              >
+                <OpenLinkIcon /> Open Link...
               </div>
             </>
           )}
