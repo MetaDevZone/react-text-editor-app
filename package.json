@@ -22,11 +22,12 @@
     "highlight-text-react"
   ],
   "scripts": {
+    "remove_nm": "rimraf node_modules package-lock.json",
     "build": "webpack"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/MetaDevZone/react-text-editor-app/issues"
+    "url": "https://github.com/MetaDevZone/react-text-editor-app"
   },
   "bugs": {
     "url": "https://github.com/MetaDevZone/react-text-editor-app/issues"
@@ -39,6 +40,7 @@
     "@babel/plugin-proposal-optional-chaining": "^7.21.0",
     "@babel/preset-env": "^7.7.6",
     "@babel/preset-react": "^7.7.4",
+    "babel-loader": "^8.0.6",
     "css-loader": "^3.3.0",
     "file-loader": "^6.2.0",
     "style-loader": "^1.0.1",
@@ -49,7 +51,6 @@
   "peerDependencies": {
     "prop-types": "^15.7.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "babel-loader": "^8.0.6"
+    "react-dom": "^18.2.0"
   }
 }

@@ -14,7 +14,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/, // Update the test pattern to include JSX files
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
@@ -37,7 +37,6 @@ module.exports = {
   externals: {
     react: "react",
     "react-dom": "react-dom",
-    "babel-loader": "babel-loader",
   },
   resolve: {
     extensions: [".js", ".jsx"],
