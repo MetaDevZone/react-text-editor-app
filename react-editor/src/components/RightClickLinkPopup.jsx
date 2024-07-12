@@ -100,10 +100,19 @@ const RightClickLinkPopup = ({
 
   const handleImageLink = () => {
     setPopupVisible(false);
+    let height = selectedEvent.style?.height;
+    let width = selectedEvent.style?.width;
+
+    if (!height) {
+      height = selectedEvent?.offsetHeight;
+    }
+    if (!width) {
+      width = selectedEvent?.offsetWidth;
+    }
     setSelectedData({
       link: selectedEvent?.src,
-      height: selectedEvent?.offsetHeight,
-      width: selectedEvent?.offsetWidth,
+      height: height,
+      width: width,
     });
     setIsOpenModel("image");
   };

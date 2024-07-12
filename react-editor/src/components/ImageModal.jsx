@@ -8,6 +8,7 @@ export default function ImageModal(props) {
   const [errorMessage, setErrorMessage] = useState("");
   const [heightRatio, setHeightRatio] = useState(0);
   const [isLocked, setIsLocked] = useState(true);
+  const [allowSHW, setAllowSHW] = useState(false);
 
   const [inputs, setInputs] = useState({
     link: "",
@@ -19,7 +20,12 @@ export default function ImageModal(props) {
 
   const handleChangeFile = (event) => {
     const { name, files } = event.target;
-    setInputs((oldInputs) => ({ ...oldInputs, [name]: files[0] }));
+    setInputs((oldInputs) => ({
+      ...oldInputs,
+      [name]: files[0],
+      height: "",
+      width: "",
+    }));
   };
 
   const MAX_RETRIES = 3;
@@ -31,6 +37,9 @@ export default function ImageModal(props) {
     img.onload = function () {
       img_width = img.width;
       img_height = img.height;
+      let ratio = img_width / img_height;
+      setHeightRatio(ratio);
+      setAllowSHW(true);
       setInputs((old) => ({
         ...old,
         width: img_width,
@@ -103,9 +112,13 @@ export default function ImageModal(props) {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    if (isLocked && name !== "link") {
+    if (isLocked && name !== "link" && allowSHW && inputs.link) {
       handleChangeHW(event);
       return;
+    }
+    if (name === "link" && value === "") {
+      setInputs((old) => ({ ...old, height: 0, width: 0 }));
+      setAllowSHW(false);
     }
     setInputs((old) => ({ ...old, [name]: value }));
   };
@@ -118,11 +131,17 @@ export default function ImageModal(props) {
 
   useEffect(() => {
     if (selectedData?.link) {
-      let height = selectedData.width / selectedData.height;
-      setHeightRatio(height);
-      setInputs({ ...inputs, ...selectedData });
+      let height = parseFloat(selectedData.height);
+      let width = parseFloat(selectedData.width);
+      let ratio = width / height;
+
+      setHeightRatio(ratio);
+      setAllowSHW(true);
+      setInputs({ ...inputs, ...selectedData, height, width });
     }
   }, [selectedData]);
+
+  console.log(inputs, "inputsinputsinputs33");
 
   return (
     <div className="link-modal">
@@ -161,7 +180,7 @@ export default function ImageModal(props) {
               )}
             </div>
             <div className="react-editor-d-flex justify-content-between">
-              <div className="react-editor-mt-10 react-editor-w-40">
+              <div className="react-editor-mt-10 react-editor-w-45">
                 <label htmlFor="height">Height</label>
                 <input
                   id="height"
@@ -172,7 +191,7 @@ export default function ImageModal(props) {
                   className="form-control-input"
                 />
               </div>
-              <div className="react-editor-mt-10 react-editor-w-40">
+              <div className="react-editor-mt-10 react-editor-w-45">
                 <label htmlFor="width">Width</label>
                 <input
                   id="width"

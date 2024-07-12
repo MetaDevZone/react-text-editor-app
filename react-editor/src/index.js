@@ -120,7 +120,7 @@ export default function ReactEditorKit(props) {
     text: "",
     open_new_tab: false,
   });
-  const [selectedEvent, setSelectedEvent] = useState({});
+  const [selectedEvent, setSelectedEvent] = useState(null);
   const [isPlaceholder, setIsPlaceholder] = useState(true);
   const [selectedItem, setSelectedItem] = useState({});
   const [selectedRange, setSelectedRange] = useState(null);
@@ -148,7 +148,7 @@ export default function ReactEditorKit(props) {
     setImageUrl("");
     setIsOpenModel("");
     setSelectedData({});
-    setSelectedEvent({});
+    setSelectedEvent(null);
   };
 
   const handleSaveSource = (e) => {
@@ -260,22 +260,35 @@ export default function ReactEditorKit(props) {
     let { link, height, width } = data;
     if (selectedEvent && selectedData) {
       selectedEvent.src = link;
-      selectedEvent.height = height;
-      selectedEvent.width = width;
-    } else {
-      handleFocusEditor();
-      let imgElement = `<img src="${link}" alt="Image"`;
       if (height) {
-        imgElement += ` height="${height}"`;
+        selectedEvent.style.height = `${height}px`;
+      } else {
+        selectedEvent.style.height = null;
       }
       if (width) {
-        imgElement += ` width="${width}"`;
+        selectedEvent.style.width = `${width}px`;
+      } else {
+        selectedEvent.style.width = null;
       }
-      imgElement += `/>`;
+      setTimeout(() => {
+        setIsLoading(false);
+        handleCloseModel();
+      }, 0);
+    } else {
+      handleFocusEditor();
+      console.log("handleFocusEditor");
+      let imgElement = `<img src="${link}" alt="Image" style="`;
+      if (height) {
+        imgElement += `height:${height}px;`;
+      }
+      if (width) {
+        imgElement += `width:${width}px;`;
+      }
+      imgElement += `"/>`;
       document.execCommand("insertHTML", false, imgElement);
+      setIsLoading(false);
+      handleCloseModel();
     }
-    setIsLoading(false);
-    handleCloseModel();
   };
 
   const handleMediaInsert = (data) => {
@@ -699,15 +712,15 @@ export default function ReactEditorKit(props) {
 
     let element = document.querySelector(".resize-image-wrapper");
     let image_element = document.querySelector(".resizer-image");
-    let startWidth = parseFloat(element.style.width);
-    let startHeight = parseFloat(element.style.height);
+    let startWidth = parseFloat(image_element.style.width);
+    let startHeight = parseFloat(image_element.style.height);
     console.log(startHeight, "startHeight");
     if (isNaN(startHeight)) {
-      startHeight = parseFloat(getComputedStyle(element).height);
+      startHeight = parseFloat(image_element.offsetHeight);
     }
 
     if (isNaN(startWidth)) {
-      startWidth = parseFloat(getComputedStyle(element).width);
+      startWidth = parseFloat(image_element.offsetWidth);
     }
     console.log(startHeight, "startHeight---1");
     let heightRatio = startHeight / startWidth;
@@ -724,8 +737,8 @@ export default function ReactEditorKit(props) {
       width = Math.round(width);
 
       element.style.width = `${width}px`;
-      image_element.style.width = `${width}px`;
       element.style.height = `${height}px`;
+      image_element.style.width = `${width}px`;
       image_element.style.height = `${height}px`;
     };
 
@@ -784,6 +797,7 @@ export default function ReactEditorKit(props) {
       );
       if (!target && !hasClass) {
         remove_resizer();
+        setSelectedEvent(null);
       }
     }
   };
