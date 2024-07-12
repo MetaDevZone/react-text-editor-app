@@ -404,7 +404,7 @@ module.exports = function (list, options) {
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(5);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ":root {\r\n  --editor-background-color: #fff;\r\n  --editor-border-color: #c4c4c4;\r\n  --editor-text-color: #414141;\r\n  --editor-toolbar-button-background: #fff;\r\n  --editor-toolbar-text-color: #414141;\r\n  --editor-toolbar-button-hover-background: #efefef;\r\n  --editor-toolbar-button-selected-background: #dee0e2;\r\n  --editor-svg-color: #414141;\r\n  --editor-save-button-background: rgb(9, 134, 62);\r\n}\r\n\r\nhtml,\r\nbody {\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\r\n}\r\n\r\n.react-editor-main img {\r\n  max-width: 60%;\r\n  height: auto;\r\n}\r\n\r\n.react-editor-main .select-option p,\r\n.react-editor-main .select-option pre,\r\n.react-editor-main .select-option h2,\r\n.react-editor-main .select-option h3,\r\n.react-editor-main .select-option h4,\r\n.react-editor-main .select-option h5,\r\n.react-editor-main .select-option h6,\r\n.react-editor-main .select-option blockquote,\r\n.react-editor-main .select-option h1 {\r\n  margin: 0;\r\n  color: var(--editor-toolbar-text-color) !important;\r\n}\r\n\r\n.react-editor-main {\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  color: var(--editor-text-color);\r\n  line-height: 16px !important;\r\n  font-family: system-ui !important;\r\n}\r\n\r\n.react-editor-main .wysiwyg-editor__toolbar {\r\n  border-bottom: 1px solid var(--editor-border-color);\r\n  font-size: 18px;\r\n  display: flex;\r\n  align-items: center;\r\n  flex-wrap: wrap;\r\n  padding: 0 5px;\r\n  position: relative;\r\n}\r\n\r\n.react-editor-main .wysiwyg-editor__toolbar .hr-1 {\r\n  position: absolute;\r\n  width: 98%;\r\n  border-color: var(--editor-border-color);\r\n  border: none;\r\n  border-top: 1px solid var(--editor-border-color);\r\n  height: 1px;\r\n  display: none;\r\n  top: 32px;\r\n  margin: 0;\r\n}\r\n\r\n.react-editor-main .wysiwyg-editor__toolbar .hr-2 {\r\n  top: 64px;\r\n}\r\n\r\n.react-editor-main .wysiwyg-editor__toolbar .button-group {\r\n  display: inline-block;\r\n  border-right: 1px solid var(--editor-border-color);\r\n}\r\n.react-editor-main .wysiwyg-editor__toolbar button {\r\n  background: var(--editor-toolbar-button-background);\r\n  outline: none;\r\n  border: none;\r\n  cursor: pointer;\r\n  padding: 6px 10px;\r\n  color: var(--editor-toolbar-text-color);\r\n  line-height: 16px;\r\n}\r\n.wysiwyg-editor__toolbar button:disabled,\r\n.wysiwyg-editor__toolbar button.disabled {\r\n  cursor: not-allowed;\r\n}\r\n.wysiwyg-editor__toolbar button:disabled svg,\r\n.wysiwyg-editor__toolbar button.disabled svg {\r\n  fill: #9fa2a6;\r\n}\r\n\r\n.wysiwyg-editor__toolbar button:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background);\r\n}\r\n\r\n.wysiwyg-editor__toolbar input {\r\n  background-color: transparent;\r\n  border: 1px solid var(--editor-border-color);\r\n  outline: none;\r\n  cursor: pointer;\r\n}\r\n\r\n.wysiwyg-editor__toolbar select,\r\n.wysiwyg-editor__toolbar select:focus-visible {\r\n  border: none !important;\r\n  outline: none;\r\n}\r\n\r\n.ml-main-content-box {\r\n  padding: 10px;\r\n  height: 250px;\r\n  overflow: auto;\r\n  resize: vertical;\r\n  max-width: 100% !important;\r\n  line-height: normal;\r\n}\r\n\r\n.react-editor-main .placeholder-text {\r\n  opacity: 0.8;\r\n  font-style: italic;\r\n}\r\n\r\n.ml-main-content-box h1,\r\n.ml-main-content-box h2,\r\n.ml-main-content-box h3,\r\n.ml-main-content-box h4,\r\n.ml-main-content-box h5,\r\n.ml-main-content-box h6,\r\n.ml-main-content-box p {\r\n  margin-top: 0;\r\n  color: var(--editor-text-color);\r\n}\r\n\r\n.ml-main-content-box h1 {\r\n  font-size: 2em;\r\n}\r\n\r\n.ml-main-content-box h2 {\r\n  font-size: 1.5em;\r\n}\r\n\r\n.ml-main-content-box h3 {\r\n  font-size: 1.17em;\r\n}\r\n\r\n.ml-main-content-box h4 {\r\n  font-size: 1em;\r\n}\r\n\r\n.ml-main-content-box h5 {\r\n  font-size: 0.83em;\r\n}\r\n\r\n.ml-main-content-box h6 {\r\n  font-size: 0.67em;\r\n}\r\n\r\n.ml-main-content-box p {\r\n  font-size: 1em;\r\n}\r\n\r\n#modal-root .link-image {\r\n  height: 80px;\r\n  width: 80px;\r\n  object-fit: cover;\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 5px;\r\n}\r\n\r\n#modal-root .link-image-box {\r\n  height: 80px;\r\n  width: 80px;\r\n  position: relative;\r\n  margin-top: 10px;\r\n}\r\n#modal-root .link-image-cross {\r\n  position: absolute;\r\n  top: -5px;\r\n  right: -7px;\r\n  height: 20px;\r\n  width: 20px;\r\n  background-color: red;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  border-radius: 50%;\r\n  color: #fff;\r\n  cursor: pointer;\r\n  padding-bottom: 3px;\r\n}\r\n\r\n.ml-main-content-box:focus-visible {\r\n  outline: none;\r\n}\r\n\r\n.wysiwyg-editor__source {\r\n  width: 98%;\r\n  height: 80%;\r\n  outline: none;\r\n  padding: 10px;\r\n  font-family: \"Courier New\", Monospace !important;\r\n  font-size: small;\r\n  white-space: pre-wrap;\r\n  margin: 0;\r\n  display: block;\r\n  font-size: 16px;\r\n  resize: none;\r\n}\r\n\r\n/* Modal.css */\r\n\r\n#modal-root .modal-overlay {\r\n  font-family: system-ui !important;\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: rgba(0, 0, 0, 0.5);\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  z-index: 999999;\r\n}\r\n\r\n.image-model-overly {\r\n  z-index: 999999;\r\n}\r\n\r\n.fill-screen-view {\r\n  z-index: 999999;\r\n}\r\n\r\n#modal-root .model-title {\r\n  display: flex;\r\n  justify-content: space-between;\r\n}\r\n\r\n#modal-root .model-title h2 {\r\n  margin: 0;\r\n}\r\n\r\n#modal-root .model-title svg {\r\n  font-size: 25px;\r\n  cursor: pointer;\r\n}\r\n\r\n#modal-root .modal-popup {\r\n  background-color: #fff;\r\n  padding: 20px;\r\n  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\r\n  width: 400px;\r\n  max-width: 85%;\r\n  color: #000;\r\n  border-radius: 5px;\r\n}\r\n\r\n.fill-screen-view .modal-popup {\r\n  max-width: 100% !important;\r\n  width: 100vw !important;\r\n  height: 100vh !important;\r\n  z-index: 1;\r\n  padding: 0 !important;\r\n  overflow: hidden;\r\n  border-radius: 0 !important;\r\n}\r\n\r\n#modal-root .modal-popup hr {\r\n  margin-bottom: 0;\r\n}\r\n\r\n#modal-root .modal-close-btn {\r\n  position: absolute;\r\n  top: 10px;\r\n  right: 10px;\r\n  background: none;\r\n  border: none;\r\n  cursor: pointer;\r\n  padding: 5px 10px;\r\n  font-size: 16px;\r\n}\r\n\r\n.wysiwyg-editor__toolbar button svg {\r\n  fill: var(--editor-svg-color);\r\n  color: var(--editor-svg-color);\r\n  display: inline-block;\r\n  height: 15px;\r\n  width: 14px;\r\n}\r\n\r\n.react-editor-main .custom-select {\r\n  position: relative;\r\n  display: inline-block;\r\n  cursor: pointer;\r\n  font-size: 16px;\r\n  padding: 6px;\r\n  color: var(--editor-toolbar-text-color);\r\n  line-height: 16px;\r\n}\r\n\r\n.react-editor-main .custom-select-format {\r\n  position: relative;\r\n  display: inline-block;\r\n  cursor: pointer;\r\n  font-size: 16px;\r\n  padding: 6px;\r\n}\r\n\r\n.react-editor-main .main-color-component svg {\r\n  height: 13px !important;\r\n}\r\n\r\n.react-editor-main .select-items {\r\n  position: absolute;\r\n  background-color: #fff;\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 2px;\r\n  z-index: 2;\r\n  width: 160px;\r\n  max-height: 200px;\r\n  overflow-y: auto;\r\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\r\n  top: 29px;\r\n  left: 0;\r\n  display: none;\r\n}\r\n\r\n.react-editor-main .select-items button {\r\n  display: flex !important;\r\n  width: 100%;\r\n  padding: 7px;\r\n  font-family: system-ui !important;\r\n}\r\n\r\n.react-editor-main .p-items .select-items {\r\n  left: 142px;\r\n}\r\n\r\n.react-editor-main .select-items-format {\r\n  position: absolute;\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  border-top: none;\r\n  border-radius: 2px;\r\n  z-index: 1;\r\n  max-height: 200px;\r\n  overflow-y: auto;\r\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\r\n  left: 0;\r\n  top: 30px;\r\n}\r\n\r\n.react-editor-main .select-items-format .select-option:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background) !important;\r\n}\r\n\r\n.react-editor-main .select-items-format h1 {\r\n  font-size: 32px !important;\r\n  font-weight: 600;\r\n  line-height: 32px;\r\n}\r\n.react-editor-main .select-items-format h2 {\r\n  font-size: 28px !important;\r\n  font-weight: 600;\r\n  line-height: 28px;\r\n}\r\n.react-editor-main .select-items-format h3 {\r\n  font-size: 24px !important;\r\n  font-weight: 600;\r\n  line-height: 24px;\r\n}\r\n.react-editor-main .select-items-format h4 {\r\n  font-size: 20px !important;\r\n  line-height: 20px;\r\n}\r\n.react-editor-main .select-items-format h5 {\r\n  font-size: 16px !important;\r\n}\r\n.react-editor-main .select-items-format h6 {\r\n  font-size: 14px;\r\n}\r\n\r\n.react-editor-main .select-items.show {\r\n  display: block;\r\n}\r\n\r\n.react-editor-main .select-items .select-option,\r\n.react-editor-main .select-items-format .select-option {\r\n  padding: 6px 10px;\r\n  cursor: pointer;\r\n  font-size: 16px;\r\n  white-space: nowrap;\r\n}\r\n\r\n.react-editor-main .select-items .select-insert svg {\r\n  height: 20px;\r\n  width: 20px;\r\n  margin-right: 7px;\r\n  color: var(--editor-svg-color);\r\n  fill: var(--editor-svg-color);\r\n}\r\n\r\n.react-editor-main .select-items button svg {\r\n  height: 16px !important;\r\n  width: 16px !important;\r\n  margin-top: 2px;\r\n}\r\n\r\n.react-editor-main .select-items .select-insert span {\r\n  margin-top: 2px;\r\n}\r\n\r\n.react-editor-main .selected-option {\r\n  background-color: var(--editor-toolbar-button-selected-background) !important;\r\n}\r\n\r\n.react-editor-main .select-items .select-option:hover,\r\n.react-editor-main .select-insert:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background) !important;\r\n}\r\n\r\n#modal-root .form-control-input {\r\n  font-family: system-ui !important;\r\n  width: 100%;\r\n  padding: 7px;\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 3px;\r\n}\r\n\r\n#modal-root .form-control-input:focus-visible {\r\n  outline: none;\r\n}\r\n\r\n#modal-root .save-button {\r\n  background-color: var(--editor-save-button-background);\r\n  color: #fff;\r\n  padding: 7px 14px;\r\n  border: none;\r\n  margin-top: 10px;\r\n  border-radius: 3px;\r\n  cursor: pointer;\r\n}\r\n\r\n#modal-root .select-type button {\r\n  padding: 6px 20px;\r\n  background-color: var(--editor-toolbar-button-background);\r\n  border: 1px solid var(--editor-border-color);\r\n  cursor: pointer;\r\n}\r\n\r\n#modal-root .select-type button.selected-type {\r\n  background-color: #efefef;\r\n}\r\n\r\n#modal-root .special-char-box {\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n}\r\n\r\n#modal-root .special-char {\r\n  width: 30px;\r\n  height: 30px;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  cursor: pointer;\r\n  border-radius: 2px;\r\n}\r\n\r\n#modal-root .special-char:hover {\r\n  background-color: #dee0e2;\r\n}\r\n\r\n.react-editor-main .select-insert {\r\n  min-width: 120px;\r\n  font-size: 16px;\r\n  text-align: left;\r\n  padding: 8px 10px;\r\n  white-space: nowrap;\r\n  display: flex;\r\n  border-top: 1px solid var(--editor-border-color) !important;\r\n  color: var(--editor-text-color) !important;\r\n  background-color: var(--editor-background-color);\r\n  border-radius: 0 !important;\r\n  margin: 0 !important;\r\n}\r\n\r\n/* width */\r\n.react-editor-main ::-webkit-scrollbar {\r\n  width: 5px;\r\n}\r\n\r\n/* Track */\r\n.react-editor-main ::-webkit-scrollbar-track {\r\n  background: #f1f1f1;\r\n}\r\n\r\n/* Handle */\r\n.react-editor-main ::-webkit-scrollbar-thumb {\r\n  background: var(--editor-border-color);\r\n}\r\n\r\n/* Handle on hover */\r\n.react-editor-main ::-webkit-scrollbar-thumb:hover {\r\n  background: #555;\r\n}\r\n\r\n#modal-root .full-screen-model {\r\n  width: 95% !important;\r\n  height: 85vh;\r\n}\r\n\r\n.ml-main-content-box blockquote {\r\n  border-left: 2px solid var(--editor-border-color);\r\n  border-left-width: 5px;\r\n  margin-left: 1.5rem;\r\n  padding: 2px 0;\r\n  padding-left: 1rem;\r\n  font-style: italic;\r\n  font-family: Georgia, Times, \"Times New Roman\", serif;\r\n  color: var(--editor-text-color);\r\n}\r\n\r\n.select-items-nested.left {\r\n  left: -100%;\r\n}\r\n\r\n.react-editor-main .select-formation-dropdown {\r\n  position: absolute;\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 4px;\r\n  left: 154px;\r\n  display: none;\r\n  min-width: 140px;\r\n  z-index: 2;\r\n  max-height: 200px;\r\n  overflow-x: hidden;\r\n}\r\n\r\n.react-editor-main .font-size-dropdown {\r\n  min-width: 90px;\r\n}\r\n\r\n.react-editor-main .font-size-dropdown .select-option {\r\n  padding: 10px;\r\n  border-bottom: 1px solid var(--editor-border-color);\r\n  font-size: 16px;\r\n  width: 98%;\r\n  margin: 0;\r\n  border-radius: 0 !important;\r\n  font-family: system-ui !important;\r\n}\r\n\r\n.react-editor-main .select-formation-dropdown.show {\r\n  display: block;\r\n}\r\n\r\n.react-editor-main .font-family-option {\r\n  display: block;\r\n  width: 99%;\r\n  padding: 9px !important;\r\n  border-top: 1px solid var(--editor-border-color) !important;\r\n  margin: 0 !important;\r\n  border-radius: 0 !important;\r\n}\r\n\r\n.react-editor-main .font-family-option:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background);\r\n}\r\n\r\n.react-editor-main .bottom-colored-line {\r\n  height: 3px;\r\n  width: 14px;\r\n  background-color: var(--editor-svg-color);\r\n}\r\n\r\n.react-editor-main .main-color-component {\r\n  position: relative;\r\n  display: inline-block;\r\n}\r\n\r\n.react-editor-main .open-color-box {\r\n  position: absolute;\r\n  height: 140px;\r\n  width: 140px;\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  top: 30px;\r\n  left: -1px;\r\n  display: none;\r\n  z-index: 1;\r\n}\r\n\r\n.react-editor-main .color-box-grid button {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  border-radius: 0 !important;\r\n}\r\n\r\n.react-editor-main .open-color-box.show {\r\n  display: block;\r\n}\r\n\r\n.react-editor-main .color-box {\r\n  height: 28px;\r\n  width: 28px;\r\n  cursor: pointer;\r\n  background-color: var(--editor-background-color);\r\n}\r\n\r\n.react-editor-main .custom-color-picker {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n}\r\n\r\n.react-editor-main .custom-color-picker svg {\r\n  height: 20px;\r\n}\r\n\r\n.react-editor-main .increase-icon-size svg {\r\n  height: 20px !important;\r\n  width: 17px !important;\r\n  margin-top: 3px;\r\n}\r\n\r\n.react-editor-main .increase-icon-size button {\r\n  padding: 3px 10px;\r\n}\r\n\r\n.react-editor-main .color-box:hover {\r\n  transform: scale(1.2);\r\n  transition: transform 0.5s ease;\r\n}\r\n\r\n.react-editor-main .vertical-line {\r\n  height: 32px;\r\n  width: 1px;\r\n  background-color: var(--editor-border-color);\r\n}\r\n\r\n.react-editor-main .react-editor-mt-2 {\r\n  margin-top: 2px;\r\n}\r\n#modal-root .react-editor-mt-10 {\r\n  margin-top: 10px;\r\n}\r\n.react-editor-main .react-editor-me-5 {\r\n  margin-right: 5px;\r\n}\r\n\r\n#modal-root .react-editor-text-end {\r\n  text-align: right;\r\n}\r\n\r\n.react-editor-main .react-editor-text-left {\r\n  text-align: left;\r\n}\r\n\r\n.react-editor-main .react-editor-d-flex,\r\n#modal-root .react-editor-d-flex {\r\n  display: flex;\r\n}\r\n\r\n.react-editor-main .react-editor-w-47,\r\n#modal-root .react-editor-w-47 {\r\n  width: 47%;\r\n}\r\n\r\n.react-editor-main .justify-content-between,\r\n#modal-root .justify-content-between {\r\n  justify-content: space-between;\r\n}\r\n\r\n.react-editor-main .react-editor-flex-column,\r\n#modal-root .react-editor-flex-column {\r\n  flex-direction: column;\r\n}\r\n\r\n.editor-error-messsage {\r\n  color: red;\r\n}\r\n\r\n.ml-main-content-box:empty:before {\r\n  content: attr(data-placeholder);\r\n  color: #aaa;\r\n  pointer-events: none;\r\n}\r\n\r\n.full-screen {\r\n  position: fixed !important;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100% !important;\r\n  height: 100% !important;\r\n  background-color: var(--editor-toolbar-button-background);\r\n  overflow: hidden;\r\n  z-index: 99999 !important;\r\n}\r\n\r\n.right_click_popup_background {\r\n  position: absolute;\r\n  cursor: pointer;\r\n  background-color: var(--editor-toolbar-button-background);\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 5px;\r\n  z-index: 1000;\r\n  min-width: 100px;\r\n  padding: 3px 0px;\r\n}\r\n\r\n.right_click_popup_background hr {\r\n  margin: 0;\r\n  border: none;\r\n  border-top: 1px solid var(--editor-border-color);\r\n  width: 100%;\r\n}\r\n\r\n.right_click_popup {\r\n  padding: 5px 10px;\r\n  font-family: system-ui;\r\n  font-size: 15px;\r\n  color: var(--editor-text-color);\r\n}\r\n\r\n.right_click_popup:hover {\r\n  background: var(--editor-toolbar-button-hover-background);\r\n}\r\n\r\n.right_click_popup svg {\r\n  margin-right: 5px;\r\n  height: 20px;\r\n  width: 20px;\r\n  vertical-align: bottom;\r\n}\r\n\r\n.right_click_popup.open-link svg {\r\n  height: 15px;\r\n  margin-bottom: 1px;\r\n}\r\n", ""]);
+exports.push([module.i, ":root {\r\n  --editor-background-color: #fff;\r\n  --editor-border-color: #c4c4c4;\r\n  --editor-text-color: #414141;\r\n  --editor-toolbar-button-background: #fff;\r\n  --editor-toolbar-text-color: #414141;\r\n  --editor-toolbar-button-hover-background: #efefef;\r\n  --editor-toolbar-button-selected-background: #dee0e2;\r\n  --editor-svg-color: #414141;\r\n  --editor-save-button-background: rgb(9, 134, 62);\r\n}\r\n\r\nhtml,\r\nbody {\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\r\n}\r\n\r\n.react-editor-main img {\r\n  /* max-width: 60%; */\r\n  /* height: auto; */\r\n}\r\n\r\n.react-editor-main .select-option p,\r\n.react-editor-main .select-option pre,\r\n.react-editor-main .select-option h2,\r\n.react-editor-main .select-option h3,\r\n.react-editor-main .select-option h4,\r\n.react-editor-main .select-option h5,\r\n.react-editor-main .select-option h6,\r\n.react-editor-main .select-option blockquote,\r\n.react-editor-main .select-option h1 {\r\n  margin: 0;\r\n  color: var(--editor-toolbar-text-color) !important;\r\n}\r\n\r\n.react-editor-main {\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  color: var(--editor-text-color);\r\n  line-height: 16px !important;\r\n  font-family: system-ui !important;\r\n}\r\n\r\n.react-editor-main .wysiwyg-editor__toolbar {\r\n  border-bottom: 1px solid var(--editor-border-color);\r\n  font-size: 18px;\r\n  display: flex;\r\n  align-items: center;\r\n  flex-wrap: wrap;\r\n  padding: 0 5px;\r\n  position: relative;\r\n}\r\n\r\n.react-editor-main .wysiwyg-editor__toolbar .hr-1 {\r\n  position: absolute;\r\n  width: 98%;\r\n  border-color: var(--editor-border-color);\r\n  border: none;\r\n  border-top: 1px solid var(--editor-border-color);\r\n  height: 1px;\r\n  display: none;\r\n  top: 32px;\r\n  margin: 0;\r\n}\r\n\r\n.react-editor-main .wysiwyg-editor__toolbar .hr-2 {\r\n  top: 64px;\r\n}\r\n\r\n.react-editor-main .wysiwyg-editor__toolbar .button-group {\r\n  display: inline-block;\r\n  border-right: 1px solid var(--editor-border-color);\r\n}\r\n.react-editor-main .wysiwyg-editor__toolbar button {\r\n  background: var(--editor-toolbar-button-background);\r\n  outline: none;\r\n  border: none;\r\n  cursor: pointer;\r\n  padding: 6px 10px;\r\n  color: var(--editor-toolbar-text-color);\r\n  line-height: 16px;\r\n}\r\n.wysiwyg-editor__toolbar button:disabled,\r\n.wysiwyg-editor__toolbar button.disabled {\r\n  cursor: not-allowed;\r\n}\r\n.wysiwyg-editor__toolbar button:disabled svg,\r\n.wysiwyg-editor__toolbar button.disabled svg {\r\n  fill: #9fa2a6;\r\n}\r\n\r\n.wysiwyg-editor__toolbar button:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background);\r\n}\r\n\r\n.wysiwyg-editor__toolbar input {\r\n  background-color: transparent;\r\n  border: 1px solid var(--editor-border-color);\r\n  outline: none;\r\n  cursor: pointer;\r\n}\r\n\r\n.wysiwyg-editor__toolbar select,\r\n.wysiwyg-editor__toolbar select:focus-visible {\r\n  border: none !important;\r\n  outline: none;\r\n}\r\n\r\n.ml-main-content-box {\r\n  padding: 10px;\r\n  height: 250px;\r\n  overflow: auto;\r\n  resize: vertical;\r\n  max-width: 100% !important;\r\n  line-height: normal;\r\n}\r\n\r\n.react-editor-main .placeholder-text {\r\n  opacity: 0.8;\r\n  font-style: italic;\r\n}\r\n\r\n.ml-main-content-box h1,\r\n.ml-main-content-box h2,\r\n.ml-main-content-box h3,\r\n.ml-main-content-box h4,\r\n.ml-main-content-box h5,\r\n.ml-main-content-box h6,\r\n.ml-main-content-box p {\r\n  margin-top: 0;\r\n  color: var(--editor-text-color);\r\n}\r\n\r\n.ml-main-content-box h1 {\r\n  font-size: 2em;\r\n}\r\n\r\n.ml-main-content-box h2 {\r\n  font-size: 1.5em;\r\n}\r\n\r\n.ml-main-content-box h3 {\r\n  font-size: 1.17em;\r\n}\r\n\r\n.ml-main-content-box h4 {\r\n  font-size: 1em;\r\n}\r\n\r\n.ml-main-content-box h5 {\r\n  font-size: 0.83em;\r\n}\r\n\r\n.ml-main-content-box h6 {\r\n  font-size: 0.67em;\r\n}\r\n\r\n.ml-main-content-box p {\r\n  font-size: 1em;\r\n}\r\n\r\n#modal-root .link-image {\r\n  height: 80px;\r\n  width: 80px;\r\n  object-fit: cover;\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 5px;\r\n}\r\n\r\n#modal-root .link-image-box {\r\n  height: 80px;\r\n  width: 80px;\r\n  position: relative;\r\n  margin-top: 10px;\r\n}\r\n#modal-root .link-image-cross {\r\n  position: absolute;\r\n  top: -5px;\r\n  right: -7px;\r\n  height: 20px;\r\n  width: 20px;\r\n  background-color: red;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  border-radius: 50%;\r\n  color: #fff;\r\n  cursor: pointer;\r\n  padding-bottom: 3px;\r\n}\r\n\r\n.ml-main-content-box:focus-visible {\r\n  outline: none;\r\n}\r\n\r\n.wysiwyg-editor__source {\r\n  width: 98%;\r\n  height: 80%;\r\n  outline: none;\r\n  padding: 10px;\r\n  font-family: \"Courier New\", Monospace !important;\r\n  font-size: small;\r\n  white-space: pre-wrap;\r\n  margin: 0;\r\n  display: block;\r\n  font-size: 16px;\r\n  resize: none;\r\n}\r\n\r\n/* Modal.css */\r\n\r\n#modal-root .modal-overlay {\r\n  font-family: system-ui !important;\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: rgba(0, 0, 0, 0.5);\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  z-index: 999999;\r\n}\r\n\r\n.image-model-overly {\r\n  z-index: 999999;\r\n}\r\n\r\n.fill-screen-view {\r\n  z-index: 999999;\r\n}\r\n\r\n#modal-root .model-title {\r\n  display: flex;\r\n  justify-content: space-between;\r\n}\r\n\r\n#modal-root .model-title h2 {\r\n  margin: 0;\r\n}\r\n\r\n#modal-root .model-title svg {\r\n  font-size: 25px;\r\n  cursor: pointer;\r\n}\r\n\r\n#modal-root .modal-popup {\r\n  background-color: #fff;\r\n  padding: 20px;\r\n  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\r\n  width: 400px;\r\n  max-width: 85%;\r\n  color: #000;\r\n  border-radius: 5px;\r\n}\r\n\r\n.fill-screen-view .modal-popup {\r\n  max-width: 100% !important;\r\n  width: 100vw !important;\r\n  height: 100vh !important;\r\n  z-index: 1;\r\n  padding: 0 !important;\r\n  overflow: hidden;\r\n  border-radius: 0 !important;\r\n}\r\n\r\n#modal-root .modal-popup hr {\r\n  margin-bottom: 0;\r\n}\r\n\r\n#modal-root .modal-close-btn {\r\n  position: absolute;\r\n  top: 10px;\r\n  right: 10px;\r\n  background: none;\r\n  border: none;\r\n  cursor: pointer;\r\n  padding: 5px 10px;\r\n  font-size: 16px;\r\n}\r\n\r\n.wysiwyg-editor__toolbar button svg {\r\n  fill: var(--editor-svg-color);\r\n  color: var(--editor-svg-color);\r\n  display: inline-block;\r\n  height: 15px;\r\n  width: 14px;\r\n}\r\n\r\n.react-editor-main .custom-select {\r\n  position: relative;\r\n  display: inline-block;\r\n  cursor: pointer;\r\n  font-size: 16px;\r\n  padding: 6px;\r\n  color: var(--editor-toolbar-text-color);\r\n  line-height: 16px;\r\n}\r\n\r\n.react-editor-main .custom-select-format {\r\n  position: relative;\r\n  display: inline-block;\r\n  cursor: pointer;\r\n  font-size: 16px;\r\n  padding: 6px;\r\n}\r\n\r\n.react-editor-main .main-color-component svg {\r\n  height: 13px !important;\r\n}\r\n\r\n.react-editor-main .select-items {\r\n  position: absolute;\r\n  background-color: #fff;\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 2px;\r\n  z-index: 2;\r\n  width: 160px;\r\n  max-height: 200px;\r\n  overflow-y: auto;\r\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\r\n  top: 29px;\r\n  left: 0;\r\n  display: none;\r\n}\r\n\r\n.react-editor-main .select-items button {\r\n  display: flex !important;\r\n  width: 100%;\r\n  padding: 7px;\r\n  font-family: system-ui !important;\r\n}\r\n\r\n.react-editor-main .p-items .select-items {\r\n  left: 142px;\r\n}\r\n\r\n.react-editor-main .select-items-format {\r\n  position: absolute;\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  border-top: none;\r\n  border-radius: 2px;\r\n  z-index: 1;\r\n  max-height: 200px;\r\n  overflow-y: auto;\r\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\r\n  left: 0;\r\n  top: 30px;\r\n}\r\n\r\n.react-editor-main .select-items-format .select-option:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background) !important;\r\n}\r\n\r\n.react-editor-main .select-items-format h1 {\r\n  font-size: 32px !important;\r\n  font-weight: 600;\r\n  line-height: 32px;\r\n}\r\n.react-editor-main .select-items-format h2 {\r\n  font-size: 28px !important;\r\n  font-weight: 600;\r\n  line-height: 28px;\r\n}\r\n.react-editor-main .select-items-format h3 {\r\n  font-size: 24px !important;\r\n  font-weight: 600;\r\n  line-height: 24px;\r\n}\r\n.react-editor-main .select-items-format h4 {\r\n  font-size: 20px !important;\r\n  line-height: 20px;\r\n}\r\n.react-editor-main .select-items-format h5 {\r\n  font-size: 16px !important;\r\n}\r\n.react-editor-main .select-items-format h6 {\r\n  font-size: 14px;\r\n}\r\n\r\n.react-editor-main .select-items.show {\r\n  display: block;\r\n}\r\n\r\n.react-editor-main .select-items .select-option,\r\n.react-editor-main .select-items-format .select-option {\r\n  padding: 6px 10px;\r\n  cursor: pointer;\r\n  font-size: 16px;\r\n  white-space: nowrap;\r\n}\r\n\r\n.react-editor-main .select-items .select-insert svg {\r\n  height: 20px;\r\n  width: 20px;\r\n  margin-right: 7px;\r\n  color: var(--editor-svg-color);\r\n  fill: var(--editor-svg-color);\r\n}\r\n\r\n.react-editor-main .select-items button svg {\r\n  height: 16px !important;\r\n  width: 16px !important;\r\n  margin-top: 2px;\r\n}\r\n\r\n.react-editor-main .select-items .select-insert span {\r\n  margin-top: 2px;\r\n}\r\n\r\n.react-editor-main .selected-option {\r\n  background-color: var(--editor-toolbar-button-selected-background) !important;\r\n}\r\n\r\n.react-editor-main .select-items .select-option:hover,\r\n.react-editor-main .select-insert:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background) !important;\r\n}\r\n\r\n#modal-root .form-control-input {\r\n  font-family: system-ui !important;\r\n  width: 100%;\r\n  padding: 7px;\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 3px;\r\n}\r\n\r\n#modal-root .form-control-input:focus-visible {\r\n  outline: none;\r\n}\r\n\r\n#modal-root .save-button {\r\n  background-color: var(--editor-save-button-background);\r\n  color: #fff;\r\n  padding: 7px 14px;\r\n  border: none;\r\n  margin-top: 10px;\r\n  border-radius: 3px;\r\n  cursor: pointer;\r\n}\r\n\r\n#modal-root .select-type button {\r\n  padding: 6px 20px;\r\n  background-color: var(--editor-toolbar-button-background);\r\n  border: 1px solid var(--editor-border-color);\r\n  cursor: pointer;\r\n}\r\n\r\n#modal-root .select-type button.selected-type {\r\n  background-color: #efefef;\r\n}\r\n\r\n#modal-root .special-char-box {\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n}\r\n\r\n#modal-root .special-char {\r\n  width: 30px;\r\n  height: 30px;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  cursor: pointer;\r\n  border-radius: 2px;\r\n}\r\n\r\n#modal-root .special-char:hover {\r\n  background-color: #dee0e2;\r\n}\r\n\r\n.react-editor-main .select-insert {\r\n  min-width: 120px;\r\n  font-size: 16px;\r\n  text-align: left;\r\n  padding: 8px 10px;\r\n  white-space: nowrap;\r\n  display: flex;\r\n  border-top: 1px solid var(--editor-border-color) !important;\r\n  color: var(--editor-text-color) !important;\r\n  background-color: var(--editor-background-color);\r\n  border-radius: 0 !important;\r\n  margin: 0 !important;\r\n}\r\n\r\n/* width */\r\n.react-editor-main ::-webkit-scrollbar {\r\n  width: 5px;\r\n}\r\n\r\n/* Track */\r\n.react-editor-main ::-webkit-scrollbar-track {\r\n  background: #f1f1f1;\r\n}\r\n\r\n/* Handle */\r\n.react-editor-main ::-webkit-scrollbar-thumb {\r\n  background: var(--editor-border-color);\r\n}\r\n\r\n/* Handle on hover */\r\n.react-editor-main ::-webkit-scrollbar-thumb:hover {\r\n  background: #555;\r\n}\r\n\r\n#modal-root .full-screen-model {\r\n  width: 95% !important;\r\n  height: 85vh;\r\n}\r\n\r\n.ml-main-content-box blockquote {\r\n  border-left: 2px solid var(--editor-border-color);\r\n  border-left-width: 5px;\r\n  margin-left: 1.5rem;\r\n  padding: 2px 0;\r\n  padding-left: 1rem;\r\n  font-style: italic;\r\n  font-family: Georgia, Times, \"Times New Roman\", serif;\r\n  color: var(--editor-text-color);\r\n}\r\n\r\n.select-items-nested.left {\r\n  left: -100%;\r\n}\r\n\r\n.react-editor-main .select-formation-dropdown {\r\n  position: absolute;\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 4px;\r\n  left: 154px;\r\n  display: none;\r\n  min-width: 140px;\r\n  z-index: 2;\r\n  max-height: 200px;\r\n  overflow-x: hidden;\r\n}\r\n\r\n.react-editor-main .font-size-dropdown {\r\n  min-width: 90px;\r\n}\r\n\r\n.react-editor-main .font-size-dropdown .select-option {\r\n  padding: 10px;\r\n  border-bottom: 1px solid var(--editor-border-color);\r\n  font-size: 16px;\r\n  width: 98%;\r\n  margin: 0;\r\n  border-radius: 0 !important;\r\n  font-family: system-ui !important;\r\n}\r\n\r\n.react-editor-main .select-formation-dropdown.show {\r\n  display: block;\r\n}\r\n\r\n.react-editor-main .font-family-option {\r\n  display: block;\r\n  width: 99%;\r\n  padding: 9px !important;\r\n  border-top: 1px solid var(--editor-border-color) !important;\r\n  margin: 0 !important;\r\n  border-radius: 0 !important;\r\n}\r\n\r\n.react-editor-main .font-family-option:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background);\r\n}\r\n\r\n.react-editor-main .bottom-colored-line {\r\n  height: 3px;\r\n  width: 14px;\r\n  background-color: var(--editor-svg-color);\r\n}\r\n\r\n.react-editor-main .main-color-component {\r\n  position: relative;\r\n  display: inline-block;\r\n}\r\n\r\n.react-editor-main .open-color-box {\r\n  position: absolute;\r\n  height: 140px;\r\n  width: 140px;\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  top: 30px;\r\n  left: -1px;\r\n  display: none;\r\n  z-index: 1;\r\n}\r\n\r\n.react-editor-main .color-box-grid button {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  border-radius: 0 !important;\r\n}\r\n\r\n.react-editor-main .open-color-box.show {\r\n  display: block;\r\n}\r\n\r\n.react-editor-main .color-box {\r\n  height: 28px;\r\n  width: 28px;\r\n  cursor: pointer;\r\n  background-color: var(--editor-background-color);\r\n}\r\n\r\n.react-editor-main .custom-color-picker {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n}\r\n\r\n.react-editor-main .custom-color-picker svg {\r\n  height: 20px;\r\n}\r\n\r\n.react-editor-main .increase-icon-size svg {\r\n  height: 20px !important;\r\n  width: 17px !important;\r\n  margin-top: 3px;\r\n}\r\n\r\n.react-editor-main .increase-icon-size button {\r\n  padding: 3px 10px;\r\n}\r\n\r\n.react-editor-main .color-box:hover {\r\n  transform: scale(1.2);\r\n  transition: transform 0.5s ease;\r\n}\r\n\r\n.react-editor-main .vertical-line {\r\n  height: 32px;\r\n  width: 1px;\r\n  background-color: var(--editor-border-color);\r\n}\r\n\r\n.react-editor-main .react-editor-mt-2 {\r\n  margin-top: 2px;\r\n}\r\n#modal-root .react-editor-mt-10 {\r\n  margin-top: 10px;\r\n}\r\n.react-editor-main .react-editor-me-5 {\r\n  margin-right: 5px;\r\n}\r\n\r\n#modal-root .react-editor-text-end {\r\n  text-align: right;\r\n}\r\n\r\n.react-editor-main .react-editor-text-left {\r\n  text-align: left;\r\n}\r\n\r\n.react-editor-main .react-editor-d-flex,\r\n#modal-root .react-editor-d-flex {\r\n  display: flex;\r\n}\r\n\r\n.react-editor-main .react-editor-w-47,\r\n#modal-root .react-editor-w-47 {\r\n  width: 47%;\r\n}\r\n\r\n.react-editor-main .react-editor-w-40,\r\n#modal-root .react-editor-w-40 {\r\n  width: 40%;\r\n}\r\n\r\n.react-editor-main .justify-content-between,\r\n#modal-root .justify-content-between {\r\n  justify-content: space-between;\r\n}\r\n\r\n.react-editor-main .react-editor-flex-column,\r\n#modal-root .react-editor-flex-column {\r\n  flex-direction: column;\r\n}\r\n\r\n.editor-error-messsage {\r\n  color: red;\r\n}\r\n\r\n.ml-main-content-box:empty:before {\r\n  content: attr(data-placeholder);\r\n  color: #aaa;\r\n  pointer-events: none;\r\n}\r\n\r\n.full-screen {\r\n  position: fixed !important;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100% !important;\r\n  height: 100% !important;\r\n  background-color: var(--editor-toolbar-button-background);\r\n  overflow: hidden;\r\n  z-index: 99999 !important;\r\n}\r\n\r\n.right_click_popup_background {\r\n  position: absolute;\r\n  cursor: pointer;\r\n  background-color: var(--editor-toolbar-button-background);\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 5px;\r\n  z-index: 1000;\r\n  min-width: 100px;\r\n  padding: 3px 0px;\r\n}\r\n\r\n.right_click_popup_background hr {\r\n  margin: 0;\r\n  border: none;\r\n  border-top: 1px solid var(--editor-border-color);\r\n  width: 100%;\r\n}\r\n\r\n.right_click_popup {\r\n  padding: 5px 10px;\r\n  font-family: system-ui;\r\n  font-size: 15px;\r\n  color: var(--editor-text-color);\r\n}\r\n\r\n.right_click_popup:hover {\r\n  background: var(--editor-toolbar-button-hover-background);\r\n}\r\n\r\n.right_click_popup svg {\r\n  margin-right: 5px;\r\n  height: 20px;\r\n  width: 20px;\r\n  vertical-align: bottom;\r\n}\r\n\r\n.right_click_popup.open-link svg {\r\n  height: 15px;\r\n  margin-bottom: 1px;\r\n}\r\n\r\n.resize-image-wrapper {\r\n  outline: 3px solid #b4d7ff;\r\n  position: relative;\r\n}\r\n\r\n.resizer {\r\n  position: absolute;\r\n  width: 10px;\r\n  height: 10px;\r\n  background-color: #4099ff;\r\n  right: -5px;\r\n  bottom: -5px;\r\n  cursor: se-resize;\r\n}\r\n\r\n.resizer.top-right {\r\n  right: -5px;\r\n  top: -5px;\r\n  cursor: ne-resize;\r\n}\r\n\r\n.resizer.bottom-left {\r\n  bottom: -5px;\r\n  left: -5px;\r\n  cursor: ne-resize;\r\n}\r\n\r\n.resizer.top-left {\r\n  top: -5px;\r\n  left: -5px;\r\n  cursor: se-resize;\r\n}\r\n\r\n.lock-unlock-icon svg {\r\n  height: 16px;\r\n  margin-top: 38px;\r\n  cursor: pointer;\r\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -1042,9 +1042,31 @@ function RemoveLinkIcon() {
     d: "M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L489.3 358.2l90.5-90.5c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114l-96 96-31.9-25C430.9 239.6 420.1 175.1 377 132c-52.2-52.3-134.5-56.2-191.3-11.7L38.8 5.1zM239 162c30.1-14.9 67.7-9.9 92.8 15.3c20 20 27.5 48.3 21.7 74.5L239 162zM116.6 187.9L60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5l61.8-61.8-50.6-39.9zM220.9 270c-2.1 39.8 12.2 80.1 42.2 110c38.9 38.9 94.4 51 143.6 36.3L220.9 270z"
   }));
 }
+// CONCATENATED MODULE: ./src/components/SVGImages/UnlockIcon.jsx
+
+function UnlockIcon() {
+  return /*#__PURE__*/external_react_default.a.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 448 512"
+  }, /*#__PURE__*/external_react_default.a.createElement("path", {
+    d: "M144 144c0-44.2 35.8-80 80-80c31.9 0 59.4 18.6 72.3 45.7c7.6 16 26.7 22.8 42.6 15.2s22.8-26.7 15.2-42.6C331 33.7 281.5 0 224 0C144.5 0 80 64.5 80 144v48H64c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V256c0-35.3-28.7-64-64-64H144V144z"
+  }));
+}
+// CONCATENATED MODULE: ./src/components/SVGImages/LockIcon.jsx
+
+function LockIcon() {
+  return /*#__PURE__*/external_react_default.a.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 448 512"
+  }, /*#__PURE__*/external_react_default.a.createElement("path", {
+    d: "M144 144v48H304V144c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192V144C80 64.5 144.5 0 224 0s144 64.5 144 144v48h16c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64H80z"
+  }));
+}
 // CONCATENATED MODULE: ./src/components/SVGImages/loader.gif
 /* harmony default export */ var loader = ("data:image/gif;base64,R0lGODlhngHpANUrAJycnPLy8tjY2AAAANTU1Pb29sTExMrKysLCwtbW1ru7u/j4+Ojo6LKysu7u7tzc3Ly8vNDQ0BEREbCwsL6+vqqqqiIiIs7OzuDg4KampkRERDMzM7i4uMzMzIiIiHd3d8jIyN3d3WZmZlVVVfT09OTk5JmZmcbGxqCgoOzs7JaWlv///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh/wtYTVAgRGF0YVhNUDw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjc0MEVDNDE3NTBFNDExRTE5OTAzODVFNEI4NUU1MDAzIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjc0MEVDNDE4NTBFNDExRTE5OTAzODVFNEI4NUU1MDAzIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NzQwRUM0MTU1MEU0MTFFMTk5MDM4NUU0Qjg1RTUwMDMiIHN0UmVmOmRv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");
 // CONCATENATED MODULE: ./src/components/index.js
+
+
 
 
 
@@ -1367,6 +1389,14 @@ function transformHTML(htmlString) {
     return transformedHTML;
   }
 }
+var remove_resizer = function remove_resizer() {
+  var element = document.querySelector(".resize-image-wrapper");
+  var image_element = document.querySelector(".resizer-image");
+  if (element && image_element) {
+    element.insertAdjacentElement("afterend", image_element);
+    element.parentNode.removeChild(element);
+  }
+};
 // CONCATENATED MODULE: ./src/components/SelectInsert.jsx
 function SelectInsert_slicedToArray(r, e) { return SelectInsert_arrayWithHoles(r) || SelectInsert_iterableToArrayLimit(r, e) || SelectInsert_unsupportedIterableToArray(r, e) || SelectInsert_nonIterableRest(); }
 function SelectInsert_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -2646,29 +2676,26 @@ function LinkModal(props) {
             data = {
               image: files[0]
             };
-            console.log(image_handler, "image_handlerimage_handler");
             if (!image_handler) {
-              _context.next = 13;
+              _context.next = 10;
               break;
             }
-            console.log(data, "datadatadatadatadata");
             setIsLoading(true);
-            _context.next = 8;
+            _context.next = 6;
             return image_handler(data);
-          case 8:
+          case 6:
             image_path = _context.sent;
-            console.log(image_path, "image_pathimage_path");
             if (image_path) {
               setImageUrl(image_path);
               setIsLoading(false);
             } else {
               setIsLoading(false);
             }
-            _context.next = 14;
+            _context.next = 11;
             break;
-          case 13:
+          case 10:
             setImageUrl(URL.createObjectURL(data.image));
-          case 14:
+          case 11:
           case "end":
             return _context.stop();
         }
@@ -2803,6 +2830,8 @@ function ImageModal_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a =
 function ImageModal_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function ImageModal_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
+
+
 function ImageModal(props) {
   var onImageInsert = props.onImageInsert,
     item = props.item,
@@ -2813,16 +2842,24 @@ function ImageModal(props) {
     _useState2 = ImageModal_slicedToArray(_useState, 2),
     errorMessage = _useState2[0],
     setErrorMessage = _useState2[1];
-  var _useState3 = Object(external_react_["useState"])({
+  var _useState3 = Object(external_react_["useState"])(0),
+    _useState4 = ImageModal_slicedToArray(_useState3, 2),
+    heightRatio = _useState4[0],
+    setHeightRatio = _useState4[1];
+  var _useState5 = Object(external_react_["useState"])(true),
+    _useState6 = ImageModal_slicedToArray(_useState5, 2),
+    isLocked = _useState6[0],
+    setIsLocked = _useState6[1];
+  var _useState7 = Object(external_react_["useState"])({
       link: "",
       height: "",
       width: "",
       image: null,
       type: "general"
     }),
-    _useState4 = ImageModal_slicedToArray(_useState3, 2),
-    inputs = _useState4[0],
-    setInputs = _useState4[1];
+    _useState8 = ImageModal_slicedToArray(_useState7, 2),
+    inputs = _useState8[0],
+    setInputs = _useState8[1];
   var handleChangeFile = function handleChangeFile(event) {
     var _event$target = event.target,
       name = _event$target.name,
@@ -2931,10 +2968,36 @@ function ImageModal(props) {
       return _ref.apply(this, arguments);
     };
   }();
-  var handleChange = function handleChange(event) {
+  var handleChangeHW = function handleChangeHW(event) {
     var _event$target2 = event.target,
       name = _event$target2.name,
       value = _event$target2.value;
+    var height = inputs.height;
+    var width = inputs.width;
+    if (name === "width") {
+      height = value / heightRatio;
+      width = value;
+    } else {
+      width = value * heightRatio;
+      height = value;
+    }
+    height = Math.round(height);
+    width = Math.round(width);
+    setInputs(function (old) {
+      return ImageModal_objectSpread(ImageModal_objectSpread({}, old), {}, {
+        height: height,
+        width: width
+      });
+    });
+  };
+  var handleChange = function handleChange(event) {
+    var _event$target3 = event.target,
+      name = _event$target3.name,
+      value = _event$target3.value;
+    if (isLocked && name !== "link") {
+      handleChangeHW(event);
+      return;
+    }
     setInputs(function (old) {
       return ImageModal_objectSpread(ImageModal_objectSpread({}, old), {}, ImageModal_defineProperty({}, name, value));
     });
@@ -2951,6 +3014,8 @@ function ImageModal(props) {
   };
   Object(external_react_["useEffect"])(function () {
     if (selectedData !== null && selectedData !== void 0 && selectedData.link) {
+      var height = selectedData.width / selectedData.height;
+      setHeightRatio(height);
       setInputs(ImageModal_objectSpread(ImageModal_objectSpread({}, inputs), selectedData));
     }
   }, [selectedData]);
@@ -2985,7 +3050,7 @@ function ImageModal(props) {
   }, "*", "".concat(errorMessage))), /*#__PURE__*/external_react_default.a.createElement("div", {
     className: "react-editor-d-flex justify-content-between"
   }, /*#__PURE__*/external_react_default.a.createElement("div", {
-    className: "react-editor-mt-10 react-editor-w-47"
+    className: "react-editor-mt-10 react-editor-w-40"
   }, /*#__PURE__*/external_react_default.a.createElement("label", {
     htmlFor: "height"
   }, "Height"), /*#__PURE__*/external_react_default.a.createElement("input", {
@@ -2996,7 +3061,7 @@ function ImageModal(props) {
     onChange: handleChange,
     className: "form-control-input"
   })), /*#__PURE__*/external_react_default.a.createElement("div", {
-    className: "react-editor-mt-10 react-editor-w-47"
+    className: "react-editor-mt-10 react-editor-w-40"
   }, /*#__PURE__*/external_react_default.a.createElement("label", {
     htmlFor: "width"
   }, "Width"), /*#__PURE__*/external_react_default.a.createElement("input", {
@@ -3006,7 +3071,12 @@ function ImageModal(props) {
     value: inputs.width,
     onChange: handleChange,
     className: "form-control-input"
-  })))) : /*#__PURE__*/external_react_default.a.createElement("div", {
+  })), /*#__PURE__*/external_react_default.a.createElement("div", {
+    className: "lock-unlock-icon",
+    onClick: function onClick() {
+      return setIsLocked(!isLocked);
+    }
+  }, isLocked ? /*#__PURE__*/external_react_default.a.createElement(LockIcon, null) : /*#__PURE__*/external_react_default.a.createElement(UnlockIcon, null)))) : /*#__PURE__*/external_react_default.a.createElement("div", {
     className: "react-editor-mt-10"
   }, /*#__PURE__*/external_react_default.a.createElement("label", {
     htmlFor: "image"
@@ -3206,6 +3276,7 @@ function RightClickLinkPopup_arrayWithHoles(r) { if (Array.isArray(r)) return r;
 
 
 
+
 var RightClickLinkPopup_RightClickLinkPopup = function RightClickLinkPopup(_ref) {
   var _selectedEvent$parent3;
   var editorRef = _ref.editorRef,
@@ -3237,20 +3308,17 @@ var RightClickLinkPopup_RightClickLinkPopup = function RightClickLinkPopup(_ref)
   };
   var handleRightClick = function handleRightClick(event) {
     event.preventDefault();
+    remove_resizer();
     var target = event.target;
-    var target_ref = editorRef.current.contains(target);
     setPopupPosition({
       x: event.clientX,
       y: event.clientY
     });
-    if (target.tagName === "IMG" || target.tagName === "A" || target.tagName === "BUTTON") {
+    var tagNames = ["IMG", "A", "BUTTON"];
+    if (tagNames.includes(target.tagName)) {
       setSelectedEvent(target);
     }
-    if (target.tagName === "IMG") {
-      setPopupVisible(true);
-    } else {
-      setPopupVisible(true);
-    }
+    setPopupVisible(true);
   };
   var handleClickOutside = function handleClickOutside(event) {
     if (popupRef.current && !popupRef.current.contains(event.target)) {
@@ -3260,7 +3328,7 @@ var RightClickLinkPopup_RightClickLinkPopup = function RightClickLinkPopup(_ref)
   var handleOpenLinkPopup = function handleOpenLinkPopup() {
     var open_new_tab = false;
     var link_url = "";
-    var link_text = "";
+    var link_text = getSelectedText() || "";
     var link_type = "text";
     if ((selectedEvent === null || selectedEvent === void 0 ? void 0 : selectedEvent.tagName) === "A") {
       link_url = selectedEvent === null || selectedEvent === void 0 ? void 0 : selectedEvent.href;
@@ -3584,7 +3652,23 @@ function ReactEditorKit(props) {
       linkHTML += ' target="_blank"';
     }
     if (link_type === "image" && imageUrl) {
-      text = "<img src=\"".concat(imageUrl, "\" alt=\"ImageLink\" />");
+      if (selectedEvent.tagName === "IMG") {
+        var src = selectedEvent.src;
+        if (src === imageUrl) {
+          text = selectedEvent.outerHTML;
+        } else {
+          text = "<img src=\"".concat(imageUrl, "\" alt=\"ImageLink\" />");
+        }
+      } else if (selectedEvent.tagName === "A") {
+        var childNode = selectedEvent.firstChild;
+        if (childNode && childNode.nodeType === Node.ELEMENT_NODE && childNode.tagName === "IMG" && childNode.src === imageUrl) {
+          text = childNode.outerHTML;
+        } else {
+          text = "<img src=\"".concat(imageUrl, "\" alt=\"ImageLink\" />");
+        }
+      } else {
+        text = "<img src=\"".concat(imageUrl, "\" alt=\"ImageLink\" />");
+      }
     } else if (link_type === "button") {
       text = "<button contentEditable=false>".concat(text, "</button>");
     }
@@ -3620,22 +3704,22 @@ function ReactEditorKit(props) {
     var link = data.link,
       height = data.height,
       width = data.width;
-    var imgElement = "<img src=\"".concat(link, "\" alt=\"Image\"");
-    if (height) {
-      imgElement += " height=\"".concat(height, "\"");
-    }
-    if (width) {
-      imgElement += " width=\"".concat(width, "\"");
-    }
-    imgElement += "/>";
     if (selectedEvent && selectedData) {
-      var parentElement = selectedEvent.parentElement;
-      if (parentElement) {
-        parentElement.removeChild(selectedEvent);
+      selectedEvent.src = link;
+      selectedEvent.height = height;
+      selectedEvent.width = width;
+    } else {
+      handleFocusEditor();
+      var imgElement = "<img src=\"".concat(link, "\" alt=\"Image\"");
+      if (height) {
+        imgElement += " height=\"".concat(height, "\"");
       }
+      if (width) {
+        imgElement += " width=\"".concat(width, "\"");
+      }
+      imgElement += "/>";
+      document.execCommand("insertHTML", false, imgElement);
     }
-    handleFocusEditor();
-    document.execCommand("insertHTML", false, imgElement);
     setIsLoading(false);
     handleCloseModel();
   };
@@ -3937,27 +4021,6 @@ function ReactEditorKit(props) {
     setShowHR2(hr_2.offsetHeight > 34);
     setShowHR3(hr_2.offsetHeight > 65);
   };
-  var handleDoubleClick = function handleDoubleClick(event) {
-    var target = event.target;
-    var target_ref = editorRef.current.contains(target);
-    if (target.tagName === "IMG" && target_ref) {
-      setIsOpenModel("image");
-      setSelectedData({
-        link: target.src,
-        height: target.offsetHeight,
-        width: target.offsetWidth
-      });
-      setSelectedEvent(target);
-    } else if (target.tagName === "A" && target_ref) {
-      setIsOpenModel("link");
-      setSelectedData({
-        link: target.href,
-        text: target.textContent.trim(),
-        open_new_tab: target.target === "_blank"
-      });
-      setSelectedEvent(target);
-    }
-  };
   var setCursorAtStart = function setCursorAtStart() {
     var editor = editorRef.current;
     if (editor) {
@@ -3975,12 +4038,93 @@ function ReactEditorKit(props) {
       setSelectedRange(range);
     }
   };
+  var handleMouseDown = function handleMouseDown(e, left) {
+    e.preventDefault();
+    var startX = e.clientX;
+    var element = document.querySelector(".resize-image-wrapper");
+    var image_element = document.querySelector(".resizer-image");
+    var startWidth = parseFloat(element.style.width);
+    var startHeight = parseFloat(element.style.height);
+    console.log(startHeight, "startHeight");
+    if (isNaN(startHeight)) {
+      startHeight = parseFloat(getComputedStyle(element).height);
+    }
+    if (isNaN(startWidth)) {
+      startWidth = parseFloat(getComputedStyle(element).width);
+    }
+    console.log(startHeight, "startHeight---1");
+    var heightRatio = startHeight / startWidth;
+    console.log(heightRatio, "heightRatio---1");
+    var handleMouseMove = function handleMouseMove(e) {
+      var newWidth = startWidth + (e.clientX - startX);
+      if (left) {
+        newWidth = startWidth - (e.clientX - startX);
+      }
+      var width = newWidth > 50 ? newWidth : 50;
+      var height = heightRatio * width;
+      height = Math.round(height);
+      width = Math.round(width);
+      element.style.width = "".concat(width, "px");
+      image_element.style.width = "".concat(width, "px");
+      element.style.height = "".concat(height, "px");
+      image_element.style.height = "".concat(height, "px");
+    };
+    var handleMouseUp = function handleMouseUp() {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+  };
+  var handleClickImage = function handleClickImage(event) {
+    if (event.target.tagName === "IMG") {
+      var hasClass = event.target.parentElement.classList.contains("resize-image-wrapper");
+      if (hasClass) return;
+      var imgElement = event.target;
+      var imageWidth = imgElement.offsetWidth;
+      var divElement = document.createElement("div");
+      divElement.style.display = "inline-block";
+      divElement.style.width = "".concat(imageWidth, "px");
+      divElement.classList.add("resize-image-wrapper");
+      var resizer = document.createElement("div");
+      resizer.classList.add("resizer");
+      resizer.onmousedown = handleMouseDown;
+      var resizerRight = document.createElement("div");
+      resizerRight.classList.add("resizer", "top-right");
+      resizerRight.onmousedown = handleMouseDown;
+      var resizerBottom = document.createElement("div");
+      resizerBottom.classList.add("resizer", "bottom-left");
+      resizerBottom.onmousedown = function (e) {
+        return handleMouseDown(e, "left");
+      };
+      var resizerBottomRight = document.createElement("div");
+      resizerBottomRight.classList.add("resizer", "top-left");
+      resizerBottomRight.onmousedown = function (e) {
+        return handleMouseDown(e, "left");
+      };
+      imgElement.classList.add("resizer-image");
+      var clonedImgElement = imgElement.cloneNode(true);
+      divElement.appendChild(clonedImgElement);
+      divElement.appendChild(resizer);
+      divElement.appendChild(resizerRight);
+      divElement.appendChild(resizerBottom);
+      divElement.appendChild(resizerBottomRight);
+      setSelectedEvent(divElement);
+      imgElement.parentNode.replaceChild(divElement, imgElement);
+    } else {
+      var target = event.target.classList.contains("resize-image-wrapper");
+      var _hasClass = event.target.parentElement.classList.contains("resize-image-wrapper");
+      if (!target && !_hasClass) {
+        remove_resizer();
+      }
+    }
+  };
   Object(external_react_["useEffect"])(function () {
     handle_resize();
     setCursorAtStart();
     var editor = editorRef.current;
     if (editor) {
-      editor.addEventListener("dblclick", handleDoubleClick);
+      editor.addEventListener("click", handleClickImage);
       editor.addEventListener("mouseup", handleSelection);
       editor.addEventListener("keyup", handleSelection);
     }
@@ -3988,7 +4132,7 @@ function ReactEditorKit(props) {
     return function () {
       window.removeEventListener("resize", handle_resize);
       if (editor) {
-        editor.removeEventListener("dblclick", handleDoubleClick);
+        editor.removeEventListener("click", handleClickImage);
         editor.removeEventListener("mouseup", handleSelection);
         editor.removeEventListener("keyup", handleSelection);
       }
@@ -4004,7 +4148,7 @@ function ReactEditorKit(props) {
   var dynamicStyle = isFullScreen && document.getElementById("action-components") ? {
     height: "calc(100vh - ".concat(document.getElementById("action-components").offsetHeight, "px - 22px)")
   } : {};
-  console.log(isLoading, "isLoadingisLoadingisLoading");
+  console.log(selectedEvent, "selectedEventselectedEvent");
   return /*#__PURE__*/external_react_default.a.createElement(external_react_default.a.Fragment, null, /*#__PURE__*/external_react_default.a.createElement("div", _extends({}, mainProps, {
     className: "react-editor-main ".concat(isFullScreen ? "full-screen" : ""),
     id: "react-editor"
