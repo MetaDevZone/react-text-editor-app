@@ -18,8 +18,8 @@ body {
 }
 
 .react-editor-main img {
-  max-width: 60%;
-  height: auto;
+  /* max-width: 60%; */
+  /* height: auto; */
 }
 
 .react-editor-main .select-option p,
@@ -670,6 +670,11 @@ body {
   width: 47%;
 }
 
+.react-editor-main .react-editor-w-40,
+#modal-root .react-editor-w-40 {
+  width: 40%;
+}
+
 .react-editor-main .justify-content-between,
 #modal-root .justify-content-between {
   justify-content: space-between;
@@ -740,4 +745,43 @@ body {
 .right_click_popup.open-link svg {
   height: 15px;
   margin-bottom: 1px;
+}
+
+.resize-image-wrapper {
+  outline: 3px solid #b4d7ff;
+  position: relative;
+}
+
+.resizer {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #4099ff;
+  right: -5px;
+  bottom: -5px;
+  cursor: se-resize;
+}
+
+.resizer.top-right {
+  right: -5px;
+  top: -5px;
+  cursor: ne-resize;
+}
+
+.resizer.bottom-left {
+  bottom: -5px;
+  left: -5px;
+  cursor: ne-resize;
+}
+
+.resizer.top-left {
+  top: -5px;
+  left: -5px;
+  cursor: se-resize;
+}
+
+.lock-unlock-icon svg {
+  height: 16px;
+  margin-top: 38px;
+  cursor: pointer;
 }

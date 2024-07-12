@@ -105,3 +105,12 @@ export function transformHTML(htmlString) {
     return transformedHTML;
   }
 }
+
+export const remove_resizer = () => {
+  let element = document.querySelector(".resize-image-wrapper");
+  let image_element = document.querySelector(".resizer-image");
+  if (element && image_element) {
+    element.insertAdjacentElement("afterend", image_element);
+    element.parentNode.removeChild(element);
+  }
+};

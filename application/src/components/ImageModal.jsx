@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
+import LockIcon from "./SVGImages/LockIcon";
+import UnlockIcon from "./SVGImages/UnlockIcon";
 
 export default function ImageModal(props) {
   const { onImageInsert, item, setIsLoading, image_handler, selectedData } =
     props;
   const [errorMessage, setErrorMessage] = useState("");
+  const [heightRatio, setHeightRatio] = useState(0);
+  const [isLocked, setIsLocked] = useState(true);
+
   const [inputs, setInputs] = useState({
     link: "",
     height: "",
@@ -80,8 +85,28 @@ export default function ImageModal(props) {
     }
   };
 
+  const handleChangeHW = (event) => {
+    const { name, value } = event.target;
+    let height = inputs.height;
+    let width = inputs.width;
+    if (name === "width") {
+      height = value / heightRatio;
+      width = value;
+    } else {
+      width = value * heightRatio;
+      height = value;
+    }
+    height = Math.round(height);
+    width = Math.round(width);
+    setInputs((old) => ({ ...old, height, width }));
+  };
+
   const handleChange = (event) => {
     const { name, value } = event.target;
+    if (isLocked && name !== "link") {
+      handleChangeHW(event);
+      return;
+    }
     setInputs((old) => ({ ...old, [name]: value }));
   };
 
@@ -93,6 +118,8 @@ export default function ImageModal(props) {
 
   useEffect(() => {
     if (selectedData?.link) {
+      let height = selectedData.width / selectedData.height;
+      setHeightRatio(height);
       setInputs({ ...inputs, ...selectedData });
     }
   }, [selectedData]);
@@ -134,7 +161,7 @@ export default function ImageModal(props) {
               )}
             </div>
             <div className="react-editor-d-flex justify-content-between">
-              <div className="react-editor-mt-10 react-editor-w-47">
+              <div className="react-editor-mt-10 react-editor-w-40">
                 <label htmlFor="height">Height</label>
                 <input
                   id="height"
@@ -145,7 +172,7 @@ export default function ImageModal(props) {
                   className="form-control-input"
                 />
               </div>
-              <div className="react-editor-mt-10 react-editor-w-47">
+              <div className="react-editor-mt-10 react-editor-w-40">
                 <label htmlFor="width">Width</label>
                 <input
                   id="width"
@@ -155,6 +182,12 @@ export default function ImageModal(props) {
                   onChange={handleChange}
                   className="form-control-input"
                 />
+              </div>
+              <div
+                className="lock-unlock-icon"
+                onClick={() => setIsLocked(!isLocked)}
+              >
+                {isLocked ? <LockIcon /> : <UnlockIcon />}
               </div>
             </div>
           </>

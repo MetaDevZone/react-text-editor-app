@@ -37,6 +37,7 @@ import ManageColors from "./components/ManageColors";
 import SimpleButton from "./components/SimpleButton";
 import {
   NAVBAR_ITEMS,
+  remove_resizer,
   TOOLBAR_ITEMS,
   transformHTML,
 } from "./components/constant";
@@ -198,8 +199,30 @@ export default function ReactEditorKit(props) {
     if (open_new_tab && open_new_tab !== "false") {
       linkHTML += ' target="_blank"';
     }
+
     if (link_type === "image" && imageUrl) {
-      text = `<img src="${imageUrl}" alt="ImageLink" />`;
+      if (selectedEvent.tagName === "IMG") {
+        let src = selectedEvent.src;
+        if (src === imageUrl) {
+          text = selectedEvent.outerHTML;
+        } else {
+          text = `<img src="${imageUrl}" alt="ImageLink" />`;
+        }
+      } else if (selectedEvent.tagName === "A") {
+        let childNode = selectedEvent.firstChild;
+        if (
+          childNode &&
+          childNode.nodeType === Node.ELEMENT_NODE &&
+          childNode.tagName === "IMG" &&
+          childNode.src === imageUrl
+        ) {
+          text = childNode.outerHTML;
+        } else {
+          text = `<img src="${imageUrl}" alt="ImageLink" />`;
+        }
+      } else {
+        text = `<img src="${imageUrl}" alt="ImageLink" />`;
+      }
     } else if (link_type === "button") {
       text = `<button contentEditable=false>${text}</button>`;
     }
@@ -235,22 +258,22 @@ export default function ReactEditorKit(props) {
 
   const handleImageInsert = (data) => {
     let { link, height, width } = data;
-    let imgElement = `<img src="${link}" alt="Image"`;
-    if (height) {
-      imgElement += ` height="${height}"`;
-    }
-    if (width) {
-      imgElement += ` width="${width}"`;
-    }
-    imgElement += `/>`;
     if (selectedEvent && selectedData) {
-      const parentElement = selectedEvent.parentElement;
-      if (parentElement) {
-        parentElement.removeChild(selectedEvent);
+      selectedEvent.src = link;
+      selectedEvent.height = height;
+      selectedEvent.width = width;
+    } else {
+      handleFocusEditor();
+      let imgElement = `<img src="${link}" alt="Image"`;
+      if (height) {
+        imgElement += ` height="${height}"`;
       }
+      if (width) {
+        imgElement += ` width="${width}"`;
+      }
+      imgElement += `/>`;
+      document.execCommand("insertHTML", false, imgElement);
     }
-    handleFocusEditor();
-    document.execCommand("insertHTML", false, imgElement);
     setIsLoading(false);
     handleCloseModel();
   };
@@ -652,29 +675,6 @@ export default function ReactEditorKit(props) {
     setShowHR3(hr_2.offsetHeight > 65);
   };
 
-  const handleDoubleClick = (event) => {
-    const target = event.target;
-
-    let target_ref = editorRef.current.contains(target);
-    if (target.tagName === "IMG" && target_ref) {
-      setIsOpenModel("image");
-      setSelectedData({
-        link: target.src,
-        height: target.offsetHeight,
-        width: target.offsetWidth,
-      });
-      setSelectedEvent(target);
-    } else if (target.tagName === "A" && target_ref) {
-      setIsOpenModel("link");
-      setSelectedData({
-        link: target.href,
-        text: target.textContent.trim(),
-        open_new_tab: target.target === "_blank",
-      });
-      setSelectedEvent(target);
-    }
-  };
-
   const setCursorAtStart = () => {
     const editor = editorRef.current;
     if (editor) {
@@ -693,12 +693,107 @@ export default function ReactEditorKit(props) {
     }
   };
 
+  const handleMouseDown = (e, left) => {
+    e.preventDefault();
+    const startX = e.clientX;
+
+    let element = document.querySelector(".resize-image-wrapper");
+    let image_element = document.querySelector(".resizer-image");
+    let startWidth = parseFloat(element.style.width);
+    let startHeight = parseFloat(element.style.height);
+    console.log(startHeight, "startHeight");
+    if (isNaN(startHeight)) {
+      startHeight = parseFloat(getComputedStyle(element).height);
+    }
+
+    if (isNaN(startWidth)) {
+      startWidth = parseFloat(getComputedStyle(element).width);
+    }
+    console.log(startHeight, "startHeight---1");
+    let heightRatio = startHeight / startWidth;
+    console.log(heightRatio, "heightRatio---1");
+    const handleMouseMove = (e) => {
+      let newWidth = startWidth + (e.clientX - startX);
+      if (left) {
+        newWidth = startWidth - (e.clientX - startX);
+      }
+      let width = newWidth > 50 ? newWidth : 50;
+      let height = heightRatio * width;
+
+      height = Math.round(height);
+      width = Math.round(width);
+
+      element.style.width = `${width}px`;
+      image_element.style.width = `${width}px`;
+      element.style.height = `${height}px`;
+      image_element.style.height = `${height}px`;
+    };
+
+    const handleMouseUp = () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+  };
+
+  const handleClickImage = (event) => {
+    if (event.target.tagName === "IMG") {
+      const hasClass = event.target.parentElement.classList.contains(
+        "resize-image-wrapper"
+      );
+      if (hasClass) return;
+      const imgElement = event.target;
+      const imageWidth = imgElement.offsetWidth;
+      const divElement = document.createElement("div");
+      divElement.style.display = "inline-block";
+      divElement.style.width = `${imageWidth}px`;
+      divElement.classList.add("resize-image-wrapper");
+
+      const resizer = document.createElement("div");
+      resizer.classList.add("resizer");
+      resizer.onmousedown = handleMouseDown;
+
+      const resizerRight = document.createElement("div");
+      resizerRight.classList.add("resizer", "top-right");
+      resizerRight.onmousedown = handleMouseDown;
+
+      const resizerBottom = document.createElement("div");
+      resizerBottom.classList.add("resizer", "bottom-left");
+      resizerBottom.onmousedown = (e) => handleMouseDown(e, "left");
+
+      const resizerBottomRight = document.createElement("div");
+      resizerBottomRight.classList.add("resizer", "top-left");
+      resizerBottomRight.onmousedown = (e) => handleMouseDown(e, "left");
+
+      imgElement.classList.add("resizer-image");
+
+      const clonedImgElement = imgElement.cloneNode(true);
+      divElement.appendChild(clonedImgElement);
+      divElement.appendChild(resizer);
+      divElement.appendChild(resizerRight);
+      divElement.appendChild(resizerBottom);
+      divElement.appendChild(resizerBottomRight);
+      setSelectedEvent(divElement);
+      imgElement.parentNode.replaceChild(divElement, imgElement);
+    } else {
+      const target = event.target.classList.contains("resize-image-wrapper");
+      const hasClass = event.target.parentElement.classList.contains(
+        "resize-image-wrapper"
+      );
+      if (!target && !hasClass) {
+        remove_resizer();
+      }
+    }
+  };
+
   useEffect(() => {
     handle_resize();
     setCursorAtStart();
     const editor = editorRef.current;
     if (editor) {
-      editor.addEventListener("dblclick", handleDoubleClick);
+      editor.addEventListener("click", handleClickImage);
       editor.addEventListener("mouseup", handleSelection);
       editor.addEventListener("keyup", handleSelection);
     }
@@ -706,7 +801,7 @@ export default function ReactEditorKit(props) {
     return () => {
       window.removeEventListener("resize", handle_resize);
       if (editor) {
-        editor.removeEventListener("dblclick", handleDoubleClick);
+        editor.removeEventListener("click", handleClickImage);
         editor.removeEventListener("mouseup", handleSelection);
         editor.removeEventListener("keyup", handleSelection);
       }
@@ -729,6 +824,8 @@ export default function ReactEditorKit(props) {
           }px - 22px)`,
         }
       : {};
+
+  console.log(selectedEvent, "selectedEventselectedEvent");
 
   return (
     <>

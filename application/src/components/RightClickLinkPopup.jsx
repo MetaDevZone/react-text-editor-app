@@ -3,6 +3,7 @@ import LinkIcon from "./SVGImages/LinkIcon";
 import ImageIcon from "./SVGImages/ImageIcon";
 import RemoveLinkIcon from "./SVGImages/RemoveLinkIcon";
 import OpenLinkIcon from "./SVGImages/OpenLinkIcon";
+import { remove_resizer } from "./constant";
 
 const RightClickLinkPopup = ({
   editorRef,
@@ -28,21 +29,14 @@ const RightClickLinkPopup = ({
 
   const handleRightClick = (event) => {
     event.preventDefault();
+    remove_resizer();
     const target = event.target;
-    let target_ref = editorRef.current.contains(target);
     setPopupPosition({ x: event.clientX, y: event.clientY });
-    if (
-      target.tagName === "IMG" ||
-      target.tagName === "A" ||
-      target.tagName === "BUTTON"
-    ) {
+    let tagNames = ["IMG", "A", "BUTTON"];
+    if (tagNames.includes(target.tagName)) {
       setSelectedEvent(target);
     }
-    if (target.tagName === "IMG") {
-      setPopupVisible(true);
-    } else {
-      setPopupVisible(true);
-    }
+    setPopupVisible(true);
   };
 
   const handleClickOutside = (event) => {
@@ -54,7 +48,7 @@ const RightClickLinkPopup = ({
   const handleOpenLinkPopup = () => {
     let open_new_tab = false;
     let link_url = "";
-    let link_text = "";
+    let link_text = getSelectedText() || "";
     let link_type = "text";
 
     if (selectedEvent?.tagName === "A") {
