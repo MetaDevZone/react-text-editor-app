@@ -1,6 +1,6 @@
 {
   "name": "react-text-editor-kit",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "React Text Editor Kit is a customizable rich text editor component for React applications. It provides a flexible and easy-to-use interface for users to create and edit content with various formatting options. And also easy to integrate in react applications",
   "main": "./build/index.js",
   "keywords": [

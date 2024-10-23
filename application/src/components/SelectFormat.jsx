@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import Styles from "../css/style.module.css";
 
 function SelectFormat({ remove_from_toolbar, editorRef }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -103,21 +104,21 @@ function SelectFormat({ remove_from_toolbar, editorRef }) {
 
   return (
     <button
-      className="custom-select-format"
+      className={Styles.customSelectFormat}
       onClick={toggleSelect}
       ref={selectRef}
       style={{
         minWidth: "120px",
       }}
     >
-      <div className="select-selected">{selectedOption}</div>
+      <div className={Styles.selectSelected}>{selectedOption}</div>
       {isOpen && (
-        <div className="select-items-format">
+        <div className={Styles.selectItemsFormat}>
           {formats.map((option, index) => (
             <div
               key={`key${index}`}
               onClick={(e) => handleOptionClick(e, option)}
-              className="select-option"
+              className={Styles.selectOption}
             >
               <option.value>{option.label}</option.value>
             </div>

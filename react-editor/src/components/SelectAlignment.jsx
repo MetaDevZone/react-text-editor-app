@@ -1,5 +1,6 @@
 import React from "react";
 import { AlignCenter, AlignJustify, AlignLeft, AlignRight } from ".";
+import Styles from "../css/style.module.css";
 
 function SelectAlignment({ handleHideChildOptions }) {
   const alignments = [
@@ -37,9 +38,9 @@ function SelectAlignment({ handleHideChildOptions }) {
         <button
           key={`key${index}`}
           onClick={(e) => handleOptionClick(e, option)}
-          className="select-option react-editor-text-left"
+          className={`${Styles.selectOption} ${Styles.reactEditorTextLeft}`}
         >
-          <span className="react-editor-me-5">{option.icon}</span>
+          <span className={Styles.reactEditorMe5}>{option.icon}</span>
           {option.title}
         </button>
       ))}

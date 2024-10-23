@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Styles from "../css/style.module.css";
 
 export default function LinkModal(props) {
   const {
@@ -99,41 +100,47 @@ export default function LinkModal(props) {
   }, [selectedData]);
 
   return (
-    <div className="link-modal">
-      <div className="select-type">
+    <>
+      <div className={Styles.selectType}>
         <button
-          className={`${inputs.link_type === "text" ? "selected-type" : ""}`}
+          className={`${
+            inputs.link_type === "text" ? Styles.selectedType : ""
+          }`}
           onClick={(e) => handleChangeType(e, "text")}
         >
           Text
         </button>
         <button
-          className={`${inputs.link_type === "image" ? "selected-type" : ""}`}
+          className={`${
+            inputs.link_type === "image" ? Styles.selectedType : ""
+          }`}
           onClick={(e) => handleChangeType(e, "image")}
         >
           Image
         </button>
         <button
-          className={`${inputs.link_type === "button" ? "selected-type" : ""}`}
+          className={`${
+            inputs.link_type === "button" ? Styles.selectedType : ""
+          }`}
           onClick={(e) => handleChangeType(e, "button")}
         >
           Button
         </button>
       </div>
       <>
-        <div className="react-editor-mt-10">
+        <div className={Styles.reactEditorMt10}>
           <label htmlFor="link">URL*</label>
           <input
             id="link"
             type="text"
             name="link"
             autoFocus
-            className="form-control-input"
+            className={Styles.formControlInput}
             value={inputs.link}
             onChange={handleChange}
           />
           {errorMessage.type === "link" && (
-            <div className="editor-error-messsage">
+            <div className={Styles.editorErrorMessage}>
               *{`${errorMessage.message}`}
             </div>
           )}
@@ -141,25 +148,29 @@ export default function LinkModal(props) {
         {inputs.link_type === "image" ? (
           <>
             {imageUrl ? (
-              <div className="link-image-box">
-                <span className="link-image-cross" onClick={handleCross}>
+              <div className={Styles.linkImageBox}>
+                <span className={Styles.linkImageCross} onClick={handleCross}>
                   x
                 </span>
-                <img src={imageUrl} alt="ImageLink" className="link-image" />
+                <img
+                  src={imageUrl}
+                  alt="ImageLink"
+                  className={Styles.linkImage}
+                />
               </div>
             ) : (
-              <div className="react-editor-mt-10">
+              <div className={Styles.reactEditorMt10}>
                 <label htmlFor="image">Choose File *</label>
                 <input
                   type="file"
                   id="image"
                   name="image"
-                  className="form-control-input"
+                  className={Styles.formControlInput}
                   accept="image/*"
                   onChange={handleChangeFile}
                 />
                 {errorMessage.type === "image" && (
-                  <div className="editor-error-messsage">
+                  <div className={Styles.editorErrorMessage}>
                     *{`${errorMessage.message}`}
                   </div>
                 )}
@@ -167,7 +178,7 @@ export default function LinkModal(props) {
             )}
           </>
         ) : (
-          <div className="react-editor-mt-10">
+          <div className={Styles.reactEditorMt10}>
             <label htmlFor="text">{`Text to display ${
               inputs.link_type === "button" ? "*" : ""
             }`}</label>
@@ -177,22 +188,22 @@ export default function LinkModal(props) {
               name="text"
               value={inputs.text}
               onChange={handleChange}
-              className="form-control-input"
+              className={Styles.formControlInput}
             />
             {errorMessage.type === "button" && (
-              <div className="editor-error-messsage">
+              <div className={Styles.editorErrorMessage}>
                 *{`${errorMessage.message}`}
               </div>
             )}
           </div>
         )}
 
-        <div className="react-editor-mt-10">
+        <div className={Styles.reactEditorMt10}>
           <label htmlFor="open_new_tab">Open in</label>
           <select
             name="open_new_tab"
             id="open_new_tab"
-            className="form-control-input react-editor-mt-2"
+            className={`${Styles.formControlInput} ${Styles.reactEditorMt2}`}
             value={inputs.open_new_tab}
             onChange={handleChange}
           >
@@ -200,12 +211,12 @@ export default function LinkModal(props) {
             <option value={true}>New window</option>
           </select>
         </div>
-        <div className="react-editor-text-end">
-          <button className="save-button" onClick={handleLinkInsert}>
+        <div className={Styles.reactEditorTextEnd}>
+          <button className={Styles.saveButton} onClick={handleLinkInsert}>
             Save
           </button>
         </div>
       </>
-    </div>
+    </>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import LockIcon from "./SVGImages/LockIcon";
 import UnlockIcon from "./SVGImages/UnlockIcon";
+import Styles from "../css/style.module.css";
 
 export default function ImageModal(props) {
   const { onImageInsert, item, setIsLoading, image_handler, selectedData } =
@@ -141,19 +142,21 @@ export default function ImageModal(props) {
     }
   }, [selectedData]);
 
-  console.log(inputs, "inputsinputsinputs33");
-
   return (
-    <div className="link-modal">
-      <div className="select-type">
+    <>
+      <div className={Styles.selectType}>
         <button
-          className={`${inputs.type === "general" ? "selected-type" : ""}`}
+          className={`${
+            inputs.type === "general" ? `${Styles.selectedType}` : ""
+          }`}
           onClick={(e) => handleChangeType(e, "general")}
         >
           General
         </button>
         <button
-          className={`${inputs.type === "upload" ? "selected-type" : ""}`}
+          className={`${
+            inputs.type === "upload" ? `${Styles.selectedType}` : ""
+          }`}
           onClick={(e) => handleChangeType(e, "upload")}
         >
           Upload
@@ -162,48 +165,54 @@ export default function ImageModal(props) {
       <>
         {inputs.type === "general" ? (
           <>
-            <div className="react-editor-mt-10">
+            <div className={Styles.reactEditorMt10}>
               <label htmlFor="link">Source</label>
               <input
                 id="link"
                 type="text"
                 name="link"
                 autoFocus
-                className="form-control-input"
+                className={Styles.formControlInput}
                 value={inputs.link}
                 onChange={handleChange}
               />
               {errorMessage && (
-                <div className="editor-error-messsage">
+                <div className={Styles.editorErrorMessage}>
                   *{`${errorMessage}`}
                 </div>
               )}
             </div>
-            <div className="react-editor-d-flex justify-content-between">
-              <div className="react-editor-mt-10 react-editor-w-45">
+            <div
+              className={`${Styles.reactEditorDFlex} ${Styles.justifyContentBetween}`}
+            >
+              <div
+                className={`${Styles.reactEditorMt10} ${Styles.reactEditorW45}`}
+              >
                 <label htmlFor="height">Height</label>
                 <input
                   id="height"
-                  type="text"
+                  type="number"
                   name="height"
                   value={inputs.height}
                   onChange={handleChange}
-                  className="form-control-input"
-                />
-              </div>
-              <div className="react-editor-mt-10 react-editor-w-45">
-                <label htmlFor="width">Width</label>
-                <input
-                  id="width"
-                  type="text"
-                  name="width"
-                  value={inputs.width}
-                  onChange={handleChange}
-                  className="form-control-input"
+                  className={Styles.formControlInput}
                 />
               </div>
               <div
-                className="lock-unlock-icon"
+                className={`${Styles.reactEditorMt10} ${Styles.reactEditorW45}`}
+              >
+                <label htmlFor="width">Width</label>
+                <input
+                  id="width"
+                  type="number"
+                  name="width"
+                  value={inputs.width}
+                  onChange={handleChange}
+                  className={Styles.formControlInput}
+                />
+              </div>
+              <div
+                className={Styles.lockUnlockIcon}
                 onClick={() => setIsLocked(!isLocked)}
               >
                 {isLocked ? <LockIcon /> : <UnlockIcon />}
@@ -211,27 +220,29 @@ export default function ImageModal(props) {
             </div>
           </>
         ) : (
-          <div className="react-editor-mt-10">
+          <div className={Styles.reactEditorMt10}>
             <label htmlFor="image">Choose File</label>
             <input
               type="file"
               id="image"
               name="image"
-              className="form-control-input"
+              className={Styles.formControlInput}
               accept="image/*"
               onChange={handleChangeFile}
             />
             {errorMessage && (
-              <div className="editor-error-messsage">*{`${errorMessage}`}</div>
+              <div className={Styles.editorErrorMessage}>
+                *{`${errorMessage}`}
+              </div>
             )}
           </div>
         )}
-        <div className="react-editor-text-end">
-          <button className="save-button" onClick={handleLinkInsert}>
+        <div className={Styles.reactEditorTextEnd}>
+          <button className={Styles.saveButton} onClick={handleLinkInsert}>
             Save
           </button>
         </div>
       </>
-    </div>
+    </>
   );
 }

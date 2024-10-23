@@ -1,24 +1,26 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { CrossImage } from ".";
+import Styles from "../css/style.module.css";
 
 const Modal = (props) => {
   const { onClose, children, title, className, isFullScreen } = props;
 
   return ReactDOM.createPortal(
     <div
-      onClick={onClose}
-      className={`modal-overlay  ${isFullScreen ? "fill-screen-view" : ""}`}
+      className={`${Styles.modalOverlay} ${
+        isFullScreen ? `${Styles.fillScreenView}` : ""
+      }`}
     >
       <div
-        className={`modal-popup ${className ? className : ""}`}
+        className={`${Styles.modalPopup} ${className ? className : ""}`}
         onClick={(e) => e.stopPropagation()}
       >
         {!isFullScreen && (
           <>
-            <div className="model-title">
+            <div className={Styles.modelTitle}>
               <h2>{title}</h2>
-              <div className="cross" onClick={onClose}>
+              <div className={Styles.cross} onClick={onClose}>
                 <CrossImage />
               </div>
             </div>

@@ -102,12 +102,21 @@ export function transformHTML(htmlString) {
     );
     transformedHTML = transformedHTML.trim();
 
-    return transformedHTML;
+    const lines = transformedHTML.split("\n");
+    const processedLines = lines.map((line) => {
+      const hasLeading = /^<.*?>|<.*?>$/.test(line);
+      if (!hasLeading && line.trim()) {
+        return `<p>${line}</p>`;
+      }
+      return line;
+    });
+    return processedLines.join("\n").trim();
   }
+  return "";
 }
 
 export const remove_resizer = () => {
-  let element = document.querySelector(".resize-image-wrapper");
+  let element = document.querySelector(".resizeImageWrapper");
   let image_element = document.querySelector(".resizer-image");
   if (element && image_element) {
     element.insertAdjacentElement("afterend", image_element);

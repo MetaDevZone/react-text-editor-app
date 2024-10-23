@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BackgroundColorIcon, TextColorUpperIcon } from ".";
+import Styles from "../css/style.module.css";
 
 function rgbToHex(rgb) {
   const [r, g, b] = rgb.match(/\d+/g);
@@ -82,9 +83,11 @@ export default function ManageColors(props) {
   // document.documentElement.style.setProperty(variable, newColor);
 
   return (
-    <div className="main-color-component" ref={colorPickerRef}>
+    <div className={Styles.mainColorComponent} ref={colorPickerRef}>
       <button onClick={handleClick} title={item?.title ? item.title : title}>
-        <div className="react-editor-d-flex react-editor-flex-column">
+        <div
+          className={`${Styles.reactEditorDFlex} ${Styles.reactEditorFlexColumn}`}
+        >
           {item?.icon ? (
             item.icon
           ) : type === "foreColor" ? (
@@ -94,17 +97,17 @@ export default function ManageColors(props) {
           )}
 
           <div
-            className="bottom-colored-line"
+            className={Styles.bottomColoredLine}
             style={{
               backgroundColor: value,
             }}
           ></div>
         </div>
       </button>
-      <div className={`open-color-box ${openColor ? "show" : ""}`}>
-        <div className="color-box-grid react-editor-d-flex">
+      <div className={`${Styles.openColorBox} ${openColor ? Styles.show : ""}`}>
+        <div className={`${Styles.colorBoxGrid} ${Styles.reactEditorDFlex}`}>
           <button
-            className="color-box"
+            className={Styles.colorBox}
             style={{
               backgroundColor: "#BFEDD2",
             }}
@@ -112,7 +115,7 @@ export default function ManageColors(props) {
             onClick={(e) => handleChangeColor(e, "#BFEDD2")}
           ></button>
           <button
-            className="color-box"
+            className={Styles.colorBox}
             style={{
               backgroundColor: "#FBEEB8",
             }}
@@ -120,7 +123,7 @@ export default function ManageColors(props) {
             onClick={(e) => handleChangeColor(e, "#FBEEB8")}
           ></button>
           <button
-            className="color-box"
+            className={Styles.colorBox}
             style={{
               backgroundColor: "#F8CAC6",
             }}
@@ -128,7 +131,7 @@ export default function ManageColors(props) {
             onClick={(e) => handleChangeColor(e, "#BFEDD2")}
           ></button>
           <button
-            className="color-box"
+            className={Styles.colorBox}
             style={{
               backgroundColor: "#ECCAFA",
             }}
@@ -136,7 +139,7 @@ export default function ManageColors(props) {
             onClick={(e) => handleChangeColor(e, "#ECCAFA")}
           ></button>
           <button
-            className="color-box"
+            className={Styles.colorBox}
             style={{
               backgroundColor: "#C2E0F4",
             }}
@@ -144,9 +147,9 @@ export default function ManageColors(props) {
             onClick={(e) => handleChangeColor(e, "#C2E0F4")}
           ></button>
         </div>
-        <div className="color-box-grid react-editor-d-flex">
+        <div className={`${Styles.colorBoxGrid} ${Styles.reactEditorDFlex}`}>
           <button
-            className="color-box"
+            className={Styles.colorBox}
             style={{
               backgroundColor: "#2DC26B",
             }}
@@ -154,7 +157,7 @@ export default function ManageColors(props) {
             onClick={(e) => handleChangeColor(e, "#2DC26B")}
           ></button>
           <button
-            className="color-box"
+            className={Styles.colorBox}
             style={{
               backgroundColor: "#F1C40F",
             }}
@@ -162,7 +165,7 @@ export default function ManageColors(props) {
             onClick={(e) => handleChangeColor(e, "#F1C40F")}
           ></button>
           <button
-            className="color-box"
+            className={Styles.colorBox}
             style={{
               backgroundColor: "#E03E2D",
             }}
@@ -170,7 +173,7 @@ export default function ManageColors(props) {
             onClick={(e) => handleChangeColor(e, "#E03E2D")}
           ></button>
           <button
-            className="color-box"
+            className={Styles.colorBox}
             style={{
               backgroundColor: "#B96AD9",
             }}
@@ -178,7 +181,7 @@ export default function ManageColors(props) {
             onClick={(e) => handleChangeColor(e, "#B96AD9")}
           ></button>
           <button
-            className="color-box"
+            className={Styles.colorBox}
             style={{
               backgroundColor: "#3598DB",
             }}
@@ -186,9 +189,9 @@ export default function ManageColors(props) {
             onClick={(e) => handleChangeColor(e, "#3598DB")}
           ></button>
         </div>
-        <div className="color-box-grid react-editor-d-flex">
+        <div className={`${Styles.colorBoxGrid} ${Styles.reactEditorDFlex}`}>
           <button
-            className="color-box"
+            className={Styles.colorBox}
             style={{
               backgroundColor: "#169179",
             }}
@@ -196,7 +199,7 @@ export default function ManageColors(props) {
             onClick={(e) => handleChangeColor(e, "#169179")}
           ></button>
           <button
-            className="color-box"
+            className={Styles.colorBox}
             style={{
               backgroundColor: "#E67E23",
             }}
@@ -204,7 +207,7 @@ export default function ManageColors(props) {
             onClick={(e) => handleChangeColor(e, "#E67E23")}
           ></button>
           <button
-            className="color-box"
+            className={Styles.colorBox}
             style={{
               backgroundColor: "#BA372A",
             }}
@@ -212,7 +215,7 @@ export default function ManageColors(props) {
             onClick={(e) => handleChangeColor(e, "#BA372A")}
           ></button>
           <button
-            className="color-box"
+            className={Styles.colorBox}
             style={{
               backgroundColor: "#843FA1",
             }}
@@ -220,7 +223,7 @@ export default function ManageColors(props) {
             onClick={(e) => handleChangeColor(e, "#843FA1")}
           ></button>
           <button
-            className="color-box"
+            className={Styles.colorBox}
             style={{
               backgroundColor: "#236FA1",
             }}
@@ -228,9 +231,9 @@ export default function ManageColors(props) {
             onClick={(e) => handleChangeColor(e, "#236FA1")}
           ></button>
         </div>
-        <div className="color-box-grid react-editor-d-flex">
+        <div className={`${Styles.colorBoxGrid} ${Styles.reactEditorDFlex}`}>
           <button
-            className="color-box"
+            className={Styles.colorBox}
             style={{
               backgroundColor: "#ECF0F1",
             }}
@@ -238,7 +241,7 @@ export default function ManageColors(props) {
             onClick={(e) => handleChangeColor(e, "#ECF0F1")}
           ></button>
           <button
-            className="color-box"
+            className={Styles.colorBox}
             style={{
               backgroundColor: "#CED4D9",
             }}
@@ -246,7 +249,7 @@ export default function ManageColors(props) {
             onClick={(e) => handleChangeColor(e, "#CED4D9")}
           ></button>
           <button
-            className="color-box"
+            className={Styles.colorBox}
             style={{
               backgroundColor: "#95A5A6",
             }}
@@ -254,7 +257,7 @@ export default function ManageColors(props) {
             onClick={(e) => handleChangeColor(e, "#95A5A6")}
           ></button>
           <button
-            className="color-box"
+            className={Styles.colorBox}
             style={{
               backgroundColor: "#7E8C8D",
             }}
@@ -262,7 +265,7 @@ export default function ManageColors(props) {
             onClick={(e) => handleChangeColor(e, "#7E8C8D")}
           ></button>
           <button
-            className="color-box"
+            className={Styles.colorBox}
             style={{
               backgroundColor: "#34495E",
             }}
@@ -270,9 +273,9 @@ export default function ManageColors(props) {
             onClick={(e) => handleChangeColor(e, "#34495E")}
           ></button>
         </div>
-        <div className="color-box-grid react-editor-d-flex">
+        <div className={`${Styles.colorBoxGrid} ${Styles.reactEditorDFlex}`}>
           <button
-            className="color-box"
+            className={Styles.colorBox}
             style={{
               backgroundColor: "#fff",
             }}
@@ -280,7 +283,7 @@ export default function ManageColors(props) {
             onClick={(e) => handleChangeColor(e, "#fff")}
           ></button>
           <button
-            className="color-box"
+            className={Styles.colorBox}
             style={{
               backgroundColor: "#000",
             }}
@@ -288,12 +291,9 @@ export default function ManageColors(props) {
             onClick={(e) => handleChangeColor(e, "#000")}
           ></button>
 
-          <button className="color-box"></button>
-          <button className="color-box"></button>
-          <button
-            className="color-box custom-color-picker"
-            title="Custom color"
-          >
+          <button className={Styles.colorBox}></button>
+          <button className={Styles.colorBox}></button>
+          <button className={Styles.colorBox} title="Custom color">
             <input
               id="input-color"
               type="color"

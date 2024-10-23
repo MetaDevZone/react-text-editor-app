@@ -1,4 +1,5 @@
 import React from "react";
+import Styles from "../css/style.module.css";
 
 function SelectLineHeight({ handleHideChildOptions }) {
   const lineHeightOptions = [1, 1.1, 1.2, 1.3, 1.4, 1.5, 2.0];
@@ -58,7 +59,7 @@ function SelectLineHeight({ handleHideChildOptions }) {
         <button
           key={`key${index}`}
           onClick={(e) => handleOptionClick(e, option)}
-          className="select-option"
+          className={Styles.selectOption}
         >
           {option}
         </button>

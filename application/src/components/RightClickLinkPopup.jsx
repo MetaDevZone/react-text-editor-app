@@ -4,6 +4,7 @@ import ImageIcon from "./SVGImages/ImageIcon";
 import RemoveLinkIcon from "./SVGImages/RemoveLinkIcon";
 import OpenLinkIcon from "./SVGImages/OpenLinkIcon";
 import { remove_resizer } from "./constant";
+import Styles from "../css/style.module.css";
 
 const RightClickLinkPopup = ({
   editorRef,
@@ -135,24 +136,24 @@ const RightClickLinkPopup = ({
     <>
       {popupVisible && (
         <div
-          className="right_click_popup_background"
+          className={Styles.rightClickPopupBackground}
           style={{
             top: popupPosition.y + window.scrollY,
             left: popupPosition.x,
           }}
           ref={popupRef}
         >
-          <div className="right_click_popup" onClick={handleOpenLinkPopup}>
+          <div className={Styles.rightClickPopup} onClick={handleOpenLinkPopup}>
             <LinkIcon /> Link...
           </div>
           {(selectedEvent?.tagName === "A" ||
             selectedEvent?.parentElement?.tagName === "A") && (
             <>
-              <div className="right_click_popup" onClick={handleRemove}>
+              <div className={Styles.rightClickPopup} onClick={handleRemove}>
                 <RemoveLinkIcon /> Remove Link...
               </div>{" "}
               <div
-                className="right_click_popup open-link"
+                className={`${Styles.rightClickPopup} ${Styles.openLink}`}
                 onClick={handleOpenLink}
               >
                 <OpenLinkIcon /> Open Link...
@@ -163,7 +164,7 @@ const RightClickLinkPopup = ({
             <>
               <hr />
               <div
-                className="right_click_popup"
+                className={Styles.rightClickPopup}
                 ref={popupRef}
                 onClick={handleImageLink}
               >

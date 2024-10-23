@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Styles from "../css/style.module.css";
 
 export default function MediaModal({ onMediaInsert }) {
   const [errorMessage, setErrorMessage] = useState("");
@@ -45,8 +46,8 @@ export default function MediaModal({ onMediaInsert }) {
   };
 
   return (
-    <div className="link-modal">
-      <div className="select-type">
+    <div className={Styles.mediaModal}>
+      <div className={Styles.selectType}>
         <button
           className={`${inputs.type === "general" ? "selected-type" : ""}`}
           onClick={(e) => handleChangeType(e, "general")}
@@ -69,63 +70,69 @@ export default function MediaModal({ onMediaInsert }) {
       <>
         {inputs.type === "general" ? (
           <>
-            <div className="react-editor-mt-10">
+            <div className={Styles.reactEditorMt10}>
               <label htmlFor="link">Source</label>
               <input
                 id="link"
                 type="text"
                 name="link"
                 autoFocus
-                className="form-control-input"
+                className={Styles.formControlInput}
                 value={inputs.link}
                 onChange={handleChange}
               />
               {errorMessage && (
-                <div className="editor-error-messsage">
+                <div className={Styles.editorErrorMessage}>
                   *{`${errorMessage}`}
                 </div>
               )}
             </div>
-            <div className="react-editor-d-flex justify-content-between">
-              <div className="react-editor-mt-10 react-editor-w-47">
+            <div
+              className={`${Styles.reactEditorDFlex} ${Styles.justifyContentBetween}`}
+            >
+              <div
+                className={`${Styles.reactEditorMt10} ${Styles.reactEditorW47}`}
+              >
                 <label htmlFor="height">Height</label>
                 <input
                   id="height"
-                  type="text"
+                  type="number"
                   name="height"
                   value={inputs.height}
                   onChange={handleChange}
-                  className="form-control-input"
+                  className={Styles.formControlInput}
                 />
               </div>
-              <div className="react-editor-mt-10 react-editor-w-47">
+              <div
+                className={`${Styles.reactEditorMt10} ${Styles.reactEditorW47}`}
+              >
                 <label htmlFor="width">Width</label>
                 <input
                   id="width"
-                  type="text"
+                  type="number"
                   name="width"
                   value={inputs.width}
                   onChange={handleChange}
-                  className="form-control-input"
+                  className={Styles.formControlInput}
                 />
               </div>
             </div>
           </>
         ) : inputs.type === "embed" ? (
           <>
-            <div className="react-editor-mt-10">
+            <div className={Styles.reactEditorMt10}>
               <label htmlFor="embed_code">Paste your embed code below:</label>
               <textarea
                 id="embed_code"
                 name="embed_code"
                 rows={5}
                 autoFocus
-                className="form-control-input"
+                className={Styles.formControlInput}
                 value={inputs.embed_code}
                 onChange={handleChange}
               />
               {errorMessage && (
-                <div className="editor-error-messsage">
+                <div className={Styles.editorErrorMessage}>
                   *{`${errorMessage}`}
                 </div>
               )}
@@ -133,18 +140,18 @@ export default function MediaModal({ onMediaInsert }) {
           </>
         ) : (
           <>
-            <div className="react-editor-mt-10">
+            <div className={Styles.reactEditorMt10}>
               <label htmlFor="link">Choose File</label>
               <input
                 type="file"
                 id="link"
                 name="link"
-                className="form-control-input"
+                className={Styles.formControlInput}
                 accept="video/*"
                 onChange={handleChangeFile}
               />
               {errorMessage && (
-                <div className="editor-error-messsage">
+                <div className={Styles.editorErrorMessage}>
                   *{`${errorMessage}`}
                 </div>
               )}
@@ -152,8 +159,8 @@ export default function MediaModal({ onMediaInsert }) {
           </>
         )}
 
-        <div className="react-editor-text-end">
-          <button className="save-button" onClick={handleSubmit}>
+        <div className={Styles.reactEditorTextEnd}>
+          <button className={Styles.saveButton} onClick={handleSubmit}>
             Save
           </button>
         </div>

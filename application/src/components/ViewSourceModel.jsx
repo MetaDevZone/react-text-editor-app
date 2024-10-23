@@ -1,5 +1,6 @@
 import React from "react";
 import Modal from "./Model";
+import Styles from "../css/style.module.css";
 
 export default function ViewSourceModal(props) {
   const {
@@ -11,20 +12,20 @@ export default function ViewSourceModal(props) {
   } = props;
 
   return (
-    <div className="ml-main-content-box">
+    <div className={Styles.mlMainContentBox}>
       <Modal
         isOpen={viewSource}
         onClose={() => setViewSource(false)}
         title="Source Code"
-        className="full-screen-model"
+        className={Styles.fullScreenModel}
       >
         <textarea
-          className="wysiwyg-editor__source"
+          className={Styles.wysiwygEditorSource}
           value={sourceCode}
           onChange={(e) => setSourceCode(e.target.value)}
         />
-        <div className="react-editor-text-end">
-          <button className="save-button" onClick={handleSaveSource}>
+        <div className={Styles.reactEditorTextEnd}>
+          <button className={Styles.saveButton} onClick={handleSaveSource}>
             Save
           </button>
         </div>

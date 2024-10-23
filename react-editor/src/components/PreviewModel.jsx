@@ -1,18 +1,19 @@
 import React from "react";
 import Modal from "./Model";
+import Styles from "../css/style.module.css";
 
 export default function PreviewModel(props) {
   const { openPreview, setOpenPreview, previewContent } = props;
   return (
-    <div className="ml-main-content-box">
+    <div className={Styles.mlMainContentBox}>
       <Modal
         isOpen={openPreview}
         onClose={() => setOpenPreview(false)}
         title="Preview"
-        className="full-screen-model"
+        className={Styles.fullScreenModel}
       >
         <div
-          className="react-editor-mt-10"
+          className={Styles.reactEditorMt10}
           dangerouslySetInnerHTML={{ __html: previewContent }}
         ></div>
       </Modal>

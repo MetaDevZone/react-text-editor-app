@@ -1,4 +1,5 @@
 import React from "react";
+import Styles from "../css/style.module.css";
 
 function SelectFontSize({ handleHideChildOptions }) {
   const fontSizes = [
@@ -37,7 +38,7 @@ function SelectFontSize({ handleHideChildOptions }) {
         <button
           key={`key${index}`}
           onClick={(e) => handleOptionClick(e, option)}
-          className="select-option"
+          className={Styles.selectOption}
         >
           {`${option}px`}
         </button>

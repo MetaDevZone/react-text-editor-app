@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { CodeIcon, FullscreenExit, FullscreenIcon } from ".";
 import { VIEW_OPTIONS } from "./constant";
+import Styles from "../css/style.module.css";
 
 export default function SelectFileOptions(props) {
   const {
@@ -47,12 +48,14 @@ export default function SelectFileOptions(props) {
 
   return (
     <div
-      className="custom-select"
+      className={Styles.customSelect}
       onMouseEnter={() => setIsShow(true)}
       onMouseLeave={() => setIsShow(false)}
     >
       {item?.title ? item.title : "View"}
-      <div className={`select-items ${isShow ? "show" : ""}`}>
+      <div
+        className={`${Styles.selectItems} ${isShow ? `${Styles.show}` : ""}`}
+      >
         {options.map((option, index) => {
           let is_source_code =
             option === "source_code" || option.name === "source_code";
@@ -63,7 +66,7 @@ export default function SelectFileOptions(props) {
             <div key={`key${index}`}>
               {is_source_code && (
                 <div
-                  className="select-insert"
+                  className={Styles.selectInsert}
                   onClick={(e) => handleSelect(e, "code", option)}
                 >
                   {option?.icon ? option.icon : <CodeIcon />}
@@ -72,7 +75,7 @@ export default function SelectFileOptions(props) {
               )}
               {is_full_screen && (
                 <div
-                  className="select-insert"
+                  className={Styles.selectInsert}
                   onClick={(e) => handleSelect(e, "screen", option)}
                 >
                   {option?.icon ? (

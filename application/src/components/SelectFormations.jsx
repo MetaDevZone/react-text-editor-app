@@ -15,6 +15,7 @@ import SelectFontSize from "./SelectFontSize";
 import SelectAlignment from "./SelectAlignment";
 import SelectLineHeight from "./SelectLineHeight";
 import { FORMAT_OPTIONS, generateRandomID } from "./constant";
+import Styles from "../css/style.module.css";
 
 export default function SelectFileOptions(props) {
   let { item, isFullScreen, remove_from_navbar, editorRef } = props;
@@ -66,13 +67,17 @@ export default function SelectFileOptions(props) {
 
   return (
     <div
-      className="custom-select"
+      className={Styles.customSelect}
       onMouseOver={() => setShowFormatOptions(true)}
       onMouseLeave={handleHideChildOptions}
       id={random_id}
     >
       {item?.title ? item.title : "Format"}
-      <div className={`select-items ${showFormatOptions ? "show" : ""}`}>
+      <div
+        className={`${Styles.selectItems} ${
+          showFormatOptions ? `${Styles.show}` : ""
+        }`}
+      >
         {options?.length > 0 &&
           options.map((option, index) => {
             let is_bold = option === "bold" || option.name === "bold";
@@ -93,7 +98,7 @@ export default function SelectFileOptions(props) {
               <>
                 {is_bold && (
                   <button
-                    className="select-insert"
+                    className={Styles.selectInsert}
                     onClick={(e) => handleClick(e, "bold", option)}
                   >
                     {option?.icon ? option.icon : <BoldIcon />}
@@ -102,7 +107,7 @@ export default function SelectFileOptions(props) {
                 )}
                 {is_italic && (
                   <button
-                    className="select-insert"
+                    className={Styles.selectInsert}
                     onClick={(e) => handleClick(e, "italic", option)}
                   >
                     {option?.icon ? option.icon : <ItalicIcon />}
@@ -111,7 +116,7 @@ export default function SelectFileOptions(props) {
                 )}
                 {is_underline && (
                   <button
-                    className="select-insert"
+                    className={Styles.selectInsert}
                     onClick={(e) => handleClick(e, "underline", option)}
                   >
                     {option?.icon ? option.icon : <UnderlineIcon />}
@@ -120,7 +125,7 @@ export default function SelectFileOptions(props) {
                 )}
                 {is_superscript && (
                   <button
-                    className="select-insert"
+                    className={Styles.selectInsert}
                     onClick={(e) => handleClick(e, "superscript", option)}
                   >
                     {option?.icon ? option.icon : <SuperscriptIcon />}
@@ -129,7 +134,7 @@ export default function SelectFileOptions(props) {
                 )}
                 {is_subscript && (
                   <button
-                    className="select-insert"
+                    className={Styles.selectInsert}
                     onClick={(e) => handleClick(e, "subscript", option)}
                   >
                     {option?.icon ? option.icon : <SubscriptIcon />}
@@ -143,7 +148,7 @@ export default function SelectFileOptions(props) {
                     }}
                     onMouseLeave={handleHideChildOptions}
                   >
-                    <div className="select-insert">
+                    <div className={Styles.selectInsert}>
                       {option?.icon ? option.icon : <FontFamilyIcon />}
                       <span>
                         {option?.title ? option.title : "Font Family"}
@@ -158,7 +163,7 @@ export default function SelectFileOptions(props) {
                     }}
                     onMouseLeave={handleHideChildOptions}
                   >
-                    <div className="select-insert">
+                    <div className={Styles.selectInsert}>
                       {option?.icon ? option.icon : <FontSizeIcon />}
                       <span>{option?.title ? option.title : "Font Size"}</span>
                     </div>
@@ -171,7 +176,7 @@ export default function SelectFileOptions(props) {
                     }}
                     onMouseLeave={handleHideChildOptions}
                   >
-                    <div className="select-insert">
+                    <div className={Styles.selectInsert}>
                       {option?.icon ? option.icon : <AlignLeft />}
                       <span>{option?.title ? option.title : "Align"}</span>
                     </div>
@@ -182,7 +187,7 @@ export default function SelectFileOptions(props) {
           })}
 
         {/* <div
-          className="select-insert"
+          className={Styles.selectInsert}
           onMouseOver={() => {
             handleShowFamily(4, 175);
           }}
@@ -192,8 +197,8 @@ export default function SelectFileOptions(props) {
         </div> */}
       </div>
       <div
-        className={`select-formation-dropdown ${
-          showChildOptions === 1 ? "show" : ""
+        className={`${Styles.selectFormationDropdown} ${
+          showChildOptions === 1 ? `${Styles.show}` : ""
         }`}
         onMouseOver={() => {
           handleShowFamily(1);
@@ -204,9 +209,9 @@ export default function SelectFileOptions(props) {
         <SelectFamily handleHideChildOptions={handleHideChildOptions} />
       </div>
       <div
-        className={`select-formation-dropdown font-size-dropdown ${
-          showChildOptions === 2 ? "show" : ""
-        }`}
+        className={`${Styles.selectFormationDropdown} ${
+          Styles.fontSizeDropdown
+        } ${showChildOptions === 2 ? `${Styles.show}` : ""}`}
         onMouseOver={() => {
           handleShowFamily(2);
         }}
@@ -216,9 +221,9 @@ export default function SelectFileOptions(props) {
         <SelectFontSize handleHideChildOptions={handleHideChildOptions} />
       </div>
       <div
-        className={`select-formation-dropdown font-size-dropdown ${
-          showChildOptions === 3 ? "show" : ""
-        }`}
+        className={`${Styles.selectFormationDropdown} ${
+          Styles.fontSizeDropdown
+        } ${showChildOptions === 3 ? `${Styles.show}` : ""}`}
         onMouseOver={() => {
           handleShowFamily(3);
         }}
@@ -228,9 +233,9 @@ export default function SelectFileOptions(props) {
         <SelectAlignment handleHideChildOptions={handleHideChildOptions} />
       </div>
       <div
-        className={`select-formation-dropdown font-size-dropdown ${
-          showChildOptions === 4 ? "show" : ""
-        }`}
+        className={`${Styles.selectFormationDropdown} ${
+          Styles.fontSizeDropdown
+        } ${showChildOptions === 4 ? `${Styles.show}` : ""}`}
         onMouseOver={() => {
           handleShowFamily(4);
         }}

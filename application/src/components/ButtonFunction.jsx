@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Styles from "../css/style.module.css";
 
 const ButtonFunction = (props) => {
   const { name, icon, title, item, disabled, editorRef } = props;
@@ -45,11 +46,11 @@ const ButtonFunction = (props) => {
   const handleClasses = () => {
     let className = "";
     if (isSelected) {
-      className = "selected-option";
+      className = Styles.selectedOption || "";
     }
     if (name === "redo" || name === "undo") {
       if (isDisabled) {
-        className += " disabled";
+        className += ` ${Styles.disabled || ""}`;
       }
     }
     return className.trim();

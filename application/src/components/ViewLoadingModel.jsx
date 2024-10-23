@@ -2,10 +2,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { loader_img } from ".";
+import Styles from "../css/style.module.css";
 
 const ViewLoadingModel = () => {
   return ReactDOM.createPortal(
-    <div className="modal-overlay image-model-overly">
+    <div className={`${Styles.modalOverlay} ${Styles.imageModelOverly}`}>
       <div onClick={(e) => e.stopPropagation()}>
         <img src={loader_img} alt="" />
       </div>

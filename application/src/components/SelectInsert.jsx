@@ -7,6 +7,7 @@ import {
   VideoIcon,
 } from ".";
 import { INSER_OPTIONS } from "./constant";
+import Styles from "../css/style.module.css";
 
 export default function SelectFileOptions(props) {
   const { onSelectOption, handleInsertHR, item, remove_from_navbar } = props;
@@ -37,12 +38,14 @@ export default function SelectFileOptions(props) {
 
   return (
     <div
-      className="custom-select"
+      className={Styles.customSelect}
       onMouseEnter={() => setIsShow(true)}
       onMouseLeave={() => setIsShow(false)}
     >
       {item?.title ? item.title : "Insert"}
-      <div className={`select-items ${isShow ? "show" : ""}`}>
+      <div
+        className={`${Styles.selectItems} ${isShow ? `${Styles.show}` : ""}`}
+      >
         {options?.length > 0 &&
           options.map((option, index) => {
             let is_image = option === "image" || option.name === "image";
@@ -56,7 +59,7 @@ export default function SelectFileOptions(props) {
               <div key={`key${index}`}>
                 {is_image && (
                   <div
-                    className="select-insert"
+                    className={Styles.selectInsert}
                     onClick={(e) => handleSelect(e, "image")}
                   >
                     {option?.icon ? option.icon : <ImageIcon />}
@@ -65,7 +68,7 @@ export default function SelectFileOptions(props) {
                 )}
                 {is_link && (
                   <div
-                    className="select-insert"
+                    className={Styles.selectInsert}
                     onClick={(e) => handleSelect(e, "link")}
                   >
                     {option?.icon ? option.icon : <LinkIcon />}
@@ -74,7 +77,7 @@ export default function SelectFileOptions(props) {
                 )}
                 {is_video && (
                   <div
-                    className="select-insert"
+                    className={Styles.selectInsert}
                     onClick={(e) => handleSelect(e, "video")}
                   >
                     {option?.icon ? option.icon : <VideoIcon />}
@@ -83,7 +86,7 @@ export default function SelectFileOptions(props) {
                 )}
                 {is_hr_line && (
                   <div
-                    className="select-insert"
+                    className={Styles.selectInsert}
                     onClick={(e) => handleSelect(e, "hr_line")}
                   >
                     {option?.icon ? option.icon : <HorizontalLineIcon />}
@@ -94,7 +97,7 @@ export default function SelectFileOptions(props) {
                 )}
                 {is_special_char && (
                   <div
-                    className="select-insert"
+                    className={Styles.selectInsert}
                     onClick={(e) => handleSelect(e, "special_char")}
                   >
                     {option?.icon ? option.icon : <SpecialCharIcon />}

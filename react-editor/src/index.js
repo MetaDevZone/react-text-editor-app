@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./css/style.css";
+import Styles from "./css/style.module.css";
 import {
   AlignCenter,
   AlignJustify,
@@ -128,11 +129,46 @@ export default function ReactEditorKit(props) {
   const [showHR2, setShowHR2] = useState(false);
   const [showHR3, setShowHR3] = useState(false);
 
+  const checkIfImageExists = () => {
+    const editor = editorRef.current;
+    if (editor) {
+      const imgTag = editor.querySelector("img");
+      if (imgTag) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return false;
+  };
+
   const handleInput = () => {
     setInit(true);
-    const content = editorRef.current.innerHTML;
-    if (onChange) {
-      onChange(content);
+
+    let isImageExists = checkIfImageExists();
+    if (!isImageExists) {
+      let element = document.querySelector(".resizeImageWrapper");
+      if (element) {
+        element.parentNode.removeChild(element);
+      }
+      setSelectedEvent(null);
+    }
+    const editor = editorRef.current;
+    let content = editor.innerHTML;
+    content = transformHTML(content);
+
+    const tempDiv = document.createElement("p");
+    tempDiv.innerHTML = content;
+
+    const cleanedContent = tempDiv.textContent || tempDiv.innerText || "";
+    if (cleanedContent.trim() === "") {
+      if (onChange) {
+        onChange("");
+      }
+    } else {
+      if (onChange) {
+        onChange(content);
+      }
     }
   };
 
@@ -154,10 +190,15 @@ export default function ReactEditorKit(props) {
   const handleSaveSource = (e) => {
     e.preventDefault();
     if (editorRef.current) {
-      editorRef.current.innerHTML = sourceCode;
+      const trimmedSourceCode = sourceCode
+        .replace(/\n\s*\n/g, "\n")
+        .replace(/\s+/g, " ")
+        .trim();
+
+      editorRef.current.innerHTML = trimmedSourceCode;
       setViewSource(false);
       if (onChange) {
-        onChange(sourceCode);
+        onChange(trimmedSourceCode);
       }
     }
   };
@@ -276,7 +317,6 @@ export default function ReactEditorKit(props) {
       }, 0);
     } else {
       handleFocusEditor();
-      console.log("handleFocusEditor");
       let imgElement = `<img src="${link}" alt="Image" style="`;
       if (height) {
         imgElement += `height:${height}px;`;
@@ -589,6 +629,9 @@ export default function ReactEditorKit(props) {
         setInit(true);
       }
     }
+    if (!value) {
+      editorRef.current.innerHTML = "";
+    }
     if (getEditorRef) {
       getEditorRef(editorRef);
     }
@@ -681,11 +724,19 @@ export default function ReactEditorKit(props) {
   };
 
   const handle_resize = () => {
-    const hr_1 = document.getElementsByClassName("wysiwyg-editor__toolbar")[0];
-    setShowHR1(hr_1.offsetHeight > 34);
-    const hr_2 = document.getElementsByClassName("wysiwyg-editor__toolbar")[1];
-    setShowHR2(hr_2.offsetHeight > 34);
-    setShowHR3(hr_2.offsetHeight > 65);
+    const hr_1 = document.getElementsByClassName(
+      "style_wysiwygEditorToolbar__2W7yf"
+    )[0];
+    if (hr_1) {
+      setShowHR1(hr_1.offsetHeight > 34);
+    }
+    const hr_2 = document.getElementsByClassName(
+      "style_wysiwygEditorToolbar__2W7yf"
+    )[1];
+    if (hr_2) {
+      setShowHR2(hr_2.offsetHeight > 34);
+      setShowHR3(hr_2.offsetHeight > 65);
+    }
   };
 
   const setCursorAtStart = () => {
@@ -710,11 +761,10 @@ export default function ReactEditorKit(props) {
     e.preventDefault();
     const startX = e.clientX;
 
-    let element = document.querySelector(".resize-image-wrapper");
+    let element = document.querySelector(".resizeImageWrapper");
     let image_element = document.querySelector(".resizer-image");
     let startWidth = parseFloat(image_element.style.width);
     let startHeight = parseFloat(image_element.style.height);
-    console.log(startHeight, "startHeight");
     if (isNaN(startHeight)) {
       startHeight = parseFloat(image_element.offsetHeight);
     }
@@ -722,9 +772,7 @@ export default function ReactEditorKit(props) {
     if (isNaN(startWidth)) {
       startWidth = parseFloat(image_element.offsetWidth);
     }
-    console.log(startHeight, "startHeight---1");
     let heightRatio = startHeight / startWidth;
-    console.log(heightRatio, "heightRatio---1");
     const handleMouseMove = (e) => {
       let newWidth = startWidth + (e.clientX - startX);
       if (left) {
@@ -753,31 +801,30 @@ export default function ReactEditorKit(props) {
 
   const handleClickImage = (event) => {
     if (event.target.tagName === "IMG") {
-      const hasClass = event.target.parentElement.classList.contains(
-        "resize-image-wrapper"
-      );
+      const hasClass =
+        event.target.parentElement.classList.contains("resizeImageWrapper");
       if (hasClass) return;
       const imgElement = event.target;
       const imageWidth = imgElement.offsetWidth;
       const divElement = document.createElement("div");
       divElement.style.display = "inline-block";
       divElement.style.width = `${imageWidth}px`;
-      divElement.classList.add("resize-image-wrapper");
+      divElement.classList.add("resizeImageWrapper");
 
       const resizer = document.createElement("div");
       resizer.classList.add("resizer");
       resizer.onmousedown = handleMouseDown;
 
       const resizerRight = document.createElement("div");
-      resizerRight.classList.add("resizer", "top-right");
+      resizerRight.classList.add("resizer", "topRight");
       resizerRight.onmousedown = handleMouseDown;
 
       const resizerBottom = document.createElement("div");
-      resizerBottom.classList.add("resizer", "bottom-left");
+      resizerBottom.classList.add("resizer", "bottomLeft");
       resizerBottom.onmousedown = (e) => handleMouseDown(e, "left");
 
       const resizerBottomRight = document.createElement("div");
-      resizerBottomRight.classList.add("resizer", "top-left");
+      resizerBottomRight.classList.add("resizer", "topLeft");
       resizerBottomRight.onmousedown = (e) => handleMouseDown(e, "left");
 
       imgElement.classList.add("resizer-image");
@@ -789,12 +836,12 @@ export default function ReactEditorKit(props) {
       divElement.appendChild(resizerBottom);
       divElement.appendChild(resizerBottomRight);
       setSelectedEvent(divElement);
+
       imgElement.parentNode.replaceChild(divElement, imgElement);
     } else {
-      const target = event.target.classList.contains("resize-image-wrapper");
-      const hasClass = event.target.parentElement.classList.contains(
-        "resize-image-wrapper"
-      );
+      const target = event.target.classList.contains("resizeImageWrapper");
+      const hasClass =
+        event.target.parentElement.classList.contains("resizeImageWrapper");
       if (!target && !hasClass) {
         remove_resizer();
         setSelectedEvent(null);
@@ -839,19 +886,19 @@ export default function ReactEditorKit(props) {
         }
       : {};
 
-  console.log(selectedEvent, "selectedEventselectedEvent");
-
   return (
     <>
       <div
         {...mainProps}
-        className={`react-editor-main ${isFullScreen ? "full-screen" : ""}`}
+        className={`${Styles.reactEditorMain} ${
+          isFullScreen ? Styles.fullScreen : ""
+        }`}
         id="react-editor"
       >
         <div id="action-components">
-          <div className="wysiwyg-editor__toolbar" id="editor-navbar">
+          <div className={Styles.wysiwygEditorToolbar} id="editor-navbar">
             <hr
-              className="hr-1"
+              className={Styles.hr1}
               style={{ display: showHR1 ? "block" : "none" }}
             />
             {navbar.map((item, index) => {
@@ -870,7 +917,7 @@ export default function ReactEditorKit(props) {
               let is_video = item === "video" || item.name === "video";
               return (
                 <div key={`key${index}`}>
-                  {is_line && <div className="vertical-line"></div>}
+                  {is_line && <div className={Styles.verticalLine}></div>}
                   {is_file && (
                     <SelectFileOptions
                       handleNewDocument={handleNewDocument}
@@ -910,7 +957,7 @@ export default function ReactEditorKit(props) {
                   )}
 
                   {is_select_all && (
-                    <div className="increase-icon-size">
+                    <div className={Styles.increaseIconSize}>
                       <button
                         onClick={handleSelectAll}
                         title={item?.title ? item.title : "Select All"}
@@ -921,7 +968,7 @@ export default function ReactEditorKit(props) {
                     </div>
                   )}
                   {is_image && (
-                    <div className="increase-icon-size">
+                    <div className={Styles.increaseIconSize}>
                       <button
                         onClick={(e) => handleOpenModel(e, "image", item)}
                         title={item?.title ? item.title : "Upload Image"}
@@ -931,7 +978,7 @@ export default function ReactEditorKit(props) {
                     </div>
                   )}
                   {is_link && (
-                    <div className="increase-icon-size">
+                    <div className={Styles.increaseIconSize}>
                       <button
                         onClick={(e) => handleOpenModel(e, "link", item)}
                         title={item?.title ? item.title : "Add Link"}
@@ -941,7 +988,7 @@ export default function ReactEditorKit(props) {
                     </div>
                   )}
                   {is_video && (
-                    <div className="increase-icon-size">
+                    <div className={Styles.increaseIconSize}>
                       <button
                         onClick={(e) => handleOpenModel(e, "video", item)}
                         title={item?.title ? item.title : "Upload Video"}
@@ -951,7 +998,7 @@ export default function ReactEditorKit(props) {
                     </div>
                   )}
                   {is_copy && (
-                    <div className="increase-icon-size">
+                    <div className={Styles.increaseIconSize}>
                       <ButtonFunction
                         editorRef={editorRef}
                         name="copy"
@@ -963,7 +1010,7 @@ export default function ReactEditorKit(props) {
                     </div>
                   )}
                   {is_cut && (
-                    <div className="increase-icon-size">
+                    <div className={Styles.increaseIconSize}>
                       <ButtonFunction
                         editorRef={editorRef}
                         name="cut"
@@ -975,7 +1022,7 @@ export default function ReactEditorKit(props) {
                     </div>
                   )}
                   {is_paste && (
-                    <div className="increase-icon-size">
+                    <div className={Styles.increaseIconSize}>
                       <button
                         onClick={handlePaste}
                         title={item?.title ? item.title : "Paste"}
@@ -988,13 +1035,13 @@ export default function ReactEditorKit(props) {
               );
             })}
           </div>
-          <div className="wysiwyg-editor__toolbar">
+          <div className={Styles.wysiwygEditorToolbar}>
             <hr
-              className="hr-1"
+              className={Styles.hr1}
               style={{ display: showHR2 ? "block" : "none" }}
             />
             <hr
-              className="hr-1 hr-2"
+              className={`${Styles.hr1} ${Styles.hr2}`}
               style={{ display: showHR3 ? "block" : "none" }}
             />
             {toolbar.map((item, index) => {
@@ -1035,7 +1082,7 @@ export default function ReactEditorKit(props) {
 
               return (
                 <div key={`key${index}`}>
-                  {is_line && <div className="vertical-line"></div>}
+                  {is_line && <div className={Styles.verticalLine}></div>}
                   {is_undo && (
                     <ButtonFunction
                       editorRef={editorRef}
@@ -1227,7 +1274,7 @@ export default function ReactEditorKit(props) {
         </div>
         <div
           {...others}
-          className={`ml-main-content-box print-only `}
+          className={`${Styles.mlMainContentBox}`}
           autoFocus={isFullScreen}
           contentEditable
           ref={editorRef}

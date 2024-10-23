@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { EmptyFileIcon, FileUploadIcon, PreviewIcon, PrintIcon } from ".";
 import { FILE_OPTIONS } from "./constant";
+import Styles from "../css/style.module.css";
 
 export default function SelectFileOptions(props) {
   const {
@@ -50,12 +51,14 @@ export default function SelectFileOptions(props) {
 
   return (
     <div
-      className="custom-select"
+      className={Styles.customSelect}
       onMouseEnter={() => setIsShow(true)}
       onMouseLeave={() => setIsShow(false)}
     >
       {item?.title ? item.title : "File"}
-      <div className={`select-items ${isShow ? "show" : ""}`}>
+      <div
+        className={`${Styles.selectItems} ${isShow ? `${Styles.show}` : ""}`}
+      >
         {options.map((option, index) => {
           let is_new_document =
             option === "new_document" || option.name === "new_document";
@@ -68,7 +71,7 @@ export default function SelectFileOptions(props) {
             <div key={`key${index}`}>
               {is_new_document && (
                 <div
-                  className="select-insert"
+                  className={Styles.selectInsert}
                   onClick={(e) => handleSelect(e, "new_document", option)}
                 >
                   {option?.icon ? option.icon : <EmptyFileIcon />}
@@ -77,7 +80,7 @@ export default function SelectFileOptions(props) {
               )}
               {is_preview && (
                 <div
-                  className="select-insert"
+                  className={Styles.selectInsert}
                   onClick={(e) => handleSelect(e, "preview", option)}
                 >
                   {option?.icon ? option.icon : <PreviewIcon />}
@@ -86,7 +89,7 @@ export default function SelectFileOptions(props) {
               )}
               {is_print && (
                 <div
-                  className="select-insert"
+                  className={Styles.selectInsert}
                   onClick={(e) => handleSelect(e, "print", option)}
                 >
                   {option?.icon ? option.icon : <PrintIcon />}
@@ -95,8 +98,8 @@ export default function SelectFileOptions(props) {
               )}
               {/* {is_upload_file && (
                   <div
-                    className="select-insert"
-                    onClick={(e) => handleSelect(e,"screen", option)}
+                    className={Styles.selectInsert}
+                    onClick={(e) => handleSelect(e, "screen", option)}
                   >
                     {option?.icon ? option.icon : <FileUploadIcon />}
                     <span>{option?.title ? option.title : "Upload File"}</span>

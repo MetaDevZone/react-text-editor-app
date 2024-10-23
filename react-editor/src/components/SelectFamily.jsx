@@ -1,4 +1,5 @@
 import React from "react";
+import Styles from "../css/style.module.css";
 
 function SelectFamily({ handleHideChildOptions }) {
   const fontFamilies = [
@@ -48,7 +49,7 @@ function SelectFamily({ handleHideChildOptions }) {
           style={{
             fontFamily: option.style,
           }}
-          className="font-family-option"
+          className={Styles.fontFamilyOption}
           onClick={(e) => handleOptionClick(e, option)}
         >
           {option.name}

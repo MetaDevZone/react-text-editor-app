@@ -1,4 +1,5 @@
 import React from "react";
+import Styles from "../css/style.module.css";
 
 export default function SpecialChars({ handleCharSelect }) {
   const specialCharacters = [
@@ -149,12 +150,12 @@ export default function SpecialChars({ handleCharSelect }) {
   ];
 
   return (
-    <div className="special-char-box">
+    <div className={Styles.specialCharBox}>
       {specialCharacters.map((char, index) => (
         <div
           key={`key${index}`}
           onClick={(e) => handleCharSelect(e, char)}
-          className="special-char"
+          className={Styles.specialChar}
         >
           {char}
         </div>
