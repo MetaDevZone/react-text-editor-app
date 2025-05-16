@@ -1,19 +1,17 @@
 import React, { useState } from "react";
-// import ReactEditorKit from "../ReactEditorKit";
-import ReactEditorKit from "react-text-editor-kit";
+import ReactEditorKit from "../ReactEditorKit";
+// import ReactEditorKit from "react-text-editor-kit";
 
 export default function AnOtherPage() {
   const [value, setValue] = useState("");
-  const [value1, setValue1] = useState("");
-  const [value2, setValue2] = useState("");
 
   return (
-    <>
+    <div style={{ marginTop: "20px" }}>
       <ReactEditorKit
         value={value}
         onChange={setValue}
         mainProps={{ className: "red" }}
-        placeholder="Write your text here 1"
+        placeholder="Please Write Something..."
       />
       {/* <ReactEditorKit
         value={value1}
@@ -27,6 +25,6 @@ export default function AnOtherPage() {
         mainProps={{ className: "red" }}
         placeholder="Write your text here 1"
       /> */}
-    </>
+    </div>
   );
 }

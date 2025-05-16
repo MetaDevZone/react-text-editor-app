@@ -43,6 +43,10 @@ body {
   font-family: system-ui !important;
 }
 
+.mlMainContentBox p {
+  margin: 0 0 1em 0 !important;
+}
+
 .reactEditorMain .wysiwygEditorToolbar {
   border-bottom: 1px solid var(--editor-border-color);
   font-size: 18px;
@@ -133,7 +137,7 @@ body {
   color: var(--editor-text-color);
 }
 
-.mlMainContentBox h1 {
+.mlMainContentBox h1 { 
   font-size: 2em;
 }
 

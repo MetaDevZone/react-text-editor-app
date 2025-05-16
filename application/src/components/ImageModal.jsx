@@ -6,6 +6,7 @@ import Styles from "../css/style.module.css";
 export default function ImageModal(props) {
   const { onImageInsert, item, setIsLoading, image_handler, selectedData } =
     props;
+  console.log(selectedData, "selectedDataselectedDataselectedData");
   const [errorMessage, setErrorMessage] = useState("");
   const [heightRatio, setHeightRatio] = useState(0);
   const [isLocked, setIsLocked] = useState(true);
@@ -18,6 +19,7 @@ export default function ImageModal(props) {
     image: null,
     type: "general",
   });
+  console.log(inputs, "ansdjnasdjansjd");
 
   const handleChangeFile = (event) => {
     const { name, files } = event.target;
@@ -58,6 +60,7 @@ export default function ImageModal(props) {
   };
 
   const handleLinkInsert = async (e) => {
+    console.log("imsavessssssssss");
     e.preventDefault();
     if (inputs.type === "general") {
       if (!inputs.link) {
@@ -73,6 +76,7 @@ export default function ImageModal(props) {
         return;
       }
       if (image_handler) {
+        console.log("imageHandlerrrrrrrrrrr");
         setIsLoading(true);
         let image_path = await image_handler({ ...inputs }, item);
         if (image_path) {
