@@ -1,7 +1,7 @@
 import React from "react";
 import Styles from "../css/style.module.css";
 
-function SelectFamily({ handleHideChildOptions }) {
+function SelectFamily({ handleHideChildOptions, editorRef }) {
   const fontFamilies = [
     { name: "Arial", style: "Arial, sans-serif" },
     { name: "Helvetica", style: "Helvetica, sans-serif" },
@@ -33,8 +33,12 @@ function SelectFamily({ handleHideChildOptions }) {
 
   const handleOptionClick = (e, option) => {
     e.preventDefault();
+    editorRef.current.focus();
     const selection = window.getSelection();
     if (!selection.isCollapsed) {
+      document.execCommand("styleWithCSS", false, true);
+      document.execCommand("fontName", false, option.style);
+    } else {
       document.execCommand("styleWithCSS", false, true);
       document.execCommand("fontName", false, option.style);
     }

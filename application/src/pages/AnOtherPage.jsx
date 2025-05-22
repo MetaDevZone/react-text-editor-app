@@ -6,7 +6,7 @@ export default function AnOtherPage() {
   const [value, setValue] = useState("");
 
   return (
-    <div style={{ marginTop: "20px" }}>
+    <>
       <ReactEditorKit
         value={value}
         onChange={setValue}
@@ -25,6 +25,6 @@ export default function AnOtherPage() {
         mainProps={{ className: "red" }}
         placeholder="Write your text here 1"
       /> */}
-    </div>
+    </>
   );
 }

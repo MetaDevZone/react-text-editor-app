@@ -8,7 +8,11 @@ import {
   AlignRight,
   BoldIcon,
   ClearFormatting,
+  CodeIcon,
   DecreaseIndentIcon,
+  FullscreenExit,
+  FullscreenIcon,
+  HorizontalLineIcon,
   ImageIcon,
   IncreaseIndentIcon,
   ItalicIcon,
@@ -18,6 +22,7 @@ import {
   RTLIcon,
   RedoIcon,
   SelectAll,
+  SpecialCharIcon,
   SubscriptIcon,
   SuperscriptIcon,
   UnderlineIcon,
@@ -51,6 +56,9 @@ import ImageModal from "./components/ImageModal";
 import MediaModal from "./components/MediaModal";
 import Modal from "./components/Model";
 import RightClickLinkPopup from "./components/RightClickLinkPopup";
+import SelectFontFamily from "./components/SelectFontFamily";
+import AlignmentOptions from "./components/AlignmentOptions";
+import FontSize from "./components/FontSize";
 
 const show_final_options = (options, remove, all_options) => {
   if (!options) {
@@ -112,6 +120,8 @@ export default function ReactEditorKit(props) {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [isOpenModel, setIsOpenModel] = useState("");
+  const [targetElement, setTargetElement] = useState(null);
+  const [targetElementType, setTargetElementType] = useState(null);
   const [previewContent, setPreviewContent] = useState("");
   const [selectedData, setSelectedData] = useState({
     link: "",
@@ -121,12 +131,9 @@ export default function ReactEditorKit(props) {
     text: "",
     open_new_tab: false,
   });
-  console.log(selectedData, "selectedDataselectedData");
   const [selectedEvent, setSelectedEvent] = useState(null);
-  console.log(selectedEvent, "selectedEventselectedEvent");
   const [isPlaceholder, setIsPlaceholder] = useState(true);
   const [selectedItem, setSelectedItem] = useState({});
-  console.log(selectedItem, "itemmmmmmmmmmmmm");
   const [selectedRange, setSelectedRange] = useState(null);
   const [showHR1, setShowHR1] = useState(false);
   const [showHR2, setShowHR2] = useState(false);
@@ -144,36 +151,6 @@ export default function ReactEditorKit(props) {
     }
     return false;
   };
-
-  // const handleInput = () => {
-  //   setInit(true);
-
-  //   let isImageExists = checkIfImageExists();
-  //   if (!isImageExists) {
-  //     let element = document.querySelector(".resizeImageWrapper");
-  //     if (element) {
-  //       element.parentNode.removeChild(element);
-  //     }
-  //     setSelectedEvent(null);
-  //   }
-  //   const editor = editorRef?.current;
-  //   let content = editor.innerHTML;
-  //   content = transformHTML(content);
-
-  //   const tempDiv = document.createElement("p");
-  //   tempDiv.innerHTML = content;
-
-  //   const cleanedContent = tempDiv.textContent || tempDiv.innerText || "";
-  //   if (cleanedContent.trim() === "") {
-  //     if (onChange) {
-  //       onChange("");
-  //     }
-  //   } else {
-  //     if (onChange) {
-  //       onChange(content);
-  //     }
-  //   }
-  // };
 
   const handleInput = () => {
     setInit(true);
@@ -248,20 +225,99 @@ export default function ReactEditorKit(props) {
       } catch (e) {}
     }
 
-    // Continue with rest of logic
+    function clearEditorFormatting(editor, tempDiv) {
+      if (
+        editor.getAttribute("data-mlx-editor-empty") ||
+        editor.classList.contains("empty")
+      ) {
+        editor.setAttribute("data-mlx-editor-empty", "true");
+
+        let childdiv;
+        if (tempDiv.tagName.toLowerCase() === "div") {
+          // Create a new <p> element
+          const p = document.createElement("p");
+          // Copy the contents of tempDiv to the <p> element
+          p.innerHTML = tempDiv.innerHTML;
+          // Preserve attributes if needed
+          for (let attr of tempDiv.attributes) {
+            p.setAttribute(attr.name, attr.value);
+          }
+          childdiv = p.outerHTML;
+        } else {
+          childdiv = tempDiv.outerHTML;
+        }
+        editor.innerHTML = childdiv;
+        return;
+      }
+
+      editor.setAttribute("data-mlx-editor-empty", "true");
+      // Save current selection
+      const selection = window.getSelection();
+      const range = document.createRange();
+      // Completely clear the editor
+
+      range.selectNodeContents(editor);
+      range.collapse(true);
+      selection.removeAllRanges();
+      selection.addRange(range);
+      editor.innerHTML = "<p><br></p>";
+      document.execCommand("removeFormat", false, null);
+      // Reset any formatting
+      // Optional: Reset any CSS styles
+      editor.style.cssText = "";
+    }
+
+    // Usage:
     let content = editor.innerHTML;
     content = transformHTML(content);
+    const tempDiv = document.createElement("div");
 
-    const tempDiv = document.createElement("p");
     tempDiv.innerHTML = content;
 
-    const cleanedContent = tempDiv.textContent || tempDiv.innerText || "";
-    if (cleanedContent.trim() === "") {
-      onChange?.("");
+    let checkEditorIsEmptyAndGetTagName = isEditorEmpty(editor.innerHTML);
+    // First check if the content is "effectively empty" (if spaces exist then condition will be false)
+    const isEffectivelyEmpty =
+      (!tempDiv.textContent ||
+        tempDiv.textContent.replace(/\s/g, "").length === 0) &&
+      checkEditorIsEmptyAndGetTagName.isEmpty;
+
+    if (isEffectivelyEmpty) {
+      clearEditorFormatting(editor, checkEditorIsEmptyAndGetTagName.tempDiv);
     } else {
-      onChange?.(content);
+      editor.removeAttribute("data-mlx-editor-empty");
+      onChange?.(tempDiv.innerHTML);
     }
   };
+
+  function isEditorEmpty(html) {
+    // Create a temporary DOM element to parse and inspect the structure
+    const temp = document.createElement("div");
+    temp.innerHTML = html;
+    // Remove whitespace text nodes with text type elements
+    temp.childNodes.forEach((node) => {
+      if (node.type == Node.TEXT_NODE && !node.textContent.trim()) {
+        temp.removeChild(node);
+      }
+    });
+
+    // Case 1: Only a single <br>
+    if (temp.children.length === 0 || temp.innerHTML === "<br>") {
+      let pTagDiv = document.createElement("P");
+      pTagDiv.innerHTML = "<br>";
+      return { tempDiv: pTagDiv, isEmpty: true };
+    }
+
+    // Case 2: Only a <p> with a <br> inside (ignore styles)
+    if (
+      temp.children.length === 1 &&
+      temp.children[0].children.length === 1 &&
+      temp.children[0].children[0].tagName === "BR"
+    ) {
+      return { tempDiv: temp.children[0], isEmpty: true };
+    }
+
+    return { isEmpty: false };
+  }
 
   const handleEditorKeyDown = (event) => {
     if (event.key === "Enter" && !event.shiftKey) {
@@ -273,6 +329,37 @@ export default function ReactEditorKit(props) {
 
       const range = selection.getRangeAt(0);
       let currentNode = range.startContainer;
+
+      let listItemNode = null;
+      // Traverse up to find the nearest LI element
+      while (currentNode && currentNode !== editor) {
+        if (currentNode.nodeName === "LI") {
+          listItemNode = currentNode;
+          break;
+        }
+        currentNode = currentNode.parentNode;
+      }
+
+      if (listItemNode) {
+        // Create new LI
+        const newLI = document.createElement("li");
+        newLI.appendChild(document.createElement("br"));
+        // Insert after current LI
+        if (listItemNode.nextSibling) {
+          listItemNode.parentNode.insertBefore(newLI, listItemNode.nextSibling);
+        } else {
+          listItemNode.parentNode.appendChild(newLI);
+        }
+
+        // Move cursor into new LI
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(newLI);
+        range.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(range);
+        return;
+      }
 
       // Step 1: Find the containing <p>
       while (
@@ -289,8 +376,7 @@ export default function ReactEditorKit(props) {
       if (!currentP) {
         currentP = document.createElement("p");
         currentP.appendChild(document.createElement("br"));
-        range.insertNode(currentP);
-
+        editor.appendChild(currentP);
         const newRange = document.createRange();
         newRange.setStart(currentP, 0);
         newRange.collapse(true);
@@ -354,6 +440,7 @@ export default function ReactEditorKit(props) {
       e.preventDefault();
     }
     setImageUrl("");
+    setTargetElement("");
     setIsOpenModel("");
     setSelectedData({});
     setSelectedEvent(null);
@@ -504,7 +591,6 @@ export default function ReactEditorKit(props) {
       document.execCommand("insertHTML", false, imgElement);
       // Ensure editor picks up the change
       const editorElement = document.querySelector('[contenteditable="true"]');
-      // console.log(editorElement, "elementtttttttttttt");
       if (editorElement) {
         editorElement.dispatchEvent(new Event("input", { bubbles: true }));
       }
@@ -513,16 +599,15 @@ export default function ReactEditorKit(props) {
     }
   };
 
-  const handleMediaInsert = (data) => {
+  const handleMediaInsert = (data, targetElement) => {
     let { link, height, width, type, embed_code } = data;
     const editorNode = editorRef.current;
+    let iframeHTML = "";
 
     if (type === "general") {
-      let iframeElement = "";
-
       // Check if it's a direct video link
       if (link.match(/\.(mp4|mov|avi|wmv)$/)) {
-        iframeElement = `<video width="${width || "640"}" height="${
+        iframeHTML = `<video width="${width || "640"}" height="${
           height || "360"
         }" controls><source src="${link}" type="video/mp4"></video>`;
       } else {
@@ -533,33 +618,95 @@ export default function ReactEditorKit(props) {
 
         if (link.match(youtubeRegex)) {
           const videoId = link.match(youtubeRegex)[1];
-          iframeElement = `<iframe width="${width || "640"}" height="${
+          iframeHTML = `<iframe width="${width || "640"}" height="${
             height || "360"
           }" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
         } else if (link.match(vimeoRegex)) {
           const videoId = link.match(vimeoRegex)[1];
-          iframeElement = `<iframe src="https://player.vimeo.com/video/${videoId}" width="${
+          iframeHTML = `<iframe src="https://player.vimeo.com/video/${videoId}" width="${
             width || "640"
           }" height="${
             height || "360"
           }" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
         } else {
           // Insert custom embed code if available
-          iframeElement = embed_code || "";
+          iframeHTML = embed_code || "";
         }
       }
-
-      if (editorNode && iframeElement) {
-        handleFocusEditor();
-        document.execCommand("insertHTML", false, iframeElement);
-      }
     } else if (type === "embed" && embed_code && editorNode) {
-      handleFocusEditor();
-      document.execCommand("insertHTML", false, embed_code);
+      iframeHTML = embed_code;
     }
 
+    if (targetElement && editorNode && iframeHTML) {
+      handleFocusEditor();
+      targetElement.parentNode.setAttribute("data-mtl-link-type", type);
+      targetElement.outerHTML = iframeHTML;
+    } else if (editorNode && iframeHTML) {
+      const wrapper = createIframeWrapperWithSettings(
+        iframeHTML,
+        type,
+        (wrapper) => {
+          let iframe_element = wrapper.querySelector("iframe");
+          setTargetElement(iframe_element);
+          setTargetElementType(
+            wrapper.getAttribute("data-mtl-link-type") || "general"
+          );
+          setIsOpenModel("video");
+        }
+      );
+
+      handleFocusEditor();
+      // document.execCommand("insertHTML", false, wrapper.outerHTML);
+      const selection = window.getSelection();
+      if (!selection.rangeCount) return;
+
+      const range = selection.getRangeAt(0);
+      range.deleteContents();
+      range.insertNode(wrapper);
+
+      // Move cursor after the inserted element
+      range.setStartAfter(wrapper);
+      range.setEndAfter(wrapper);
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+
+    setTargetElement(null);
     setIsOpenModel(""); // Assuming this is setting some state related to the modal
   };
+
+  function createIframeWrapperWithSettings(iframeHTML, type, onSettingsClick) {
+    const iframeElement = document.createElement("div");
+    iframeElement.innerHTML = iframeHTML;
+    // Create wrapper
+    const wrapper = document.createElement("div");
+    wrapper.className = "iframe-wrapper";
+    wrapper.contentEditable = "true";
+    wrapper.setAttribute("data-mtl-link-type", type);
+
+    const overlay = document.createElement("div");
+    overlay.className = "iframe-overlay";
+
+    const settingsBtn = document.createElement("button");
+    settingsBtn.className = "iframe-settings-btn";
+    settingsBtn.contentEditable = "false";
+
+    settingsBtn.innerHTML = `<div style="display: flex; align-items: center;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M10.275 22q-.425 0-.75-.275t-.375-.7l-.3-2.225q-.325-.125-.612-.3t-.563-.375l-1.55.65q-.625.275-1.25.05t-.975-.8l-1.175-2.05q-.35-.575-.2-1.225t.675-1.075l1.325-1Q4.5 12.5 4.5 12.337v-.675q0-.162.025-.337l-1.325-1Q2.675 9.9 2.525 9.25t.2-1.225L3.9 5.975q.35-.575.975-.8t1.25.05l1.55.65q.275-.2.575-.375t.6-.3l.2-1.65q.075-.675.575-1.113T10.8 2h2.4q.675 0 1.175.438t.575 1.112l.2 1.65q.325.125.613.3t.562.375l1.5-.65q.625-.275 1.263-.05t.987.8l1.175 2.05q.35.575.213 1.225t-.663 1.075L19.125 11.6q-.275.2-.562.3t-.638.1h-2.35q0-1.45-1.037-2.475T12.05 8.5q-1.475 0-2.488 1.013T8.55 12q0 1.2.688 2.1T11 15.35v5.8q0 .35-.2.6t-.525.25M20 22h-6q-.425 0-.712-.288T13 21v-6q0-.425.288-.712T14 14h6q.425 0 .713.288T21 15v2l1.575-1.575q.125-.125.275-.062t.15.237v4.8q0 .175-.15.238t-.275-.063L21 19v2q0 .425-.288.713T20 22"/></svg> <span style="margin-inline: 8px;">Settings</span></div>`;
+
+    settingsBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (typeof onSettingsClick === "function") {
+        onSettingsClick(wrapper);
+      }
+    });
+
+    // Build DOM structure
+    wrapper.appendChild(overlay);
+    wrapper.appendChild(settingsBtn);
+    wrapper.appendChild(iframeElement.childNodes[0]);
+
+    return wrapper;
+  }
 
   const handlePrint = () => {
     let data = editorRef.current.innerHTML;
@@ -580,6 +727,7 @@ export default function ReactEditorKit(props) {
     if (editorRef?.current !== null) {
       handleFocusEditor();
       document.execCommand("insertHTML", false, char);
+      setTargetElement(null);
       setIsOpenModel("");
     }
   };
@@ -781,7 +929,13 @@ export default function ReactEditorKit(props) {
       };
     } else if (isOpenModel === "video") {
       return {
-        component: <MediaModal onMediaInsert={handleMediaInsert} />,
+        component: (
+          <MediaModal
+            onMediaInsert={handleMediaInsert}
+            targetElement={targetElement}
+            targetElementType={targetElementType}
+          />
+        ),
         title: `${selectedData?.link ? "Update" : "Insert"} Video`,
       };
     } else if (isOpenModel === "special_char") {
@@ -1030,68 +1184,6 @@ export default function ReactEditorKit(props) {
       }
     }
   };
-
-  // const handleEditorKeyDown = (event) => {
-  //   if (event.key === "Enter" && !event.shiftKey) {
-  //     event.preventDefault();
-
-  //     const editor = editorRef.current;
-  //     const selection = window.getSelection();
-  //     if (!selection.rangeCount || !editor) return;
-
-  //     const range = selection.getRangeAt(0);
-  //     let currentNode = range.startContainer;
-
-  //     // Ensure we have a paragraph wrapper
-  //     while (
-  //       currentNode &&
-  //       currentNode.nodeName !== "P" &&
-  //       currentNode !== editor
-  //     ) {
-  //       currentNode = currentNode.parentNode;
-  //     }
-
-  //     const currentP =
-  //       currentNode && currentNode.nodeName === "P" ? currentNode : null;
-
-  //     // If not inside a <p>, wrap content in a <p> first
-  //     if (!currentP) {
-  //       const newP = document.createElement("p");
-  //       newP.innerHTML = "<br>";
-  //       range.insertNode(newP);
-  //       const newRange = document.createRange();
-  //       newRange.setStart(newP, 0);
-  //       newRange.collapse(true);
-  //       selection.removeAllRanges();
-  //       selection.addRange(newRange);
-  //       return;
-  //     }
-
-  //     // Split the current paragraph at caret position
-  //     const offset = range.startOffset;
-  //     const splitRange = range.cloneRange();
-  //     splitRange.setStartAfter(currentP);
-  //     const contentAfter = splitRange.extractContents();
-
-  //     const newP = document.createElement("p");
-  //     newP.innerHTML = "<br>";
-
-  //     // Insert after current paragraph
-  //     if (currentP.nextSibling) {
-  //       editor.insertBefore(newP, currentP.nextSibling);
-  //     } else {
-  //       editor.appendChild(newP);
-  //     }
-
-  //     // Move caret into new paragraph
-  //     const newRange = document.createRange();
-  //     newRange.setStart(newP, 0);
-  //     newRange.collapse(true);
-  //     selection.removeAllRanges();
-  //     selection.addRange(newRange);
-  //   }
-  // };
-
   useEffect(() => {
     handle_resize();
     setCursorAtStart();
@@ -1138,148 +1230,155 @@ export default function ReactEditorKit(props) {
         }`}
         id="react-editor"
       >
-        <div id="action-components">
-          <div className={Styles.wysiwygEditorToolbar} id="editor-navbar">
-            <hr
-              className={Styles.hr1}
-              style={{ display: showHR1 ? "block" : "none" }}
-            />
-            {navbar.map((item, index) => {
-              let is_line = Boolean(item === "|");
-              let is_file = item === "file" || item.name === "file";
-              let is_view = item === "view" || item.name === "view";
-              let is_format = item === "format" || item.name === "format";
-              let is_insert = item === "insert" || item.name === "insert";
-              let is_copy = item === "copy" || item.name === "copy";
-              let is_cut = item === "cut" || item.name === "cut";
-              let is_paste = item === "paste" || item.name === "paste";
-              let is_select_all =
-                item === "select_all" || item.name === "select_all";
-              let is_image = item === "image" || item.name === "image";
-              let is_link = item === "link" || item.name === "link";
-              let is_video = item === "video" || item.name === "video";
-              return (
-                <div key={`key${index}`}>
-                  {is_line && <div className={Styles.verticalLine}></div>}
-                  {is_file && (
-                    <SelectFileOptions
-                      handleNewDocument={handleNewDocument}
-                      handlePreview={handlePreview}
-                      handlePrint={handlePrint}
-                      item={item}
-                      remove_from_navbar={remove_from_navbar}
-                    />
-                  )}
-                  {is_view && (
-                    <SelectView
-                      isFullScreen={isFullScreen}
-                      handleViewSource={handleViewSource}
-                      toggleFullScreen={toggleFullScreen}
-                      item={item}
-                      isPlaceholder={isPlaceholder}
-                      placeholder={placeholder}
-                      value={value}
-                      remove_from_navbar={remove_from_navbar}
-                    />
-                  )}
-                  {is_insert && (
-                    <SelectInsert
-                      onSelectOption={handleOpenModel}
-                      handleInsertHR={handleInsertHRClick}
-                      item={item}
-                      remove_from_navbar={remove_from_navbar}
-                    />
-                  )}
-                  {is_format && (
-                    <SelectFormations
-                      item={item}
-                      isFullScreen={isFullScreen}
-                      remove_from_navbar={remove_from_navbar}
-                      editorRef={editorRef}
-                    />
-                  )}
-
-                  {is_select_all && (
-                    <div className={Styles.increaseIconSize}>
-                      <button
-                        onClick={handleSelectAll}
-                        title={item?.title ? item.title : "Select All"}
-                        disabled={isPlaceholder && placeholder && !value}
-                      >
-                        {item?.icon ? item.icon : <SelectAll />}
-                      </button>
-                    </div>
-                  )}
-                  {is_image && (
-                    <div className={Styles.increaseIconSize}>
-                      <button
-                        onClick={(e) => handleOpenModel(e, "image", item)}
-                        title={item?.title ? item.title : "Upload Image"}
-                      >
-                        {item?.icon ? item.icon : <ImageIcon />}
-                      </button>
-                    </div>
-                  )}
-                  {is_link && (
-                    <div className={Styles.increaseIconSize}>
-                      <button
-                        onClick={(e) => handleOpenModel(e, "link", item)}
-                        title={item?.title ? item.title : "Add Link"}
-                      >
-                        {item?.icon ? item.icon : <LinkIcon />}
-                      </button>
-                    </div>
-                  )}
-                  {is_video && (
-                    <div className={Styles.increaseIconSize}>
-                      <button
-                        onClick={(e) => handleOpenModel(e, "video", item)}
-                        title={item?.title ? item.title : "Upload Video"}
-                      >
-                        {item?.icon ? item.icon : <VideoIcon />}
-                      </button>
-                    </div>
-                  )}
-                  {is_copy && (
-                    <div className={Styles.increaseIconSize}>
-                      <ButtonFunction
-                        editorRef={editorRef}
-                        name="copy"
-                        icon={<CopyIcon />}
-                        title="Copy"
+        <div id="action-components" className={`${Styles.actionComponents}`}>
+          {navbar.length > 0 && (
+            <div
+              className={`${Styles.wysiwygEditorToolbar}`}
+              id="editor-navbar"
+            >
+              <hr
+                className={Styles.hr1}
+                style={{ display: showHR1 ? "block" : "none" }}
+              />
+              {navbar.map((item, index) => {
+                let is_line = Boolean(item === "|");
+                let is_file = item === "file" || item.name === "file";
+                let is_view = item === "view" || item.name === "view";
+                let is_format = item === "format" || item.name === "format";
+                let is_insert = item === "insert" || item.name === "insert";
+                let is_copy = item === "copy" || item.name === "copy";
+                let is_cut = item === "cut" || item.name === "cut";
+                let is_paste = item === "paste" || item.name === "paste";
+                let is_select_all =
+                  item === "select_all" || item.name === "select_all";
+                let is_image = item === "image" || item.name === "image";
+                let is_link = item === "link" || item.name === "link";
+                let is_video = item === "video" || item.name === "video";
+                return (
+                  <div key={`key${index}`}>
+                    {is_line && <div className={Styles.verticalLine}></div>}
+                    {is_file && (
+                      <SelectFileOptions
+                        handleNewDocument={handleNewDocument}
+                        handlePreview={handlePreview}
+                        handlePrint={handlePrint}
                         item={item}
-                        disabled={isPlaceholder && placeholder && !value}
+                        remove_from_navbar={remove_from_navbar}
                       />
-                    </div>
-                  )}
-                  {is_cut && (
-                    <div className={Styles.increaseIconSize}>
-                      <ButtonFunction
-                        editorRef={editorRef}
-                        name="cut"
-                        icon={<CutIcon />}
-                        title="Cut"
+                    )}
+                    {is_view && (
+                      <SelectView
+                        isFullScreen={isFullScreen}
+                        handleViewSource={handleViewSource}
+                        toggleFullScreen={toggleFullScreen}
                         item={item}
-                        disabled={isPlaceholder && placeholder && !value}
+                        isPlaceholder={isPlaceholder}
+                        placeholder={placeholder}
+                        value={value}
+                        remove_from_navbar={remove_from_navbar}
                       />
-                    </div>
-                  )}
-                  {is_paste && (
-                    <div className={Styles.increaseIconSize}>
-                      <button
-                        onClick={handlePaste}
-                        title={item?.title ? item.title : "Paste"}
-                      >
-                        {item?.icon ? item.icon : <PasteIcon />}
-                      </button>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+                    )}
+                    {is_insert && (
+                      <SelectInsert
+                        onSelectOption={handleOpenModel}
+                        handleInsertHR={handleInsertHRClick}
+                        item={item}
+                        remove_from_navbar={remove_from_navbar}
+                      />
+                    )}
+                    {is_format && (
+                      <SelectFormations
+                        item={item}
+                        isFullScreen={isFullScreen}
+                        remove_from_navbar={remove_from_navbar}
+                        editorRef={editorRef}
+                      />
+                    )}
 
-          <div className={Styles.wysiwygEditorToolbar}>
+                    {is_select_all && (
+                      <div className={Styles.increaseIconSize}>
+                        <button
+                          onClick={handleSelectAll}
+                          title={item?.title ? item.title : "Select All"}
+                          disabled={isPlaceholder && placeholder && !value}
+                        >
+                          {item?.icon ? item.icon : <SelectAll />}
+                        </button>
+                      </div>
+                    )}
+                    {is_image && (
+                      <div className={Styles.increaseIconSize}>
+                        <button
+                          onClick={(e) => handleOpenModel(e, "image", item)}
+                          title={item?.title ? item.title : "Upload Image"}
+                        >
+                          {item?.icon ? item.icon : <ImageIcon />}
+                        </button>
+                      </div>
+                    )}
+                    {is_link && (
+                      <div className={Styles.increaseIconSize}>
+                        <button
+                          onClick={(e) => handleOpenModel(e, "link", item)}
+                          title={item?.title ? item.title : "Add Link"}
+                        >
+                          {item?.icon ? item.icon : <LinkIcon />}
+                        </button>
+                      </div>
+                    )}
+                    {is_video && (
+                      <div className={Styles.increaseIconSize}>
+                        <button
+                          onClick={(e) => handleOpenModel(e, "video", item)}
+                          title={item?.title ? item.title : "Upload Video"}
+                        >
+                          {item?.icon ? item.icon : <VideoIcon />}
+                        </button>
+                      </div>
+                    )}
+                    {is_copy && (
+                      <div className={Styles.increaseIconSize}>
+                        <ButtonFunction
+                          editorRef={editorRef}
+                          name="copy"
+                          icon={<CopyIcon />}
+                          title="Copy"
+                          item={item}
+                          disabled={isPlaceholder && placeholder && !value}
+                        />
+                      </div>
+                    )}
+                    {is_cut && (
+                      <div className={Styles.increaseIconSize}>
+                        <ButtonFunction
+                          editorRef={editorRef}
+                          name="cut"
+                          icon={<CutIcon />}
+                          title="Cut"
+                          item={item}
+                          disabled={isPlaceholder && placeholder && !value}
+                        />
+                      </div>
+                    )}
+                    {is_paste && (
+                      <div className={Styles.increaseIconSize}>
+                        <button
+                          onClick={handlePaste}
+                          title={item?.title ? item.title : "Paste"}
+                        >
+                          {item?.icon ? item.icon : <PasteIcon />}
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          <div
+            className={`${Styles.wysiwygEditorToolbar} ${Styles.wysiwygEditorToolbarWrapper}`}
+          >
             <hr
               className={Styles.hr1}
               style={{ display: showHR2 ? "block" : "none" }}
@@ -1308,6 +1407,8 @@ export default function ReactEditorKit(props) {
                 item === "alignRight" || item.name === "alignRight";
               let is_alignJustify =
                 item === "alignJustify" || item.name === "alignJustify";
+              let is_alignment =
+                item === "alignment" || item.name === "alignment";
               let is_indent = item === "indent" || item.name === "indent";
               let is_outdent = item === "outdent" || item.name === "outdent";
               let is_orderedList =
@@ -1323,6 +1424,27 @@ export default function ReactEditorKit(props) {
               let is_ltr = item === "ltr" || item.name === "ltr";
               let is_rtl = item === "rtl" || item.name === "rtl";
               let is_format = item === "format" || item.name === "format";
+              let is_fontfamily =
+                item === "fontfamily" || item.name === "fontfamily";
+              let is_fontSize = item === "fontsize" || item.name === "fontsize";
+              let is_copy = item === "copy" || item.name === "copy";
+              let is_cut = item === "cut" || item.name === "cut";
+              let is_paste = item === "paste" || item.name === "paste";
+              let is_select_all =
+                item === "select_all" || item.name === "select_all";
+              let is_image = item === "image" || item.name === "image";
+              let is_link = item === "link" || item.name === "link";
+              let is_video = item === "video" || item.name === "video";
+
+              let source_code =
+                item === "source_code" || item.name === "source_code";
+              let is_fullscreen =
+                item === "full_screen" || item.name === "full_screen";
+              let is_hr_line =
+                item === "horizontal_line" || item.name === "horizontal_line";
+              let is_special_char =
+                item === "special_character" ||
+                item.name === "special_character";
 
               return (
                 <div key={`key${index}`}>
@@ -1351,6 +1473,8 @@ export default function ReactEditorKit(props) {
                       editorRef={editorRef}
                     />
                   )}
+                  {is_fontfamily && <SelectFontFamily editorRef={editorRef} />}
+                  {is_fontSize && <FontSize editorRef={editorRef} />}
                   {is_bold && (
                     <ButtonFunction
                       editorRef={editorRef}
@@ -1396,6 +1520,8 @@ export default function ReactEditorKit(props) {
                       item={item}
                     />
                   )}
+                  {is_alignment && <AlignmentOptions editorRef={editorRef} />}
+
                   {is_alignLeft && (
                     <ButtonFunction
                       editorRef={editorRef}
@@ -1510,6 +1636,121 @@ export default function ReactEditorKit(props) {
                       icon={<RTLIcon />}
                       editorRef={editorRef}
                     />
+                  )}
+
+                  {is_select_all && (
+                    <button
+                      onClick={handleSelectAll}
+                      title={item?.title ? item.title : "Select All"}
+                      disabled={isPlaceholder && placeholder && !value}
+                    >
+                      {item?.icon ? item.icon : <SelectAll />}
+                    </button>
+                  )}
+                  {is_image && (
+                    <button
+                      onClick={(e) => handleOpenModel(e, "image", item)}
+                      title={item?.title ? item.title : "Upload Image"}
+                    >
+                      {item?.icon ? item.icon : <ImageIcon />}
+                    </button>
+                  )}
+                  {is_link && (
+                    <button
+                      onClick={(e) => handleOpenModel(e, "link", item)}
+                      title={item?.title ? item.title : "Add Link"}
+                    >
+                      {item?.icon ? item.icon : <LinkIcon />}
+                    </button>
+                  )}
+                  {is_video && (
+                    <button
+                      onClick={(e) => handleOpenModel(e, "video", item)}
+                      title={item?.title ? item.title : "Upload Video"}
+                    >
+                      {item?.icon ? item.icon : <VideoIcon />}
+                    </button>
+                  )}
+                  {is_copy && (
+                    <ButtonFunction
+                      editorRef={editorRef}
+                      name="copy"
+                      icon={<CopyIcon />}
+                      title="Copy"
+                      item={item}
+                      disabled={isPlaceholder && placeholder && !value}
+                    />
+                  )}
+                  {is_cut && (
+                    <ButtonFunction
+                      editorRef={editorRef}
+                      name="cut"
+                      icon={<CutIcon />}
+                      title="Cut"
+                      item={item}
+                      disabled={isPlaceholder && placeholder && !value}
+                    />
+                  )}
+                  {is_paste && (
+                    <button
+                      onClick={handlePaste}
+                      title={item?.title ? item.title : "Paste"}
+                    >
+                      {item?.icon ? item.icon : <PasteIcon />}
+                    </button>
+                  )}
+                  {source_code && (
+                    <div className={Styles.increaseIconSize}>
+                      <button
+                        onClick={handleViewSource}
+                        title={item?.title || "Source Code"}
+                      >
+                        <CodeIcon />
+                      </button>
+                    </div>
+                  )}
+                  {is_fullscreen && (
+                    <div className={Styles.increaseIconSize}>
+                      <button
+                        onClick={toggleFullScreen}
+                        title={
+                          isFullScreen
+                            ? item?.title || "Exit Full Screen"
+                            : item?.title || "Full Screen"
+                        }
+                      >
+                        {isFullScreen ? (
+                          <>
+                            <FullscreenExit />
+                          </>
+                        ) : (
+                          <>
+                            <FullscreenIcon />
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  )}
+
+                  {is_hr_line && (
+                    <div className={Styles.increaseIconSize}>
+                      <button
+                        onClick={handleInsertHRClick}
+                        title={item?.title || "Horizontal Line"}
+                      >
+                        <HorizontalLineIcon />
+                      </button>
+                    </div>
+                  )}
+                  {is_special_char && (
+                    <div className={Styles.increaseIconSize}>
+                      <button
+                        onClick={(e) => handleOpenModel(e, "special_char")}
+                        title={item?.title || "Special Char"}
+                      >
+                        <SpecialCharIcon />
+                      </button>
+                    </div>
                   )}
                 </div>
               );

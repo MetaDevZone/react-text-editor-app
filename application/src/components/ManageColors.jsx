@@ -291,9 +291,27 @@ export default function ManageColors(props) {
             onClick={(e) => handleChangeColor(e, "#000")}
           ></button>
 
-          <button className={Styles.colorBox}></button>
-          <button className={Styles.colorBox}></button>
-          <button className={Styles.colorBox} title="Custom color">
+          <button
+            className={Styles.colorBox}
+            style={{
+              pointerEvents: "none",
+            }}
+          ></button>
+          <button
+            className={Styles.colorBox}
+            style={{
+              pointerEvents: "none",
+            }}
+          ></button>
+          <button
+            className={Styles.colorBox}
+            title="Custom color"
+            style={{
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
             <input
               id="input-color"
               type="color"

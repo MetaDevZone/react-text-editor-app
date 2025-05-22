@@ -528,7 +528,7 @@ module.exports = content.locals || {};
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(4);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".resizeImageWrapper {\r\n  outline: 3px solid #b4d7ff;\r\n  position: relative;\r\n}\r\n\r\n.resizer {\r\n  position: absolute;\r\n  width: 10px;\r\n  height: 10px;\r\n  background-color: #4099ff;\r\n  right: -5px;\r\n  bottom: -5px;\r\n  cursor: se-resize;\r\n}\r\n\r\n.resizer.topRight {\r\n  right: -5px;\r\n  top: -5px;\r\n  cursor: ne-resize;\r\n}\r\n\r\n.resizer.bottomLeft {\r\n  bottom: -5px;\r\n  left: -5px;\r\n  cursor: ne-resize;\r\n}\r\n\r\n.resizer.topLeft {\r\n  top: -5px;\r\n  left: -5px;\r\n  cursor: se-resize;\r\n}\r\n", ""]);
+exports.push([module.i, ".resizeImageWrapper {\r\n  outline: 3px solid #b4d7ff;\r\n  position: relative;\r\n}\r\n\r\n.resizer {\r\n  position: absolute;\r\n  width: 10px;\r\n  height: 10px;\r\n  background-color: #4099ff;\r\n  right: -5px;\r\n  bottom: -5px;\r\n  cursor: se-resize;\r\n}\r\n\r\n.resizer.topRight {\r\n  right: -5px;\r\n  top: -5px;\r\n  cursor: ne-resize;\r\n}\r\n\r\n.resizer.bottomLeft {\r\n  bottom: -5px;\r\n  left: -5px;\r\n  cursor: ne-resize;\r\n}\r\n\r\n.resizer.topLeft {\r\n  top: -5px;\r\n  left: -5px;\r\n  cursor: se-resize;\r\n}\r\n\r\n\r\n/* Wrapper for iframe and overlay */\r\n.iframe-wrapper {\r\n  position: relative;\r\n  display: inline-block;\r\n}\r\n\r\n/* Overlay shown on hover */\r\n.iframe-wrapper .iframe-overlay {\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  background: rgba(0, 0, 0, 0.35);\r\n  z-index: 5;\r\n  pointer-events: none;\r\n  display: none;\r\n}\r\n\r\n/* Settings button */\r\n.iframe-wrapper .iframe-settings-btn {\r\n  position: absolute;\r\n  top: 5px;\r\n  right: 5px;\r\n  z-index: 10;\r\n  display: none;\r\n  background: #fff;\r\n  border: 1px solid #ccc;\r\n  border-radius: 4px;\r\n  padding: 4px 6px;\r\n  cursor: pointer;\r\n  pointer-events: auto;\r\n  text-align: center;\r\n}\r\n\r\n/* Show both overlay and button on hover */\r\n.iframe-wrapper:hover .iframe-overlay,\r\n.iframe-wrapper:hover .iframe-settings-btn {\r\n  display: block;\r\n}", ""]);
 // Exports
 module.exports = exports;
 
@@ -541,17 +541,19 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(4);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ":root {\r\n  --editor-background-color: #fff;\r\n  --editor-border-color: #c4c4c4;\r\n  --editor-text-color: #414141;\r\n  --editor-toolbar-button-background: #fff;\r\n  --editor-toolbar-text-color: #414141;\r\n  --editor-toolbar-button-hover-background: #efefef;\r\n  --editor-toolbar-button-selected-background: #dee0e2;\r\n  --editor-svg-color: #414141;\r\n  --editor-save-button-background: rgb(9, 134, 62);\r\n}\r\n\r\nhtml,\r\nbody {\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI img {\r\n  max-width: 100%;\r\n  height: auto;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq p,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq pre,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq h2,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq h3,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq h4,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq h5,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq h6,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq blockquote,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq h1 {\r\n  margin: 0;\r\n  color: var(--editor-toolbar-text-color) !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI {\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  color: var(--editor-text-color);\r\n  line-height: 16px !important;\r\n  font-family: system-ui !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__wysiwygEditorToolbar___3YLm2 {\r\n  border-bottom: 1px solid var(--editor-border-color);\r\n  font-size: 18px;\r\n  display: flex;\r\n  align-items: center;\r\n  flex-wrap: wrap;\r\n  padding: 0 5px;\r\n  position: relative;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__wysiwygEditorToolbar___3YLm2 .style-module__hr1___2GDDO {\r\n  position: absolute;\r\n  width: 98%;\r\n  border-color: var(--editor-border-color);\r\n  border: none;\r\n  border-top: 1px solid var(--editor-border-color);\r\n  height: 1px;\r\n  display: none;\r\n  top: 32px;\r\n  margin: 0;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__wysiwygEditorToolbar___3YLm2 .style-module__hr2___2wfnq {\r\n  top: 64px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__wysiwygEditorToolbar___3YLm2 .style-module__buttonGroup___2VL8t {\r\n  display: inline-block;\r\n  border-right: 1px solid var(--editor-border-color);\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__wysiwygEditorToolbar___3YLm2 button {\r\n  background: var(--editor-toolbar-button-background);\r\n  outline: none;\r\n  border: none;\r\n  cursor: pointer;\r\n  padding: 6px 10px;\r\n  color: var(--editor-toolbar-text-color);\r\n  line-height: 16px;\r\n}\r\n.style-module__wysiwygEditorToolbar___3YLm2 button:disabled,\r\n.style-module__wysiwygEditorToolbar___3YLm2 button.style-module__disabled___31WG5 {\r\n  cursor: not-allowed;\r\n}\r\n.style-module__wysiwygEditorToolbar___3YLm2 button:disabled svg,\r\n.style-module__wysiwygEditorToolbar___3YLm2 button.style-module__disabled___31WG5 svg {\r\n  fill: #9fa2a6;\r\n}\r\n\r\n.style-module__wysiwygEditorToolbar___3YLm2 button:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background);\r\n}\r\n\r\n.style-module__wysiwygEditorToolbar___3YLm2 input {\r\n  background-color: transparent;\r\n  border: 1px solid var(--editor-border-color);\r\n  outline: none;\r\n  cursor: pointer;\r\n}\r\n\r\n.style-module__wysiwygEditorToolbar___3YLm2 select,\r\n.style-module__wysiwygEditorToolbar___3YLm2 select:focus-visible {\r\n  border: none !important;\r\n  outline: none;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj {\r\n  padding: 10px;\r\n  height: 250px;\r\n  overflow: auto;\r\n  resize: vertical;\r\n  max-width: 100% !important;\r\n  line-height: normal;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__placeholderText___20Ilw {\r\n  opacity: 0.8;\r\n  font-style: italic;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h1,\r\n.style-module__mlMainContentBox___3RMYj h2,\r\n.style-module__mlMainContentBox___3RMYj h3,\r\n.style-module__mlMainContentBox___3RMYj h4,\r\n.style-module__mlMainContentBox___3RMYj h5,\r\n.style-module__mlMainContentBox___3RMYj h6,\r\n.style-module__mlMainContentBox___3RMYj p {\r\n  margin-top: 0;\r\n  color: var(--editor-text-color);\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h1 {\r\n  font-size: 2em;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h2 {\r\n  font-size: 1.5em;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h3 {\r\n  font-size: 1.17em;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h4 {\r\n  font-size: 1em;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h5 {\r\n  font-size: 0.83em;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h6 {\r\n  font-size: 0.67em;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj p {\r\n  font-size: 1em;\r\n}\r\n\r\n.style-module__linkImage___M2hpC {\r\n  height: 80px;\r\n  width: 80px;\r\n  object-fit: cover;\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 5px;\r\n}\r\n\r\n.style-module__linkImageBox___d0yYz {\r\n  height: 80px;\r\n  width: 80px;\r\n  position: relative;\r\n  margin-top: 10px;\r\n}\r\n.style-module__linkImageCross___WbyR3 {\r\n  position: absolute;\r\n  top: -5px;\r\n  right: -7px;\r\n  height: 20px;\r\n  width: 20px;\r\n  background-color: red;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  border-radius: 50%;\r\n  color: #fff;\r\n  cursor: pointer;\r\n  padding-bottom: 3px;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj:focus-visible {\r\n  outline: none;\r\n}\r\n\r\n.style-module__wysiwygEditorSource___2DKV1 {\r\n  width: 98%;\r\n  height: 80%;\r\n  outline: none;\r\n  padding: 10px;\r\n  font-family: \"Courier New\", Monospace !important;\r\n  font-size: small;\r\n  white-space: pre-wrap;\r\n  margin: 0;\r\n  display: block;\r\n  font-size: 16px;\r\n  resize: none;\r\n}\r\n\r\n/* Modal.css */\r\n\r\n.style-module__modalOverlay___TXsmk {\r\n  font-family: system-ui !important;\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: rgba(0, 0, 0, 0.5);\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  z-index: 999999;\r\n}\r\n\r\n.style-module__imageModelOverlay___8jCM7 {\r\n  z-index: 999999;\r\n}\r\n\r\n.style-module__fillScreenView___13J2K {\r\n  z-index: 999999;\r\n}\r\n\r\n.style-module__modelTitle___3jHG7 {\r\n  display: flex;\r\n  justify-content: space-between;\r\n}\r\n\r\n.style-module__modelTitle___3jHG7 h2 {\r\n  margin: 0;\r\n}\r\n\r\n.style-module__modelTitle___3jHG7 svg {\r\n  font-size: 25px;\r\n  cursor: pointer;\r\n}\r\n\r\n.style-module__modalPopup___1C0ia {\r\n  background-color: #fff;\r\n  padding: 20px;\r\n  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\r\n  width: 400px;\r\n  max-width: 85%;\r\n  color: #000;\r\n  border-radius: 5px;\r\n}\r\n\r\n.style-module__fillScreenView___13J2K .style-module__modalPopup___1C0ia {\r\n  max-width: 100% !important;\r\n  width: 100vw !important;\r\n  height: 100vh !important;\r\n  z-index: 1;\r\n  padding: 0 !important;\r\n  overflow: hidden;\r\n  border-radius: 0 !important;\r\n}\r\n\r\n.style-module__modalPopup___1C0ia hr {\r\n  margin-bottom: 0;\r\n}\r\n\r\n.style-module__modalCloseBtn___2Qx0Z {\r\n  position: absolute;\r\n  top: 10px;\r\n  right: 10px;\r\n  background: none;\r\n  border: none;\r\n  cursor: pointer;\r\n  padding: 5px 10px;\r\n  font-size: 16px;\r\n}\r\n\r\n.style-module__wysiwygEditorToolbar___3YLm2 button svg {\r\n  fill: var(--editor-svg-color);\r\n  color: var(--editor-svg-color);\r\n  display: inline-block;\r\n  height: 15px;\r\n  width: 14px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__customSelect___vdO64 {\r\n  position: relative;\r\n  display: inline-block;\r\n  cursor: pointer;\r\n  font-size: 16px;\r\n  padding: 6px;\r\n  color: var(--editor-toolbar-text-color);\r\n  line-height: 16px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__customSelectFormat___3e6iP {\r\n  position: relative;\r\n  display: inline-block;\r\n  cursor: pointer;\r\n  font-size: 16px;\r\n  padding: 6px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__mainColorComponent___KneIc svg {\r\n  height: 13px !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 {\r\n  position: absolute;\r\n  background-color: #fff;\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 2px;\r\n  z-index: 2;\r\n  width: 160px;\r\n  max-height: 200px;\r\n  overflow-y: auto;\r\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\r\n  top: 29px;\r\n  left: 0;\r\n  display: none;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 button {\r\n  display: flex !important;\r\n  width: 100%;\r\n  padding: 7px;\r\n  font-family: system-ui !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__pItems___1bRzo .style-module__selectItems___3G3Z7 {\r\n  left: 142px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF {\r\n  position: absolute;\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  border-top: none;\r\n  border-radius: 2px;\r\n  z-index: 1;\r\n  max-height: 200px;\r\n  overflow-y: auto;\r\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\r\n  left: 0;\r\n  top: 30px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF .style-module__selectOption___7easq:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background) !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF h1 {\r\n  font-size: 32px !important;\r\n  font-weight: 600;\r\n  line-height: 32px;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF h2 {\r\n  font-size: 28px !important;\r\n  font-weight: 600;\r\n  line-height: 28px;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF h3 {\r\n  font-size: 24px !important;\r\n  font-weight: 600;\r\n  line-height: 24px;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF h4 {\r\n  font-size: 20px !important;\r\n  line-height: 20px;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF h5 {\r\n  font-size: 16px !important;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF h6 {\r\n  font-size: 14px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7.style-module__show___3qCvb {\r\n  display: block;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 .style-module__selectOption___7easq,\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF .style-module__selectOption___7easq {\r\n  padding: 6px 10px;\r\n  cursor: pointer;\r\n  font-size: 16px;\r\n  white-space: nowrap;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 .style-module__selectInsert___2lLJI svg {\r\n  height: 20px;\r\n  width: 20px;\r\n  margin-right: 7px;\r\n  color: var(--editor-svg-color);\r\n  fill: var(--editor-svg-color);\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 button svg {\r\n  height: 16px !important;\r\n  width: 16px !important;\r\n  margin-top: 2px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 .style-module__selectInsert___2lLJI span {\r\n  margin-top: 2px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectedOption___bGTuj {\r\n  background-color: var(--editor-toolbar-button-selected-background) !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 .style-module__selectOption___7easq:hover,\r\n.style-module__reactEditorMain___20UxI .style-module__selectInsert___2lLJI:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background) !important;\r\n}\r\n\r\n.style-module__formControlInput___JxKoB {\r\n  font-family: system-ui !important;\r\n  width: 100%;\r\n  padding: 7px;\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 3px;\r\n}\r\n\r\n.style-module__formControlInput___JxKoB:focus-visible {\r\n  outline: none;\r\n}\r\n\r\n.style-module__saveButton___jY5in {\r\n  background-color: var(--editor-save-button-background);\r\n  color: #fff;\r\n  padding: 7px 14px;\r\n  border: none;\r\n  margin-top: 10px;\r\n  border-radius: 3px;\r\n  cursor: pointer;\r\n}\r\n\r\n.style-module__selectType___2EuiV button {\r\n  padding: 6px 20px;\r\n  background-color: var(--editor-toolbar-button-background);\r\n  border: 1px solid var(--editor-border-color);\r\n  cursor: pointer;\r\n}\r\n\r\n.style-module__selectType___2EuiV button.style-module__selectedType___1pN_w {\r\n  background-color: #efefef;\r\n}\r\n\r\n.style-module__specialCharBox___5ivgz {\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n}\r\n\r\n.style-module__specialChar___3kuh4 {\r\n  width: 30px;\r\n  height: 30px;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  cursor: pointer;\r\n  border-radius: 2px;\r\n}\r\n\r\n.style-module__specialChar___3kuh4:hover {\r\n  background-color: #dee0e2;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectInsert___2lLJI {\r\n  min-width: 120px;\r\n  font-size: 16px;\r\n  text-align: left;\r\n  padding: 8px 10px;\r\n  white-space: nowrap;\r\n  display: flex;\r\n  border-top: 1px solid var(--editor-border-color) !important;\r\n  color: var(--editor-text-color) !important;\r\n  background-color: var(--editor-background-color);\r\n  border-radius: 0 !important;\r\n  margin: 0 !important;\r\n}\r\n\r\n/* width */\r\n.style-module__reactEditorMain___20UxI ::-webkit-scrollbar {\r\n  width: 5px;\r\n}\r\n\r\n/* Track */\r\n.style-module__reactEditorMain___20UxI ::-webkit-scrollbar-track {\r\n  background: #f1f1f1;\r\n}\r\n\r\n/* Handle */\r\n.style-module__reactEditorMain___20UxI ::-webkit-scrollbar-thumb {\r\n  background: var(--editor-border-color);\r\n}\r\n\r\n/* Handle on hover */\r\n.style-module__reactEditorMain___20UxI ::-webkit-scrollbar-thumb:hover {\r\n  background: #555;\r\n}\r\n\r\n.style-module__fullScreenModel___2BTIF {\r\n  width: 95% !important;\r\n  height: 85vh;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj blockquote {\r\n  border-left: 2px solid var(--editor-border-color);\r\n  border-left-width: 5px;\r\n  margin-left: 1.5rem;\r\n  padding: 2px 0;\r\n  padding-left: 1rem;\r\n  font-style: italic;\r\n  font-family: Georgia, Times, \"Times New Roman\", serif;\r\n  color: var(--editor-text-color);\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsNested___3AX3C.style-module__left___19fvP {\r\n  left: -100%;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectFormationDropdown___2zsBU {\r\n  position: absolute;\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 4px;\r\n  left: 154px;\r\n  display: none;\r\n  min-width: 140px;\r\n  z-index: 2;\r\n  max-height: 200px;\r\n  overflow-x: hidden;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__fontSizeDropdown___2JM1U {\r\n  min-width: 90px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__fontSizeDropdown___2JM1U .style-module__selectOption___7easq {\r\n  padding: 10px;\r\n  border-bottom: 1px solid var(--editor-border-color);\r\n  font-size: 16px;\r\n  width: 98%;\r\n  margin: 0;\r\n  border-radius: 0 !important;\r\n  font-family: system-ui !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectFormationDropdown___2zsBU.style-module__show___3qCvb {\r\n  display: block;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__fontFamilyOption___1iKD6 {\r\n  display: block;\r\n  width: 99%;\r\n  padding: 9px !important;\r\n  border-top: 1px solid var(--editor-border-color) !important;\r\n  margin: 0 !important;\r\n  border-radius: 0 !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__fontFamilyOption___1iKD6:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background);\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__bottomColoredLine___2ZzSJ {\r\n  height: 3px;\r\n  width: 14px;\r\n  background-color: var(--editor-svg-color);\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__mainColorComponent___KneIc {\r\n  position: relative;\r\n  display: inline-block;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__openColorBox___HXFEl {\r\n  position: absolute;\r\n  height: 140px;\r\n  width: 140px;\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  top: 30px;\r\n  left: -1px;\r\n  display: none;\r\n  z-index: 1;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__colorBoxGrid___2aldn button {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  border-radius: 0 !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__openColorBox___HXFEl.style-module__show___3qCvb {\r\n  display: block;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__colorBox___34xoe {\r\n  height: 28px;\r\n  width: 28px;\r\n  cursor: pointer;\r\n  background-color: var(--editor-background-color);\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__customColorPicker___1m1Pk {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__customColorPicker___1m1Pk svg {\r\n  height: 20px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__increaseIconSize___jwjQX svg {\r\n  height: 20px !important;\r\n  width: 17px !important;\r\n  margin-top: 3px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__increaseIconSize___jwjQX button {\r\n  padding: 3px 10px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__colorBox___34xoe:hover {\r\n  transform: scale(1.2);\r\n  transition: transform 0.5s ease;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__verticalLine___3Ck-S {\r\n  height: 32px;\r\n  width: 1px;\r\n  background-color: var(--editor-border-color);\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorMt2___6i1Q_ {\r\n  margin-top: 2px;\r\n}\r\n.style-module__reactEditorMt10___2Crph {\r\n  margin-top: 10px;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorMe5___280IF {\r\n  margin-right: 5px;\r\n}\r\n\r\n.style-module__reactEditorTextEnd___1pcIh {\r\n  text-align: right;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorTextLeft___3E-uy {\r\n  text-align: left;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorDFlex___XY9O6,\r\n.style-module__reactEditorDFlex___XY9O6 {\r\n  display: flex;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorW47___2e5OR,\r\n.style-module__reactEditorW47___2e5OR {\r\n  width: 47%;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorW45___18O_s,\r\n.style-module__reactEditorW45___18O_s {\r\n  width: 40%;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__justifyContentBetween___17lWt,\r\n.style-module__justifyContentBetween___17lWt {\r\n  justify-content: space-between;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorFlexColumn___kYPWH,\r\n.style-module__reactEditorFlexColumn___kYPWH {\r\n  flex-direction: column;\r\n}\r\n\r\n.style-module__editorErrorMessage___3IFX_ {\r\n  color: red;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj:empty:before {\r\n  content: attr(data-placeholder);\r\n  color: #aaa;\r\n  pointer-events: none;\r\n}\r\n\r\n.style-module__fullScreen___2IkPb {\r\n  position: fixed !important;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100% !important;\r\n  height: 100% !important;\r\n  background-color: var(--editor-toolbar-button-background);\r\n  overflow: hidden;\r\n  z-index: 99999 !important;\r\n}\r\n\r\n.style-module__rightClickPopupBackground___2kc56 {\r\n  position: absolute;\r\n  cursor: pointer;\r\n  background-color: var(--editor-toolbar-button-background);\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 5px;\r\n  z-index: 1000;\r\n  min-width: 100px;\r\n  padding: 3px 0px;\r\n}\r\n\r\n.style-module__rightClickPopupBackground___2kc56 hr {\r\n  margin: 0;\r\n  border: none;\r\n  border-top: 1px solid var(--editor-border-color);\r\n  width: 100%;\r\n}\r\n\r\n.style-module__rightClickPopup___2fZw0 {\r\n  padding: 5px 10px;\r\n  font-family: system-ui;\r\n  font-size: 15px;\r\n  color: var(--editor-text-color);\r\n}\r\n\r\n.style-module__rightClickPopup___2fZw0:hover {\r\n  background: var(--editor-toolbar-button-hover-background);\r\n}\r\n\r\n.style-module__rightClickPopup___2fZw0 svg {\r\n  margin-right: 5px;\r\n  height: 20px;\r\n  width: 20px;\r\n  vertical-align: bottom;\r\n}\r\n\r\n.style-module__rightClickPopup___2fZw0.style-module__openLink___1piNb svg {\r\n  height: 15px;\r\n  margin-bottom: 1px;\r\n}\r\n\r\n.style-module__lockUnlockIcon___1F-wI svg {\r\n  height: 16px;\r\n  margin-top: 38px;\r\n  cursor: pointer;\r\n}\r\n\r\ninput::-webkit-outer-spin-button,\r\ninput::-webkit-inner-spin-button {\r\n  -webkit-appearance: none;\r\n  margin: 0;\r\n}\r\n\r\n/* Firefox */\r\ninput[type=\"number\"] {\r\n  -moz-appearance: textfield;\r\n}\r\n", ""]);
+exports.push([module.i, ":root {\r\n  --editor-background-color: #fff;\r\n  --editor-border-color: #eee;\r\n  --editor-text-color: #414141;\r\n  --editor-toolbar-button-background: #fff;\r\n  --editor-toolbar-text-color: #414141;\r\n  --editor-toolbar-button-hover-background: #efefef;\r\n  --editor-toolbar-button-selected-background: #dee0e2;\r\n  --editor-svg-color: #414141;\r\n  --editor-save-button-background: rgb(9, 134, 62);\r\n}\r\n\r\nhtml,\r\nbody {\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI img {\r\n  max-width: 100%;\r\n  height: auto;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq p,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq pre,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq h2,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq h3,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq h4,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq h5,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq h6,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq blockquote,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq h1 {\r\n  margin: 0;\r\n  color: var(--editor-toolbar-text-color) !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI {\r\n  background-color: var(--editor-background-color);\r\n  border: 2px solid var(--editor-border-color);\r\n  color: var(--editor-text-color);\r\n  line-height: 16px !important;\r\n  font-family: system-ui !important;\r\n  border-radius: 10px;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj p {\r\n  margin: 0 0 1em 0 !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__actionComponents___nnaIk {\r\n  margin: 0px 12px;\r\n  box-shadow: 0 2px 2px -2px rgba(34, 47, 62, 0.1),\r\n    0 8px 8px -4px rgba(34, 47, 62, 0.07);\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__wysiwygEditorToolbar___3YLm2 {\r\n  /* border-bottom: 1px solid var(--editor-border-color); */\r\n  font-size: 18px;\r\n  display: flex;\r\n  align-items: center;\r\n  flex-wrap: wrap;\r\n  margin: 6px 0px;\r\n  position: relative;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__wysiwygEditorToolbarWrapper___Sl-RX {\r\n  background-position: center top 42px;\r\n  background-size: calc(100% - 0px * 2) calc(100% - 0px);\r\n  background-attachment: local;\r\n  background-color: #fff;\r\n  background-image: repeating-linear-gradient(\r\n    #e3e3e3 0 1px,\r\n    transparent 1px 44px\r\n  );\r\n  background-repeat: no-repeat;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__wysiwygEditorToolbar___3YLm2 .style-module__hr1___2GDDO {\r\n  position: absolute;\r\n  width: 98%;\r\n  border-color: var(--editor-border-color);\r\n  border: none;\r\n  border-top: 1px solid var(--editor-border-color);\r\n  height: 1px;\r\n  display: none;\r\n  top: 32px;\r\n  margin: 0;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__wysiwygEditorToolbar___3YLm2 .style-module__hr2___2wfnq {\r\n  top: 64px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__wysiwygEditorToolbar___3YLm2 .style-module__buttonGroup___2VL8t {\r\n  display: inline-block;\r\n  border-right: 1px solid var(--editor-border-color);\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__wysiwygEditorToolbar___3YLm2 button {\r\n  background: var(--editor-toolbar-button-background);\r\n  outline: none;\r\n  border: none;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  padding: 6px 10px;\r\n  color: var(--editor-toolbar-text-color);\r\n  line-height: 16px;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__wysiwygEditorToolbarWrapper___Sl-RX button {\r\n  margin-block: 6px;\r\n}\r\n.style-module__wysiwygEditorToolbar___3YLm2 button:disabled,\r\n.style-module__wysiwygEditorToolbar___3YLm2 button.style-module__disabled___31WG5 {\r\n  cursor: not-allowed;\r\n}\r\n.style-module__wysiwygEditorToolbar___3YLm2 button:disabled svg,\r\n.style-module__wysiwygEditorToolbar___3YLm2 button.style-module__disabled___31WG5 svg {\r\n  fill: #9fa2a6;\r\n}\r\n\r\n.style-module__wysiwygEditorToolbar___3YLm2 button:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background);\r\n}\r\n\r\n.style-module__wysiwygEditorToolbar___3YLm2 input {\r\n  background-color: transparent;\r\n  border: 1px solid var(--editor-border-color);\r\n  outline: none;\r\n  cursor: pointer;\r\n}\r\n\r\n.style-module__wysiwygEditorToolbar___3YLm2 select,\r\n.style-module__wysiwygEditorToolbar___3YLm2 select:focus-visible {\r\n  border: none !important;\r\n  outline: none;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj {\r\n  padding: 8px 12px;\r\n  margin: 2px;\r\n  height: 250px;\r\n  overflow: auto;\r\n  resize: vertical;\r\n  max-width: 100% !important;\r\n  line-height: normal;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__placeholderText___20Ilw {\r\n  opacity: 0.8;\r\n  font-style: italic;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h1,\r\n.style-module__mlMainContentBox___3RMYj h2,\r\n.style-module__mlMainContentBox___3RMYj h3,\r\n.style-module__mlMainContentBox___3RMYj h4,\r\n.style-module__mlMainContentBox___3RMYj h5,\r\n.style-module__mlMainContentBox___3RMYj h6,\r\n.style-module__mlMainContentBox___3RMYj p {\r\n  margin-top: 0;\r\n  color: var(--editor-text-color);\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h1 {\r\n  font-size: 2em;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h2 {\r\n  font-size: 1.5em;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h3 {\r\n  font-size: 1.17em;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h4 {\r\n  font-size: 1em;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h5 {\r\n  font-size: 0.83em;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h6 {\r\n  font-size: 0.67em;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj p {\r\n  font-size: 1em;\r\n}\r\n\r\n.style-module__linkImage___M2hpC {\r\n  height: 80px;\r\n  width: 80px;\r\n  object-fit: cover;\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 5px;\r\n}\r\n\r\n.style-module__linkImageBox___d0yYz {\r\n  height: 80px;\r\n  width: 80px;\r\n  position: relative;\r\n  margin-top: 10px;\r\n}\r\n.style-module__linkImageCross___WbyR3 {\r\n  position: absolute;\r\n  top: -5px;\r\n  right: -7px;\r\n  height: 20px;\r\n  width: 20px;\r\n  background-color: red;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  border-radius: 50%;\r\n  color: #fff;\r\n  cursor: pointer;\r\n  padding-bottom: 3px;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj:focus-visible {\r\n  outline: none;\r\n}\r\n\r\n.style-module__wysiwygEditorSource___2DKV1 {\r\n  width: 98%;\r\n  height: 80%;\r\n  outline: none;\r\n  padding: 10px;\r\n  font-family: \"Courier New\", Monospace !important;\r\n  font-size: small;\r\n  white-space: pre-wrap;\r\n  margin: 0;\r\n  display: block;\r\n  font-size: 16px;\r\n  resize: none;\r\n}\r\n\r\n/* Modal.css */\r\n\r\n.style-module__modalOverlay___TXsmk {\r\n  font-family: system-ui !important;\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: rgba(0, 0, 0, 0.5);\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  z-index: 999999;\r\n}\r\n\r\n.style-module__imageModelOverlay___8jCM7 {\r\n  z-index: 999999;\r\n}\r\n\r\n.style-module__fillScreenView___13J2K {\r\n  z-index: 999999;\r\n}\r\n\r\n.style-module__modelTitle___3jHG7 {\r\n  display: flex;\r\n  justify-content: space-between;\r\n}\r\n\r\n.style-module__modelTitle___3jHG7 h2 {\r\n  margin: 0;\r\n}\r\n\r\n.style-module__modelTitle___3jHG7 svg {\r\n  font-size: 25px;\r\n  cursor: pointer;\r\n}\r\n\r\n.style-module__modalPopup___1C0ia {\r\n  background-color: #fff;\r\n  padding: 20px;\r\n  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\r\n  width: 400px;\r\n  max-width: 85%;\r\n  color: #000;\r\n  border-radius: 5px;\r\n}\r\n\r\n.style-module__fillScreenView___13J2K .style-module__modalPopup___1C0ia {\r\n  max-width: 100% !important;\r\n  width: 100vw !important;\r\n  height: 100vh !important;\r\n  z-index: 1;\r\n  padding: 0 !important;\r\n  overflow: hidden;\r\n  border-radius: 0 !important;\r\n}\r\n\r\n.style-module__modalPopup___1C0ia hr {\r\n  margin-bottom: 0;\r\n}\r\n\r\n.style-module__modalCloseBtn___2Qx0Z {\r\n  position: absolute;\r\n  top: 10px;\r\n  right: 10px;\r\n  background: none;\r\n  border: none;\r\n  cursor: pointer;\r\n  padding: 5px 10px;\r\n  font-size: 16px;\r\n}\r\n\r\n.style-module__wysiwygEditorToolbar___3YLm2 button svg {\r\n  fill: var(--editor-svg-color);\r\n  color: var(--editor-svg-color);\r\n  display: inline-block;\r\n  height: 15px;\r\n  width: 14px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__customSelect___vdO64 {\r\n  position: relative;\r\n  display: inline-block;\r\n  cursor: pointer;\r\n  font-size: 16px;\r\n  padding: 6px;\r\n  color: var(--editor-toolbar-text-color);\r\n  line-height: 16px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__customSelectFormat___3e6iP {\r\n  position: relative;\r\n  display: inline-block;\r\n  cursor: pointer;\r\n  font-size: 14px;\r\n  padding: 6px;\r\n  line-height: 16px;\r\n  margin-inline: 2px;\r\n  background-color: #f7f7f7 !important;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__customSelectFormat___3e6iP:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background) !important;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__customSelectFormat___3e6iP .style-module__selectSelected___2eABi {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__customSelectFormat___3e6iP .style-module__selectSelected___2eABi svg {\r\n  width: 10px;\r\n  height: 10px;\r\n  margin-inline-start: 12px;\r\n  opacity: 0.5;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__mainColorComponent___KneIc svg {\r\n  height: 15px !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 {\r\n  position: absolute;\r\n  background-color: #fff;\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 2px;\r\n  z-index: 2;\r\n  width: 160px;\r\n  max-height: 200px;\r\n  overflow-y: auto;\r\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\r\n  top: 29px;\r\n  left: 0;\r\n  display: none;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 button {\r\n  display: flex !important;\r\n  width: 100%;\r\n  padding: 7px;\r\n  font-family: system-ui !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__pItems___1bRzo .style-module__selectItems___3G3Z7 {\r\n  left: 142px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF {\r\n  position: absolute;\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  border-top: none;\r\n  border-radius: 2px;\r\n  z-index: 1;\r\n  max-height: 200px;\r\n  overflow-y: auto;\r\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\r\n  left: 0;\r\n  top: 30px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF .style-module__selectOption___7easq:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background) !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF h1 {\r\n  font-size: 32px !important;\r\n  font-weight: 600;\r\n  line-height: 32px;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF h2 {\r\n  font-size: 28px !important;\r\n  font-weight: 600;\r\n  line-height: 28px;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF h3 {\r\n  font-size: 24px !important;\r\n  font-weight: 600;\r\n  line-height: 24px;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF h4 {\r\n  font-size: 20px !important;\r\n  line-height: 20px;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF h5 {\r\n  font-size: 16px !important;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF h6 {\r\n  font-size: 14px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7.style-module__show___3qCvb {\r\n  display: block;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 .style-module__selectOption___7easq,\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF .style-module__selectOption___7easq {\r\n  padding: 6px 10px;\r\n  cursor: pointer;\r\n  font-size: 16px;\r\n  white-space: nowrap;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 .style-module__selectInsert___2lLJI svg {\r\n  height: 20px;\r\n  width: 20px;\r\n  margin-right: 7px;\r\n  color: var(--editor-svg-color);\r\n  fill: var(--editor-svg-color);\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 button svg {\r\n  height: 16px !important;\r\n  width: 16px !important;\r\n  margin-top: 2px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 .style-module__selectInsert___2lLJI span {\r\n  margin-top: 2px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectedOption___bGTuj {\r\n  background-color: var(--editor-toolbar-button-selected-background) !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 .style-module__selectOption___7easq:hover,\r\n.style-module__reactEditorMain___20UxI .style-module__selectInsert___2lLJI:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background) !important;\r\n}\r\n\r\n.style-module__formControlInput___JxKoB {\r\n  font-family: system-ui !important;\r\n  width: 100%;\r\n  padding: 7px;\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 3px;\r\n}\r\n\r\n.style-module__formControlInput___JxKoB:focus-visible {\r\n  outline: none;\r\n}\r\n\r\n.style-module__saveButton___jY5in {\r\n  background-color: var(--editor-save-button-background);\r\n  color: #fff;\r\n  padding: 7px 14px;\r\n  border: none;\r\n  margin-top: 10px;\r\n  border-radius: 3px;\r\n  cursor: pointer;\r\n}\r\n\r\n.style-module__selectType___2EuiV button {\r\n  padding: 6px 20px;\r\n  background-color: var(--editor-toolbar-button-background);\r\n  border: 1px solid var(--editor-border-color);\r\n  cursor: pointer;\r\n}\r\n\r\n.style-module__selectType___2EuiV button.style-module__selectedType___1pN_w {\r\n  background-color: #efefef;\r\n}\r\n\r\n.style-module__specialCharBox___5ivgz {\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n}\r\n\r\n.style-module__specialChar___3kuh4 {\r\n  width: 30px;\r\n  height: 30px;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  cursor: pointer;\r\n  border-radius: 2px;\r\n}\r\n\r\n.style-module__specialChar___3kuh4:hover {\r\n  background-color: #dee0e2;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectInsert___2lLJI {\r\n  min-width: 120px;\r\n  font-size: 16px;\r\n  text-align: left;\r\n  padding: 8px 10px;\r\n  white-space: nowrap;\r\n  display: flex;\r\n  border-top: 1px solid var(--editor-border-color) !important;\r\n  color: var(--editor-text-color) !important;\r\n  background-color: var(--editor-background-color);\r\n  border-radius: 0 !important;\r\n  margin: 0 !important;\r\n}\r\n\r\n/* width */\r\n.style-module__reactEditorMain___20UxI ::-webkit-scrollbar {\r\n  width: 5px;\r\n}\r\n\r\n/* Track */\r\n.style-module__reactEditorMain___20UxI ::-webkit-scrollbar-track {\r\n  background: #f1f1f1;\r\n}\r\n\r\n/* Handle */\r\n.style-module__reactEditorMain___20UxI ::-webkit-scrollbar-thumb {\r\n  background: #c4c4c4;\r\n}\r\n\r\n/* Handle on hover */\r\n.style-module__reactEditorMain___20UxI ::-webkit-scrollbar-thumb:hover {\r\n  background: #555;\r\n}\r\n\r\n.style-module__fullScreenModel___2BTIF {\r\n  width: 95% !important;\r\n  height: 85vh;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj blockquote {\r\n  border-left: 2px solid var(--editor-border-color);\r\n  border-left-width: 5px;\r\n  margin-left: 1.5rem;\r\n  padding: 2px 0;\r\n  padding-left: 1rem;\r\n  font-style: italic;\r\n  font-family: Georgia, Times, \"Times New Roman\", serif;\r\n  color: var(--editor-text-color);\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsNested___3AX3C.style-module__left___19fvP {\r\n  left: -100%;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectFormationDropdown___2zsBU {\r\n  position: absolute;\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 4px;\r\n  left: 154px;\r\n  display: none;\r\n  min-width: 140px;\r\n  z-index: 2;\r\n  max-height: 200px;\r\n  overflow-x: hidden;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__fontSizeDropdown___2JM1U {\r\n  min-width: 90px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__fontSizeDropdown___2JM1U .style-module__selectOption___7easq {\r\n  padding: 10px;\r\n  border-bottom: 1px solid var(--editor-border-color);\r\n  font-size: 16px;\r\n  width: 98%;\r\n  margin: 0;\r\n  border-radius: 0 !important;\r\n  font-family: system-ui !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectFormationDropdown___2zsBU.style-module__show___3qCvb {\r\n  display: block;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__fontFamilyOption___1iKD6 {\r\n  display: block;\r\n  width: 99%;\r\n  padding: 9px !important;\r\n  border-top: 1px solid var(--editor-border-color) !important;\r\n  margin: 0 !important;\r\n  border-radius: 0 !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__fontFamilyOption___1iKD6:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background);\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__bottomColoredLine___2ZzSJ {\r\n  height: 3px;\r\n  width: 14px;\r\n  background-color: var(--editor-svg-color);\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__mainColorComponent___KneIc {\r\n  position: relative;\r\n  display: inline-block;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__openColorBox___HXFEl {\r\n  position: absolute;\r\n  height: 140px;\r\n  width: 140px;\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  top: 30px;\r\n  left: -1px;\r\n  display: none;\r\n  z-index: 1;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__colorBoxGrid___2aldn button {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  border-radius: 0 !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__openColorBox___HXFEl.style-module__show___3qCvb {\r\n  display: block;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__colorBox___34xoe {\r\n  height: 28px;\r\n  width: 28px;\r\n  cursor: pointer;\r\n  background-color: var(--editor-background-color);\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__customColorPicker___1m1Pk {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__customColorPicker___1m1Pk svg {\r\n  height: 20px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__increaseIconSize___jwjQX svg {\r\n  height: 20px !important;\r\n  width: 17px !important;\r\n  /* margin-top: 3px; */\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__increaseIconSize___jwjQX button {\r\n  padding: 3px 10px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__colorBox___34xoe:hover {\r\n  transform: scale(1.2);\r\n  transition: transform 0.5s ease;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__verticalLine___3Ck-S {\r\n  height: 32px;\r\n  width: 12px;\r\n  /* background-color: var(--editor-border-color); */\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorMt2___6i1Q_ {\r\n  margin-top: 2px;\r\n}\r\n.style-module__reactEditorMt10___2Crph {\r\n  margin-top: 10px;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorMe5___280IF {\r\n  margin-right: 5px;\r\n}\r\n\r\n.style-module__reactEditorTextEnd___1pcIh {\r\n  text-align: right;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorTextLeft___3E-uy {\r\n  text-align: left;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorDFlex___XY9O6,\r\n.style-module__reactEditorDFlex___XY9O6 {\r\n  display: flex;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorW47___2e5OR,\r\n.style-module__reactEditorW47___2e5OR {\r\n  width: 47%;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorW45___18O_s,\r\n.style-module__reactEditorW45___18O_s {\r\n  width: 40%;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__justifyContentBetween___17lWt,\r\n.style-module__justifyContentBetween___17lWt {\r\n  justify-content: space-between;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorFlexColumn___kYPWH,\r\n.style-module__reactEditorFlexColumn___kYPWH {\r\n  flex-direction: column;\r\n}\r\n\r\n.style-module__editorErrorMessage___3IFX_ {\r\n  color: red;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj:empty:before {\r\n  content: attr(data-placeholder);\r\n  color: #aaa;\r\n  pointer-events: none;\r\n}\r\n[contenteditable][data-mlx-editor-empty=\"true\"]::before {\r\n  content: attr(data-placeholder);\r\n  color: #aaa;\r\n  pointer-events: none;\r\n  position: absolute;\r\n}\r\n\r\n.style-module__fullScreen___2IkPb {\r\n  position: fixed !important;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100% !important;\r\n  height: 100% !important;\r\n  background-color: var(--editor-toolbar-button-background);\r\n  overflow: hidden;\r\n  z-index: 99999 !important;\r\n}\r\n\r\n.style-module__rightClickPopupBackground___2kc56 {\r\n  position: absolute;\r\n  cursor: pointer;\r\n  background-color: var(--editor-toolbar-button-background);\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 5px;\r\n  z-index: 1000;\r\n  min-width: 100px;\r\n  padding: 3px 0px;\r\n}\r\n\r\n.style-module__rightClickPopupBackground___2kc56 hr {\r\n  margin: 0;\r\n  border: none;\r\n  border-top: 1px solid var(--editor-border-color);\r\n  width: 100%;\r\n}\r\n\r\n.style-module__rightClickPopup___2fZw0 {\r\n  padding: 5px 10px;\r\n  font-family: system-ui;\r\n  font-size: 15px;\r\n  color: var(--editor-text-color);\r\n}\r\n\r\n.style-module__rightClickPopup___2fZw0:hover {\r\n  background: var(--editor-toolbar-button-hover-background);\r\n}\r\n\r\n.style-module__rightClickPopup___2fZw0 svg {\r\n  margin-right: 5px;\r\n  height: 20px;\r\n  width: 20px;\r\n  vertical-align: bottom;\r\n}\r\n\r\n.style-module__rightClickPopup___2fZw0.style-module__openLink___1piNb svg {\r\n  height: 15px;\r\n  margin-bottom: 1px;\r\n}\r\n\r\n.style-module__lockUnlockIcon___1F-wI svg {\r\n  height: 16px;\r\n  margin-top: 38px;\r\n  cursor: pointer;\r\n}\r\n\r\ninput::-webkit-outer-spin-button,\r\ninput::-webkit-inner-spin-button {\r\n  -webkit-appearance: none;\r\n  margin: 0;\r\n}\r\n\r\n/* Firefox */\r\ninput[type=\"number\"] {\r\n  -moz-appearance: textfield;\r\n}\r\n", ""]);
 // Exports
 exports.locals = {
 	"reactEditorMain": "style-module__reactEditorMain___20UxI",
 	"selectOption": "style-module__selectOption___7easq",
+	"mlMainContentBox": "style-module__mlMainContentBox___3RMYj",
+	"actionComponents": "style-module__actionComponents___nnaIk",
 	"wysiwygEditorToolbar": "style-module__wysiwygEditorToolbar___3YLm2",
+	"wysiwygEditorToolbarWrapper": "style-module__wysiwygEditorToolbarWrapper___Sl-RX",
 	"hr1": "style-module__hr1___2GDDO",
 	"hr2": "style-module__hr2___2wfnq",
 	"buttonGroup": "style-module__buttonGroup___2VL8t",
 	"disabled": "style-module__disabled___31WG5",
-	"mlMainContentBox": "style-module__mlMainContentBox___3RMYj",
 	"placeholderText": "style-module__placeholderText___20Ilw",
 	"linkImage": "style-module__linkImage___M2hpC",
 	"linkImageBox": "style-module__linkImageBox___d0yYz",
@@ -565,6 +567,7 @@ exports.locals = {
 	"modalCloseBtn": "style-module__modalCloseBtn___2Qx0Z",
 	"customSelect": "style-module__customSelect___vdO64",
 	"customSelectFormat": "style-module__customSelectFormat___3e6iP",
+	"selectSelected": "style-module__selectSelected___2eABi",
 	"mainColorComponent": "style-module__mainColorComponent___KneIc",
 	"selectItems": "style-module__selectItems___3G3Z7",
 	"pItems": "style-module__pItems___1bRzo",
@@ -638,12 +641,14 @@ var style_module_default = /*#__PURE__*/__webpack_require__.n(style_module);
 function SelectAll() {
   return /*#__PURE__*/external_react_default.a.createElement("svg", {
     xmlns: "http://www.w3.org/2000/svg",
-    width: "1em",
-    height: "1em",
-    viewBox: "0 0 24 24"
+    width: "16",
+    height: "16",
+    viewBox: "0 0 16 16"
   }, /*#__PURE__*/external_react_default.a.createElement("path", {
     fill: "currentColor",
-    d: "M7 17V7h10v10zm2-2h6V9H9zm-2 6v-2h2v2zM3 5V3h2v2zm4 0V3h2v2zm4 16v-2h2v2zm0-16V3h2v2zm4 0V3h2v2zm0 16v-2h2v2zm4-16V3h2v2zM3 21v-2h2v2zm0-4v-2h2v2zm0-4v-2h2v2zm0-4V7h2v2zm16 12v-2h2v2zm0-4v-2h2v2zm0-4v-2h2v2zm0-4V7h2v2z"
+    "fill-rule": "evenodd",
+    d: "M1.75 1H1v2.25a.75.75 0 0 0 1.5 0V2.5h.75a.75.75 0 0 0 0-1.5zm0 5a.75.75 0 0 1 .75.75v2.5a.75.75 0 0 1-1.5 0v-2.5A.75.75 0 0 1 1.75 6m7.106 2.856l1.507 3.517l2.01-2.01zm-.558-1.871l5.344 2.29a1 1 0 0 1 .314 1.627l-.997.996l1.821 1.822a.75.75 0 1 1-1.06 1.06l-1.822-1.821l-.996.997a1 1 0 0 1-1.627-.314l-2.29-5.344c-.356-.83.483-1.669 1.313-1.313M1.75 15H1v-2.25a.75.75 0 0 1 1.5 0v.75h.75a.75.75 0 0 1 0 1.5zM6 1.75A.75.75 0 0 1 6.75 1h2.5a.75.75 0 0 1 0 1.5h-2.5A.75.75 0 0 1 6 1.75M14.25 1H15v2.25a.75.75 0 0 1-1.5 0V2.5h-.75a.75.75 0 0 1 0-1.5z",
+    "clip-rule": "evenodd"
   }));
 }
 // CONCATENATED MODULE: ./src/components/SVGImages/LineHeightIcon.jsx
@@ -1050,12 +1055,12 @@ function IncreaseIndentIcon() {
 function ImageIcon() {
   return /*#__PURE__*/external_react_default.a.createElement("svg", {
     xmlns: "http://www.w3.org/2000/svg",
-    width: "1em",
-    height: "1em",
-    viewBox: "0 0 24 24"
+    width: "15",
+    height: "15",
+    viewBox: "0 0 512 512"
   }, /*#__PURE__*/external_react_default.a.createElement("path", {
     fill: "currentColor",
-    d: "M19 4H5a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3M5 18a1 1 0 0 1-1-1v-2.42l3.3-3.29a1 1 0 0 1 1.4 0L15.41 18Zm15-1a1 1 0 0 1-1 1h-.77l-3.81-3.83l.88-.88a1 1 0 0 1 1.4 0l3.3 3.29Zm0-3.24l-1.88-1.87a3.06 3.06 0 0 0-4.24 0l-.88.88l-2.88-2.88a3.06 3.06 0 0 0-4.24 0L4 11.76V7a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1Z"
+    d: "M0 96c0-35.3 28.7-64 64-64h384c35.3 0 64 28.7 64 64v320c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64zm323.8 106.5c-4.5-6.6-11.9-10.5-19.8-10.5s-15.4 3.9-19.8 10.5l-87 127.6l-26.5-33.1c-4.6-5.7-11.5-9-18.7-9s-14.2 3.3-18.7 9l-64 80c-5.8 7.2-6.9 17.1-2.9 25.4S78.8 416 88 416h336c8.9 0 17.1-4.9 21.2-12.8s3.6-17.4-1.4-24.7zM112 192a48 48 0 1 0 0-96a48 48 0 1 0 0 96"
   }));
 }
 // CONCATENATED MODULE: ./src/components/SVGImages/VideoIcon.jsx
@@ -1063,17 +1068,20 @@ function ImageIcon() {
 function VideoIcon() {
   return /*#__PURE__*/external_react_default.a.createElement("svg", {
     xmlns: "http://www.w3.org/2000/svg",
-    width: "1em",
-    height: "1em",
-    viewBox: "0 0 24 24"
-  }, /*#__PURE__*/external_react_default.a.createElement("path", {
+    width: "48",
+    height: "48",
+    viewBox: "0 0 48 48"
+  }, /*#__PURE__*/external_react_default.a.createElement("g", {
     fill: "none",
     stroke: "currentColor",
-    strokeLinecap: "round",
-    strokeLinejoin: "round",
-    strokeWidth: "1.5",
-    d: "M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 0 1-1.125-1.125M3.375 19.5h1.5C5.496 19.5 6 18.996 6 18.375m-3.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-1.5A1.125 1.125 0 0 1 18 18.375M20.625 4.5H3.375m17.25 0c.621 0 1.125.504 1.125 1.125M20.625 4.5h-1.5C18.504 4.5 18 5.004 18 5.625m3.75 0v1.5c0 .621-.504 1.125-1.125 1.125M3.375 4.5c-.621 0-1.125.504-1.125 1.125M3.375 4.5h1.5C5.496 4.5 6 5.004 6 5.625m-3.75 0v1.5c0 .621.504 1.125 1.125 1.125m0 0h1.5m-1.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m1.5-3.75C5.496 8.25 6 7.746 6 7.125v-1.5M4.875 8.25C5.496 8.25 6 8.754 6 9.375v1.5m0-5.25v5.25m0-5.25C6 5.004 6.504 4.5 7.125 4.5h9.75c.621 0 1.125.504 1.125 1.125m1.125 2.625h1.5m-1.5 0A1.125 1.125 0 0 1 18 7.125v-1.5m1.125 2.625c-.621 0-1.125.504-1.125 1.125v1.5m2.625-2.625c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125M18 5.625v5.25M7.125 12h9.75m-9.75 0A1.125 1.125 0 0 1 6 10.875M7.125 12C6.504 12 6 12.504 6 13.125m0-2.25C6 11.496 5.496 12 4.875 12M18 10.875c0 .621-.504 1.125-1.125 1.125M18 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m-12 5.25v-5.25m0 5.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125m-12 0v-1.5c0-.621-.504-1.125-1.125-1.125M18 18.375v-5.25m0 5.25v-1.5c0-.621.504-1.125 1.125-1.125M18 13.125v1.5c0 .621.504 1.125 1.125 1.125M18 13.125c0-.621.504-1.125 1.125-1.125M6 13.125v1.5c0 .621-.504 1.125-1.125 1.125M6 13.125C6 12.504 5.496 12 4.875 12m-1.5 0h1.5m-1.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M19.125 12h1.5m0 0c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h1.5m14.25 0h1.5"
-  }));
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "4"
+  }, /*#__PURE__*/external_react_default.a.createElement("path", {
+    d: "M11 7h26v34H11zm-7 4h7v26H4zm33 0h7v26h-7z"
+  }), /*#__PURE__*/external_react_default.a.createElement("path", {
+    d: "m22 20l6 4l-6 4z"
+  })));
 }
 // CONCATENATED MODULE: ./src/components/SVGImages/BoldIcon.jsx
 
@@ -1092,7 +1100,10 @@ function CodeIcon() {
     xmlns: "http://www.w3.org/2000/svg",
     width: "1em",
     height: "1em",
-    viewBox: "0 0 24 24"
+    viewBox: "0 0 24 24",
+    style: {
+      marginTop: "0px"
+    }
   }, /*#__PURE__*/external_react_default.a.createElement("path", {
     fill: "currentColor",
     d: "M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6l6 6zm5.2 0l4.6-4.6l-4.6-4.6L16 6l6 6l-6 6z"
@@ -1236,13 +1247,26 @@ function SpecialChars(_ref) {
     }, _char);
   }));
 }
+// CONCATENATED MODULE: ./src/components/SVGImages/ArrowDown.jsx
+
+function ArrowDown() {
+  return /*#__PURE__*/external_react_default.a.createElement("svg", {
+    width: "10",
+    height: "10",
+    focusable: "false"
+  }, /*#__PURE__*/external_react_default.a.createElement("path", {
+    d: "M8.7 2.2c.3-.3.8-.3 1 0 .4.4.4.9 0 1.2L5.7 7.8c-.3.3-.9.3-1.2 0L.2 3.4a.8.8 0 0 1 0-1.2c.3-.3.8-.3 1.1 0L5 6l3.7-3.8Z",
+    "fill-rule": "nonzero"
+  }));
+}
 // CONCATENATED MODULE: ./src/components/SelectFormat.jsx
-function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 function SelectFormat(_ref) {
@@ -1373,7 +1397,7 @@ function SelectFormat(_ref) {
     }
   }, /*#__PURE__*/external_react_default.a.createElement("div", {
     className: style_module_default.a.selectSelected
-  }, selectedOption), isOpen && /*#__PURE__*/external_react_default.a.createElement("div", {
+  }, selectedOption, /*#__PURE__*/external_react_default.a.createElement(ArrowDown, null)), isOpen && /*#__PURE__*/external_react_default.a.createElement("div", {
     className: style_module_default.a.selectItemsFormat
   }, formats.map(function (option, index) {
     return /*#__PURE__*/external_react_default.a.createElement("div", {
@@ -1387,12 +1411,12 @@ function SelectFormat(_ref) {
 }
 /* harmony default export */ var components_SelectFormat = (SelectFormat);
 // CONCATENATED MODULE: ./src/components/ButtonFunction.jsx
-function ButtonFunction_slicedToArray(r, e) { return ButtonFunction_arrayWithHoles(r) || ButtonFunction_iterableToArrayLimit(r, e) || ButtonFunction_unsupportedIterableToArray(r, e) || ButtonFunction_nonIterableRest(); }
+function ButtonFunction_slicedToArray(arr, i) { return ButtonFunction_arrayWithHoles(arr) || ButtonFunction_iterableToArrayLimit(arr, i) || ButtonFunction_unsupportedIterableToArray(arr, i) || ButtonFunction_nonIterableRest(); }
 function ButtonFunction_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function ButtonFunction_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return ButtonFunction_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? ButtonFunction_arrayLikeToArray(r, a) : void 0; } }
-function ButtonFunction_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function ButtonFunction_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return ButtonFunction_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return ButtonFunction_arrayLikeToArray(o, minLen); }
+function ButtonFunction_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function ButtonFunction_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function ButtonFunction_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function ButtonFunction_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var ButtonFunction_ButtonFunction = function ButtonFunction(props) {
@@ -1406,10 +1430,13 @@ var ButtonFunction_ButtonFunction = function ButtonFunction(props) {
     _useState2 = ButtonFunction_slicedToArray(_useState, 2),
     isSelected = _useState2[0],
     setIsSelected = _useState2[1];
+  // console.log(isSelected, "selecteddddddddddd");
   var _useState3 = Object(external_react_["useState"])(true),
     _useState4 = ButtonFunction_slicedToArray(_useState3, 2),
     isDisabled = _useState4[0],
     setIsDisabled = _useState4[1];
+  // console.log(isDisabled, "disableeeeeeeeeeeeee");
+
   var handleClick = function handleClick(e, ref) {
     e.preventDefault();
     ref.current.focus();
@@ -1465,7 +1492,12 @@ var ButtonFunction_ButtonFunction = function ButtonFunction(props) {
 };
 /* harmony default export */ var components_ButtonFunction = (ButtonFunction_ButtonFunction);
 // CONCATENATED MODULE: ./src/components/constant.js
-var TOOLBAR_ITEMS = ["undo", "redo", "|", "format", "|", "bold", "italic", "underline", "superscript", "subscript", "|", "alignLeft", "alignCenter", "alignRight", "alignJustify", "|", "indent", "outdent", "|", "orderedList", "unorderedList", "|", "removeFormat", "|", "textColor", "backgroundColor", "|", "ltr", "rtl", "|"];
+var TOOLBAR_ITEMS = ["undo", "redo", "|", "format", "fontfamily", "fontsize", "|", "bold", "italic", "underline", "superscript", "subscript", "|",
+// "alignLeft",
+// "alignCenter",
+// "alignRight",
+// "alignJustify",
+"alignment", "|", "indent", "outdent", "|", "orderedList", "unorderedList", "|", "removeFormat", "|", "textColor", "backgroundColor", "|", "ltr", "rtl", "|", "copy", "cut", "paste", "select_all", "|", "image", "link", "video", "|", "source_code", "full_screen", "special_character", "horizontal_line"];
 var NAVBAR_ITEMS = ["file", "view", "insert", "format", "|", "select_all", "|", "image", "link", "video", "|", "copy", "cut", "paste", "|"];
 var FORMAT_OPTIONS = ["bold", "italic", "underline", "superscript", "subscript", "font", "font_size", "alignment"];
 var INSER_OPTIONS = ["image", "link", "video", "hr_line", "special_char"];
@@ -1516,12 +1548,12 @@ var remove_resizer = function remove_resizer() {
   }
 };
 // CONCATENATED MODULE: ./src/components/SelectInsert.jsx
-function SelectInsert_slicedToArray(r, e) { return SelectInsert_arrayWithHoles(r) || SelectInsert_iterableToArrayLimit(r, e) || SelectInsert_unsupportedIterableToArray(r, e) || SelectInsert_nonIterableRest(); }
+function SelectInsert_slicedToArray(arr, i) { return SelectInsert_arrayWithHoles(arr) || SelectInsert_iterableToArrayLimit(arr, i) || SelectInsert_unsupportedIterableToArray(arr, i) || SelectInsert_nonIterableRest(); }
 function SelectInsert_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function SelectInsert_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return SelectInsert_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? SelectInsert_arrayLikeToArray(r, a) : void 0; } }
-function SelectInsert_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function SelectInsert_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return SelectInsert_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return SelectInsert_arrayLikeToArray(o, minLen); }
+function SelectInsert_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function SelectInsert_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function SelectInsert_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function SelectInsert_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
@@ -1607,12 +1639,12 @@ function SelectFileOptions(props) {
   })));
 }
 // CONCATENATED MODULE: ./src/components/SelectView.jsx
-function SelectView_slicedToArray(r, e) { return SelectView_arrayWithHoles(r) || SelectView_iterableToArrayLimit(r, e) || SelectView_unsupportedIterableToArray(r, e) || SelectView_nonIterableRest(); }
+function SelectView_slicedToArray(arr, i) { return SelectView_arrayWithHoles(arr) || SelectView_iterableToArrayLimit(arr, i) || SelectView_unsupportedIterableToArray(arr, i) || SelectView_nonIterableRest(); }
 function SelectView_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function SelectView_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return SelectView_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? SelectView_arrayLikeToArray(r, a) : void 0; } }
-function SelectView_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function SelectView_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return SelectView_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return SelectView_arrayLikeToArray(o, minLen); }
+function SelectView_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function SelectView_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function SelectView_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function SelectView_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
@@ -1687,12 +1719,12 @@ function SelectView_SelectFileOptions(props) {
   })));
 }
 // CONCATENATED MODULE: ./src/components/SelectFileOptions.jsx
-function SelectFileOptions_slicedToArray(r, e) { return SelectFileOptions_arrayWithHoles(r) || SelectFileOptions_iterableToArrayLimit(r, e) || SelectFileOptions_unsupportedIterableToArray(r, e) || SelectFileOptions_nonIterableRest(); }
+function SelectFileOptions_slicedToArray(arr, i) { return SelectFileOptions_arrayWithHoles(arr) || SelectFileOptions_iterableToArrayLimit(arr, i) || SelectFileOptions_unsupportedIterableToArray(arr, i) || SelectFileOptions_nonIterableRest(); }
 function SelectFileOptions_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function SelectFileOptions_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return SelectFileOptions_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? SelectFileOptions_arrayLikeToArray(r, a) : void 0; } }
-function SelectFileOptions_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function SelectFileOptions_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return SelectFileOptions_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return SelectFileOptions_arrayLikeToArray(o, minLen); }
+function SelectFileOptions_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function SelectFileOptions_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function SelectFileOptions_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function SelectFileOptions_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
@@ -1866,7 +1898,8 @@ function PreviewModel(props) {
 
 
 function SelectFamily(_ref) {
-  var handleHideChildOptions = _ref.handleHideChildOptions;
+  var handleHideChildOptions = _ref.handleHideChildOptions,
+    editorRef = _ref.editorRef;
   var fontFamilies = [{
     name: "Arial",
     style: "Arial, sans-serif"
@@ -1947,8 +1980,12 @@ function SelectFamily(_ref) {
   ];
   var handleOptionClick = function handleOptionClick(e, option) {
     e.preventDefault();
+    editorRef.current.focus();
     var selection = window.getSelection();
     if (!selection.isCollapsed) {
+      document.execCommand("styleWithCSS", false, true);
+      document.execCommand("fontName", false, option.style);
+    } else {
       document.execCommand("styleWithCSS", false, true);
       document.execCommand("fontName", false, option.style);
     }
@@ -1978,12 +2015,25 @@ function SelectFontSize(_ref) {
     e.preventDefault();
     var selection = window.getSelection();
     if (!selection.isCollapsed) {
+      // If there's a text selection, apply font size to selected text
       document.execCommand("styleWithCSS", false, true);
-      document.execCommand("fontSize", false, "1"); // Reset font size to default
+      document.execCommand("fontSize", false, "1"); // Required for compatibility
       var range = selection.getRangeAt(0);
       var span = document.createElement("span");
       span.style.fontSize = option + "px";
       range.surroundContents(span);
+    } else {
+      // If there's no selection, insert a styled span at caret position
+      var _range = selection.getRangeAt(0);
+      var _span = document.createElement("span");
+      _span.style.fontSize = option + "px";
+      _span.innerHTML = "\u200B"; // Zero-width space to keep the span visible
+      _range.insertNode(_span);
+      // Move caret inside the span
+      _range.setStart(_span, 1);
+      _range.setEnd(_span, 1);
+      selection.removeAllRanges();
+      selection.addRange(_range);
     }
     handleHideChildOptions();
   };
@@ -2040,12 +2090,12 @@ function SelectAlignment(_ref) {
 }
 /* harmony default export */ var components_SelectAlignment = (SelectAlignment);
 // CONCATENATED MODULE: ./src/components/SelectLineHeight.jsx
-function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || SelectLineHeight_unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || SelectLineHeight_unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function SelectLineHeight_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return SelectLineHeight_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? SelectLineHeight_arrayLikeToArray(r, a) : void 0; } }
-function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
-function _arrayWithoutHoles(r) { if (Array.isArray(r)) return SelectLineHeight_arrayLikeToArray(r); }
-function SelectLineHeight_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function SelectLineHeight_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return SelectLineHeight_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return SelectLineHeight_arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return SelectLineHeight_arrayLikeToArray(arr); }
+function SelectLineHeight_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 
 
 function SelectLineHeight(_ref) {
@@ -2102,12 +2152,12 @@ function SelectLineHeight(_ref) {
 }
 /* harmony default export */ var components_SelectLineHeight = (SelectLineHeight);
 // CONCATENATED MODULE: ./src/components/SelectFormations.jsx
-function SelectFormations_slicedToArray(r, e) { return SelectFormations_arrayWithHoles(r) || SelectFormations_iterableToArrayLimit(r, e) || SelectFormations_unsupportedIterableToArray(r, e) || SelectFormations_nonIterableRest(); }
+function SelectFormations_slicedToArray(arr, i) { return SelectFormations_arrayWithHoles(arr) || SelectFormations_iterableToArrayLimit(arr, i) || SelectFormations_unsupportedIterableToArray(arr, i) || SelectFormations_nonIterableRest(); }
 function SelectFormations_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function SelectFormations_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return SelectFormations_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? SelectFormations_arrayLikeToArray(r, a) : void 0; } }
-function SelectFormations_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function SelectFormations_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return SelectFormations_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return SelectFormations_arrayLikeToArray(o, minLen); }
+function SelectFormations_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function SelectFormations_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function SelectFormations_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function SelectFormations_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
@@ -2251,7 +2301,8 @@ function SelectFormations_SelectFileOptions(props) {
       top: dropdownTop
     }
   }, /*#__PURE__*/external_react_default.a.createElement(components_SelectFamily, {
-    handleHideChildOptions: handleHideChildOptions
+    handleHideChildOptions: handleHideChildOptions,
+    editorRef: editorRef
   })), /*#__PURE__*/external_react_default.a.createElement("div", {
     className: "".concat(style_module_default.a.selectFormationDropdown, " ").concat(style_module_default.a.fontSizeDropdown, " ").concat(showChildOptions === 2 ? "".concat(style_module_default.a.show) : ""),
     onMouseOver: function onMouseOver() {
@@ -2294,12 +2345,12 @@ function SelectFormations_SelectFileOptions(props) {
   })));
 }
 // CONCATENATED MODULE: ./src/components/ManageColors.jsx
-function ManageColors_slicedToArray(r, e) { return ManageColors_arrayWithHoles(r) || ManageColors_iterableToArrayLimit(r, e) || ManageColors_unsupportedIterableToArray(r, e) || ManageColors_nonIterableRest(); }
+function ManageColors_slicedToArray(arr, i) { return ManageColors_arrayWithHoles(arr) || ManageColors_iterableToArrayLimit(arr, i) || ManageColors_unsupportedIterableToArray(arr, i) || ManageColors_nonIterableRest(); }
 function ManageColors_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function ManageColors_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return ManageColors_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? ManageColors_arrayLikeToArray(r, a) : void 0; } }
-function ManageColors_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function ManageColors_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return ManageColors_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return ManageColors_arrayLikeToArray(o, minLen); }
+function ManageColors_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function ManageColors_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function ManageColors_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function ManageColors_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
@@ -2613,12 +2664,23 @@ function ManageColors(props) {
       return handleChangeColor(e, "#000");
     }
   }), /*#__PURE__*/external_react_default.a.createElement("button", {
-    className: style_module_default.a.colorBox
-  }), /*#__PURE__*/external_react_default.a.createElement("button", {
-    className: style_module_default.a.colorBox
+    className: style_module_default.a.colorBox,
+    style: {
+      pointerEvents: "none"
+    }
   }), /*#__PURE__*/external_react_default.a.createElement("button", {
     className: style_module_default.a.colorBox,
-    title: "Custom color"
+    style: {
+      pointerEvents: "none"
+    }
+  }), /*#__PURE__*/external_react_default.a.createElement("button", {
+    className: style_module_default.a.colorBox,
+    title: "Custom color",
+    style: {
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center"
+    }
   }, /*#__PURE__*/external_react_default.a.createElement("input", {
     id: "input-color",
     type: "color",
@@ -2715,20 +2777,20 @@ function CopyIcon() {
 }
 // CONCATENATED MODULE: ./src/components/LinkModal.jsx
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
-function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function LinkModal_slicedToArray(r, e) { return LinkModal_arrayWithHoles(r) || LinkModal_iterableToArrayLimit(r, e) || LinkModal_unsupportedIterableToArray(r, e) || LinkModal_nonIterableRest(); }
+function LinkModal_slicedToArray(arr, i) { return LinkModal_arrayWithHoles(arr) || LinkModal_iterableToArrayLimit(arr, i) || LinkModal_unsupportedIterableToArray(arr, i) || LinkModal_nonIterableRest(); }
 function LinkModal_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function LinkModal_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return LinkModal_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? LinkModal_arrayLikeToArray(r, a) : void 0; } }
-function LinkModal_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function LinkModal_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return LinkModal_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return LinkModal_arrayLikeToArray(o, minLen); }
+function LinkModal_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function LinkModal_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function LinkModal_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function LinkModal_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 function LinkModal(props) {
@@ -2944,20 +3006,20 @@ function LinkModal(props) {
 }
 // CONCATENATED MODULE: ./src/components/ImageModal.jsx
 function ImageModal_typeof(o) { "@babel/helpers - typeof"; return ImageModal_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, ImageModal_typeof(o); }
-function ImageModal_regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ ImageModal_regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == ImageModal_typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(ImageModal_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
-function ImageModal_asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function ImageModal_asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { ImageModal_asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { ImageModal_asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function ImageModal_regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ ImageModal_regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == ImageModal_typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(ImageModal_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function ImageModal_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function ImageModal_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { ImageModal_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { ImageModal_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 function ImageModal_ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function ImageModal_objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ImageModal_ownKeys(Object(t), !0).forEach(function (r) { ImageModal_defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ImageModal_ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function ImageModal_defineProperty(e, r, t) { return (r = ImageModal_toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function ImageModal_toPropertyKey(t) { var i = ImageModal_toPrimitive(t, "string"); return "symbol" == ImageModal_typeof(i) ? i : i + ""; }
+function ImageModal_defineProperty(obj, key, value) { key = ImageModal_toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function ImageModal_toPropertyKey(t) { var i = ImageModal_toPrimitive(t, "string"); return "symbol" == ImageModal_typeof(i) ? i : String(i); }
 function ImageModal_toPrimitive(t, r) { if ("object" != ImageModal_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != ImageModal_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function ImageModal_slicedToArray(r, e) { return ImageModal_arrayWithHoles(r) || ImageModal_iterableToArrayLimit(r, e) || ImageModal_unsupportedIterableToArray(r, e) || ImageModal_nonIterableRest(); }
+function ImageModal_slicedToArray(arr, i) { return ImageModal_arrayWithHoles(arr) || ImageModal_iterableToArrayLimit(arr, i) || ImageModal_unsupportedIterableToArray(arr, i) || ImageModal_nonIterableRest(); }
 function ImageModal_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function ImageModal_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return ImageModal_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? ImageModal_arrayLikeToArray(r, a) : void 0; } }
-function ImageModal_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function ImageModal_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return ImageModal_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return ImageModal_arrayLikeToArray(o, minLen); }
+function ImageModal_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function ImageModal_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function ImageModal_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function ImageModal_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
@@ -3250,19 +3312,23 @@ function ImageModal(props) {
 function MediaModal_typeof(o) { "@babel/helpers - typeof"; return MediaModal_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, MediaModal_typeof(o); }
 function MediaModal_ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function MediaModal_objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? MediaModal_ownKeys(Object(t), !0).forEach(function (r) { MediaModal_defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : MediaModal_ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function MediaModal_defineProperty(e, r, t) { return (r = MediaModal_toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function MediaModal_toPropertyKey(t) { var i = MediaModal_toPrimitive(t, "string"); return "symbol" == MediaModal_typeof(i) ? i : i + ""; }
+function MediaModal_defineProperty(obj, key, value) { key = MediaModal_toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function MediaModal_toPropertyKey(t) { var i = MediaModal_toPrimitive(t, "string"); return "symbol" == MediaModal_typeof(i) ? i : String(i); }
 function MediaModal_toPrimitive(t, r) { if ("object" != MediaModal_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != MediaModal_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function MediaModal_slicedToArray(r, e) { return MediaModal_arrayWithHoles(r) || MediaModal_iterableToArrayLimit(r, e) || MediaModal_unsupportedIterableToArray(r, e) || MediaModal_nonIterableRest(); }
+function MediaModal_slicedToArray(arr, i) { return MediaModal_arrayWithHoles(arr) || MediaModal_iterableToArrayLimit(arr, i) || MediaModal_unsupportedIterableToArray(arr, i) || MediaModal_nonIterableRest(); }
 function MediaModal_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function MediaModal_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return MediaModal_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? MediaModal_arrayLikeToArray(r, a) : void 0; } }
-function MediaModal_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function MediaModal_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return MediaModal_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return MediaModal_arrayLikeToArray(o, minLen); }
+function MediaModal_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function MediaModal_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function MediaModal_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function MediaModal_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 function MediaModal(_ref) {
-  var onMediaInsert = _ref.onMediaInsert;
+  var onMediaInsert = _ref.onMediaInsert,
+    _ref$targetElement = _ref.targetElement,
+    targetElement = _ref$targetElement === void 0 ? null : _ref$targetElement,
+    _ref$targetElementTyp = _ref.targetElementType,
+    targetElementType = _ref$targetElementTyp === void 0 ? "" : _ref$targetElementTyp;
   var _useState = Object(external_react_["useState"])(""),
     _useState2 = MediaModal_slicedToArray(_useState, 2),
     errorMessage = _useState2[0],
@@ -3300,7 +3366,7 @@ function MediaModal(_ref) {
       setErrorMessage(_error_message2);
       return;
     }
-    onMediaInsert(inputs);
+    onMediaInsert(inputs, targetElement);
   };
   var handleChange = function handleChange(event) {
     var _event$target2 = event.target,
@@ -3319,17 +3385,29 @@ function MediaModal(_ref) {
     });
     setErrorMessage("");
   };
+  Object(external_react_["useEffect"])(function () {
+    if (targetElement) {
+      var newInputs = {
+        link: targetElement.getAttribute("src") || "",
+        height: targetElement.getAttribute("height") || "",
+        width: targetElement.getAttribute("width") || "",
+        embed_code: targetElementType == "general" ? "" : targetElement.outerHTML || "",
+        type: targetElementType || "general"
+      };
+      setInputs(newInputs);
+    }
+  }, [targetElement, targetElementType]);
   return /*#__PURE__*/external_react_default.a.createElement("div", {
     className: style_module_default.a.mediaModal
   }, /*#__PURE__*/external_react_default.a.createElement("div", {
     className: style_module_default.a.selectType
   }, /*#__PURE__*/external_react_default.a.createElement("button", {
-    className: "".concat(inputs.type === "general" ? "selected-type" : ""),
+    className: "".concat(inputs.type === "general" ? "".concat(style_module_default.a.selectedType) : ""),
     onClick: function onClick(e) {
       return handleChangeType(e, "general");
     }
   }, "General"), /*#__PURE__*/external_react_default.a.createElement("button", {
-    className: "".concat(inputs.type === "embed" ? "selected-type" : ""),
+    className: "".concat(inputs.type === "embed" ? "".concat(style_module_default.a.selectedType) : ""),
     onClick: function onClick(e) {
       return handleChangeType(e, "embed");
     }
@@ -3416,12 +3494,12 @@ function OpenLinkIcon() {
   }));
 }
 // CONCATENATED MODULE: ./src/components/RightClickLinkPopup.jsx
-function RightClickLinkPopup_slicedToArray(r, e) { return RightClickLinkPopup_arrayWithHoles(r) || RightClickLinkPopup_iterableToArrayLimit(r, e) || RightClickLinkPopup_unsupportedIterableToArray(r, e) || RightClickLinkPopup_nonIterableRest(); }
+function RightClickLinkPopup_slicedToArray(arr, i) { return RightClickLinkPopup_arrayWithHoles(arr) || RightClickLinkPopup_iterableToArrayLimit(arr, i) || RightClickLinkPopup_unsupportedIterableToArray(arr, i) || RightClickLinkPopup_nonIterableRest(); }
 function RightClickLinkPopup_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function RightClickLinkPopup_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return RightClickLinkPopup_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? RightClickLinkPopup_arrayLikeToArray(r, a) : void 0; } }
-function RightClickLinkPopup_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function RightClickLinkPopup_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return RightClickLinkPopup_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return RightClickLinkPopup_arrayLikeToArray(o, minLen); }
+function RightClickLinkPopup_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function RightClickLinkPopup_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function RightClickLinkPopup_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function RightClickLinkPopup_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
@@ -3578,23 +3656,581 @@ var RightClickLinkPopup_RightClickLinkPopup = function RightClickLinkPopup(_ref)
   }, /*#__PURE__*/external_react_default.a.createElement(ImageIcon, null), " Image..."))));
 };
 /* harmony default export */ var components_RightClickLinkPopup = (RightClickLinkPopup_RightClickLinkPopup);
+// CONCATENATED MODULE: ./src/components/SelectFontFamily.jsx
+function SelectFontFamily_slicedToArray(arr, i) { return SelectFontFamily_arrayWithHoles(arr) || SelectFontFamily_iterableToArrayLimit(arr, i) || SelectFontFamily_unsupportedIterableToArray(arr, i) || SelectFontFamily_nonIterableRest(); }
+function SelectFontFamily_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function SelectFontFamily_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return SelectFontFamily_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return SelectFontFamily_arrayLikeToArray(o, minLen); }
+function SelectFontFamily_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function SelectFontFamily_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function SelectFontFamily_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+function SelectFontFamily(_ref) {
+  var editorRef = _ref.editorRef;
+  var _useState = Object(external_react_["useState"])(false),
+    _useState2 = SelectFontFamily_slicedToArray(_useState, 2),
+    isOpen = _useState2[0],
+    setIsOpen = _useState2[1];
+  var _useState3 = Object(external_react_["useState"])("Default"),
+    _useState4 = SelectFontFamily_slicedToArray(_useState3, 2),
+    selectedOption = _useState4[0],
+    setSelectedOption = _useState4[1];
+  var selectRef = Object(external_react_["useRef"])(null);
+  var fontFamilies = [{
+    label: "Arial",
+    value: "Arial, sans-serif"
+  }, {
+    label: "Helvetica",
+    value: "Helvetica, sans-serif"
+  }, {
+    label: "Times New Roman",
+    value: "Times New Roman, serif"
+  }, {
+    label: "Courier New",
+    value: "Courier New, monospace"
+  }, {
+    label: "Courier",
+    value: "Courier, monospace"
+  }, {
+    label: "Verdana",
+    value: "Verdana, sans-serif"
+  }, {
+    label: "Georgia",
+    value: "Georgia, serif"
+  }, {
+    label: "Palatino",
+    value: "Palatino, serif"
+  }, {
+    label: "Garamond",
+    value: "Garamond, serif"
+  }, {
+    label: "Bookman",
+    value: "Bookman, serif"
+  }, {
+    label: "Comic Sans MS",
+    value: "Comic Sans MS, sans-serif"
+  }, {
+    label: "Trebuchet MS",
+    value: "Trebuchet MS, sans-serif"
+  }, {
+    label: "Arial Black",
+    value: "Arial Black, sans-serif"
+  }, {
+    label: "Impact",
+    value: "Impact, sans-serif"
+  }, {
+    label: "Roboto",
+    value: "Roboto, sans-serif"
+  }, {
+    label: "Open Sans",
+    value: "Open Sans, sans-serif"
+  }, {
+    label: "Lato",
+    value: "Lato, sans-serif"
+  }, {
+    label: "Montserrat",
+    value: "Montserrat, sans-serif"
+  }, {
+    label: "Roboto Condensed",
+    value: "Roboto Condensed, sans-serif"
+  }, {
+    label: "Oswald",
+    value: "Oswald, sans-serif"
+  }, {
+    label: "Raleway",
+    value: "Raleway, sans-serif"
+  }, {
+    label: "Noto Sans",
+    value: "Noto Sans, sans-serif"
+  }, {
+    label: "Poppins",
+    value: "Poppins, sans-serif"
+  }, {
+    label: "Ubuntu",
+    value: "Ubuntu, sans-serif"
+  }, {
+    label: "Source Sans Pro",
+    value: "Source Sans Pro, sans-serif"
+  }];
+  var toggleSelect = function toggleSelect(e) {
+    e.preventDefault();
+    setIsOpen(!isOpen);
+  };
+  var handleOptionClick = function handleOptionClick(e, option) {
+    e.preventDefault();
+    editorRef.current.focus();
+    document.execCommand("styleWithCSS", false, true);
+    document.execCommand("fontName", false, option.value);
+    setSelectedOption(option.label);
+    setIsOpen(false);
+  };
+  var getCurrentFontFamily = function getCurrentFontFamily() {
+    var selection = window.getSelection();
+    if (selection.rangeCount > 0) {
+      var range = selection.getRangeAt(0);
+      var startNode = range.startContainer;
+      var node = startNode;
+      while (node && node !== editorRef.current) {
+        if (node.nodeType === Node.ELEMENT_NODE && node.style.fontFamily) {
+          var fontFamily = node.style.fontFamily.replace(/"/g, "");
+          // Check for exact matches first
+          for (var _i = 0, _fontFamilies = fontFamilies; _i < _fontFamilies.length; _i++) {
+            var family = _fontFamilies[_i];
+            var primaryFont = family.value.split(",")[0].trim();
+            // Match exact value or primary font at start of font stack
+            if (fontFamily === family.value || fontFamily.startsWith("".concat(primaryFont, ",")) || fontFamily === primaryFont) {
+              return family.label;
+            }
+          }
+        }
+        node = node.parentNode;
+      }
+    }
+    return null;
+  };
+  var handleKeyDown = function handleKeyDown() {
+    var editor = editorRef.current;
+    if (!editor) return;
+    if (!editor.contains(window.getSelection().anchorNode)) {
+      return;
+    }
+    editor.focus();
+  };
+  Object(external_react_["useEffect"])(function () {
+    var handleClickOutside = function handleClickOutside(event) {
+      if (selectRef.current && !selectRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    var handleSelectionChange = function handleSelectionChange() {
+      var _editorRef$current;
+      if (editorRef !== null && editorRef !== void 0 && (_editorRef$current = editorRef.current) !== null && _editorRef$current !== void 0 && _editorRef$current.contains(window.getSelection().anchorNode)) {
+        var currentFont = getCurrentFontFamily();
+        if (currentFont) {
+          setSelectedOption(currentFont);
+        } else {
+          setSelectedOption("Default");
+        }
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    document.addEventListener("selectionchange", handleSelectionChange);
+    document.addEventListener("keydown", handleKeyDown);
+    return function () {
+      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("selectionchange", handleSelectionChange);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [editorRef]);
+  return /*#__PURE__*/external_react_default.a.createElement("button", {
+    className: style_module_default.a.customSelectFormat,
+    onClick: toggleSelect,
+    ref: selectRef,
+    style: {
+      minWidth: "120px"
+    }
+  }, /*#__PURE__*/external_react_default.a.createElement("div", {
+    className: style_module_default.a.selectSelected
+  }, selectedOption, /*#__PURE__*/external_react_default.a.createElement(ArrowDown, null)), isOpen && /*#__PURE__*/external_react_default.a.createElement("div", {
+    className: style_module_default.a.selectItemsFormat,
+    style: {
+      maxHeight: "200px",
+      overflowY: "auto"
+    }
+  }, fontFamilies.map(function (option, index) {
+    return /*#__PURE__*/external_react_default.a.createElement("div", {
+      key: "key".concat(index),
+      onClick: function onClick(e) {
+        return handleOptionClick(e, option);
+      },
+      className: style_module_default.a.selectOption,
+      style: {
+        fontFamily: option.value
+      }
+    }, option.label);
+  })));
+}
+/* harmony default export */ var components_SelectFontFamily = (SelectFontFamily);
+// CONCATENATED MODULE: ./src/components/AlignmentOptions.jsx
+function AlignmentOptions_slicedToArray(arr, i) { return AlignmentOptions_arrayWithHoles(arr) || AlignmentOptions_iterableToArrayLimit(arr, i) || AlignmentOptions_unsupportedIterableToArray(arr, i) || AlignmentOptions_nonIterableRest(); }
+function AlignmentOptions_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function AlignmentOptions_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return AlignmentOptions_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return AlignmentOptions_arrayLikeToArray(o, minLen); }
+function AlignmentOptions_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function AlignmentOptions_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function AlignmentOptions_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+function AlignmentOptions(_ref) {
+  var _alignments$, _alignments$find;
+  var editorRef = _ref.editorRef;
+  var _useState = Object(external_react_["useState"])(false),
+    _useState2 = AlignmentOptions_slicedToArray(_useState, 2),
+    isOpen = _useState2[0],
+    setIsOpen = _useState2[1];
+  var _useState3 = Object(external_react_["useState"])("Alignment"),
+    _useState4 = AlignmentOptions_slicedToArray(_useState3, 2),
+    selectedOption = _useState4[0],
+    setSelectedOption = _useState4[1];
+  var selectRef = Object(external_react_["useRef"])(null);
+  var alignments = [{
+    label: "Left",
+    value: "left",
+    icon: /*#__PURE__*/external_react_default.a.createElement(AlignLeft, null)
+  }, {
+    label: "Center",
+    value: "center",
+    icon: /*#__PURE__*/external_react_default.a.createElement(AlignCenter, null)
+  }, {
+    label: "Right",
+    value: "right",
+    icon: /*#__PURE__*/external_react_default.a.createElement(AlignRight, null)
+  }, {
+    label: "Justify",
+    value: "justify",
+    icon: /*#__PURE__*/external_react_default.a.createElement(AlignJustify, null)
+  }];
+  var toggleSelect = function toggleSelect(e) {
+    e.preventDefault();
+    setIsOpen(!isOpen);
+  };
+  var handleOptionClick = function handleOptionClick(e, alignment) {
+    e.preventDefault();
+    editorRef.current.focus();
+    document.execCommand("justify" + alignment.value.charAt(0).toUpperCase() + alignment.value.slice(1));
+    setSelectedOption(alignment.label);
+    setIsOpen(false);
+  };
+  var getCurrentAlignment = function getCurrentAlignment() {
+    var selection = window.getSelection();
+    if (selection.rangeCount > 0) {
+      var range = selection.getRangeAt(0);
+      var startNode = range.startContainer;
+      var node = startNode;
+      var _loop = function _loop() {
+          if (node.nodeType === Node.ELEMENT_NODE && node.style.textAlign) {
+            var alignment = node.style.textAlign;
+            var foundAlignment = alignments.find(function (a) {
+              return a.value === alignment;
+            });
+            if (foundAlignment) {
+              return {
+                v: foundAlignment.label
+              };
+            }
+          }
+          node = node.parentNode;
+        },
+        _ret;
+      while (node && node !== editorRef.current) {
+        _ret = _loop();
+        if (_ret) return _ret.v;
+      }
+    }
+    return null;
+  };
+  var handleKeyDown = function handleKeyDown() {
+    var editor = editorRef.current;
+    if (!editor) return;
+    if (!editor.contains(window.getSelection().anchorNode)) {
+      return;
+    }
+    editor.focus();
+  };
+  Object(external_react_["useEffect"])(function () {
+    var handleClickOutside = function handleClickOutside(event) {
+      if (selectRef.current && !selectRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    var handleSelectionChange = function handleSelectionChange() {
+      var _editorRef$current;
+      if (editorRef !== null && editorRef !== void 0 && (_editorRef$current = editorRef.current) !== null && _editorRef$current !== void 0 && _editorRef$current.contains(window.getSelection().anchorNode)) {
+        var currentAlignment = getCurrentAlignment();
+        if (currentAlignment) {
+          setSelectedOption(currentAlignment);
+        } else {
+          setSelectedOption("Alignment");
+        }
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    document.addEventListener("selectionchange", handleSelectionChange);
+    document.addEventListener("keydown", handleKeyDown);
+    return function () {
+      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("selectionchange", handleSelectionChange);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [editorRef]);
+  return /*#__PURE__*/external_react_default.a.createElement("button", {
+    className: style_module_default.a.customSelectFormat,
+    onClick: toggleSelect,
+    ref: selectRef
+  }, /*#__PURE__*/external_react_default.a.createElement("div", {
+    style: {
+      display: "flex"
+    }
+  }, selectedOption === "Alignment" ? /*#__PURE__*/external_react_default.a.createElement("span", null, (_alignments$ = alignments[0]) === null || _alignments$ === void 0 ? void 0 : _alignments$.icon) : /*#__PURE__*/external_react_default.a.createElement("span", null, (_alignments$find = alignments.find(function (a) {
+    return a.label === selectedOption;
+  })) === null || _alignments$find === void 0 ? void 0 : _alignments$find.icon), /*#__PURE__*/external_react_default.a.createElement("span", {
+    className: style_module_default.a.selectSelected
+  }, /*#__PURE__*/external_react_default.a.createElement(ArrowDown, null))), isOpen && /*#__PURE__*/external_react_default.a.createElement("div", {
+    className: style_module_default.a.selectItemsFormat
+  }, alignments.map(function (alignment, index) {
+    return /*#__PURE__*/external_react_default.a.createElement("div", {
+      key: "key".concat(index),
+      onClick: function onClick(e) {
+        return handleOptionClick(e, alignment);
+      },
+      className: style_module_default.a.selectOption,
+      style: {
+        display: "flex",
+        alignItems: "center",
+        gap: "8px",
+        textAlign: alignment.value,
+        fontSize: "12px"
+      }
+    }, /*#__PURE__*/external_react_default.a.createElement("span", null, alignment.icon), /*#__PURE__*/external_react_default.a.createElement("span", null, alignment.label));
+  })));
+}
+/* harmony default export */ var components_AlignmentOptions = (AlignmentOptions);
+// CONCATENATED MODULE: ./src/components/FontSize.jsx
+function FontSize_slicedToArray(arr, i) { return FontSize_arrayWithHoles(arr) || FontSize_iterableToArrayLimit(arr, i) || FontSize_unsupportedIterableToArray(arr, i) || FontSize_nonIterableRest(); }
+function FontSize_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function FontSize_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return FontSize_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return FontSize_arrayLikeToArray(o, minLen); }
+function FontSize_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function FontSize_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function FontSize_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+function FontSize(_ref) {
+  var editorRef = _ref.editorRef;
+  var _useState = Object(external_react_["useState"])(false),
+    _useState2 = FontSize_slicedToArray(_useState, 2),
+    isOpen = _useState2[0],
+    setIsOpen = _useState2[1];
+  var _useState3 = Object(external_react_["useState"])("16px"),
+    _useState4 = FontSize_slicedToArray(_useState3, 2),
+    selectedOption = _useState4[0],
+    setSelectedOption = _useState4[1];
+  var selectRef = Object(external_react_["useRef"])(null);
+  var fontSizes = [{
+    label: "10px",
+    value: "10"
+  }, {
+    label: "12px",
+    value: "12"
+  }, {
+    label: "14px",
+    value: "14"
+  }, {
+    label: "16px",
+    value: "16"
+  }, {
+    label: "18px",
+    value: "18"
+  }, {
+    label: "20px",
+    value: "20"
+  }, {
+    label: "24px",
+    value: "24"
+  }, {
+    label: "28px",
+    value: "28"
+  }, {
+    label: "32px",
+    value: "32"
+  }, {
+    label: "36px",
+    value: "36"
+  }, {
+    label: "48px",
+    value: "48"
+  }, {
+    label: "60px",
+    value: "60"
+  }, {
+    label: "72px",
+    value: "72"
+  }];
+  var toggleSelect = function toggleSelect(e) {
+    e.preventDefault();
+    setIsOpen(!isOpen);
+  };
+  var handleOptionClick = function handleOptionClick(e, option) {
+    e.preventDefault();
+    editorRef.current.focus();
+    var selection = window.getSelection();
+    if (!selection.rangeCount) return;
+    var range = selection.getRangeAt(0);
+    var selectedNode = range.commonAncestorContainer;
+    var selectedText = range.toString();
+    var value = option.value + "px";
+    var findParentSpan = function findParentSpan(node) {
+      while (node && node !== editorRef.current) {
+        if (node.nodeType === 1 && node.tagName === "SPAN") {
+          if (node.textContent == selectedText || node.innerText == selectedText) {
+            return node;
+          } else {
+            return null;
+          }
+        }
+        node = node.parentNode;
+      }
+      return null;
+    };
+    var existingSpan = findParentSpan(selectedNode);
+    if (!selection.isCollapsed) {
+      if (existingSpan) {
+        existingSpan.style.fontSize = value;
+      } else {
+        var span = document.createElement("span");
+        span.style.fontSize = value;
+
+        // To safely wrap the selection without breaking HTML structure
+        var content = range.extractContents();
+        span.appendChild(content);
+        range.insertNode(span);
+      }
+    } else {
+      // No selection — insert empty span at caret
+      var _span = document.createElement("span");
+      _span.style.fontSize = value;
+      _span.innerHTML = "\u200B";
+      range.insertNode(_span);
+
+      // Place caret inside span
+      range.setStart(_span.firstChild, 1);
+      range.setEnd(_span.firstChild, 1);
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+    setSelectedOption(option.label);
+    setIsOpen(false);
+  };
+  var getCurrentFontSize = function getCurrentFontSize() {
+    var selection = window.getSelection();
+    if (selection.rangeCount > 0) {
+      var range = selection.getRangeAt(0);
+      var startNode = range.startContainer;
+      var node = startNode;
+      var _loop = function _loop() {
+          if (node.nodeType === Node.ELEMENT_NODE && node.style.fontSize) {
+            var fontSize = node.style.fontSize;
+            // Remove 'px' and find matching option
+            var sizeValue = fontSize.replace("px", "");
+            var foundSize = fontSizes.find(function (size) {
+              return size.value === sizeValue;
+            });
+            if (foundSize) {
+              return {
+                v: foundSize.label
+              };
+            }
+          }
+          node = node.parentNode;
+        },
+        _ret;
+      while (node && node !== editorRef.current) {
+        _ret = _loop();
+        if (_ret) return _ret.v;
+      }
+    }
+    return null;
+  };
+  var handleKeyDown = function handleKeyDown() {
+    var editor = editorRef.current;
+    if (!editor) return;
+    if (!editor.contains(window.getSelection().anchorNode)) {
+      return;
+    }
+    editor.focus();
+  };
+  Object(external_react_["useEffect"])(function () {
+    var handleClickOutside = function handleClickOutside(event) {
+      if (selectRef.current && !selectRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    var handleSelectionChange = function handleSelectionChange() {
+      var _editorRef$current;
+      if (editorRef !== null && editorRef !== void 0 && (_editorRef$current = editorRef.current) !== null && _editorRef$current !== void 0 && _editorRef$current.contains(window.getSelection().anchorNode)) {
+        var currentSize = getCurrentFontSize();
+        if (currentSize) {
+          setSelectedOption(currentSize);
+        } else {
+          setSelectedOption("16px");
+        }
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    document.addEventListener("selectionchange", handleSelectionChange);
+    document.addEventListener("keydown", handleKeyDown);
+    return function () {
+      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("selectionchange", handleSelectionChange);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [editorRef]);
+  return /*#__PURE__*/external_react_default.a.createElement("button", {
+    className: style_module_default.a.customSelectFormat,
+    onClick: toggleSelect,
+    ref: selectRef
+  }, /*#__PURE__*/external_react_default.a.createElement("div", {
+    className: style_module_default.a.selectSelected
+  }, selectedOption, /*#__PURE__*/external_react_default.a.createElement(ArrowDown, null)), isOpen && /*#__PURE__*/external_react_default.a.createElement("div", {
+    className: style_module_default.a.selectItemsFormat,
+    style: {
+      maxHeight: "200px",
+      overflowY: "auto"
+    }
+  }, fontSizes.map(function (option, index) {
+    return /*#__PURE__*/external_react_default.a.createElement("div", {
+      key: "key".concat(index),
+      onClick: function onClick(e) {
+        return handleOptionClick(e, option);
+      },
+      className: style_module_default.a.selectOption,
+      style: {
+        fontSize: "14px"
+      }
+    }, option.label);
+  })));
+}
+/* harmony default export */ var components_FontSize = (FontSize);
 // CONCATENATED MODULE: ./src/index.js
 function src_typeof(o) { "@babel/helpers - typeof"; return src_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, src_typeof(o); }
 var _excluded = ["theme_config", "toolbar", "navbar", "value", "onChange", "getEditorRef", "mainProps", "placeholder", "image_handler", "handleFullScreen", "remove_from_toolbar", "remove_from_navbar", "style"];
-function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 function src_ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function src_objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? src_ownKeys(Object(t), !0).forEach(function (r) { src_defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : src_ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function src_defineProperty(e, r, t) { return (r = src_toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function src_toPropertyKey(t) { var i = src_toPrimitive(t, "string"); return "symbol" == src_typeof(i) ? i : i + ""; }
+function src_defineProperty(obj, key, value) { key = src_toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function src_toPropertyKey(t) { var i = src_toPrimitive(t, "string"); return "symbol" == src_typeof(i) ? i : String(i); }
 function src_toPrimitive(t, r) { if ("object" != src_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != src_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function src_slicedToArray(r, e) { return src_arrayWithHoles(r) || src_iterableToArrayLimit(r, e) || src_unsupportedIterableToArray(r, e) || src_nonIterableRest(); }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = src_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function src_toConsumableArray(arr) { return src_arrayWithoutHoles(arr) || src_iterableToArray(arr) || src_unsupportedIterableToArray(arr) || src_nonIterableSpread(); }
+function src_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function src_iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function src_arrayWithoutHoles(arr) { if (Array.isArray(arr)) return src_arrayLikeToArray(arr); }
+function src_slicedToArray(arr, i) { return src_arrayWithHoles(arr) || src_iterableToArrayLimit(arr, i) || src_unsupportedIterableToArray(arr, i) || src_nonIterableRest(); }
 function src_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function src_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return src_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? src_arrayLikeToArray(r, a) : void 0; } }
-function src_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function src_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return src_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return src_arrayLikeToArray(o, minLen); }
+function src_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function src_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function src_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], t.indexOf(o) >= 0 || {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
-function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (e.indexOf(n) >= 0) continue; t[n] = r[n]; } return t; }
+function src_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+
+
 
 
 
@@ -3702,11 +4338,19 @@ function ReactEditorKit(props) {
     _useState16 = src_slicedToArray(_useState15, 2),
     isOpenModel = _useState16[0],
     setIsOpenModel = _useState16[1];
-  var _useState17 = Object(external_react_["useState"])(""),
+  var _useState17 = Object(external_react_["useState"])(null),
     _useState18 = src_slicedToArray(_useState17, 2),
-    previewContent = _useState18[0],
-    setPreviewContent = _useState18[1];
-  var _useState19 = Object(external_react_["useState"])({
+    targetElement = _useState18[0],
+    setTargetElement = _useState18[1];
+  var _useState19 = Object(external_react_["useState"])(null),
+    _useState20 = src_slicedToArray(_useState19, 2),
+    targetElementType = _useState20[0],
+    setTargetElementType = _useState20[1];
+  var _useState21 = Object(external_react_["useState"])(""),
+    _useState22 = src_slicedToArray(_useState21, 2),
+    previewContent = _useState22[0],
+    setPreviewContent = _useState22[1];
+  var _useState23 = Object(external_react_["useState"])({
       link: "",
       height: "",
       width: "",
@@ -3714,39 +4358,39 @@ function ReactEditorKit(props) {
       text: "",
       open_new_tab: false
     }),
-    _useState20 = src_slicedToArray(_useState19, 2),
-    selectedData = _useState20[0],
-    setSelectedData = _useState20[1];
-  var _useState21 = Object(external_react_["useState"])(null),
-    _useState22 = src_slicedToArray(_useState21, 2),
-    selectedEvent = _useState22[0],
-    setSelectedEvent = _useState22[1];
-  var _useState23 = Object(external_react_["useState"])(true),
     _useState24 = src_slicedToArray(_useState23, 2),
-    isPlaceholder = _useState24[0],
-    setIsPlaceholder = _useState24[1];
-  var _useState25 = Object(external_react_["useState"])({}),
+    selectedData = _useState24[0],
+    setSelectedData = _useState24[1];
+  var _useState25 = Object(external_react_["useState"])(null),
     _useState26 = src_slicedToArray(_useState25, 2),
-    selectedItem = _useState26[0],
-    setSelectedItem = _useState26[1];
-  var _useState27 = Object(external_react_["useState"])(null),
+    selectedEvent = _useState26[0],
+    setSelectedEvent = _useState26[1];
+  var _useState27 = Object(external_react_["useState"])(true),
     _useState28 = src_slicedToArray(_useState27, 2),
-    selectedRange = _useState28[0],
-    setSelectedRange = _useState28[1];
-  var _useState29 = Object(external_react_["useState"])(false),
+    isPlaceholder = _useState28[0],
+    setIsPlaceholder = _useState28[1];
+  var _useState29 = Object(external_react_["useState"])({}),
     _useState30 = src_slicedToArray(_useState29, 2),
-    showHR1 = _useState30[0],
-    setShowHR1 = _useState30[1];
-  var _useState31 = Object(external_react_["useState"])(false),
+    selectedItem = _useState30[0],
+    setSelectedItem = _useState30[1];
+  var _useState31 = Object(external_react_["useState"])(null),
     _useState32 = src_slicedToArray(_useState31, 2),
-    showHR2 = _useState32[0],
-    setShowHR2 = _useState32[1];
+    selectedRange = _useState32[0],
+    setSelectedRange = _useState32[1];
   var _useState33 = Object(external_react_["useState"])(false),
     _useState34 = src_slicedToArray(_useState33, 2),
-    showHR3 = _useState34[0],
-    setShowHR3 = _useState34[1];
+    showHR1 = _useState34[0],
+    setShowHR1 = _useState34[1];
+  var _useState35 = Object(external_react_["useState"])(false),
+    _useState36 = src_slicedToArray(_useState35, 2),
+    showHR2 = _useState36[0],
+    setShowHR2 = _useState36[1];
+  var _useState37 = Object(external_react_["useState"])(false),
+    _useState38 = src_slicedToArray(_useState37, 2),
+    showHR3 = _useState38[0],
+    setShowHR3 = _useState38[1];
   var checkIfImageExists = function checkIfImageExists() {
-    var editor = editorRef.current;
+    var editor = editorRef === null || editorRef === void 0 ? void 0 : editorRef.current;
     if (editor) {
       var imgTag = editor.querySelector("img");
       if (imgTag) {
@@ -3759,6 +4403,8 @@ function ReactEditorKit(props) {
   };
   var handleInput = function handleInput() {
     setInit(true);
+    var editor = editorRef === null || editorRef === void 0 ? void 0 : editorRef.current;
+    if (!editor) return;
     var isImageExists = checkIfImageExists();
     if (!isImageExists) {
       var element = document.querySelector(".resizeImageWrapper");
@@ -3767,20 +4413,250 @@ function ReactEditorKit(props) {
       }
       setSelectedEvent(null);
     }
-    var editor = editorRef.current;
+
+    // --- CAREFUL WRAPPING OF FIRST LINE ---
+    var hasOnlyTextOrBR = src_toConsumableArray(editor.childNodes).every(function (node) {
+      return node.nodeType === Node.TEXT_NODE || node.nodeType === Node.ELEMENT_NODE && node.nodeName === "BR";
+    });
+    if (hasOnlyTextOrBR && editor.textContent.trim() !== "") {
+      var selection = window.getSelection();
+      var range = selection === null || selection === void 0 ? void 0 : selection.getRangeAt(0);
+
+      // Save caret position relative to start
+      var preCaretRange = range === null || range === void 0 ? void 0 : range.cloneRange();
+      preCaretRange === null || preCaretRange === void 0 ? void 0 : preCaretRange.selectNodeContents(editor);
+      preCaretRange === null || preCaretRange === void 0 ? void 0 : preCaretRange.setEnd(range.startContainer, range.startOffset);
+      var caretOffset = (preCaretRange === null || preCaretRange === void 0 ? void 0 : preCaretRange.toString().length) || 0;
+
+      // Wrap text in a <p>
+      var wrapper = document.createElement("p");
+      while (editor.firstChild) {
+        wrapper.appendChild(editor.firstChild);
+      }
+      editor.appendChild(wrapper);
+
+      // Restore caret
+      var newNode = wrapper.firstChild;
+      var offset = caretOffset;
+
+      // Traverse to the correct offset
+      var setCaret = function setCaret(node, offset) {
+        var range = document.createRange();
+        var selection = window.getSelection();
+        range.setStart(node, offset);
+        range.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      };
+      var traverse = function traverse(node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+          if (offset <= node.length) {
+            setCaret(node, offset);
+            throw "done"; // stop traversal
+          } else {
+            offset -= node.length;
+          }
+        } else {
+          for (var i = 0; i < node.childNodes.length; i++) {
+            traverse(node.childNodes[i]);
+          }
+        }
+      };
+      try {
+        traverse(wrapper);
+      } catch (e) {}
+    }
+    function clearEditorFormatting(editor, tempDiv) {
+      if (editor.getAttribute("data-mlx-editor-empty") || editor.classList.contains("empty")) {
+        editor.setAttribute("data-mlx-editor-empty", "true");
+        var childdiv;
+        if (tempDiv.tagName.toLowerCase() === "div") {
+          // Create a new <p> element
+          var p = document.createElement("p");
+          // Copy the contents of tempDiv to the <p> element
+          p.innerHTML = tempDiv.innerHTML;
+          // Preserve attributes if needed
+          var _iterator = _createForOfIteratorHelper(tempDiv.attributes),
+            _step;
+          try {
+            for (_iterator.s(); !(_step = _iterator.n()).done;) {
+              var attr = _step.value;
+              p.setAttribute(attr.name, attr.value);
+            }
+          } catch (err) {
+            _iterator.e(err);
+          } finally {
+            _iterator.f();
+          }
+          childdiv = p.outerHTML;
+        } else {
+          childdiv = tempDiv.outerHTML;
+        }
+        editor.innerHTML = childdiv;
+        return;
+      }
+      editor.setAttribute("data-mlx-editor-empty", "true");
+      // Save current selection
+      var selection = window.getSelection();
+      var range = document.createRange();
+      // Completely clear the editor
+
+      range.selectNodeContents(editor);
+      range.collapse(true);
+      selection.removeAllRanges();
+      selection.addRange(range);
+      editor.innerHTML = "<p><br></p>";
+      document.execCommand("removeFormat", false, null);
+      // Reset any formatting
+      // Optional: Reset any CSS styles
+      editor.style.cssText = "";
+    }
+
+    // Usage:
     var content = editor.innerHTML;
     content = transformHTML(content);
-    var tempDiv = document.createElement("p");
+    var tempDiv = document.createElement("div");
     tempDiv.innerHTML = content;
-    var cleanedContent = tempDiv.textContent || tempDiv.innerText || "";
-    if (cleanedContent.trim() === "") {
-      if (onChange) {
-        onChange("");
-      }
+    var checkEditorIsEmptyAndGetTagName = isEditorEmpty(editor.innerHTML);
+    // First check if the content is "effectively empty" (if spaces exist then condition will be false)
+    var isEffectivelyEmpty = (!tempDiv.textContent || tempDiv.textContent.replace(/\s/g, "").length === 0) && checkEditorIsEmptyAndGetTagName.isEmpty;
+    if (isEffectivelyEmpty) {
+      clearEditorFormatting(editor, checkEditorIsEmptyAndGetTagName.tempDiv);
     } else {
-      if (onChange) {
-        onChange(content);
+      editor.removeAttribute("data-mlx-editor-empty");
+      onChange === null || onChange === void 0 ? void 0 : onChange(tempDiv.innerHTML);
+    }
+  };
+  function isEditorEmpty(html) {
+    // Create a temporary DOM element to parse and inspect the structure
+    var temp = document.createElement("div");
+    temp.innerHTML = html;
+    // Remove whitespace text nodes with text type elements
+    temp.childNodes.forEach(function (node) {
+      if (node.type == Node.TEXT_NODE && !node.textContent.trim()) {
+        temp.removeChild(node);
       }
+    });
+
+    // Case 1: Only a single <br>
+    if (temp.children.length === 0 || temp.innerHTML === "<br>") {
+      var pTagDiv = document.createElement("P");
+      pTagDiv.innerHTML = "<br>";
+      return {
+        tempDiv: pTagDiv,
+        isEmpty: true
+      };
+    }
+
+    // Case 2: Only a <p> with a <br> inside (ignore styles)
+    if (temp.children.length === 1 && temp.children[0].children.length === 1 && temp.children[0].children[0].tagName === "BR") {
+      return {
+        tempDiv: temp.children[0],
+        isEmpty: true
+      };
+    }
+    return {
+      isEmpty: false
+    };
+  }
+  var handleEditorKeyDown = function handleEditorKeyDown(event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+      var _currentNode;
+      event.preventDefault();
+      var editor = editorRef.current;
+      var selection = window.getSelection();
+      if (!selection.rangeCount || !editor) return;
+      var range = selection.getRangeAt(0);
+      var currentNode = range.startContainer;
+      var listItemNode = null;
+      // Traverse up to find the nearest LI element
+      while (currentNode && currentNode !== editor) {
+        if (currentNode.nodeName === "LI") {
+          listItemNode = currentNode;
+          break;
+        }
+        currentNode = currentNode.parentNode;
+      }
+      if (listItemNode) {
+        // Create new LI
+        var newLI = document.createElement("li");
+        newLI.appendChild(document.createElement("br"));
+        // Insert after current LI
+        if (listItemNode.nextSibling) {
+          listItemNode.parentNode.insertBefore(newLI, listItemNode.nextSibling);
+        } else {
+          listItemNode.parentNode.appendChild(newLI);
+        }
+
+        // Move cursor into new LI
+        var _selection = window.getSelection();
+        var _range = document.createRange();
+        _range.selectNodeContents(newLI);
+        _range.collapse(true);
+        _selection.removeAllRanges();
+        _selection.addRange(_range);
+        return;
+      }
+
+      // Step 1: Find the containing <p>
+      while (currentNode && currentNode.nodeName !== "P" && currentNode !== editor) {
+        currentNode = currentNode.parentNode;
+      }
+      var currentP = ((_currentNode = currentNode) === null || _currentNode === void 0 ? void 0 : _currentNode.nodeName) === "P" ? currentNode : null;
+
+      // Step 2: Wrap if no <p> exists
+      if (!currentP) {
+        currentP = document.createElement("p");
+        currentP.appendChild(document.createElement("br"));
+        editor.appendChild(currentP);
+        var _newRange = document.createRange();
+        _newRange.setStart(currentP, 0);
+        _newRange.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(_newRange);
+        return;
+      }
+
+      // Step 3: Split text manually at caret position
+      var offset = range.startOffset;
+      var container = range.startContainer;
+      var newP = document.createElement("p");
+      if (container.nodeType === Node.TEXT_NODE) {
+        var text = container.nodeValue;
+        var beforeText = text.slice(0, offset);
+        var afterText = text.slice(offset);
+
+        // Update current node text
+        container.nodeValue = beforeText;
+
+        // Insert after text into new <p>
+        if (afterText) {
+          var afterTextNode = document.createTextNode(afterText);
+          newP.appendChild(afterTextNode);
+        } else {
+          newP.appendChild(document.createElement("br"));
+        }
+      } else {
+        newP.appendChild(document.createElement("br"));
+      }
+
+      // Step 4: Insert new <p> after current
+      var parent = currentP.parentNode;
+
+      // Only insert if parent is valid and accepts <p>
+      if (parent && parent.contains(currentP)) {
+        if (currentP.nextSibling) {
+          parent.insertBefore(newP, currentP.nextSibling);
+        } else {
+          parent.appendChild(newP);
+        }
+      }
+      // Step 5: Place caret in new <p>
+      var newRange = document.createRange();
+      newRange.setStart(newP, 0);
+      newRange.collapse(true);
+      selection.removeAllRanges();
+      selection.addRange(newRange);
     }
   };
   var handleOpenModel = function handleOpenModel(e, type, item) {
@@ -3793,13 +4669,14 @@ function ReactEditorKit(props) {
       e.preventDefault();
     }
     setImageUrl("");
+    setTargetElement("");
     setIsOpenModel("");
     setSelectedData({});
     setSelectedEvent(null);
   };
   var handleSaveSource = function handleSaveSource(e) {
     e.preventDefault();
-    if (editorRef.current) {
+    if (editorRef !== null && editorRef !== void 0 && editorRef.current) {
       var trimmedSourceCode = sourceCode.replace(/\n\s*\n/g, "\n").replace(/\s+/g, " ").trim();
       editorRef.current.innerHTML = trimmedSourceCode;
       setViewSource(false);
@@ -3813,7 +4690,7 @@ function ReactEditorKit(props) {
     var selection = window.getSelection();
     if (!selection.toString()) {
       var range = document.createRange();
-      range.selectNodeContents(editorRef.current);
+      range.selectNodeContents(editorRef === null || editorRef === void 0 ? void 0 : editorRef.current);
       selection.removeAllRanges();
       selection.addRange(range);
     } else {
@@ -3825,7 +4702,7 @@ function ReactEditorKit(props) {
     document.execCommand("insertHorizontalRule");
   };
   var handleFocusEditor = function handleFocusEditor() {
-    var editor = editorRef.current;
+    var editor = editorRef === null || editorRef === void 0 ? void 0 : editorRef.current;
     if (editor && selectedRange) {
       var selection = window.getSelection();
       selection.removeAllRanges();
@@ -3846,17 +4723,22 @@ function ReactEditorKit(props) {
       linkHTML += ' target="_blank"';
     }
     if (link_type === "image" && imageUrl) {
-      if (selectedEvent.tagName === "IMG") {
-        var src = selectedEvent.src;
-        if (src === imageUrl) {
-          text = selectedEvent.outerHTML;
-        } else {
-          text = "<img src=\"".concat(imageUrl, "\" alt=\"ImageLink\" />");
-        }
-      } else if (selectedEvent.tagName === "A") {
-        var childNode = selectedEvent.firstChild;
-        if (childNode && childNode.nodeType === Node.ELEMENT_NODE && childNode.tagName === "IMG" && childNode.src === imageUrl) {
-          text = childNode.outerHTML;
+      // Use selectedEvent if available; otherwise, fall back to default image HTML
+      if (selectedEvent) {
+        if (selectedEvent.tagName === "IMG") {
+          var src = selectedEvent.src;
+          if (src === imageUrl) {
+            text = selectedEvent.outerHTML;
+          } else {
+            text = "<img src=\"".concat(imageUrl, "\" alt=\"ImageLink\" />");
+          }
+        } else if (selectedEvent.tagName === "A") {
+          var childNode = selectedEvent.firstChild;
+          if (childNode && childNode.nodeType === Node.ELEMENT_NODE && childNode.tagName === "IMG" && childNode.src === imageUrl) {
+            text = childNode.outerHTML;
+          } else {
+            text = "<img src=\"".concat(imageUrl, "\" alt=\"ImageLink\" />");
+          }
         } else {
           text = "<img src=\"".concat(imageUrl, "\" alt=\"ImageLink\" />");
         }
@@ -3867,13 +4749,10 @@ function ReactEditorKit(props) {
       text = "<button contentEditable=false>".concat(text, "</button>");
     }
     linkHTML += ">".concat(text, "</a>");
-
-    // Assuming selectedEvent and selectedData are correctly defined elsewhere
-    if (selectedEvent && selectedData) {
-      var parentElement = selectedEvent.parentElement;
-      if (parentElement) {
-        parentElement.removeChild(selectedEvent);
-      }
+    if (selectedEvent && selectedEvent.parentElement) {
+      selectedEvent.parentElement.removeChild(selectedEvent);
+    } else {
+      restoreSelection();
     }
     handleFocusEditor();
     document.execCommand("insertHTML", false, linkHTML);
@@ -3925,48 +4804,102 @@ function ReactEditorKit(props) {
       }
       imgElement += "\"/>";
       document.execCommand("insertHTML", false, imgElement);
+      // Ensure editor picks up the change
+      var editorElement = document.querySelector('[contenteditable="true"]');
+      if (editorElement) {
+        editorElement.dispatchEvent(new Event("input", {
+          bubbles: true
+        }));
+      }
       setIsLoading(false);
       handleCloseModel();
     }
   };
-  var handleMediaInsert = function handleMediaInsert(data) {
+  var handleMediaInsert = function handleMediaInsert(data, targetElement) {
     var link = data.link,
       height = data.height,
       width = data.width,
       type = data.type,
       embed_code = data.embed_code;
     var editorNode = editorRef.current;
+    var iframeHTML = "";
     if (type === "general") {
-      var iframeElement = "";
-
       // Check if it's a direct video link
       if (link.match(/\.(mp4|mov|avi|wmv)$/)) {
-        iframeElement = "<video width=\"".concat(width || "640", "\" height=\"").concat(height || "360", "\" controls><source src=\"").concat(link, "\" type=\"video/mp4\"></video>");
+        iframeHTML = "<video width=\"".concat(width || "640", "\" height=\"").concat(height || "360", "\" controls><source src=\"").concat(link, "\" type=\"video/mp4\"></video>");
       } else {
         // Check for specific video platforms
         var youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
         var vimeoRegex = /(?:https?:\/\/)?(?:www\.)?vimeo.com\/(\d+)/;
         if (link.match(youtubeRegex)) {
           var videoId = link.match(youtubeRegex)[1];
-          iframeElement = "<iframe width=\"".concat(width || "640", "\" height=\"").concat(height || "360", "\" src=\"https://www.youtube.com/embed/").concat(videoId, "\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>");
+          iframeHTML = "<iframe width=\"".concat(width || "640", "\" height=\"").concat(height || "360", "\" src=\"https://www.youtube.com/embed/").concat(videoId, "\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>");
         } else if (link.match(vimeoRegex)) {
           var _videoId = link.match(vimeoRegex)[1];
-          iframeElement = "<iframe src=\"https://player.vimeo.com/video/".concat(_videoId, "\" width=\"").concat(width || "640", "\" height=\"").concat(height || "360", "\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture\" allowfullscreen></iframe>");
+          iframeHTML = "<iframe src=\"https://player.vimeo.com/video/".concat(_videoId, "\" width=\"").concat(width || "640", "\" height=\"").concat(height || "360", "\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture\" allowfullscreen></iframe>");
         } else {
           // Insert custom embed code if available
-          iframeElement = embed_code || "";
+          iframeHTML = embed_code || "";
         }
       }
-      if (editorNode && iframeElement) {
-        handleFocusEditor();
-        document.execCommand("insertHTML", false, iframeElement);
-      }
     } else if (type === "embed" && embed_code && editorNode) {
-      handleFocusEditor();
-      document.execCommand("insertHTML", false, embed_code);
+      iframeHTML = embed_code;
     }
+    if (targetElement && editorNode && iframeHTML) {
+      handleFocusEditor();
+      targetElement.parentNode.setAttribute("data-mtl-link-type", type);
+      targetElement.outerHTML = iframeHTML;
+    } else if (editorNode && iframeHTML) {
+      var wrapper = createIframeWrapperWithSettings(iframeHTML, type, function (wrapper) {
+        var iframe_element = wrapper.querySelector("iframe");
+        setTargetElement(iframe_element);
+        setTargetElementType(wrapper.getAttribute("data-mtl-link-type") || "general");
+        setIsOpenModel("video");
+      });
+      handleFocusEditor();
+      // document.execCommand("insertHTML", false, wrapper.outerHTML);
+      var selection = window.getSelection();
+      if (!selection.rangeCount) return;
+      var range = selection.getRangeAt(0);
+      range.deleteContents();
+      range.insertNode(wrapper);
+
+      // Move cursor after the inserted element
+      range.setStartAfter(wrapper);
+      range.setEndAfter(wrapper);
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+    setTargetElement(null);
     setIsOpenModel(""); // Assuming this is setting some state related to the modal
   };
+  function createIframeWrapperWithSettings(iframeHTML, type, onSettingsClick) {
+    var iframeElement = document.createElement("div");
+    iframeElement.innerHTML = iframeHTML;
+    // Create wrapper
+    var wrapper = document.createElement("div");
+    wrapper.className = "iframe-wrapper";
+    wrapper.contentEditable = "true";
+    wrapper.setAttribute("data-mtl-link-type", type);
+    var overlay = document.createElement("div");
+    overlay.className = "iframe-overlay";
+    var settingsBtn = document.createElement("button");
+    settingsBtn.className = "iframe-settings-btn";
+    settingsBtn.contentEditable = "false";
+    settingsBtn.innerHTML = "<div style=\"display: flex; align-items: center;\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\"><path fill=\"currentColor\" d=\"M10.275 22q-.425 0-.75-.275t-.375-.7l-.3-2.225q-.325-.125-.612-.3t-.563-.375l-1.55.65q-.625.275-1.25.05t-.975-.8l-1.175-2.05q-.35-.575-.2-1.225t.675-1.075l1.325-1Q4.5 12.5 4.5 12.337v-.675q0-.162.025-.337l-1.325-1Q2.675 9.9 2.525 9.25t.2-1.225L3.9 5.975q.35-.575.975-.8t1.25.05l1.55.65q.275-.2.575-.375t.6-.3l.2-1.65q.075-.675.575-1.113T10.8 2h2.4q.675 0 1.175.438t.575 1.112l.2 1.65q.325.125.613.3t.562.375l1.5-.65q.625-.275 1.263-.05t.987.8l1.175 2.05q.35.575.213 1.225t-.663 1.075L19.125 11.6q-.275.2-.562.3t-.638.1h-2.35q0-1.45-1.037-2.475T12.05 8.5q-1.475 0-2.488 1.013T8.55 12q0 1.2.688 2.1T11 15.35v5.8q0 .35-.2.6t-.525.25M20 22h-6q-.425 0-.712-.288T13 21v-6q0-.425.288-.712T14 14h6q.425 0 .713.288T21 15v2l1.575-1.575q.125-.125.275-.062t.15.237v4.8q0 .175-.15.238t-.275-.063L21 19v2q0 .425-.288.713T20 22\"/></svg> <span style=\"margin-inline: 8px;\">Settings</span></div>";
+    settingsBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      if (typeof onSettingsClick === "function") {
+        onSettingsClick(wrapper);
+      }
+    });
+
+    // Build DOM structure
+    wrapper.appendChild(overlay);
+    wrapper.appendChild(settingsBtn);
+    wrapper.appendChild(iframeElement.childNodes[0]);
+    return wrapper;
+  }
   var handlePrint = function handlePrint() {
     var data = editorRef.current.innerHTML;
     var iframe = document.createElement("iframe");
@@ -3982,9 +4915,10 @@ function ReactEditorKit(props) {
   };
   var handleCharSelect = function handleCharSelect(e, _char) {
     e.preventDefault();
-    if (editorRef.current !== null) {
+    if ((editorRef === null || editorRef === void 0 ? void 0 : editorRef.current) !== null) {
       handleFocusEditor();
       document.execCommand("insertHTML", false, _char);
+      setTargetElement(null);
       setIsOpenModel("");
     }
   };
@@ -4045,12 +4979,12 @@ function ReactEditorKit(props) {
     editorRef.current.innerHTML = "";
   };
   var handlePreview = function handlePreview() {
-    setPreviewContent(editorRef.current.innerHTML);
+    setPreviewContent(editorRef === null || editorRef === void 0 ? void 0 : editorRef.current.innerHTML);
     setOpenPreview(true);
   };
   var handleViewSource = function handleViewSource() {
-    if (!viewSource && editorRef.current) {
-      var content = editorRef.current.innerHTML;
+    if (!viewSource && editorRef !== null && editorRef !== void 0 && editorRef.current) {
+      var content = editorRef === null || editorRef === void 0 ? void 0 : editorRef.current.innerHTML;
       var formattedContent = transformHTML(content);
       setSourceCode(formattedContent);
     } else {
@@ -4067,7 +5001,7 @@ function ReactEditorKit(props) {
     }
   };
   var handlePlaceholder = function handlePlaceholder() {
-    var editor = editorRef.current;
+    var editor = editorRef === null || editorRef === void 0 ? void 0 : editorRef.current;
     if (!editor) {
       return;
     }
@@ -4136,7 +5070,9 @@ function ReactEditorKit(props) {
     } else if (isOpenModel === "video") {
       return {
         component: /*#__PURE__*/external_react_default.a.createElement(MediaModal, {
-          onMediaInsert: handleMediaInsert
+          onMediaInsert: handleMediaInsert,
+          targetElement: targetElement,
+          targetElementType: targetElementType
         }),
         title: "".concat(selectedData !== null && selectedData !== void 0 && selectedData.link ? "Update" : "Insert", " Video")
       };
@@ -4363,9 +5299,10 @@ function ReactEditorKit(props) {
     className: "".concat(style_module_default.a.reactEditorMain, " ").concat(isFullScreen ? style_module_default.a.fullScreen : ""),
     id: "react-editor"
   }), /*#__PURE__*/external_react_default.a.createElement("div", {
-    id: "action-components"
-  }, /*#__PURE__*/external_react_default.a.createElement("div", {
-    className: style_module_default.a.wysiwygEditorToolbar,
+    id: "action-components",
+    className: "".concat(style_module_default.a.actionComponents)
+  }, navbar.length > 0 && /*#__PURE__*/external_react_default.a.createElement("div", {
+    className: "".concat(style_module_default.a.wysiwygEditorToolbar),
     id: "editor-navbar"
   }, /*#__PURE__*/external_react_default.a.createElement("hr", {
     className: style_module_default.a.hr1,
@@ -4466,7 +5403,7 @@ function ReactEditorKit(props) {
       title: item !== null && item !== void 0 && item.title ? item.title : "Paste"
     }, item !== null && item !== void 0 && item.icon ? item.icon : /*#__PURE__*/external_react_default.a.createElement(PasteIcon, null))));
   })), /*#__PURE__*/external_react_default.a.createElement("div", {
-    className: style_module_default.a.wysiwygEditorToolbar
+    className: "".concat(style_module_default.a.wysiwygEditorToolbar, " ").concat(style_module_default.a.wysiwygEditorToolbarWrapper)
   }, /*#__PURE__*/external_react_default.a.createElement("hr", {
     className: style_module_default.a.hr1,
     style: {
@@ -4490,6 +5427,7 @@ function ReactEditorKit(props) {
     var is_alignCenter = item === "alignCenter" || item.name === "alignCenter";
     var is_alignRight = item === "alignRight" || item.name === "alignRight";
     var is_alignJustify = item === "alignJustify" || item.name === "alignJustify";
+    var is_alignment = item === "alignment" || item.name === "alignment";
     var is_indent = item === "indent" || item.name === "indent";
     var is_outdent = item === "outdent" || item.name === "outdent";
     var is_orderedList = item === "orderedList" || item.name === "orderedList";
@@ -4500,6 +5438,19 @@ function ReactEditorKit(props) {
     var is_ltr = item === "ltr" || item.name === "ltr";
     var is_rtl = item === "rtl" || item.name === "rtl";
     var is_format = item === "format" || item.name === "format";
+    var is_fontfamily = item === "fontfamily" || item.name === "fontfamily";
+    var is_fontSize = item === "fontsize" || item.name === "fontsize";
+    var is_copy = item === "copy" || item.name === "copy";
+    var is_cut = item === "cut" || item.name === "cut";
+    var is_paste = item === "paste" || item.name === "paste";
+    var is_select_all = item === "select_all" || item.name === "select_all";
+    var is_image = item === "image" || item.name === "image";
+    var is_link = item === "link" || item.name === "link";
+    var is_video = item === "video" || item.name === "video";
+    var source_code = item === "source_code" || item.name === "source_code";
+    var is_fullscreen = item === "full_screen" || item.name === "full_screen";
+    var is_hr_line = item === "horizontal_line" || item.name === "horizontal_line";
+    var is_special_char = item === "special_character" || item.name === "special_character";
     return /*#__PURE__*/external_react_default.a.createElement("div", {
       key: "key".concat(index)
     }, is_line && /*#__PURE__*/external_react_default.a.createElement("div", {
@@ -4518,6 +5469,10 @@ function ReactEditorKit(props) {
       item: item
     }), is_format && /*#__PURE__*/external_react_default.a.createElement(components_SelectFormat, {
       remove_from_toolbar: remove_from_toolbar,
+      editorRef: editorRef
+    }), is_fontfamily && /*#__PURE__*/external_react_default.a.createElement(components_SelectFontFamily, {
+      editorRef: editorRef
+    }), is_fontSize && /*#__PURE__*/external_react_default.a.createElement(components_FontSize, {
       editorRef: editorRef
     }), is_bold && /*#__PURE__*/external_react_default.a.createElement(components_ButtonFunction, {
       editorRef: editorRef,
@@ -4549,6 +5504,8 @@ function ReactEditorKit(props) {
       icon: /*#__PURE__*/external_react_default.a.createElement(SubscriptIcon, null),
       title: "Subscript",
       item: item
+    }), is_alignment && /*#__PURE__*/external_react_default.a.createElement(components_AlignmentOptions, {
+      editorRef: editorRef
     }), is_alignLeft && /*#__PURE__*/external_react_default.a.createElement(components_ButtonFunction, {
       editorRef: editorRef,
       name: "justifyLeft",
@@ -4625,7 +5582,65 @@ function ReactEditorKit(props) {
       item: item,
       icon: /*#__PURE__*/external_react_default.a.createElement(RTLIcon, null),
       editorRef: editorRef
-    }));
+    }), is_select_all && /*#__PURE__*/external_react_default.a.createElement("button", {
+      onClick: handleSelectAll,
+      title: item !== null && item !== void 0 && item.title ? item.title : "Select All",
+      disabled: isPlaceholder && placeholder && !value
+    }, item !== null && item !== void 0 && item.icon ? item.icon : /*#__PURE__*/external_react_default.a.createElement(SelectAll, null)), is_image && /*#__PURE__*/external_react_default.a.createElement("button", {
+      onClick: function onClick(e) {
+        return handleOpenModel(e, "image", item);
+      },
+      title: item !== null && item !== void 0 && item.title ? item.title : "Upload Image"
+    }, item !== null && item !== void 0 && item.icon ? item.icon : /*#__PURE__*/external_react_default.a.createElement(ImageIcon, null)), is_link && /*#__PURE__*/external_react_default.a.createElement("button", {
+      onClick: function onClick(e) {
+        return handleOpenModel(e, "link", item);
+      },
+      title: item !== null && item !== void 0 && item.title ? item.title : "Add Link"
+    }, item !== null && item !== void 0 && item.icon ? item.icon : /*#__PURE__*/external_react_default.a.createElement(LinkIcon, null)), is_video && /*#__PURE__*/external_react_default.a.createElement("button", {
+      onClick: function onClick(e) {
+        return handleOpenModel(e, "video", item);
+      },
+      title: item !== null && item !== void 0 && item.title ? item.title : "Upload Video"
+    }, item !== null && item !== void 0 && item.icon ? item.icon : /*#__PURE__*/external_react_default.a.createElement(VideoIcon, null)), is_copy && /*#__PURE__*/external_react_default.a.createElement(components_ButtonFunction, {
+      editorRef: editorRef,
+      name: "copy",
+      icon: /*#__PURE__*/external_react_default.a.createElement(CopyIcon, null),
+      title: "Copy",
+      item: item,
+      disabled: isPlaceholder && placeholder && !value
+    }), is_cut && /*#__PURE__*/external_react_default.a.createElement(components_ButtonFunction, {
+      editorRef: editorRef,
+      name: "cut",
+      icon: /*#__PURE__*/external_react_default.a.createElement(CutIcon, null),
+      title: "Cut",
+      item: item,
+      disabled: isPlaceholder && placeholder && !value
+    }), is_paste && /*#__PURE__*/external_react_default.a.createElement("button", {
+      onClick: handlePaste,
+      title: item !== null && item !== void 0 && item.title ? item.title : "Paste"
+    }, item !== null && item !== void 0 && item.icon ? item.icon : /*#__PURE__*/external_react_default.a.createElement(PasteIcon, null)), source_code && /*#__PURE__*/external_react_default.a.createElement("div", {
+      className: style_module_default.a.increaseIconSize
+    }, /*#__PURE__*/external_react_default.a.createElement("button", {
+      onClick: handleViewSource,
+      title: (item === null || item === void 0 ? void 0 : item.title) || "Source Code"
+    }, /*#__PURE__*/external_react_default.a.createElement(CodeIcon, null))), is_fullscreen && /*#__PURE__*/external_react_default.a.createElement("div", {
+      className: style_module_default.a.increaseIconSize
+    }, /*#__PURE__*/external_react_default.a.createElement("button", {
+      onClick: toggleFullScreen,
+      title: isFullScreen ? (item === null || item === void 0 ? void 0 : item.title) || "Exit Full Screen" : (item === null || item === void 0 ? void 0 : item.title) || "Full Screen"
+    }, isFullScreen ? /*#__PURE__*/external_react_default.a.createElement(external_react_default.a.Fragment, null, /*#__PURE__*/external_react_default.a.createElement(FullscreenExit, null)) : /*#__PURE__*/external_react_default.a.createElement(external_react_default.a.Fragment, null, /*#__PURE__*/external_react_default.a.createElement(FullscreenIcon, null)))), is_hr_line && /*#__PURE__*/external_react_default.a.createElement("div", {
+      className: style_module_default.a.increaseIconSize
+    }, /*#__PURE__*/external_react_default.a.createElement("button", {
+      onClick: handleInsertHRClick,
+      title: (item === null || item === void 0 ? void 0 : item.title) || "Horizontal Line"
+    }, /*#__PURE__*/external_react_default.a.createElement(HorizontalLineIcon, null))), is_special_char && /*#__PURE__*/external_react_default.a.createElement("div", {
+      className: style_module_default.a.increaseIconSize
+    }, /*#__PURE__*/external_react_default.a.createElement("button", {
+      onClick: function onClick(e) {
+        return handleOpenModel(e, "special_char");
+      },
+      title: (item === null || item === void 0 ? void 0 : item.title) || "Special Char"
+    }, /*#__PURE__*/external_react_default.a.createElement(SpecialCharIcon, null))));
   }))), /*#__PURE__*/external_react_default.a.createElement("div", _extends({}, others, {
     className: "".concat(style_module_default.a.mlMainContentBox),
     autoFocus: isFullScreen,
@@ -4636,6 +5651,7 @@ function ReactEditorKit(props) {
     onInput: handleInput,
     onBlur: handleBlur,
     "data-placeholder": placeholder,
+    onKeyDown: handleEditorKeyDown,
     id: "editable",
     style: src_objectSpread(src_objectSpread({}, style), dynamicStyle)
   }))), isLoading && /*#__PURE__*/external_react_default.a.createElement(components_ViewLoadingModel, {

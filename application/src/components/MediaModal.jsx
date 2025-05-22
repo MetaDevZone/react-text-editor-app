@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Styles from "../css/style.module.css";
 
-export default function MediaModal({ onMediaInsert }) {
+export default function MediaModal({
+  onMediaInsert,
+  targetElement = null,
+  targetElementType = "",
+}) {
   const [errorMessage, setErrorMessage] = useState("");
   const [inputs, setInputs] = useState({
     link: "",
@@ -31,7 +35,7 @@ export default function MediaModal({ onMediaInsert }) {
       setErrorMessage(error_message);
       return;
     }
-    onMediaInsert(inputs);
+    onMediaInsert(inputs, targetElement);
   };
 
   const handleChange = (event) => {
@@ -45,17 +49,32 @@ export default function MediaModal({ onMediaInsert }) {
     setErrorMessage("");
   };
 
+  useEffect(() => {
+    if (targetElement) {
+      const newInputs = {
+        link: targetElement.getAttribute("src") || "",
+        height: targetElement.getAttribute("height") || "",
+        width: targetElement.getAttribute("width") || "",
+        embed_code:
+          targetElementType == "general" ? "" : targetElement.outerHTML || "",
+        type: targetElementType || "general",
+      };
+
+      setInputs(newInputs);
+    }
+  }, [targetElement, targetElementType]);
+
   return (
     <div className={Styles.mediaModal}>
       <div className={Styles.selectType}>
         <button
-          className={`${inputs.type === "general" ? "selected-type" : ""}`}
+          className={`${inputs.type === "general" ? `${Styles.selectedType}` : ""}`}
           onClick={(e) => handleChangeType(e, "general")}
         >
           General
         </button>
         <button
-          className={`${inputs.type === "embed" ? "selected-type" : ""}`}
+          className={`${inputs.type === "embed" ? `${Styles.selectedType}` : ""}`}
           onClick={(e) => handleChangeType(e, "embed")}
         >
           Embed

@@ -1,6 +1,6 @@
 :root {
   --editor-background-color: #fff;
-  --editor-border-color: #c4c4c4;
+  --editor-border-color: #eee;
   --editor-text-color: #414141;
   --editor-toolbar-button-background: #fff;
   --editor-toolbar-text-color: #414141;
@@ -37,20 +37,41 @@ body {
 
 .reactEditorMain {
   background-color: var(--editor-background-color);
-  border: 1px solid var(--editor-border-color);
+  border: 2px solid var(--editor-border-color);
   color: var(--editor-text-color);
   line-height: 16px !important;
   font-family: system-ui !important;
+  border-radius: 10px;
 }
 
+.mlMainContentBox p {
+  margin: 0 0 1em 0 !important;
+}
+
+.reactEditorMain .actionComponents {
+  margin: 0px 12px;
+  box-shadow: 0 2px 2px -2px rgba(34, 47, 62, 0.1),
+    0 8px 8px -4px rgba(34, 47, 62, 0.07);
+}
 .reactEditorMain .wysiwygEditorToolbar {
-  border-bottom: 1px solid var(--editor-border-color);
+  /* border-bottom: 1px solid var(--editor-border-color); */
   font-size: 18px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  padding: 0 5px;
+  margin: 6px 0px;
   position: relative;
+}
+.reactEditorMain .wysiwygEditorToolbarWrapper {
+  background-position: center top 42px;
+  background-size: calc(100% - 0px * 2) calc(100% - 0px);
+  background-attachment: local;
+  background-color: #fff;
+  background-image: repeating-linear-gradient(
+    #e3e3e3 0 1px,
+    transparent 1px 44px
+  );
+  background-repeat: no-repeat;
 }
 
 .reactEditorMain .wysiwygEditorToolbar .hr1 {
@@ -77,10 +98,14 @@ body {
   background: var(--editor-toolbar-button-background);
   outline: none;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
   padding: 6px 10px;
   color: var(--editor-toolbar-text-color);
   line-height: 16px;
+}
+.reactEditorMain .wysiwygEditorToolbarWrapper button {
+  margin-block: 6px;
 }
 .wysiwygEditorToolbar button:disabled,
 .wysiwygEditorToolbar button.disabled {
@@ -109,7 +134,8 @@ body {
 }
 
 .mlMainContentBox {
-  padding: 10px;
+  padding: 8px 12px;
+  margin: 2px;
   height: 250px;
   overflow: auto;
   resize: vertical;
@@ -304,12 +330,29 @@ body {
   position: relative;
   display: inline-block;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
   padding: 6px;
+  line-height: 16px;
+  margin-inline: 2px;
+  background-color: #f7f7f7 !important;
+}
+.reactEditorMain .customSelectFormat:hover {
+  background-color: var(--editor-toolbar-button-hover-background) !important;
+}
+.reactEditorMain .customSelectFormat .selectSelected {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.reactEditorMain .customSelectFormat .selectSelected svg {
+  width: 10px;
+  height: 10px;
+  margin-inline-start: 12px;
+  opacity: 0.5;
 }
 
 .reactEditorMain .mainColorComponent svg {
-  height: 13px !important;
+  height: 15px !important;
 }
 
 .reactEditorMain .selectItems {
@@ -499,7 +542,7 @@ body {
 
 /* Handle */
 .reactEditorMain ::-webkit-scrollbar-thumb {
-  background: var(--editor-border-color);
+  background: #c4c4c4;
 }
 
 /* Handle on hover */
@@ -624,7 +667,7 @@ body {
 .reactEditorMain .increaseIconSize svg {
   height: 20px !important;
   width: 17px !important;
-  margin-top: 3px;
+  /* margin-top: 3px; */
 }
 
 .reactEditorMain .increaseIconSize button {
@@ -638,8 +681,8 @@ body {
 
 .reactEditorMain .verticalLine {
   height: 32px;
-  width: 1px;
-  background-color: var(--editor-border-color);
+  width: 12px;
+  /* background-color: var(--editor-border-color); */
 }
 
 .reactEditorMain .reactEditorMt2 {
@@ -693,6 +736,12 @@ body {
   content: attr(data-placeholder);
   color: #aaa;
   pointer-events: none;
+}
+[contenteditable][data-mlx-editor-empty="true"]::before {
+  content: attr(data-placeholder);
+  color: #aaa;
+  pointer-events: none;
+  position: absolute;
 }
 
 .fullScreen {

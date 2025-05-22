@@ -206,7 +206,10 @@ export default function SelectFileOptions(props) {
         onMouseLeave={() => setShowChildOptions(false)}
         style={{ top: dropdownTop }}
       >
-        <SelectFamily handleHideChildOptions={handleHideChildOptions} />
+        <SelectFamily
+          handleHideChildOptions={handleHideChildOptions}
+          editorRef={editorRef}
+        />
       </div>
       <div
         className={`${Styles.selectFormationDropdown} ${

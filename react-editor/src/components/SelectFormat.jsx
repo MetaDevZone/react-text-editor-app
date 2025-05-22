@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Styles from "../css/style.module.css";
+import ArrowDown from "./SVGImages/ArrowDown";
 
 function SelectFormat({ remove_from_toolbar, editorRef }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -111,7 +112,11 @@ function SelectFormat({ remove_from_toolbar, editorRef }) {
         minWidth: "120px",
       }}
     >
-      <div className={Styles.selectSelected}>{selectedOption}</div>
+      <div className={Styles.selectSelected}>
+        {selectedOption}
+
+        <ArrowDown />
+      </div>
       {isOpen && (
         <div className={Styles.selectItemsFormat}>
           {formats.map((option, index) => (

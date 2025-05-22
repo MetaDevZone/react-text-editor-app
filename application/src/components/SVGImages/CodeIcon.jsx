@@ -7,6 +7,9 @@ export default function CodeIcon() {
       width="1em"
       height="1em"
       viewBox="0 0 24 24"
+      style={{
+        marginTop: "0px",
+      }}
     >
       <path
         fill="currentColor"

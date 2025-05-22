@@ -30,3 +30,45 @@
   left: -5px;
   cursor: se-resize;
 }
+
+
+/* Wrapper for iframe and overlay */
+.iframe-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Overlay shown on hover */
+.iframe-wrapper .iframe-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 5;
+  pointer-events: none;
+  display: none;
+}
+
+/* Settings button */
+.iframe-wrapper .iframe-settings-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 10;
+  display: none;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 4px 6px;
+  cursor: pointer;
+  pointer-events: auto;
+  text-align: center;
+}
+
+/* Show both overlay and button on hover */
+.iframe-wrapper:hover .iframe-overlay,
+.iframe-wrapper:hover .iframe-settings-btn {
+  display: block;
+}
