@@ -812,3 +812,7 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+.content__editable__container {
+  position: relative;
+}

@@ -136,6 +136,7 @@ export const remove_resizer = () => {
   let image_element = document.querySelector(".resizer-image");
   if (element && image_element) {
     element.insertAdjacentElement("afterend", image_element);
+    image_element.classList.remove("resizer-image");
     element.parentNode.removeChild(element);
   }
 };

@@ -32,7 +32,12 @@ const RightClickLinkPopup = ({
     event.preventDefault();
     remove_resizer();
     const target = event.target;
-    setPopupPosition({ x: event.clientX, y: event.clientY });
+    const parentRect = target.parentElement.getBoundingClientRect();
+    setPopupPosition({
+      x: event.clientX - parentRect.left,
+      y: event.clientY - parentRect.top,
+    });
+
     let tagNames = ["IMG", "A", "BUTTON"];
     if (tagNames.includes(target.tagName)) {
       setSelectedEvent(target);
@@ -138,7 +143,7 @@ const RightClickLinkPopup = ({
         <div
           className={Styles.rightClickPopupBackground}
           style={{
-            top: popupPosition.y + window.scrollY,
+            top: popupPosition.y,
             left: popupPosition.x,
           }}
           ref={popupRef}
