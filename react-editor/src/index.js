@@ -1142,7 +1142,7 @@ export default function ReactEditorKit(props) {
       editorRef.current.contains(event.target)
     ) {
       const hasClass =
-        event.target.parentElement?.classList.contains("resizeImageWrapper");
+        event.target.parentElement?.classList?.contains("resizeImageWrapper");
       if (hasClass) return;
       let image_element = document.querySelector(".resizer-image");
       if (image_element) remove_resizer();
@@ -1181,9 +1181,9 @@ export default function ReactEditorKit(props) {
 
       imgElement.parentNode.replaceChild(divElement, imgElement);
     } else {
-      const target = event.target.classList.contains("resizeImageWrapper");
+      const target = event.target?.classList?.contains("resizeImageWrapper");
       const hasClass =
-        event.target.parentElement.classList.contains("resizeImageWrapper");
+        event.target?.parentElement?.classList?.contains("resizeImageWrapper");
       if (!target && !hasClass) {
         remove_resizer();
       }
