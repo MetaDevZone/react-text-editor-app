@@ -130,7 +130,7 @@ export default function ReactEditorKit(props) {
   const [showHR3, setShowHR3] = useState(false);
 
   const checkIfImageExists = () => {
-    const editor = editorRef.current;
+    const editor = editorRef?.current;
     if (editor) {
       const imgTag = editor.querySelector("img");
       if (imgTag) {
@@ -142,8 +142,41 @@ export default function ReactEditorKit(props) {
     return false;
   };
 
+  // const handleInput = () => {
+  //   setInit(true);
+
+  //   let isImageExists = checkIfImageExists();
+  //   if (!isImageExists) {
+  //     let element = document.querySelector(".resizeImageWrapper");
+  //     if (element) {
+  //       element.parentNode.removeChild(element);
+  //     }
+  //     setSelectedEvent(null);
+  //   }
+  //   const editor = editorRef?.current;
+  //   let content = editor.innerHTML;
+  //   content = transformHTML(content);
+
+  //   const tempDiv = document.createElement("p");
+  //   tempDiv.innerHTML = content;
+
+  //   const cleanedContent = tempDiv.textContent || tempDiv.innerText || "";
+  //   if (cleanedContent.trim() === "") {
+  //     if (onChange) {
+  //       onChange("");
+  //     }
+  //   } else {
+  //     if (onChange) {
+  //       onChange(content);
+  //     }
+  //   }
+  // };
+
   const handleInput = () => {
     setInit(true);
+
+    const editor = editorRef?.current;
+    if (!editor) return;
 
     let isImageExists = checkIfImageExists();
     if (!isImageExists) {
@@ -153,7 +186,66 @@ export default function ReactEditorKit(props) {
       }
       setSelectedEvent(null);
     }
-    const editor = editorRef.current;
+
+    // --- CAREFUL WRAPPING OF FIRST LINE ---
+    const hasOnlyTextOrBR = [...editor.childNodes].every(
+      (node) =>
+        node.nodeType === Node.TEXT_NODE ||
+        (node.nodeType === Node.ELEMENT_NODE && node.nodeName === "BR")
+    );
+
+    if (hasOnlyTextOrBR && editor.textContent.trim() !== "") {
+      const selection = window.getSelection();
+      const range = selection?.getRangeAt(0);
+
+      // Save caret position relative to start
+      const preCaretRange = range?.cloneRange();
+      preCaretRange?.selectNodeContents(editor);
+      preCaretRange?.setEnd(range.startContainer, range.startOffset);
+      const caretOffset = preCaretRange?.toString().length || 0;
+
+      // Wrap text in a <p>
+      const wrapper = document.createElement("p");
+      while (editor.firstChild) {
+        wrapper.appendChild(editor.firstChild);
+      }
+      editor.appendChild(wrapper);
+
+      // Restore caret
+      let newNode = wrapper.firstChild;
+      let offset = caretOffset;
+
+      // Traverse to the correct offset
+      const setCaret = (node, offset) => {
+        const range = document.createRange();
+        const selection = window.getSelection();
+        range.setStart(node, offset);
+        range.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      };
+
+      const traverse = (node) => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          if (offset <= node.length) {
+            setCaret(node, offset);
+            throw "done"; // stop traversal
+          } else {
+            offset -= node.length;
+          }
+        } else {
+          for (let i = 0; i < node.childNodes.length; i++) {
+            traverse(node.childNodes[i]);
+          }
+        }
+      };
+
+      try {
+        traverse(wrapper);
+      } catch (e) {}
+    }
+
+    // Continue with rest of logic
     let content = editor.innerHTML;
     content = transformHTML(content);
 
@@ -162,13 +254,90 @@ export default function ReactEditorKit(props) {
 
     const cleanedContent = tempDiv.textContent || tempDiv.innerText || "";
     if (cleanedContent.trim() === "") {
-      if (onChange) {
-        onChange("");
-      }
+      onChange?.("");
     } else {
-      if (onChange) {
-        onChange(content);
+      onChange?.(content);
+    }
+  };
+
+  const handleEditorKeyDown = (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+
+      const editor = editorRef.current;
+      const selection = window.getSelection();
+      if (!selection.rangeCount || !editor) return;
+
+      const range = selection.getRangeAt(0);
+      let currentNode = range.startContainer;
+
+      // Step 1: Find the containing <p>
+      while (
+        currentNode &&
+        currentNode.nodeName !== "P" &&
+        currentNode !== editor
+      ) {
+        currentNode = currentNode.parentNode;
       }
+
+      let currentP = currentNode?.nodeName === "P" ? currentNode : null;
+
+      // Step 2: Wrap if no <p> exists
+      if (!currentP) {
+        currentP = document.createElement("p");
+        currentP.appendChild(document.createElement("br"));
+        range.insertNode(currentP);
+
+        const newRange = document.createRange();
+        newRange.setStart(currentP, 0);
+        newRange.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(newRange);
+        return;
+      }
+
+      // Step 3: Split text manually at caret position
+      const offset = range.startOffset;
+      const container = range.startContainer;
+
+      const newP = document.createElement("p");
+
+      if (container.nodeType === Node.TEXT_NODE) {
+        const text = container.nodeValue;
+        const beforeText = text.slice(0, offset);
+        const afterText = text.slice(offset);
+
+        // Update current node text
+        container.nodeValue = beforeText;
+
+        // Insert after text into new <p>
+        if (afterText) {
+          const afterTextNode = document.createTextNode(afterText);
+          newP.appendChild(afterTextNode);
+        } else {
+          newP.appendChild(document.createElement("br"));
+        }
+      } else {
+        newP.appendChild(document.createElement("br"));
+      }
+
+      // Step 4: Insert new <p> after current
+      const parent = currentP.parentNode;
+
+      // Only insert if parent is valid and accepts <p>
+      if (parent && parent.contains(currentP)) {
+        if (currentP.nextSibling) {
+          parent.insertBefore(newP, currentP.nextSibling);
+        } else {
+          parent.appendChild(newP);
+        }
+      }
+      // Step 5: Place caret in new <p>
+      const newRange = document.createRange();
+      newRange.setStart(newP, 0);
+      newRange.collapse(true);
+      selection.removeAllRanges();
+      selection.addRange(newRange);
     }
   };
 
@@ -189,7 +358,7 @@ export default function ReactEditorKit(props) {
 
   const handleSaveSource = (e) => {
     e.preventDefault();
-    if (editorRef.current) {
+    if (editorRef?.current) {
       const trimmedSourceCode = sourceCode
         .replace(/\n\s*\n/g, "\n")
         .replace(/\s+/g, " ")
@@ -208,7 +377,7 @@ export default function ReactEditorKit(props) {
     const selection = window.getSelection();
     if (!selection.toString()) {
       const range = document.createRange();
-      range.selectNodeContents(editorRef.current);
+      range.selectNodeContents(editorRef?.current);
       selection.removeAllRanges();
       selection.addRange(range);
     } else {
@@ -222,7 +391,7 @@ export default function ReactEditorKit(props) {
   };
 
   const handleFocusEditor = () => {
-    const editor = editorRef.current;
+    const editor = editorRef?.current;
     if (editor && selectedRange) {
       const selection = window.getSelection();
       selection.removeAllRanges();
@@ -242,22 +411,27 @@ export default function ReactEditorKit(props) {
     }
 
     if (link_type === "image" && imageUrl) {
-      if (selectedEvent.tagName === "IMG") {
-        let src = selectedEvent.src;
-        if (src === imageUrl) {
-          text = selectedEvent.outerHTML;
-        } else {
-          text = `<img src="${imageUrl}" alt="ImageLink" />`;
-        }
-      } else if (selectedEvent.tagName === "A") {
-        let childNode = selectedEvent.firstChild;
-        if (
-          childNode &&
-          childNode.nodeType === Node.ELEMENT_NODE &&
-          childNode.tagName === "IMG" &&
-          childNode.src === imageUrl
-        ) {
-          text = childNode.outerHTML;
+      // Use selectedEvent if available; otherwise, fall back to default image HTML
+      if (selectedEvent) {
+        if (selectedEvent.tagName === "IMG") {
+          let src = selectedEvent.src;
+          if (src === imageUrl) {
+            text = selectedEvent.outerHTML;
+          } else {
+            text = `<img src="${imageUrl}" alt="ImageLink" />`;
+          }
+        } else if (selectedEvent.tagName === "A") {
+          let childNode = selectedEvent.firstChild;
+          if (
+            childNode &&
+            childNode.nodeType === Node.ELEMENT_NODE &&
+            childNode.tagName === "IMG" &&
+            childNode.src === imageUrl
+          ) {
+            text = childNode.outerHTML;
+          } else {
+            text = `<img src="${imageUrl}" alt="ImageLink" />`;
+          }
         } else {
           text = `<img src="${imageUrl}" alt="ImageLink" />`;
         }
@@ -269,13 +443,12 @@ export default function ReactEditorKit(props) {
     }
     linkHTML += `>${text}</a>`;
 
-    // Assuming selectedEvent and selectedData are correctly defined elsewhere
-    if (selectedEvent && selectedData) {
-      const parentElement = selectedEvent.parentElement;
-      if (parentElement) {
-        parentElement.removeChild(selectedEvent);
-      }
+    if (selectedEvent && selectedEvent.parentElement) {
+      selectedEvent.parentElement.removeChild(selectedEvent);
+    } else {
+      restoreSelection();
     }
+
     handleFocusEditor();
     document.execCommand("insertHTML", false, linkHTML);
     handleCloseModel();
@@ -326,6 +499,11 @@ export default function ReactEditorKit(props) {
       }
       imgElement += `"/>`;
       document.execCommand("insertHTML", false, imgElement);
+      // Ensure editor picks up the change
+      const editorElement = document.querySelector('[contenteditable="true"]');
+      if (editorElement) {
+        editorElement.dispatchEvent(new Event("input", { bubbles: true }));
+      }
       setIsLoading(false);
       handleCloseModel();
     }
@@ -395,7 +573,7 @@ export default function ReactEditorKit(props) {
 
   const handleCharSelect = (e, char) => {
     e.preventDefault();
-    if (editorRef.current !== null) {
+    if (editorRef?.current !== null) {
       handleFocusEditor();
       document.execCommand("insertHTML", false, char);
       setIsOpenModel("");
@@ -495,13 +673,13 @@ export default function ReactEditorKit(props) {
   };
 
   const handlePreview = () => {
-    setPreviewContent(editorRef.current.innerHTML);
+    setPreviewContent(editorRef?.current.innerHTML);
     setOpenPreview(true);
   };
 
   const handleViewSource = () => {
-    if (!viewSource && editorRef.current) {
-      const content = editorRef.current.innerHTML;
+    if (!viewSource && editorRef?.current) {
+      const content = editorRef?.current.innerHTML;
       const formattedContent = transformHTML(content);
       setSourceCode(formattedContent);
     } else {
@@ -521,7 +699,7 @@ export default function ReactEditorKit(props) {
   };
 
   const handlePlaceholder = () => {
-    const editor = editorRef.current;
+    const editor = editorRef?.current;
     if (!editor) {
       return;
     }
@@ -849,6 +1027,67 @@ export default function ReactEditorKit(props) {
     }
   };
 
+  // const handleEditorKeyDown = (event) => {
+  //   if (event.key === "Enter" && !event.shiftKey) {
+  //     event.preventDefault();
+
+  //     const editor = editorRef.current;
+  //     const selection = window.getSelection();
+  //     if (!selection.rangeCount || !editor) return;
+
+  //     const range = selection.getRangeAt(0);
+  //     let currentNode = range.startContainer;
+
+  //     // Ensure we have a paragraph wrapper
+  //     while (
+  //       currentNode &&
+  //       currentNode.nodeName !== "P" &&
+  //       currentNode !== editor
+  //     ) {
+  //       currentNode = currentNode.parentNode;
+  //     }
+
+  //     const currentP =
+  //       currentNode && currentNode.nodeName === "P" ? currentNode : null;
+
+  //     // If not inside a <p>, wrap content in a <p> first
+  //     if (!currentP) {
+  //       const newP = document.createElement("p");
+  //       newP.innerHTML = "<br>";
+  //       range.insertNode(newP);
+  //       const newRange = document.createRange();
+  //       newRange.setStart(newP, 0);
+  //       newRange.collapse(true);
+  //       selection.removeAllRanges();
+  //       selection.addRange(newRange);
+  //       return;
+  //     }
+
+  //     // Split the current paragraph at caret position
+  //     const offset = range.startOffset;
+  //     const splitRange = range.cloneRange();
+  //     splitRange.setStartAfter(currentP);
+  //     const contentAfter = splitRange.extractContents();
+
+  //     const newP = document.createElement("p");
+  //     newP.innerHTML = "<br>";
+
+  //     // Insert after current paragraph
+  //     if (currentP.nextSibling) {
+  //       editor.insertBefore(newP, currentP.nextSibling);
+  //     } else {
+  //       editor.appendChild(newP);
+  //     }
+
+  //     // Move caret into new paragraph
+  //     const newRange = document.createRange();
+  //     newRange.setStart(newP, 0);
+  //     newRange.collapse(true);
+  //     selection.removeAllRanges();
+  //     selection.addRange(newRange);
+  //   }
+  // };
+
   useEffect(() => {
     handle_resize();
     setCursorAtStart();
@@ -1035,6 +1274,7 @@ export default function ReactEditorKit(props) {
               );
             })}
           </div>
+
           <div className={Styles.wysiwygEditorToolbar}>
             <hr
               className={Styles.hr1}
@@ -1272,20 +1512,33 @@ export default function ReactEditorKit(props) {
             })}
           </div>
         </div>
-        <div
-          {...others}
-          className={`${Styles.mlMainContentBox}`}
-          autoFocus={isFullScreen}
-          contentEditable
-          ref={editorRef}
-          onPaste={onPaste}
-          spellCheck="true"
-          onInput={handleInput}
-          onBlur={handleBlur}
-          data-placeholder={placeholder}
-          id="editable"
-          style={{ ...style, ...dynamicStyle }}
-        ></div>
+        <div className={`${Styles.content__editable__container}`}>
+          <div
+            {...others}
+            className={`${Styles.mlMainContentBox}`}
+            autoFocus={isFullScreen}
+            contentEditable
+            ref={editorRef}
+            onPaste={onPaste}
+            spellCheck="true"
+            onInput={handleInput}
+            onBlur={handleBlur}
+            data-placeholder={placeholder}
+            onKeyDown={handleEditorKeyDown}
+            // id="editable"
+            style={{ ...style, ...dynamicStyle }}
+          ></div>
+          <RightClickLinkPopup
+            editorRef={editorRef}
+            setIsOpenModel={setIsOpenModel}
+            setSelectedData={setSelectedData}
+            setSelectedEvent={setSelectedEvent}
+            setImageUrl={setImageUrl}
+            selectedEvent={selectedEvent}
+            handleRemoveLink={handleRemoveLink}
+            selectedRange={selectedRange}
+          />
+        </div>
       </div>
       {isLoading && (
         <ViewLoadingModel
@@ -1305,7 +1558,6 @@ export default function ReactEditorKit(props) {
           {model_component().component}
         </Modal>
       )}
-
       {viewSource && (
         <ViewSourceModel
           viewSource={viewSource}
@@ -1322,16 +1574,6 @@ export default function ReactEditorKit(props) {
           previewContent={previewContent}
         />
       )}
-      <RightClickLinkPopup
-        editorRef={editorRef}
-        setIsOpenModel={setIsOpenModel}
-        setSelectedData={setSelectedData}
-        setSelectedEvent={setSelectedEvent}
-        setImageUrl={setImageUrl}
-        selectedEvent={selectedEvent}
-        handleRemoveLink={handleRemoveLink}
-        selectedRange={selectedRange}
-      />
       <div id="modal-root"></div>
       <div id="full-screen-overlay"></div>
     </>

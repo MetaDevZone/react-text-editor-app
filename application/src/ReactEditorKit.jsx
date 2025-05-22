@@ -121,12 +121,9 @@ export default function ReactEditorKit(props) {
     text: "",
     open_new_tab: false,
   });
-  console.log(selectedData, "selectedDataselectedData");
   const [selectedEvent, setSelectedEvent] = useState(null);
-  console.log(selectedEvent, "selectedEventselectedEvent");
   const [isPlaceholder, setIsPlaceholder] = useState(true);
   const [selectedItem, setSelectedItem] = useState({});
-  console.log(selectedItem, "itemmmmmmmmmmmmm");
   const [selectedRange, setSelectedRange] = useState(null);
   const [showHR1, setShowHR1] = useState(false);
   const [showHR2, setShowHR2] = useState(false);
@@ -504,7 +501,6 @@ export default function ReactEditorKit(props) {
       document.execCommand("insertHTML", false, imgElement);
       // Ensure editor picks up the change
       const editorElement = document.querySelector('[contenteditable="true"]');
-      // console.log(editorElement, "elementtttttttttttt");
       if (editorElement) {
         editorElement.dispatchEvent(new Event("input", { bubbles: true }));
       }
@@ -1516,22 +1512,33 @@ export default function ReactEditorKit(props) {
             })}
           </div>
         </div>
-
-        <div
-          {...others}
-          className={`${Styles.mlMainContentBox}`}
-          autoFocus={isFullScreen}
-          contentEditable
-          ref={editorRef}
-          onPaste={onPaste}
-          spellCheck="true"
-          onInput={handleInput}
-          onBlur={handleBlur}
-          data-placeholder={placeholder}
-          onKeyDown={handleEditorKeyDown}
-          id="editable"
-          style={{ ...style, ...dynamicStyle }}
-        ></div>
+        <div className={`${Styles.content__editable__container}`}>
+          <div
+            {...others}
+            className={`${Styles.mlMainContentBox}`}
+            autoFocus={isFullScreen}
+            contentEditable
+            ref={editorRef}
+            onPaste={onPaste}
+            spellCheck="true"
+            onInput={handleInput}
+            onBlur={handleBlur}
+            data-placeholder={placeholder}
+            onKeyDown={handleEditorKeyDown}
+            // id="editable"
+            style={{ ...style, ...dynamicStyle }}
+          ></div>
+          <RightClickLinkPopup
+            editorRef={editorRef}
+            setIsOpenModel={setIsOpenModel}
+            setSelectedData={setSelectedData}
+            setSelectedEvent={setSelectedEvent}
+            setImageUrl={setImageUrl}
+            selectedEvent={selectedEvent}
+            handleRemoveLink={handleRemoveLink}
+            selectedRange={selectedRange}
+          />
+        </div>
       </div>
       {isLoading && (
         <ViewLoadingModel
@@ -1551,7 +1558,6 @@ export default function ReactEditorKit(props) {
           {model_component().component}
         </Modal>
       )}
-
       {viewSource && (
         <ViewSourceModel
           viewSource={viewSource}
@@ -1568,16 +1574,6 @@ export default function ReactEditorKit(props) {
           previewContent={previewContent}
         />
       )}
-      <RightClickLinkPopup
-        editorRef={editorRef}
-        setIsOpenModel={setIsOpenModel}
-        setSelectedData={setSelectedData}
-        setSelectedEvent={setSelectedEvent}
-        setImageUrl={setImageUrl}
-        selectedEvent={selectedEvent}
-        handleRemoveLink={handleRemoveLink}
-        selectedRange={selectedRange}
-      />
       <div id="modal-root"></div>
       <div id="full-screen-overlay"></div>
     </>

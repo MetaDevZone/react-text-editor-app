@@ -43,6 +43,10 @@ body {
   font-family: system-ui !important;
 }
 
+.mlMainContentBox p {
+  margin: 0 0 1em 0 !important;
+}
+
 .reactEditorMain .wysiwygEditorToolbar {
   border-bottom: 1px solid var(--editor-border-color);
   font-size: 18px;
@@ -762,4 +766,8 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
+}
+
+.content__editable__container {
+  position: relative;
 }
