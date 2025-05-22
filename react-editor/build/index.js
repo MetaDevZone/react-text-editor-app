@@ -3558,27 +3558,27 @@ var RightClickLinkPopup_RightClickLinkPopup = function RightClickLinkPopup(_ref)
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [editorRef]);
-  return /*#__PURE__*/React.createElement(React.Fragment, null, popupVisible && /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/external_react_default.a.createElement(external_react_default.a.Fragment, null, popupVisible && /*#__PURE__*/external_react_default.a.createElement("div", {
     className: style_module_default.a.rightClickPopupBackground,
     style: {
       top: popupPosition.y,
       left: popupPosition.x
     },
     ref: popupRef
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/external_react_default.a.createElement("div", {
     className: style_module_default.a.rightClickPopup,
     onClick: handleOpenLinkPopup
-  }, /*#__PURE__*/React.createElement(LinkIcon, null), " Link..."), ((selectedEvent === null || selectedEvent === void 0 ? void 0 : selectedEvent.tagName) === "A" || (selectedEvent === null || selectedEvent === void 0 ? void 0 : (_selectedEvent$parent3 = selectedEvent.parentElement) === null || _selectedEvent$parent3 === void 0 ? void 0 : _selectedEvent$parent3.tagName) === "A") && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/external_react_default.a.createElement(LinkIcon, null), " Link..."), ((selectedEvent === null || selectedEvent === void 0 ? void 0 : selectedEvent.tagName) === "A" || (selectedEvent === null || selectedEvent === void 0 ? void 0 : (_selectedEvent$parent3 = selectedEvent.parentElement) === null || _selectedEvent$parent3 === void 0 ? void 0 : _selectedEvent$parent3.tagName) === "A") && /*#__PURE__*/external_react_default.a.createElement(external_react_default.a.Fragment, null, /*#__PURE__*/external_react_default.a.createElement("div", {
     className: style_module_default.a.rightClickPopup,
     onClick: handleRemove
-  }, /*#__PURE__*/React.createElement(RemoveLinkIcon, null), " Remove Link..."), " ", /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/external_react_default.a.createElement(RemoveLinkIcon, null), " Remove Link..."), " ", /*#__PURE__*/external_react_default.a.createElement("div", {
     className: "".concat(style_module_default.a.rightClickPopup, " ").concat(style_module_default.a.openLink),
     onClick: handleOpenLink
-  }, /*#__PURE__*/React.createElement(OpenLinkIcon, null), " Open Link...")), (selectedEvent === null || selectedEvent === void 0 ? void 0 : selectedEvent.tagName) === "IMG" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/external_react_default.a.createElement(OpenLinkIcon, null), " Open Link...")), (selectedEvent === null || selectedEvent === void 0 ? void 0 : selectedEvent.tagName) === "IMG" && /*#__PURE__*/external_react_default.a.createElement(external_react_default.a.Fragment, null, /*#__PURE__*/external_react_default.a.createElement("hr", null), /*#__PURE__*/external_react_default.a.createElement("div", {
     className: style_module_default.a.rightClickPopup,
     ref: popupRef,
     onClick: handleImageLink
-  }, /*#__PURE__*/React.createElement(ImageIcon, null), " Image..."))));
+  }, /*#__PURE__*/external_react_default.a.createElement(ImageIcon, null), " Image..."))));
 };
 /* harmony default export */ var components_RightClickLinkPopup = (RightClickLinkPopup_RightClickLinkPopup);
 // CONCATENATED MODULE: ./src/index.js

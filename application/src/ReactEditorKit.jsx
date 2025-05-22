@@ -984,7 +984,7 @@ export default function ReactEditorKit(props) {
       editorRef.current.contains(event.target)
     ) {
       const hasClass =
-        event.target.parentElement.classList.contains("resizeImageWrapper");
+        event.target.parentElement?.classList.contains("resizeImageWrapper");
       if (hasClass) return;
       let image_element = document.querySelector(".resizer-image");
       if (image_element) remove_resizer();
