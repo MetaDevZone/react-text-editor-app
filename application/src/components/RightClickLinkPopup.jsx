@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import LinkIcon from "./SVGImages/LinkIcon";
 import ImageIcon from "./SVGImages/ImageIcon";
 import RemoveLinkIcon from "./SVGImages/RemoveLinkIcon";

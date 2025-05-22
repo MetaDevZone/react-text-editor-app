@@ -1513,6 +1513,7 @@ var remove_resizer = function remove_resizer() {
   var image_element = document.querySelector(".resizer-image");
   if (element && image_element) {
     element.insertAdjacentElement("afterend", image_element);
+    image_element.classList.remove("resizer-image");
     element.parentNode.removeChild(element);
   }
 };
@@ -3990,7 +3991,7 @@ function ReactEditorKit(props) {
       var selection = window.getSelection();
       selection.removeAllRanges();
       selection.addRange(selectedRange);
-      editor.focus(); // Focus on the editor without inserting text
+      editor.focus();
     }
   };
   var handleLinkInsert = function handleLinkInsert(props) {
@@ -4456,9 +4457,11 @@ function ReactEditorKit(props) {
     window.addEventListener("mouseup", handleMouseUp);
   };
   var handleClickImage = function handleClickImage(event) {
-    if (event.target.tagName === "IMG") {
+    if (event.target.tagName === "IMG" && editorRef.current.contains(event.target)) {
       var hasClass = event.target.parentElement.classList.contains("resizeImageWrapper");
       if (hasClass) return;
+      var image_element = document.querySelector(".resizer-image");
+      if (image_element) remove_resizer();
       var imgElement = event.target;
       var imageWidth = imgElement.offsetWidth;
       var divElement = document.createElement("div");
@@ -4488,14 +4491,12 @@ function ReactEditorKit(props) {
       divElement.appendChild(resizerRight);
       divElement.appendChild(resizerBottom);
       divElement.appendChild(resizerBottomRight);
-      setSelectedEvent(divElement);
       imgElement.parentNode.replaceChild(divElement, imgElement);
     } else {
       var target = event.target.classList.contains("resizeImageWrapper");
       var _hasClass = event.target.parentElement.classList.contains("resizeImageWrapper");
       if (!target && !_hasClass) {
         remove_resizer();
-        setSelectedEvent(null);
       }
     }
   };
@@ -4566,7 +4567,7 @@ function ReactEditorKit(props) {
     setCursorAtStart();
     var editor = editorRef.current;
     if (editor) {
-      editor.addEventListener("click", handleClickImage);
+      window.addEventListener("click", handleClickImage);
       editor.addEventListener("mouseup", handleSelection);
       editor.addEventListener("keyup", handleSelection);
     }
@@ -4574,7 +4575,7 @@ function ReactEditorKit(props) {
     return function () {
       window.removeEventListener("resize", handle_resize);
       if (editor) {
-        editor.removeEventListener("click", handleClickImage);
+        window.removeEventListener("click", handleClickImage);
         editor.removeEventListener("mouseup", handleSelection);
         editor.removeEventListener("keyup", handleSelection);
       }
