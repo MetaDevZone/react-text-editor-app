@@ -541,17 +541,17 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(4);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ":root {\r\n  --editor-background-color: #fff;\r\n  --editor-border-color: #c4c4c4;\r\n  --editor-text-color: #414141;\r\n  --editor-toolbar-button-background: #fff;\r\n  --editor-toolbar-text-color: #414141;\r\n  --editor-toolbar-button-hover-background: #efefef;\r\n  --editor-toolbar-button-selected-background: #dee0e2;\r\n  --editor-svg-color: #414141;\r\n  --editor-save-button-background: rgb(9, 134, 62);\r\n}\r\n\r\nhtml,\r\nbody {\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI img {\r\n  max-width: 100%;\r\n  height: auto;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq p,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq pre,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq h2,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq h3,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq h4,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq h5,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq h6,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq blockquote,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq h1 {\r\n  margin: 0;\r\n  color: var(--editor-toolbar-text-color) !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI {\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  color: var(--editor-text-color);\r\n  line-height: 16px !important;\r\n  font-family: system-ui !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__wysiwygEditorToolbar___3YLm2 {\r\n  border-bottom: 1px solid var(--editor-border-color);\r\n  font-size: 18px;\r\n  display: flex;\r\n  align-items: center;\r\n  flex-wrap: wrap;\r\n  padding: 0 5px;\r\n  position: relative;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__wysiwygEditorToolbar___3YLm2 .style-module__hr1___2GDDO {\r\n  position: absolute;\r\n  width: 98%;\r\n  border-color: var(--editor-border-color);\r\n  border: none;\r\n  border-top: 1px solid var(--editor-border-color);\r\n  height: 1px;\r\n  display: none;\r\n  top: 32px;\r\n  margin: 0;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__wysiwygEditorToolbar___3YLm2 .style-module__hr2___2wfnq {\r\n  top: 64px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__wysiwygEditorToolbar___3YLm2 .style-module__buttonGroup___2VL8t {\r\n  display: inline-block;\r\n  border-right: 1px solid var(--editor-border-color);\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__wysiwygEditorToolbar___3YLm2 button {\r\n  background: var(--editor-toolbar-button-background);\r\n  outline: none;\r\n  border: none;\r\n  cursor: pointer;\r\n  padding: 6px 10px;\r\n  color: var(--editor-toolbar-text-color);\r\n  line-height: 16px;\r\n}\r\n.style-module__wysiwygEditorToolbar___3YLm2 button:disabled,\r\n.style-module__wysiwygEditorToolbar___3YLm2 button.style-module__disabled___31WG5 {\r\n  cursor: not-allowed;\r\n}\r\n.style-module__wysiwygEditorToolbar___3YLm2 button:disabled svg,\r\n.style-module__wysiwygEditorToolbar___3YLm2 button.style-module__disabled___31WG5 svg {\r\n  fill: #9fa2a6;\r\n}\r\n\r\n.style-module__wysiwygEditorToolbar___3YLm2 button:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background);\r\n}\r\n\r\n.style-module__wysiwygEditorToolbar___3YLm2 input {\r\n  background-color: transparent;\r\n  border: 1px solid var(--editor-border-color);\r\n  outline: none;\r\n  cursor: pointer;\r\n}\r\n\r\n.style-module__wysiwygEditorToolbar___3YLm2 select,\r\n.style-module__wysiwygEditorToolbar___3YLm2 select:focus-visible {\r\n  border: none !important;\r\n  outline: none;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj {\r\n  padding: 10px;\r\n  height: 250px;\r\n  overflow: auto;\r\n  resize: vertical;\r\n  max-width: 100% !important;\r\n  line-height: normal;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__placeholderText___20Ilw {\r\n  opacity: 0.8;\r\n  font-style: italic;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h1,\r\n.style-module__mlMainContentBox___3RMYj h2,\r\n.style-module__mlMainContentBox___3RMYj h3,\r\n.style-module__mlMainContentBox___3RMYj h4,\r\n.style-module__mlMainContentBox___3RMYj h5,\r\n.style-module__mlMainContentBox___3RMYj h6,\r\n.style-module__mlMainContentBox___3RMYj p {\r\n  margin-top: 0;\r\n  color: var(--editor-text-color);\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h1 {\r\n  font-size: 2em;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h2 {\r\n  font-size: 1.5em;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h3 {\r\n  font-size: 1.17em;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h4 {\r\n  font-size: 1em;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h5 {\r\n  font-size: 0.83em;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h6 {\r\n  font-size: 0.67em;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj p {\r\n  font-size: 1em;\r\n}\r\n\r\n.style-module__linkImage___M2hpC {\r\n  height: 80px;\r\n  width: 80px;\r\n  object-fit: cover;\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 5px;\r\n}\r\n\r\n.style-module__linkImageBox___d0yYz {\r\n  height: 80px;\r\n  width: 80px;\r\n  position: relative;\r\n  margin-top: 10px;\r\n}\r\n.style-module__linkImageCross___WbyR3 {\r\n  position: absolute;\r\n  top: -5px;\r\n  right: -7px;\r\n  height: 20px;\r\n  width: 20px;\r\n  background-color: red;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  border-radius: 50%;\r\n  color: #fff;\r\n  cursor: pointer;\r\n  padding-bottom: 3px;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj:focus-visible {\r\n  outline: none;\r\n}\r\n\r\n.style-module__wysiwygEditorSource___2DKV1 {\r\n  width: 98%;\r\n  height: 80%;\r\n  outline: none;\r\n  padding: 10px;\r\n  font-family: \"Courier New\", Monospace !important;\r\n  font-size: small;\r\n  white-space: pre-wrap;\r\n  margin: 0;\r\n  display: block;\r\n  font-size: 16px;\r\n  resize: none;\r\n}\r\n\r\n/* Modal.css */\r\n\r\n.style-module__modalOverlay___TXsmk {\r\n  font-family: system-ui !important;\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: rgba(0, 0, 0, 0.5);\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  z-index: 999999;\r\n}\r\n\r\n.style-module__imageModelOverlay___8jCM7 {\r\n  z-index: 999999;\r\n}\r\n\r\n.style-module__fillScreenView___13J2K {\r\n  z-index: 999999;\r\n}\r\n\r\n.style-module__modelTitle___3jHG7 {\r\n  display: flex;\r\n  justify-content: space-between;\r\n}\r\n\r\n.style-module__modelTitle___3jHG7 h2 {\r\n  margin: 0;\r\n}\r\n\r\n.style-module__modelTitle___3jHG7 svg {\r\n  font-size: 25px;\r\n  cursor: pointer;\r\n}\r\n\r\n.style-module__modalPopup___1C0ia {\r\n  background-color: #fff;\r\n  padding: 20px;\r\n  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\r\n  width: 400px;\r\n  max-width: 85%;\r\n  color: #000;\r\n  border-radius: 5px;\r\n}\r\n\r\n.style-module__fillScreenView___13J2K .style-module__modalPopup___1C0ia {\r\n  max-width: 100% !important;\r\n  width: 100vw !important;\r\n  height: 100vh !important;\r\n  z-index: 1;\r\n  padding: 0 !important;\r\n  overflow: hidden;\r\n  border-radius: 0 !important;\r\n}\r\n\r\n.style-module__modalPopup___1C0ia hr {\r\n  margin-bottom: 0;\r\n}\r\n\r\n.style-module__modalCloseBtn___2Qx0Z {\r\n  position: absolute;\r\n  top: 10px;\r\n  right: 10px;\r\n  background: none;\r\n  border: none;\r\n  cursor: pointer;\r\n  padding: 5px 10px;\r\n  font-size: 16px;\r\n}\r\n\r\n.style-module__wysiwygEditorToolbar___3YLm2 button svg {\r\n  fill: var(--editor-svg-color);\r\n  color: var(--editor-svg-color);\r\n  display: inline-block;\r\n  height: 15px;\r\n  width: 14px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__customSelect___vdO64 {\r\n  position: relative;\r\n  display: inline-block;\r\n  cursor: pointer;\r\n  font-size: 16px;\r\n  padding: 6px;\r\n  color: var(--editor-toolbar-text-color);\r\n  line-height: 16px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__customSelectFormat___3e6iP {\r\n  position: relative;\r\n  display: inline-block;\r\n  cursor: pointer;\r\n  font-size: 16px;\r\n  padding: 6px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__mainColorComponent___KneIc svg {\r\n  height: 13px !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 {\r\n  position: absolute;\r\n  background-color: #fff;\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 2px;\r\n  z-index: 2;\r\n  width: 160px;\r\n  max-height: 200px;\r\n  overflow-y: auto;\r\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\r\n  top: 29px;\r\n  left: 0;\r\n  display: none;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 button {\r\n  display: flex !important;\r\n  width: 100%;\r\n  padding: 7px;\r\n  font-family: system-ui !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__pItems___1bRzo .style-module__selectItems___3G3Z7 {\r\n  left: 142px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF {\r\n  position: absolute;\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  border-top: none;\r\n  border-radius: 2px;\r\n  z-index: 1;\r\n  max-height: 200px;\r\n  overflow-y: auto;\r\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\r\n  left: 0;\r\n  top: 30px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF .style-module__selectOption___7easq:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background) !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF h1 {\r\n  font-size: 32px !important;\r\n  font-weight: 600;\r\n  line-height: 32px;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF h2 {\r\n  font-size: 28px !important;\r\n  font-weight: 600;\r\n  line-height: 28px;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF h3 {\r\n  font-size: 24px !important;\r\n  font-weight: 600;\r\n  line-height: 24px;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF h4 {\r\n  font-size: 20px !important;\r\n  line-height: 20px;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF h5 {\r\n  font-size: 16px !important;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF h6 {\r\n  font-size: 14px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7.style-module__show___3qCvb {\r\n  display: block;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 .style-module__selectOption___7easq,\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF .style-module__selectOption___7easq {\r\n  padding: 6px 10px;\r\n  cursor: pointer;\r\n  font-size: 16px;\r\n  white-space: nowrap;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 .style-module__selectInsert___2lLJI svg {\r\n  height: 20px;\r\n  width: 20px;\r\n  margin-right: 7px;\r\n  color: var(--editor-svg-color);\r\n  fill: var(--editor-svg-color);\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 button svg {\r\n  height: 16px !important;\r\n  width: 16px !important;\r\n  margin-top: 2px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 .style-module__selectInsert___2lLJI span {\r\n  margin-top: 2px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectedOption___bGTuj {\r\n  background-color: var(--editor-toolbar-button-selected-background) !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 .style-module__selectOption___7easq:hover,\r\n.style-module__reactEditorMain___20UxI .style-module__selectInsert___2lLJI:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background) !important;\r\n}\r\n\r\n.style-module__formControlInput___JxKoB {\r\n  font-family: system-ui !important;\r\n  width: 100%;\r\n  padding: 7px;\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 3px;\r\n}\r\n\r\n.style-module__formControlInput___JxKoB:focus-visible {\r\n  outline: none;\r\n}\r\n\r\n.style-module__saveButton___jY5in {\r\n  background-color: var(--editor-save-button-background);\r\n  color: #fff;\r\n  padding: 7px 14px;\r\n  border: none;\r\n  margin-top: 10px;\r\n  border-radius: 3px;\r\n  cursor: pointer;\r\n}\r\n\r\n.style-module__selectType___2EuiV button {\r\n  padding: 6px 20px;\r\n  background-color: var(--editor-toolbar-button-background);\r\n  border: 1px solid var(--editor-border-color);\r\n  cursor: pointer;\r\n}\r\n\r\n.style-module__selectType___2EuiV button.style-module__selectedType___1pN_w {\r\n  background-color: #efefef;\r\n}\r\n\r\n.style-module__specialCharBox___5ivgz {\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n}\r\n\r\n.style-module__specialChar___3kuh4 {\r\n  width: 30px;\r\n  height: 30px;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  cursor: pointer;\r\n  border-radius: 2px;\r\n}\r\n\r\n.style-module__specialChar___3kuh4:hover {\r\n  background-color: #dee0e2;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectInsert___2lLJI {\r\n  min-width: 120px;\r\n  font-size: 16px;\r\n  text-align: left;\r\n  padding: 8px 10px;\r\n  white-space: nowrap;\r\n  display: flex;\r\n  border-top: 1px solid var(--editor-border-color) !important;\r\n  color: var(--editor-text-color) !important;\r\n  background-color: var(--editor-background-color);\r\n  border-radius: 0 !important;\r\n  margin: 0 !important;\r\n}\r\n\r\n/* width */\r\n.style-module__reactEditorMain___20UxI ::-webkit-scrollbar {\r\n  width: 5px;\r\n}\r\n\r\n/* Track */\r\n.style-module__reactEditorMain___20UxI ::-webkit-scrollbar-track {\r\n  background: #f1f1f1;\r\n}\r\n\r\n/* Handle */\r\n.style-module__reactEditorMain___20UxI ::-webkit-scrollbar-thumb {\r\n  background: var(--editor-border-color);\r\n}\r\n\r\n/* Handle on hover */\r\n.style-module__reactEditorMain___20UxI ::-webkit-scrollbar-thumb:hover {\r\n  background: #555;\r\n}\r\n\r\n.style-module__fullScreenModel___2BTIF {\r\n  width: 95% !important;\r\n  height: 85vh;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj blockquote {\r\n  border-left: 2px solid var(--editor-border-color);\r\n  border-left-width: 5px;\r\n  margin-left: 1.5rem;\r\n  padding: 2px 0;\r\n  padding-left: 1rem;\r\n  font-style: italic;\r\n  font-family: Georgia, Times, \"Times New Roman\", serif;\r\n  color: var(--editor-text-color);\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsNested___3AX3C.style-module__left___19fvP {\r\n  left: -100%;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectFormationDropdown___2zsBU {\r\n  position: absolute;\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 4px;\r\n  left: 154px;\r\n  display: none;\r\n  min-width: 140px;\r\n  z-index: 2;\r\n  max-height: 200px;\r\n  overflow-x: hidden;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__fontSizeDropdown___2JM1U {\r\n  min-width: 90px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__fontSizeDropdown___2JM1U .style-module__selectOption___7easq {\r\n  padding: 10px;\r\n  border-bottom: 1px solid var(--editor-border-color);\r\n  font-size: 16px;\r\n  width: 98%;\r\n  margin: 0;\r\n  border-radius: 0 !important;\r\n  font-family: system-ui !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectFormationDropdown___2zsBU.style-module__show___3qCvb {\r\n  display: block;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__fontFamilyOption___1iKD6 {\r\n  display: block;\r\n  width: 99%;\r\n  padding: 9px !important;\r\n  border-top: 1px solid var(--editor-border-color) !important;\r\n  margin: 0 !important;\r\n  border-radius: 0 !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__fontFamilyOption___1iKD6:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background);\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__bottomColoredLine___2ZzSJ {\r\n  height: 3px;\r\n  width: 14px;\r\n  background-color: var(--editor-svg-color);\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__mainColorComponent___KneIc {\r\n  position: relative;\r\n  display: inline-block;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__openColorBox___HXFEl {\r\n  position: absolute;\r\n  height: 140px;\r\n  width: 140px;\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  top: 30px;\r\n  left: -1px;\r\n  display: none;\r\n  z-index: 1;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__colorBoxGrid___2aldn button {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  border-radius: 0 !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__openColorBox___HXFEl.style-module__show___3qCvb {\r\n  display: block;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__colorBox___34xoe {\r\n  height: 28px;\r\n  width: 28px;\r\n  cursor: pointer;\r\n  background-color: var(--editor-background-color);\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__customColorPicker___1m1Pk {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__customColorPicker___1m1Pk svg {\r\n  height: 20px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__increaseIconSize___jwjQX svg {\r\n  height: 20px !important;\r\n  width: 17px !important;\r\n  margin-top: 3px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__increaseIconSize___jwjQX button {\r\n  padding: 3px 10px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__colorBox___34xoe:hover {\r\n  transform: scale(1.2);\r\n  transition: transform 0.5s ease;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__verticalLine___3Ck-S {\r\n  height: 32px;\r\n  width: 1px;\r\n  background-color: var(--editor-border-color);\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorMt2___6i1Q_ {\r\n  margin-top: 2px;\r\n}\r\n.style-module__reactEditorMt10___2Crph {\r\n  margin-top: 10px;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorMe5___280IF {\r\n  margin-right: 5px;\r\n}\r\n\r\n.style-module__reactEditorTextEnd___1pcIh {\r\n  text-align: right;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorTextLeft___3E-uy {\r\n  text-align: left;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorDFlex___XY9O6,\r\n.style-module__reactEditorDFlex___XY9O6 {\r\n  display: flex;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorW47___2e5OR,\r\n.style-module__reactEditorW47___2e5OR {\r\n  width: 47%;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorW45___18O_s,\r\n.style-module__reactEditorW45___18O_s {\r\n  width: 40%;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__justifyContentBetween___17lWt,\r\n.style-module__justifyContentBetween___17lWt {\r\n  justify-content: space-between;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorFlexColumn___kYPWH,\r\n.style-module__reactEditorFlexColumn___kYPWH {\r\n  flex-direction: column;\r\n}\r\n\r\n.style-module__editorErrorMessage___3IFX_ {\r\n  color: red;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj:empty:before {\r\n  content: attr(data-placeholder);\r\n  color: #aaa;\r\n  pointer-events: none;\r\n}\r\n\r\n.style-module__fullScreen___2IkPb {\r\n  position: fixed !important;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100% !important;\r\n  height: 100% !important;\r\n  background-color: var(--editor-toolbar-button-background);\r\n  overflow: hidden;\r\n  z-index: 99999 !important;\r\n}\r\n\r\n.style-module__rightClickPopupBackground___2kc56 {\r\n  position: absolute;\r\n  cursor: pointer;\r\n  background-color: var(--editor-toolbar-button-background);\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 5px;\r\n  z-index: 1000;\r\n  min-width: 100px;\r\n  padding: 3px 0px;\r\n}\r\n\r\n.style-module__rightClickPopupBackground___2kc56 hr {\r\n  margin: 0;\r\n  border: none;\r\n  border-top: 1px solid var(--editor-border-color);\r\n  width: 100%;\r\n}\r\n\r\n.style-module__rightClickPopup___2fZw0 {\r\n  padding: 5px 10px;\r\n  font-family: system-ui;\r\n  font-size: 15px;\r\n  color: var(--editor-text-color);\r\n}\r\n\r\n.style-module__rightClickPopup___2fZw0:hover {\r\n  background: var(--editor-toolbar-button-hover-background);\r\n}\r\n\r\n.style-module__rightClickPopup___2fZw0 svg {\r\n  margin-right: 5px;\r\n  height: 20px;\r\n  width: 20px;\r\n  vertical-align: bottom;\r\n}\r\n\r\n.style-module__rightClickPopup___2fZw0.style-module__openLink___1piNb svg {\r\n  height: 15px;\r\n  margin-bottom: 1px;\r\n}\r\n\r\n.style-module__lockUnlockIcon___1F-wI svg {\r\n  height: 16px;\r\n  margin-top: 38px;\r\n  cursor: pointer;\r\n}\r\n\r\ninput::-webkit-outer-spin-button,\r\ninput::-webkit-inner-spin-button {\r\n  -webkit-appearance: none;\r\n  margin: 0;\r\n}\r\n\r\n/* Firefox */\r\ninput[type=\"number\"] {\r\n  -moz-appearance: textfield;\r\n}\r\n", ""]);
+exports.push([module.i, ":root {\r\n  --editor-background-color: #fff;\r\n  --editor-border-color: #c4c4c4;\r\n  --editor-text-color: #414141;\r\n  --editor-toolbar-button-background: #fff;\r\n  --editor-toolbar-text-color: #414141;\r\n  --editor-toolbar-button-hover-background: #efefef;\r\n  --editor-toolbar-button-selected-background: #dee0e2;\r\n  --editor-svg-color: #414141;\r\n  --editor-save-button-background: rgb(9, 134, 62);\r\n}\r\n\r\nhtml,\r\nbody {\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI img {\r\n  max-width: 100%;\r\n  height: auto;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq p,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq pre,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq h2,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq h3,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq h4,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq h5,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq h6,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq blockquote,\r\n.style-module__reactEditorMain___20UxI .style-module__selectOption___7easq h1 {\r\n  margin: 0;\r\n  color: var(--editor-toolbar-text-color) !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI {\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  color: var(--editor-text-color);\r\n  line-height: 16px !important;\r\n  font-family: system-ui !important;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj p {\r\n  margin: 0 0 1em 0 !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__wysiwygEditorToolbar___3YLm2 {\r\n  border-bottom: 1px solid var(--editor-border-color);\r\n  font-size: 18px;\r\n  display: flex;\r\n  align-items: center;\r\n  flex-wrap: wrap;\r\n  padding: 0 5px;\r\n  position: relative;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__wysiwygEditorToolbar___3YLm2 .style-module__hr1___2GDDO {\r\n  position: absolute;\r\n  width: 98%;\r\n  border-color: var(--editor-border-color);\r\n  border: none;\r\n  border-top: 1px solid var(--editor-border-color);\r\n  height: 1px;\r\n  display: none;\r\n  top: 32px;\r\n  margin: 0;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__wysiwygEditorToolbar___3YLm2 .style-module__hr2___2wfnq {\r\n  top: 64px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__wysiwygEditorToolbar___3YLm2 .style-module__buttonGroup___2VL8t {\r\n  display: inline-block;\r\n  border-right: 1px solid var(--editor-border-color);\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__wysiwygEditorToolbar___3YLm2 button {\r\n  background: var(--editor-toolbar-button-background);\r\n  outline: none;\r\n  border: none;\r\n  cursor: pointer;\r\n  padding: 6px 10px;\r\n  color: var(--editor-toolbar-text-color);\r\n  line-height: 16px;\r\n}\r\n.style-module__wysiwygEditorToolbar___3YLm2 button:disabled,\r\n.style-module__wysiwygEditorToolbar___3YLm2 button.style-module__disabled___31WG5 {\r\n  cursor: not-allowed;\r\n}\r\n.style-module__wysiwygEditorToolbar___3YLm2 button:disabled svg,\r\n.style-module__wysiwygEditorToolbar___3YLm2 button.style-module__disabled___31WG5 svg {\r\n  fill: #9fa2a6;\r\n}\r\n\r\n.style-module__wysiwygEditorToolbar___3YLm2 button:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background);\r\n}\r\n\r\n.style-module__wysiwygEditorToolbar___3YLm2 input {\r\n  background-color: transparent;\r\n  border: 1px solid var(--editor-border-color);\r\n  outline: none;\r\n  cursor: pointer;\r\n}\r\n\r\n.style-module__wysiwygEditorToolbar___3YLm2 select,\r\n.style-module__wysiwygEditorToolbar___3YLm2 select:focus-visible {\r\n  border: none !important;\r\n  outline: none;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj {\r\n  padding: 10px;\r\n  height: 250px;\r\n  overflow: auto;\r\n  resize: vertical;\r\n  max-width: 100% !important;\r\n  line-height: normal;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__placeholderText___20Ilw {\r\n  opacity: 0.8;\r\n  font-style: italic;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h1,\r\n.style-module__mlMainContentBox___3RMYj h2,\r\n.style-module__mlMainContentBox___3RMYj h3,\r\n.style-module__mlMainContentBox___3RMYj h4,\r\n.style-module__mlMainContentBox___3RMYj h5,\r\n.style-module__mlMainContentBox___3RMYj h6,\r\n.style-module__mlMainContentBox___3RMYj p {\r\n  margin-top: 0;\r\n  color: var(--editor-text-color);\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h1 {\r\n  font-size: 2em;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h2 {\r\n  font-size: 1.5em;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h3 {\r\n  font-size: 1.17em;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h4 {\r\n  font-size: 1em;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h5 {\r\n  font-size: 0.83em;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj h6 {\r\n  font-size: 0.67em;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj p {\r\n  font-size: 1em;\r\n}\r\n\r\n.style-module__linkImage___M2hpC {\r\n  height: 80px;\r\n  width: 80px;\r\n  object-fit: cover;\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 5px;\r\n}\r\n\r\n.style-module__linkImageBox___d0yYz {\r\n  height: 80px;\r\n  width: 80px;\r\n  position: relative;\r\n  margin-top: 10px;\r\n}\r\n.style-module__linkImageCross___WbyR3 {\r\n  position: absolute;\r\n  top: -5px;\r\n  right: -7px;\r\n  height: 20px;\r\n  width: 20px;\r\n  background-color: red;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  border-radius: 50%;\r\n  color: #fff;\r\n  cursor: pointer;\r\n  padding-bottom: 3px;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj:focus-visible {\r\n  outline: none;\r\n}\r\n\r\n.style-module__wysiwygEditorSource___2DKV1 {\r\n  width: 98%;\r\n  height: 80%;\r\n  outline: none;\r\n  padding: 10px;\r\n  font-family: \"Courier New\", Monospace !important;\r\n  font-size: small;\r\n  white-space: pre-wrap;\r\n  margin: 0;\r\n  display: block;\r\n  font-size: 16px;\r\n  resize: none;\r\n}\r\n\r\n/* Modal.css */\r\n\r\n.style-module__modalOverlay___TXsmk {\r\n  font-family: system-ui !important;\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: rgba(0, 0, 0, 0.5);\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  z-index: 999999;\r\n}\r\n\r\n.style-module__imageModelOverlay___8jCM7 {\r\n  z-index: 999999;\r\n}\r\n\r\n.style-module__fillScreenView___13J2K {\r\n  z-index: 999999;\r\n}\r\n\r\n.style-module__modelTitle___3jHG7 {\r\n  display: flex;\r\n  justify-content: space-between;\r\n}\r\n\r\n.style-module__modelTitle___3jHG7 h2 {\r\n  margin: 0;\r\n}\r\n\r\n.style-module__modelTitle___3jHG7 svg {\r\n  font-size: 25px;\r\n  cursor: pointer;\r\n}\r\n\r\n.style-module__modalPopup___1C0ia {\r\n  background-color: #fff;\r\n  padding: 20px;\r\n  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\r\n  width: 400px;\r\n  max-width: 85%;\r\n  color: #000;\r\n  border-radius: 5px;\r\n}\r\n\r\n.style-module__fillScreenView___13J2K .style-module__modalPopup___1C0ia {\r\n  max-width: 100% !important;\r\n  width: 100vw !important;\r\n  height: 100vh !important;\r\n  z-index: 1;\r\n  padding: 0 !important;\r\n  overflow: hidden;\r\n  border-radius: 0 !important;\r\n}\r\n\r\n.style-module__modalPopup___1C0ia hr {\r\n  margin-bottom: 0;\r\n}\r\n\r\n.style-module__modalCloseBtn___2Qx0Z {\r\n  position: absolute;\r\n  top: 10px;\r\n  right: 10px;\r\n  background: none;\r\n  border: none;\r\n  cursor: pointer;\r\n  padding: 5px 10px;\r\n  font-size: 16px;\r\n}\r\n\r\n.style-module__wysiwygEditorToolbar___3YLm2 button svg {\r\n  fill: var(--editor-svg-color);\r\n  color: var(--editor-svg-color);\r\n  display: inline-block;\r\n  height: 15px;\r\n  width: 14px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__customSelect___vdO64 {\r\n  position: relative;\r\n  display: inline-block;\r\n  cursor: pointer;\r\n  font-size: 16px;\r\n  padding: 6px;\r\n  color: var(--editor-toolbar-text-color);\r\n  line-height: 16px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__customSelectFormat___3e6iP {\r\n  position: relative;\r\n  display: inline-block;\r\n  cursor: pointer;\r\n  font-size: 16px;\r\n  padding: 6px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__mainColorComponent___KneIc svg {\r\n  height: 13px !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 {\r\n  position: absolute;\r\n  background-color: #fff;\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 2px;\r\n  z-index: 2;\r\n  width: 160px;\r\n  max-height: 200px;\r\n  overflow-y: auto;\r\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\r\n  top: 29px;\r\n  left: 0;\r\n  display: none;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 button {\r\n  display: flex !important;\r\n  width: 100%;\r\n  padding: 7px;\r\n  font-family: system-ui !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__pItems___1bRzo .style-module__selectItems___3G3Z7 {\r\n  left: 142px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF {\r\n  position: absolute;\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  border-top: none;\r\n  border-radius: 2px;\r\n  z-index: 1;\r\n  max-height: 200px;\r\n  overflow-y: auto;\r\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\r\n  left: 0;\r\n  top: 30px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF .style-module__selectOption___7easq:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background) !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF h1 {\r\n  font-size: 32px !important;\r\n  font-weight: 600;\r\n  line-height: 32px;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF h2 {\r\n  font-size: 28px !important;\r\n  font-weight: 600;\r\n  line-height: 28px;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF h3 {\r\n  font-size: 24px !important;\r\n  font-weight: 600;\r\n  line-height: 24px;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF h4 {\r\n  font-size: 20px !important;\r\n  line-height: 20px;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF h5 {\r\n  font-size: 16px !important;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF h6 {\r\n  font-size: 14px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7.style-module__show___3qCvb {\r\n  display: block;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 .style-module__selectOption___7easq,\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsFormat___3EcHF .style-module__selectOption___7easq {\r\n  padding: 6px 10px;\r\n  cursor: pointer;\r\n  font-size: 16px;\r\n  white-space: nowrap;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 .style-module__selectInsert___2lLJI svg {\r\n  height: 20px;\r\n  width: 20px;\r\n  margin-right: 7px;\r\n  color: var(--editor-svg-color);\r\n  fill: var(--editor-svg-color);\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 button svg {\r\n  height: 16px !important;\r\n  width: 16px !important;\r\n  margin-top: 2px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 .style-module__selectInsert___2lLJI span {\r\n  margin-top: 2px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectedOption___bGTuj {\r\n  background-color: var(--editor-toolbar-button-selected-background) !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItems___3G3Z7 .style-module__selectOption___7easq:hover,\r\n.style-module__reactEditorMain___20UxI .style-module__selectInsert___2lLJI:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background) !important;\r\n}\r\n\r\n.style-module__formControlInput___JxKoB {\r\n  font-family: system-ui !important;\r\n  width: 100%;\r\n  padding: 7px;\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 3px;\r\n}\r\n\r\n.style-module__formControlInput___JxKoB:focus-visible {\r\n  outline: none;\r\n}\r\n\r\n.style-module__saveButton___jY5in {\r\n  background-color: var(--editor-save-button-background);\r\n  color: #fff;\r\n  padding: 7px 14px;\r\n  border: none;\r\n  margin-top: 10px;\r\n  border-radius: 3px;\r\n  cursor: pointer;\r\n}\r\n\r\n.style-module__selectType___2EuiV button {\r\n  padding: 6px 20px;\r\n  background-color: var(--editor-toolbar-button-background);\r\n  border: 1px solid var(--editor-border-color);\r\n  cursor: pointer;\r\n}\r\n\r\n.style-module__selectType___2EuiV button.style-module__selectedType___1pN_w {\r\n  background-color: #efefef;\r\n}\r\n\r\n.style-module__specialCharBox___5ivgz {\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n}\r\n\r\n.style-module__specialChar___3kuh4 {\r\n  width: 30px;\r\n  height: 30px;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  cursor: pointer;\r\n  border-radius: 2px;\r\n}\r\n\r\n.style-module__specialChar___3kuh4:hover {\r\n  background-color: #dee0e2;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectInsert___2lLJI {\r\n  min-width: 120px;\r\n  font-size: 16px;\r\n  text-align: left;\r\n  padding: 8px 10px;\r\n  white-space: nowrap;\r\n  display: flex;\r\n  border-top: 1px solid var(--editor-border-color) !important;\r\n  color: var(--editor-text-color) !important;\r\n  background-color: var(--editor-background-color);\r\n  border-radius: 0 !important;\r\n  margin: 0 !important;\r\n}\r\n\r\n/* width */\r\n.style-module__reactEditorMain___20UxI ::-webkit-scrollbar {\r\n  width: 5px;\r\n}\r\n\r\n/* Track */\r\n.style-module__reactEditorMain___20UxI ::-webkit-scrollbar-track {\r\n  background: #f1f1f1;\r\n}\r\n\r\n/* Handle */\r\n.style-module__reactEditorMain___20UxI ::-webkit-scrollbar-thumb {\r\n  background: var(--editor-border-color);\r\n}\r\n\r\n/* Handle on hover */\r\n.style-module__reactEditorMain___20UxI ::-webkit-scrollbar-thumb:hover {\r\n  background: #555;\r\n}\r\n\r\n.style-module__fullScreenModel___2BTIF {\r\n  width: 95% !important;\r\n  height: 85vh;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj blockquote {\r\n  border-left: 2px solid var(--editor-border-color);\r\n  border-left-width: 5px;\r\n  margin-left: 1.5rem;\r\n  padding: 2px 0;\r\n  padding-left: 1rem;\r\n  font-style: italic;\r\n  font-family: Georgia, Times, \"Times New Roman\", serif;\r\n  color: var(--editor-text-color);\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectItemsNested___3AX3C.style-module__left___19fvP {\r\n  left: -100%;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectFormationDropdown___2zsBU {\r\n  position: absolute;\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 4px;\r\n  left: 154px;\r\n  display: none;\r\n  min-width: 140px;\r\n  z-index: 2;\r\n  max-height: 200px;\r\n  overflow-x: hidden;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__fontSizeDropdown___2JM1U {\r\n  min-width: 90px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__fontSizeDropdown___2JM1U .style-module__selectOption___7easq {\r\n  padding: 10px;\r\n  border-bottom: 1px solid var(--editor-border-color);\r\n  font-size: 16px;\r\n  width: 98%;\r\n  margin: 0;\r\n  border-radius: 0 !important;\r\n  font-family: system-ui !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__selectFormationDropdown___2zsBU.style-module__show___3qCvb {\r\n  display: block;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__fontFamilyOption___1iKD6 {\r\n  display: block;\r\n  width: 99%;\r\n  padding: 9px !important;\r\n  border-top: 1px solid var(--editor-border-color) !important;\r\n  margin: 0 !important;\r\n  border-radius: 0 !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__fontFamilyOption___1iKD6:hover {\r\n  background-color: var(--editor-toolbar-button-hover-background);\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__bottomColoredLine___2ZzSJ {\r\n  height: 3px;\r\n  width: 14px;\r\n  background-color: var(--editor-svg-color);\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__mainColorComponent___KneIc {\r\n  position: relative;\r\n  display: inline-block;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__openColorBox___HXFEl {\r\n  position: absolute;\r\n  height: 140px;\r\n  width: 140px;\r\n  background-color: var(--editor-background-color);\r\n  border: 1px solid var(--editor-border-color);\r\n  top: 30px;\r\n  left: -1px;\r\n  display: none;\r\n  z-index: 1;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__colorBoxGrid___2aldn button {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  border-radius: 0 !important;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__openColorBox___HXFEl.style-module__show___3qCvb {\r\n  display: block;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__colorBox___34xoe {\r\n  height: 28px;\r\n  width: 28px;\r\n  cursor: pointer;\r\n  background-color: var(--editor-background-color);\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__customColorPicker___1m1Pk {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__customColorPicker___1m1Pk svg {\r\n  height: 20px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__increaseIconSize___jwjQX svg {\r\n  height: 20px !important;\r\n  width: 17px !important;\r\n  margin-top: 3px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__increaseIconSize___jwjQX button {\r\n  padding: 3px 10px;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__colorBox___34xoe:hover {\r\n  transform: scale(1.2);\r\n  transition: transform 0.5s ease;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__verticalLine___3Ck-S {\r\n  height: 32px;\r\n  width: 1px;\r\n  background-color: var(--editor-border-color);\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorMt2___6i1Q_ {\r\n  margin-top: 2px;\r\n}\r\n.style-module__reactEditorMt10___2Crph {\r\n  margin-top: 10px;\r\n}\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorMe5___280IF {\r\n  margin-right: 5px;\r\n}\r\n\r\n.style-module__reactEditorTextEnd___1pcIh {\r\n  text-align: right;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorTextLeft___3E-uy {\r\n  text-align: left;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorDFlex___XY9O6,\r\n.style-module__reactEditorDFlex___XY9O6 {\r\n  display: flex;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorW47___2e5OR,\r\n.style-module__reactEditorW47___2e5OR {\r\n  width: 47%;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorW45___18O_s,\r\n.style-module__reactEditorW45___18O_s {\r\n  width: 40%;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__justifyContentBetween___17lWt,\r\n.style-module__justifyContentBetween___17lWt {\r\n  justify-content: space-between;\r\n}\r\n\r\n.style-module__reactEditorMain___20UxI .style-module__reactEditorFlexColumn___kYPWH,\r\n.style-module__reactEditorFlexColumn___kYPWH {\r\n  flex-direction: column;\r\n}\r\n\r\n.style-module__editorErrorMessage___3IFX_ {\r\n  color: red;\r\n}\r\n\r\n.style-module__mlMainContentBox___3RMYj:empty:before {\r\n  content: attr(data-placeholder);\r\n  color: #aaa;\r\n  pointer-events: none;\r\n}\r\n\r\n.style-module__fullScreen___2IkPb {\r\n  position: fixed !important;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100% !important;\r\n  height: 100% !important;\r\n  background-color: var(--editor-toolbar-button-background);\r\n  overflow: hidden;\r\n  z-index: 99999 !important;\r\n}\r\n\r\n.style-module__rightClickPopupBackground___2kc56 {\r\n  position: absolute;\r\n  cursor: pointer;\r\n  background-color: var(--editor-toolbar-button-background);\r\n  border: 1px solid var(--editor-border-color);\r\n  border-radius: 5px;\r\n  z-index: 1000;\r\n  min-width: 100px;\r\n  padding: 3px 0px;\r\n}\r\n\r\n.style-module__rightClickPopupBackground___2kc56 hr {\r\n  margin: 0;\r\n  border: none;\r\n  border-top: 1px solid var(--editor-border-color);\r\n  width: 100%;\r\n}\r\n\r\n.style-module__rightClickPopup___2fZw0 {\r\n  padding: 5px 10px;\r\n  font-family: system-ui;\r\n  font-size: 15px;\r\n  color: var(--editor-text-color);\r\n}\r\n\r\n.style-module__rightClickPopup___2fZw0:hover {\r\n  background: var(--editor-toolbar-button-hover-background);\r\n}\r\n\r\n.style-module__rightClickPopup___2fZw0 svg {\r\n  margin-right: 5px;\r\n  height: 20px;\r\n  width: 20px;\r\n  vertical-align: bottom;\r\n}\r\n\r\n.style-module__rightClickPopup___2fZw0.style-module__openLink___1piNb svg {\r\n  height: 15px;\r\n  margin-bottom: 1px;\r\n}\r\n\r\n.style-module__lockUnlockIcon___1F-wI svg {\r\n  height: 16px;\r\n  margin-top: 38px;\r\n  cursor: pointer;\r\n}\r\n\r\ninput::-webkit-outer-spin-button,\r\ninput::-webkit-inner-spin-button {\r\n  -webkit-appearance: none;\r\n  margin: 0;\r\n}\r\n\r\n/* Firefox */\r\ninput[type=\"number\"] {\r\n  -moz-appearance: textfield;\r\n}\r\n\r\n.style-module__content__editable__container___2AcZS {\r\n  position: relative;\r\n}\r\n", ""]);
 // Exports
 exports.locals = {
 	"reactEditorMain": "style-module__reactEditorMain___20UxI",
 	"selectOption": "style-module__selectOption___7easq",
+	"mlMainContentBox": "style-module__mlMainContentBox___3RMYj",
 	"wysiwygEditorToolbar": "style-module__wysiwygEditorToolbar___3YLm2",
 	"hr1": "style-module__hr1___2GDDO",
 	"hr2": "style-module__hr2___2wfnq",
 	"buttonGroup": "style-module__buttonGroup___2VL8t",
 	"disabled": "style-module__disabled___31WG5",
-	"mlMainContentBox": "style-module__mlMainContentBox___3RMYj",
 	"placeholderText": "style-module__placeholderText___20Ilw",
 	"linkImage": "style-module__linkImage___M2hpC",
 	"linkImageBox": "style-module__linkImageBox___d0yYz",
@@ -606,7 +606,8 @@ exports.locals = {
 	"rightClickPopupBackground": "style-module__rightClickPopupBackground___2kc56",
 	"rightClickPopup": "style-module__rightClickPopup___2fZw0",
 	"openLink": "style-module__openLink___1piNb",
-	"lockUnlockIcon": "style-module__lockUnlockIcon___1F-wI"
+	"lockUnlockIcon": "style-module__lockUnlockIcon___1F-wI",
+	"content__editable__container": "style-module__content__editable__container___2AcZS"
 };
 module.exports = exports;
 
@@ -3462,9 +3463,10 @@ var RightClickLinkPopup_RightClickLinkPopup = function RightClickLinkPopup(_ref)
     event.preventDefault();
     remove_resizer();
     var target = event.target;
+    var parentRect = target.parentElement.getBoundingClientRect();
     setPopupPosition({
-      x: event.clientX,
-      y: event.clientY
+      x: event.clientX - parentRect.left,
+      y: event.clientY - parentRect.top
     });
     var tagNames = ["IMG", "A", "BUTTON"];
     if (tagNames.includes(target.tagName)) {
@@ -3555,27 +3557,27 @@ var RightClickLinkPopup_RightClickLinkPopup = function RightClickLinkPopup(_ref)
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [editorRef]);
-  return /*#__PURE__*/external_react_default.a.createElement(external_react_default.a.Fragment, null, popupVisible && /*#__PURE__*/external_react_default.a.createElement("div", {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, popupVisible && /*#__PURE__*/React.createElement("div", {
     className: style_module_default.a.rightClickPopupBackground,
     style: {
-      top: popupPosition.y + window.scrollY,
+      top: popupPosition.y,
       left: popupPosition.x
     },
     ref: popupRef
-  }, /*#__PURE__*/external_react_default.a.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: style_module_default.a.rightClickPopup,
     onClick: handleOpenLinkPopup
-  }, /*#__PURE__*/external_react_default.a.createElement(LinkIcon, null), " Link..."), ((selectedEvent === null || selectedEvent === void 0 ? void 0 : selectedEvent.tagName) === "A" || (selectedEvent === null || selectedEvent === void 0 ? void 0 : (_selectedEvent$parent3 = selectedEvent.parentElement) === null || _selectedEvent$parent3 === void 0 ? void 0 : _selectedEvent$parent3.tagName) === "A") && /*#__PURE__*/external_react_default.a.createElement(external_react_default.a.Fragment, null, /*#__PURE__*/external_react_default.a.createElement("div", {
+  }, /*#__PURE__*/React.createElement(LinkIcon, null), " Link..."), ((selectedEvent === null || selectedEvent === void 0 ? void 0 : selectedEvent.tagName) === "A" || (selectedEvent === null || selectedEvent === void 0 ? void 0 : (_selectedEvent$parent3 = selectedEvent.parentElement) === null || _selectedEvent$parent3 === void 0 ? void 0 : _selectedEvent$parent3.tagName) === "A") && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: style_module_default.a.rightClickPopup,
     onClick: handleRemove
-  }, /*#__PURE__*/external_react_default.a.createElement(RemoveLinkIcon, null), " Remove Link..."), " ", /*#__PURE__*/external_react_default.a.createElement("div", {
+  }, /*#__PURE__*/React.createElement(RemoveLinkIcon, null), " Remove Link..."), " ", /*#__PURE__*/React.createElement("div", {
     className: "".concat(style_module_default.a.rightClickPopup, " ").concat(style_module_default.a.openLink),
     onClick: handleOpenLink
-  }, /*#__PURE__*/external_react_default.a.createElement(OpenLinkIcon, null), " Open Link...")), (selectedEvent === null || selectedEvent === void 0 ? void 0 : selectedEvent.tagName) === "IMG" && /*#__PURE__*/external_react_default.a.createElement(external_react_default.a.Fragment, null, /*#__PURE__*/external_react_default.a.createElement("hr", null), /*#__PURE__*/external_react_default.a.createElement("div", {
+  }, /*#__PURE__*/React.createElement(OpenLinkIcon, null), " Open Link...")), (selectedEvent === null || selectedEvent === void 0 ? void 0 : selectedEvent.tagName) === "IMG" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement("div", {
     className: style_module_default.a.rightClickPopup,
     ref: popupRef,
     onClick: handleImageLink
-  }, /*#__PURE__*/external_react_default.a.createElement(ImageIcon, null), " Image..."))));
+  }, /*#__PURE__*/React.createElement(ImageIcon, null), " Image..."))));
 };
 /* harmony default export */ var components_RightClickLinkPopup = (RightClickLinkPopup_RightClickLinkPopup);
 // CONCATENATED MODULE: ./src/index.js
@@ -3587,6 +3589,10 @@ function src_objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var 
 function src_defineProperty(e, r, t) { return (r = src_toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function src_toPropertyKey(t) { var i = src_toPrimitive(t, "string"); return "symbol" == src_typeof(i) ? i : i + ""; }
 function src_toPrimitive(t, r) { if ("object" != src_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != src_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function src_toConsumableArray(r) { return src_arrayWithoutHoles(r) || src_iterableToArray(r) || src_unsupportedIterableToArray(r) || src_nonIterableSpread(); }
+function src_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function src_iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function src_arrayWithoutHoles(r) { if (Array.isArray(r)) return src_arrayLikeToArray(r); }
 function src_slicedToArray(r, e) { return src_arrayWithHoles(r) || src_iterableToArrayLimit(r, e) || src_unsupportedIterableToArray(r, e) || src_nonIterableRest(); }
 function src_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function src_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return src_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? src_arrayLikeToArray(r, a) : void 0; } }
@@ -3746,7 +3752,7 @@ function ReactEditorKit(props) {
     showHR3 = _useState34[0],
     setShowHR3 = _useState34[1];
   var checkIfImageExists = function checkIfImageExists() {
-    var editor = editorRef.current;
+    var editor = editorRef === null || editorRef === void 0 ? void 0 : editorRef.current;
     if (editor) {
       var imgTag = editor.querySelector("img");
       if (imgTag) {
@@ -3757,8 +3763,41 @@ function ReactEditorKit(props) {
     }
     return false;
   };
+
+  // const handleInput = () => {
+  //   setInit(true);
+
+  //   let isImageExists = checkIfImageExists();
+  //   if (!isImageExists) {
+  //     let element = document.querySelector(".resizeImageWrapper");
+  //     if (element) {
+  //       element.parentNode.removeChild(element);
+  //     }
+  //     setSelectedEvent(null);
+  //   }
+  //   const editor = editorRef?.current;
+  //   let content = editor.innerHTML;
+  //   content = transformHTML(content);
+
+  //   const tempDiv = document.createElement("p");
+  //   tempDiv.innerHTML = content;
+
+  //   const cleanedContent = tempDiv.textContent || tempDiv.innerText || "";
+  //   if (cleanedContent.trim() === "") {
+  //     if (onChange) {
+  //       onChange("");
+  //     }
+  //   } else {
+  //     if (onChange) {
+  //       onChange(content);
+  //     }
+  //   }
+  // };
+
   var handleInput = function handleInput() {
     setInit(true);
+    var editor = editorRef === null || editorRef === void 0 ? void 0 : editorRef.current;
+    if (!editor) return;
     var isImageExists = checkIfImageExists();
     if (!isImageExists) {
       var element = document.querySelector(".resizeImageWrapper");
@@ -3767,20 +3806,141 @@ function ReactEditorKit(props) {
       }
       setSelectedEvent(null);
     }
-    var editor = editorRef.current;
+
+    // --- CAREFUL WRAPPING OF FIRST LINE ---
+    var hasOnlyTextOrBR = src_toConsumableArray(editor.childNodes).every(function (node) {
+      return node.nodeType === Node.TEXT_NODE || node.nodeType === Node.ELEMENT_NODE && node.nodeName === "BR";
+    });
+    if (hasOnlyTextOrBR && editor.textContent.trim() !== "") {
+      var selection = window.getSelection();
+      var range = selection === null || selection === void 0 ? void 0 : selection.getRangeAt(0);
+
+      // Save caret position relative to start
+      var preCaretRange = range === null || range === void 0 ? void 0 : range.cloneRange();
+      preCaretRange === null || preCaretRange === void 0 ? void 0 : preCaretRange.selectNodeContents(editor);
+      preCaretRange === null || preCaretRange === void 0 ? void 0 : preCaretRange.setEnd(range.startContainer, range.startOffset);
+      var caretOffset = (preCaretRange === null || preCaretRange === void 0 ? void 0 : preCaretRange.toString().length) || 0;
+
+      // Wrap text in a <p>
+      var wrapper = document.createElement("p");
+      while (editor.firstChild) {
+        wrapper.appendChild(editor.firstChild);
+      }
+      editor.appendChild(wrapper);
+
+      // Restore caret
+      var newNode = wrapper.firstChild;
+      var offset = caretOffset;
+
+      // Traverse to the correct offset
+      var setCaret = function setCaret(node, offset) {
+        var range = document.createRange();
+        var selection = window.getSelection();
+        range.setStart(node, offset);
+        range.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      };
+      var traverse = function traverse(node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+          if (offset <= node.length) {
+            setCaret(node, offset);
+            throw "done"; // stop traversal
+          } else {
+            offset -= node.length;
+          }
+        } else {
+          for (var i = 0; i < node.childNodes.length; i++) {
+            traverse(node.childNodes[i]);
+          }
+        }
+      };
+      try {
+        traverse(wrapper);
+      } catch (e) {}
+    }
+
+    // Continue with rest of logic
     var content = editor.innerHTML;
     content = transformHTML(content);
     var tempDiv = document.createElement("p");
     tempDiv.innerHTML = content;
     var cleanedContent = tempDiv.textContent || tempDiv.innerText || "";
     if (cleanedContent.trim() === "") {
-      if (onChange) {
-        onChange("");
-      }
+      onChange === null || onChange === void 0 ? void 0 : onChange("");
     } else {
-      if (onChange) {
-        onChange(content);
+      onChange === null || onChange === void 0 ? void 0 : onChange(content);
+    }
+  };
+  var handleEditorKeyDown = function handleEditorKeyDown(event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+      var _currentNode;
+      event.preventDefault();
+      var editor = editorRef.current;
+      var selection = window.getSelection();
+      if (!selection.rangeCount || !editor) return;
+      var range = selection.getRangeAt(0);
+      var currentNode = range.startContainer;
+
+      // Step 1: Find the containing <p>
+      while (currentNode && currentNode.nodeName !== "P" && currentNode !== editor) {
+        currentNode = currentNode.parentNode;
       }
+      var currentP = ((_currentNode = currentNode) === null || _currentNode === void 0 ? void 0 : _currentNode.nodeName) === "P" ? currentNode : null;
+
+      // Step 2: Wrap if no <p> exists
+      if (!currentP) {
+        currentP = document.createElement("p");
+        currentP.appendChild(document.createElement("br"));
+        range.insertNode(currentP);
+        var _newRange = document.createRange();
+        _newRange.setStart(currentP, 0);
+        _newRange.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(_newRange);
+        return;
+      }
+
+      // Step 3: Split text manually at caret position
+      var offset = range.startOffset;
+      var container = range.startContainer;
+      var newP = document.createElement("p");
+      if (container.nodeType === Node.TEXT_NODE) {
+        var text = container.nodeValue;
+        var beforeText = text.slice(0, offset);
+        var afterText = text.slice(offset);
+
+        // Update current node text
+        container.nodeValue = beforeText;
+
+        // Insert after text into new <p>
+        if (afterText) {
+          var afterTextNode = document.createTextNode(afterText);
+          newP.appendChild(afterTextNode);
+        } else {
+          newP.appendChild(document.createElement("br"));
+        }
+      } else {
+        newP.appendChild(document.createElement("br"));
+      }
+
+      // Step 4: Insert new <p> after current
+      var parent = currentP.parentNode;
+
+      // Only insert if parent is valid and accepts <p>
+      if (parent && parent.contains(currentP)) {
+        if (currentP.nextSibling) {
+          parent.insertBefore(newP, currentP.nextSibling);
+        } else {
+          parent.appendChild(newP);
+        }
+      }
+      // Step 5: Place caret in new <p>
+      var newRange = document.createRange();
+      newRange.setStart(newP, 0);
+      newRange.collapse(true);
+      selection.removeAllRanges();
+      selection.addRange(newRange);
     }
   };
   var handleOpenModel = function handleOpenModel(e, type, item) {
@@ -3799,7 +3959,7 @@ function ReactEditorKit(props) {
   };
   var handleSaveSource = function handleSaveSource(e) {
     e.preventDefault();
-    if (editorRef.current) {
+    if (editorRef !== null && editorRef !== void 0 && editorRef.current) {
       var trimmedSourceCode = sourceCode.replace(/\n\s*\n/g, "\n").replace(/\s+/g, " ").trim();
       editorRef.current.innerHTML = trimmedSourceCode;
       setViewSource(false);
@@ -3813,7 +3973,7 @@ function ReactEditorKit(props) {
     var selection = window.getSelection();
     if (!selection.toString()) {
       var range = document.createRange();
-      range.selectNodeContents(editorRef.current);
+      range.selectNodeContents(editorRef === null || editorRef === void 0 ? void 0 : editorRef.current);
       selection.removeAllRanges();
       selection.addRange(range);
     } else {
@@ -3825,7 +3985,7 @@ function ReactEditorKit(props) {
     document.execCommand("insertHorizontalRule");
   };
   var handleFocusEditor = function handleFocusEditor() {
-    var editor = editorRef.current;
+    var editor = editorRef === null || editorRef === void 0 ? void 0 : editorRef.current;
     if (editor && selectedRange) {
       var selection = window.getSelection();
       selection.removeAllRanges();
@@ -3846,17 +4006,22 @@ function ReactEditorKit(props) {
       linkHTML += ' target="_blank"';
     }
     if (link_type === "image" && imageUrl) {
-      if (selectedEvent.tagName === "IMG") {
-        var src = selectedEvent.src;
-        if (src === imageUrl) {
-          text = selectedEvent.outerHTML;
-        } else {
-          text = "<img src=\"".concat(imageUrl, "\" alt=\"ImageLink\" />");
-        }
-      } else if (selectedEvent.tagName === "A") {
-        var childNode = selectedEvent.firstChild;
-        if (childNode && childNode.nodeType === Node.ELEMENT_NODE && childNode.tagName === "IMG" && childNode.src === imageUrl) {
-          text = childNode.outerHTML;
+      // Use selectedEvent if available; otherwise, fall back to default image HTML
+      if (selectedEvent) {
+        if (selectedEvent.tagName === "IMG") {
+          var src = selectedEvent.src;
+          if (src === imageUrl) {
+            text = selectedEvent.outerHTML;
+          } else {
+            text = "<img src=\"".concat(imageUrl, "\" alt=\"ImageLink\" />");
+          }
+        } else if (selectedEvent.tagName === "A") {
+          var childNode = selectedEvent.firstChild;
+          if (childNode && childNode.nodeType === Node.ELEMENT_NODE && childNode.tagName === "IMG" && childNode.src === imageUrl) {
+            text = childNode.outerHTML;
+          } else {
+            text = "<img src=\"".concat(imageUrl, "\" alt=\"ImageLink\" />");
+          }
         } else {
           text = "<img src=\"".concat(imageUrl, "\" alt=\"ImageLink\" />");
         }
@@ -3867,13 +4032,10 @@ function ReactEditorKit(props) {
       text = "<button contentEditable=false>".concat(text, "</button>");
     }
     linkHTML += ">".concat(text, "</a>");
-
-    // Assuming selectedEvent and selectedData are correctly defined elsewhere
-    if (selectedEvent && selectedData) {
-      var parentElement = selectedEvent.parentElement;
-      if (parentElement) {
-        parentElement.removeChild(selectedEvent);
-      }
+    if (selectedEvent && selectedEvent.parentElement) {
+      selectedEvent.parentElement.removeChild(selectedEvent);
+    } else {
+      restoreSelection();
     }
     handleFocusEditor();
     document.execCommand("insertHTML", false, linkHTML);
@@ -3925,6 +4087,13 @@ function ReactEditorKit(props) {
       }
       imgElement += "\"/>";
       document.execCommand("insertHTML", false, imgElement);
+      // Ensure editor picks up the change
+      var editorElement = document.querySelector('[contenteditable="true"]');
+      if (editorElement) {
+        editorElement.dispatchEvent(new Event("input", {
+          bubbles: true
+        }));
+      }
       setIsLoading(false);
       handleCloseModel();
     }
@@ -3982,7 +4151,7 @@ function ReactEditorKit(props) {
   };
   var handleCharSelect = function handleCharSelect(e, _char) {
     e.preventDefault();
-    if (editorRef.current !== null) {
+    if ((editorRef === null || editorRef === void 0 ? void 0 : editorRef.current) !== null) {
       handleFocusEditor();
       document.execCommand("insertHTML", false, _char);
       setIsOpenModel("");
@@ -4045,12 +4214,12 @@ function ReactEditorKit(props) {
     editorRef.current.innerHTML = "";
   };
   var handlePreview = function handlePreview() {
-    setPreviewContent(editorRef.current.innerHTML);
+    setPreviewContent(editorRef === null || editorRef === void 0 ? void 0 : editorRef.current.innerHTML);
     setOpenPreview(true);
   };
   var handleViewSource = function handleViewSource() {
-    if (!viewSource && editorRef.current) {
-      var content = editorRef.current.innerHTML;
+    if (!viewSource && editorRef !== null && editorRef !== void 0 && editorRef.current) {
+      var content = editorRef === null || editorRef === void 0 ? void 0 : editorRef.current.innerHTML;
       var formattedContent = transformHTML(content);
       setSourceCode(formattedContent);
     } else {
@@ -4067,7 +4236,7 @@ function ReactEditorKit(props) {
     }
   };
   var handlePlaceholder = function handlePlaceholder() {
-    var editor = editorRef.current;
+    var editor = editorRef === null || editorRef === void 0 ? void 0 : editorRef.current;
     if (!editor) {
       return;
     }
@@ -4330,6 +4499,68 @@ function ReactEditorKit(props) {
       }
     }
   };
+
+  // const handleEditorKeyDown = (event) => {
+  //   if (event.key === "Enter" && !event.shiftKey) {
+  //     event.preventDefault();
+
+  //     const editor = editorRef.current;
+  //     const selection = window.getSelection();
+  //     if (!selection.rangeCount || !editor) return;
+
+  //     const range = selection.getRangeAt(0);
+  //     let currentNode = range.startContainer;
+
+  //     // Ensure we have a paragraph wrapper
+  //     while (
+  //       currentNode &&
+  //       currentNode.nodeName !== "P" &&
+  //       currentNode !== editor
+  //     ) {
+  //       currentNode = currentNode.parentNode;
+  //     }
+
+  //     const currentP =
+  //       currentNode && currentNode.nodeName === "P" ? currentNode : null;
+
+  //     // If not inside a <p>, wrap content in a <p> first
+  //     if (!currentP) {
+  //       const newP = document.createElement("p");
+  //       newP.innerHTML = "<br>";
+  //       range.insertNode(newP);
+  //       const newRange = document.createRange();
+  //       newRange.setStart(newP, 0);
+  //       newRange.collapse(true);
+  //       selection.removeAllRanges();
+  //       selection.addRange(newRange);
+  //       return;
+  //     }
+
+  //     // Split the current paragraph at caret position
+  //     const offset = range.startOffset;
+  //     const splitRange = range.cloneRange();
+  //     splitRange.setStartAfter(currentP);
+  //     const contentAfter = splitRange.extractContents();
+
+  //     const newP = document.createElement("p");
+  //     newP.innerHTML = "<br>";
+
+  //     // Insert after current paragraph
+  //     if (currentP.nextSibling) {
+  //       editor.insertBefore(newP, currentP.nextSibling);
+  //     } else {
+  //       editor.appendChild(newP);
+  //     }
+
+  //     // Move caret into new paragraph
+  //     const newRange = document.createRange();
+  //     newRange.setStart(newP, 0);
+  //     newRange.collapse(true);
+  //     selection.removeAllRanges();
+  //     selection.addRange(newRange);
+  //   }
+  // };
+
   Object(external_react_["useEffect"])(function () {
     handle_resize();
     setCursorAtStart();
@@ -4626,7 +4857,9 @@ function ReactEditorKit(props) {
       icon: /*#__PURE__*/external_react_default.a.createElement(RTLIcon, null),
       editorRef: editorRef
     }));
-  }))), /*#__PURE__*/external_react_default.a.createElement("div", _extends({}, others, {
+  }))), /*#__PURE__*/external_react_default.a.createElement("div", {
+    className: "".concat(style_module_default.a.content__editable__container)
+  }, /*#__PURE__*/external_react_default.a.createElement("div", _extends({}, others, {
     className: "".concat(style_module_default.a.mlMainContentBox),
     autoFocus: isFullScreen,
     contentEditable: true,
@@ -4636,8 +4869,19 @@ function ReactEditorKit(props) {
     onInput: handleInput,
     onBlur: handleBlur,
     "data-placeholder": placeholder,
-    id: "editable",
+    onKeyDown: handleEditorKeyDown
+    // id="editable"
+    ,
     style: src_objectSpread(src_objectSpread({}, style), dynamicStyle)
+  })), /*#__PURE__*/external_react_default.a.createElement(components_RightClickLinkPopup, {
+    editorRef: editorRef,
+    setIsOpenModel: setIsOpenModel,
+    setSelectedData: setSelectedData,
+    setSelectedEvent: setSelectedEvent,
+    setImageUrl: setImageUrl,
+    selectedEvent: selectedEvent,
+    handleRemoveLink: handleRemoveLink,
+    selectedRange: selectedRange
   }))), isLoading && /*#__PURE__*/external_react_default.a.createElement(components_ViewLoadingModel, {
     viewSource: viewSource,
     setViewSource: setViewSource,
@@ -4658,15 +4902,6 @@ function ReactEditorKit(props) {
     openPreview: openPreview,
     setOpenPreview: setOpenPreview,
     previewContent: previewContent
-  }), /*#__PURE__*/external_react_default.a.createElement(components_RightClickLinkPopup, {
-    editorRef: editorRef,
-    setIsOpenModel: setIsOpenModel,
-    setSelectedData: setSelectedData,
-    setSelectedEvent: setSelectedEvent,
-    setImageUrl: setImageUrl,
-    selectedEvent: selectedEvent,
-    handleRemoveLink: handleRemoveLink,
-    selectedRange: selectedRange
   }), /*#__PURE__*/external_react_default.a.createElement("div", {
     id: "modal-root"
   }), /*#__PURE__*/external_react_default.a.createElement("div", {
