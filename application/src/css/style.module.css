@@ -486,6 +486,21 @@ body {
   cursor: pointer;
 }
 
+.saveButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.cancel__btn {
+  background-color: red;
+  color: #fff;
+  padding: 7px 14px;
+  border: none;
+  margin-top: 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
 .selectType button {
   padding: 6px 20px;
   background-color: var(--editor-toolbar-button-background);
@@ -815,4 +830,48 @@ input[type="number"] {
 
 .content__editable__container {
   position: relative;
+}
+
+.image__submit__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 10px;
+}
+
+.image__submit__container img {
+  width: 80px;
+  height: 80px;
+  border-radius: 5px;
+  border: 1px solid;
+  cursor: pointer;
+  background-color: rgb(0 0 0 / 13%);
+  object-fit: cover;
+}
+
+.image__cropper_btn {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.image__cropper__box img {
+  background-color: rgb(0 0 0 / 13%);
+}
+
+.image__preview__box {
+  position: relative;
+}
+
+.image__preview__box:last-child {
+  max-height: 400px;
+  overflow: auto;
+}
+
+.image__preview__box svg {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  height: 20px;
+  fill: #fff;
 }

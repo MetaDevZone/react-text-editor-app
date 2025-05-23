@@ -4,9 +4,7 @@ import Styles from "../css/style.module.css";
 const ButtonFunction = (props) => {
   const { name, icon, title, item, disabled, editorRef } = props;
   const [isSelected, setIsSelected] = useState(false);
-  // console.log(isSelected, "selecteddddddddddd");
   const [isDisabled, setIsDisabled] = useState(true);
-  // console.log(isDisabled, "disableeeeeeeeeeeeee");
 
   const handleClick = (e, ref) => {
     e.preventDefault();

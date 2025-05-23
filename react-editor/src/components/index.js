@@ -42,4 +42,5 @@ export { default as AlignLeft } from "./SVGImages/AlignLeft";
 export { default as RemoveLinkIcon } from "./SVGImages/RemoveLinkIcon";
 export { default as UnlockIcon } from "./SVGImages/UnlockIcon";
 export { default as LockIcon } from "./SVGImages/LockIcon";
+export { default as CropIcon } from "./SVGImages/CropIcon";
 export { default as loader_img } from "./SVGImages/loader.gif";

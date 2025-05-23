@@ -140,3 +140,92 @@ export const remove_resizer = () => {
     element.parentNode.removeChild(element);
   }
 };
+
+export const getCroppedImage = async (image, crop, originalFile) => {
+  if (!crop || !image) {
+    console.error("No crop data or image reference");
+    return null;
+  }
+
+  const canvas = document.createElement("canvas");
+  const scaleX = image.naturalWidth / image.width;
+  const scaleY = image.naturalHeight / image.height;
+
+  canvas.width = crop.width;
+  canvas.height = crop.height;
+  const ctx = canvas.getContext("2d");
+
+  // Preserve transparency by clearing canvas with transparent pixels
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  ctx.drawImage(
+    image,
+    crop.x * scaleX,
+    crop.y * scaleY,
+    crop.width * scaleX,
+    crop.height * scaleY,
+    0,
+    0,
+    crop.width,
+    crop.height
+  );
+
+  return new Promise((resolve) => {
+    // Determine the correct file type and extension
+    let fileType = "image/png"; // Default to PNG for transparency support
+    let fileExt = "png";
+
+    if (originalFile) {
+      if (typeof originalFile === "string") {
+        // Extract extension from URL
+        const urlParts = originalFile.split(".");
+        fileExt = urlParts[urlParts.length - 1].toLowerCase();
+        fileType = `image/${fileExt === "jpg" ? "jpeg" : fileExt}`;
+      } else {
+        // Use the original file's type
+        fileType = originalFile.type || "image/png";
+        fileExt = fileType.split("/").pop();
+        if (fileExt === "jpeg") fileExt = "jpg";
+      }
+    }
+
+    // Use PNG if we need transparency, regardless of original format
+    const needsTransparency =
+      fileType === "image/png" || fileType === "image/gif";
+    const outputType = needsTransparency ? "image/png" : fileType;
+
+    canvas.toBlob(
+      (blob) => {
+        if (!blob) {
+          console.error("Canvas is empty");
+          resolve(null);
+          return;
+        }
+
+        let fileName = "cropped-image.png"; // Default name with PNG
+        if (originalFile) {
+          if (typeof originalFile === "string") {
+            const urlParts = originalFile.split("/");
+            const originalName = urlParts[urlParts.length - 1].replace(
+              /\.[^/.]+$/,
+              ""
+            );
+            fileName = `${originalName}-cropped.${fileExt}`;
+          } else {
+            const originalName =
+              originalFile.name.replace(/\.[^/.]+$/, "") || "cropped-image";
+            fileName = `${originalName}-cropped.${fileExt}`;
+          }
+        }
+
+        const file = new File([blob], fileName, {
+          type: outputType,
+          lastModified: Date.now(),
+        });
+        resolve(file);
+      },
+      outputType, // Use the determined output type
+      outputType === "image/jpeg" ? 0.9 : 1 // Only apply quality for JPEG
+    );
+  });
+};

@@ -59,6 +59,7 @@ import RightClickLinkPopup from "./components/RightClickLinkPopup";
 import SelectFontFamily from "./components/SelectFontFamily";
 import AlignmentOptions from "./components/AlignmentOptions";
 import FontSize from "./components/FontSize";
+import "react-image-crop/dist/ReactCrop.css";
 
 const show_final_options = (options, remove, all_options) => {
   if (!options) {
