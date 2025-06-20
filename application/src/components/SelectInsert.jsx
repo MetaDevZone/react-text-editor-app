@@ -10,7 +10,13 @@ import { INSER_OPTIONS } from "./constant";
 import Styles from "../css/style.module.css";
 
 export default function SelectFileOptions(props) {
-  const { onSelectOption, handleInsertHR, item, remove_from_navbar } = props;
+  const {
+    onSelectOption,
+    handleInsertHR,
+    item,
+    remove_from_navbar,
+    isDisable,
+  } = props;
   let options = item.options;
   if (!options) {
     options = INSER_OPTIONS;
@@ -18,6 +24,9 @@ export default function SelectFileOptions(props) {
   const [isShow, setIsShow] = useState(false);
 
   const handleSelect = (e, type) => {
+    if (isDisable) {
+      return;
+    }
     e.preventDefault();
     setIsShow(false);
     if (type === "hr_line") {
@@ -59,7 +68,9 @@ export default function SelectFileOptions(props) {
               <div key={`key${index}`}>
                 {is_image && (
                   <div
-                    className={Styles.selectInsert}
+                    className={`${Styles.selectInsert} ${
+                      isDisable ? Styles.disabledButton : ""
+                    }`}
                     onClick={(e) => handleSelect(e, "image")}
                   >
                     {option?.icon ? option.icon : <ImageIcon />}
@@ -68,7 +79,9 @@ export default function SelectFileOptions(props) {
                 )}
                 {is_link && (
                   <div
-                    className={Styles.selectInsert}
+                    className={`${Styles.selectInsert} ${
+                      isDisable ? Styles.disabledButton : ""
+                    }`}
                     onClick={(e) => handleSelect(e, "link")}
                   >
                     {option?.icon ? option.icon : <LinkIcon />}
@@ -77,7 +90,9 @@ export default function SelectFileOptions(props) {
                 )}
                 {is_video && (
                   <div
-                    className={Styles.selectInsert}
+                    className={`${Styles.selectInsert} ${
+                      isDisable ? Styles.disabledButton : ""
+                    }`}
                     onClick={(e) => handleSelect(e, "video")}
                   >
                     {option?.icon ? option.icon : <VideoIcon />}
@@ -86,7 +101,9 @@ export default function SelectFileOptions(props) {
                 )}
                 {is_hr_line && (
                   <div
-                    className={Styles.selectInsert}
+                    className={`${Styles.selectInsert} ${
+                      isDisable ? Styles.disabledButton : ""
+                    }`}
                     onClick={(e) => handleSelect(e, "hr_line")}
                   >
                     {option?.icon ? option.icon : <HorizontalLineIcon />}
@@ -97,7 +114,9 @@ export default function SelectFileOptions(props) {
                 )}
                 {is_special_char && (
                   <div
-                    className={Styles.selectInsert}
+                    className={`${Styles.selectInsert} ${
+                      isDisable ? Styles.disabledButton : ""
+                    }`}
                     onClick={(e) => handleSelect(e, "special_char")}
                   >
                     {option?.icon ? option.icon : <SpecialCharIcon />}

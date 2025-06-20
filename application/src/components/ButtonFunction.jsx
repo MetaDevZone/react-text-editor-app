@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import Styles from "../css/style.module.css";
 
 const ButtonFunction = (props) => {
-  const { name, icon, title, item, disabled, editorRef } = props;
+  const { name, icon, title, item, disabled, editorRef, isDisable } = props;
   const [isSelected, setIsSelected] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
 
   const handleClick = (e, ref) => {
+    if (isDisable) {
+      return;
+    }
     e.preventDefault();
     ref.current.focus();
     if (!ref.current) return;
@@ -30,7 +33,7 @@ const ButtonFunction = (props) => {
       }
       const is_selected = document.queryCommandState(name);
       const isRedoEnabled = document.queryCommandEnabled(name);
-      setIsDisabled(!isRedoEnabled);
+      setIsDisabled(!isRedoEnabled && isDisable);
       setIsSelected(is_selected);
     };
 
@@ -59,7 +62,7 @@ const ButtonFunction = (props) => {
   return (
     <button
       onClick={(e) => handleClick(e, editorRef)}
-      className={handleClasses()}
+      className={`${handleClasses()} ${isDisable ? Styles.disabledButton : ""}`}
       title={item?.title ? item.title : title}
       disabled={disabled}
     >

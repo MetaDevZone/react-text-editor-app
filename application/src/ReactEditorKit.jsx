@@ -60,6 +60,7 @@ import SelectFontFamily from "./components/SelectFontFamily";
 import AlignmentOptions from "./components/AlignmentOptions";
 import FontSize from "./components/FontSize";
 import "react-image-crop/dist/ReactCrop.css";
+import { CheckAccessDataApi } from "./DAL/CheckAcces";
 
 const show_final_options = (options, remove, all_options) => {
   if (!options) {
@@ -110,6 +111,7 @@ export default function ReactEditorKit(props) {
     remove_from_toolbar,
     remove_from_navbar,
     style,
+    apiKey,
     ...others
   } = props;
   const editorRef = useRef(null);
@@ -124,6 +126,7 @@ export default function ReactEditorKit(props) {
   const [targetElement, setTargetElement] = useState(null);
   const [targetElementType, setTargetElementType] = useState(null);
   const [previewContent, setPreviewContent] = useState("");
+  const [isDisable, setIsDisable] = useState(true);
   const [selectedData, setSelectedData] = useState({
     link: "",
     height: "",
@@ -432,6 +435,9 @@ export default function ReactEditorKit(props) {
   };
 
   const handleOpenModel = (e, type, item) => {
+    if (isDisable) {
+      return;
+    }
     e.preventDefault();
     setIsOpenModel(type);
     setSelectedItem(item);
@@ -465,6 +471,9 @@ export default function ReactEditorKit(props) {
   };
 
   const handleSelectAll = (e) => {
+    if (isDisable) {
+      return;
+    }
     e.preventDefault();
     const selection = window.getSelection();
     if (!selection.toString()) {
@@ -478,6 +487,9 @@ export default function ReactEditorKit(props) {
   };
 
   const handleInsertHRClick = () => {
+    if (isDisable) {
+      return;
+    }
     handleFocusEditor();
     document.execCommand("insertHorizontalRule");
   };
@@ -832,6 +844,9 @@ export default function ReactEditorKit(props) {
   };
 
   const handleViewSource = () => {
+    if (isDisable) {
+      return;
+    }
     if (!viewSource && editorRef?.current) {
       const content = editorRef?.current.innerHTML;
       const formattedContent = transformHTML(content);
@@ -843,6 +858,9 @@ export default function ReactEditorKit(props) {
   };
 
   const toggleFullScreen = () => {
+    if (isDisable) {
+      return;
+    }
     setIsFullScreen(!isFullScreen);
   };
 
@@ -976,6 +994,9 @@ export default function ReactEditorKit(props) {
   }, [isFullScreen, editorRef, value]);
 
   const handlePaste = (e) => {
+    if (isDisable) {
+      return;
+    }
     e.preventDefault();
     if (!editorRef.current) {
       setTimeout(() => {
@@ -1226,6 +1247,28 @@ export default function ReactEditorKit(props) {
           }px - 22px)`,
         }
       : {};
+  const CheckAccess = async (apiKey) => {
+    try {
+      const result = await CheckAccessDataApi(apiKey);
+      if (result.code == 200) {
+        if (result.valid) {
+          setIsDisable(false);
+        } else {
+          setIsDisable(true);
+        }
+      } else {
+        setIsDisable(true);
+      }
+    } catch (error) {
+      setIsDisable(true);
+    }
+  };
+
+  useEffect(() => {
+    if (apiKey) {
+      CheckAccess(apiKey);
+    }
+  }, [apiKey]);
 
   return (
     <>
@@ -1270,6 +1313,7 @@ export default function ReactEditorKit(props) {
                         handlePrint={handlePrint}
                         item={item}
                         remove_from_navbar={remove_from_navbar}
+                        isDisable={isDisable}
                       />
                     )}
                     {is_view && (
@@ -1282,6 +1326,7 @@ export default function ReactEditorKit(props) {
                         placeholder={placeholder}
                         value={value}
                         remove_from_navbar={remove_from_navbar}
+                        isDisable={isDisable}
                       />
                     )}
                     {is_insert && (
@@ -1290,6 +1335,7 @@ export default function ReactEditorKit(props) {
                         handleInsertHR={handleInsertHRClick}
                         item={item}
                         remove_from_navbar={remove_from_navbar}
+                        isDisable={isDisable}
                       />
                     )}
                     {is_format && (
@@ -1298,79 +1344,121 @@ export default function ReactEditorKit(props) {
                         isFullScreen={isFullScreen}
                         remove_from_navbar={remove_from_navbar}
                         editorRef={editorRef}
+                        isDisable={isDisable}
                       />
                     )}
 
                     {is_select_all && (
-                      <div className={Styles.increaseIconSize}>
+                      <div
+                        className={`${Styles.increaseIconSize} ${
+                          isDisable ? Styles.disabledButton : ""
+                        }`}
+                      >
                         <button
                           onClick={handleSelectAll}
                           title={item?.title ? item.title : "Select All"}
-                          disabled={isPlaceholder && placeholder && !value}
+                          disabled={
+                            isPlaceholder && placeholder && !value && isDisable
+                          }
                         >
                           {item?.icon ? item.icon : <SelectAll />}
                         </button>
                       </div>
                     )}
                     {is_image && (
-                      <div className={Styles.increaseIconSize}>
+                      <div
+                        className={`${Styles.increaseIconSize} ${
+                          isDisable ? Styles.disabledButton : ""
+                        }`}
+                      >
                         <button
                           onClick={(e) => handleOpenModel(e, "image", item)}
                           title={item?.title ? item.title : "Upload Image"}
+                          disabled={isDisable}
                         >
                           {item?.icon ? item.icon : <ImageIcon />}
                         </button>
                       </div>
                     )}
                     {is_link && (
-                      <div className={Styles.increaseIconSize}>
+                      <div
+                        className={`${Styles.increaseIconSize} ${
+                          isDisable ? Styles.disabledButton : ""
+                        }`}
+                      >
                         <button
                           onClick={(e) => handleOpenModel(e, "link", item)}
                           title={item?.title ? item.title : "Add Link"}
+                          disabled={isDisable}
                         >
                           {item?.icon ? item.icon : <LinkIcon />}
                         </button>
                       </div>
                     )}
                     {is_video && (
-                      <div className={Styles.increaseIconSize}>
+                      <div
+                        className={`${Styles.increaseIconSize} ${
+                          isDisable ? Styles.disabledButton : ""
+                        }`}
+                      >
                         <button
                           onClick={(e) => handleOpenModel(e, "video", item)}
                           title={item?.title ? item.title : "Upload Video"}
+                          disabled={isDisable}
                         >
                           {item?.icon ? item.icon : <VideoIcon />}
                         </button>
                       </div>
                     )}
                     {is_copy && (
-                      <div className={Styles.increaseIconSize}>
+                      <div
+                        className={`${Styles.increaseIconSize} ${
+                          isDisable ? Styles.disabledButton : ""
+                        }`}
+                      >
                         <ButtonFunction
                           editorRef={editorRef}
                           name="copy"
                           icon={<CopyIcon />}
                           title="Copy"
                           item={item}
-                          disabled={isPlaceholder && placeholder && !value}
+                          disabled={
+                            isPlaceholder && placeholder && !value && isDisable
+                          }
                         />
                       </div>
                     )}
                     {is_cut && (
-                      <div className={Styles.increaseIconSize}>
+                      <div
+                        className={`${Styles.increaseIconSize} ${
+                          isDisable ? Styles.disabledButton : ""
+                        }`}
+                      >
                         <ButtonFunction
                           editorRef={editorRef}
                           name="cut"
                           icon={<CutIcon />}
                           title="Cut"
                           item={item}
-                          disabled={isPlaceholder && placeholder && !value}
+                          disabled={
+                            isPlaceholder && placeholder && !value && isDisable
+                          }
                         />
                       </div>
                     )}
                     {is_paste && (
-                      <div className={Styles.increaseIconSize}>
+                      <div
+                        className={`${Styles.increaseIconSize} ${
+                          isDisable ? Styles.disabledButton : ""
+                        }`}
+                      >
                         <button
                           onClick={handlePaste}
                           title={item?.title ? item.title : "Paste"}
+                          disabled={isDisable}
+                          className={` ${
+                            isDisable ? Styles.disabledButton : ""
+                          }`}
                         >
                           {item?.icon ? item.icon : <PasteIcon />}
                         </button>
@@ -1462,6 +1550,7 @@ export default function ReactEditorKit(props) {
                       icon={<UndoIcon />}
                       title={item.title ? item.title : "Undo"}
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_redo && (
@@ -1471,16 +1560,25 @@ export default function ReactEditorKit(props) {
                       icon={<RedoIcon />}
                       title="Redo"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_format && (
                     <SelectFormat
                       remove_from_toolbar={remove_from_toolbar}
                       editorRef={editorRef}
+                      isDisable={isDisable}
                     />
                   )}
-                  {is_fontfamily && <SelectFontFamily editorRef={editorRef} />}
-                  {is_fontSize && <FontSize editorRef={editorRef} />}
+                  {is_fontfamily && (
+                    <SelectFontFamily
+                      editorRef={editorRef}
+                      isDisable={isDisable}
+                    />
+                  )}
+                  {is_fontSize && (
+                    <FontSize editorRef={editorRef} isDisable={isDisable} />
+                  )}
                   {is_bold && (
                     <ButtonFunction
                       editorRef={editorRef}
@@ -1488,6 +1586,7 @@ export default function ReactEditorKit(props) {
                       icon={<BoldIcon />}
                       title="Bold"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_italic && (
@@ -1497,6 +1596,7 @@ export default function ReactEditorKit(props) {
                       icon={<ItalicIcon />}
                       title="Italic"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_underline && (
@@ -1506,6 +1606,7 @@ export default function ReactEditorKit(props) {
                       icon={<UnderlineIcon />}
                       title="Underline"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_superscript && (
@@ -1515,6 +1616,7 @@ export default function ReactEditorKit(props) {
                       icon={<SuperscriptIcon />}
                       title="Superscript"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_subscript && (
@@ -1524,9 +1626,15 @@ export default function ReactEditorKit(props) {
                       icon={<SubscriptIcon />}
                       title="Subscript"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
-                  {is_alignment && <AlignmentOptions editorRef={editorRef} />}
+                  {is_alignment && (
+                    <AlignmentOptions
+                      editorRef={editorRef}
+                      isDisable={isDisable}
+                    />
+                  )}
 
                   {is_alignLeft && (
                     <ButtonFunction
@@ -1535,6 +1643,7 @@ export default function ReactEditorKit(props) {
                       icon={<AlignLeft />}
                       title="Align Left"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_alignCenter && (
@@ -1544,6 +1653,7 @@ export default function ReactEditorKit(props) {
                       icon={<AlignCenter />}
                       title="Align Center"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_alignRight && (
@@ -1553,6 +1663,7 @@ export default function ReactEditorKit(props) {
                       icon={<AlignRight />}
                       title="Align Right"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_alignJustify && (
@@ -1562,6 +1673,7 @@ export default function ReactEditorKit(props) {
                       icon={<AlignJustify />}
                       title="Align Justify"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_indent && (
@@ -1571,6 +1683,7 @@ export default function ReactEditorKit(props) {
                       icon={<IncreaseIndentIcon />}
                       title="Increase IndentIcon"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_outdent && (
@@ -1580,6 +1693,7 @@ export default function ReactEditorKit(props) {
                       icon={<DecreaseIndentIcon />}
                       title="Decrease IndentIcon"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_orderedList && (
@@ -1589,6 +1703,7 @@ export default function ReactEditorKit(props) {
                       icon={<OrderdList />}
                       title="Insert/Remove Numbered List"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_unorderedList && (
@@ -1598,6 +1713,7 @@ export default function ReactEditorKit(props) {
                       icon={<UnorderdList />}
                       title="Insert/Remove Bulleted List"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_removeFormat && (
@@ -1607,6 +1723,7 @@ export default function ReactEditorKit(props) {
                       icon={<ClearFormatting />}
                       title="Remove Format"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_textColor && (
@@ -1615,6 +1732,7 @@ export default function ReactEditorKit(props) {
                       title="Text Color"
                       item={item}
                       editorRef={editorRef}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_backgroundColor && (
@@ -1623,6 +1741,7 @@ export default function ReactEditorKit(props) {
                       title="Background Color"
                       item={item}
                       editorRef={editorRef}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_ltr && (
@@ -1632,6 +1751,7 @@ export default function ReactEditorKit(props) {
                       item={item}
                       icon={<LTRIcon />}
                       editorRef={editorRef}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_rtl && (
@@ -1641,6 +1761,7 @@ export default function ReactEditorKit(props) {
                       item={item}
                       icon={<RTLIcon />}
                       editorRef={editorRef}
+                      isDisable={isDisable}
                     />
                   )}
 
@@ -1648,7 +1769,10 @@ export default function ReactEditorKit(props) {
                     <button
                       onClick={handleSelectAll}
                       title={item?.title ? item.title : "Select All"}
-                      disabled={isPlaceholder && placeholder && !value}
+                      disabled={
+                        isPlaceholder && placeholder && !value && isDisable
+                      }
+                      className={` ${isDisable ? Styles.disabledButton : ""}`}
                     >
                       {item?.icon ? item.icon : <SelectAll />}
                     </button>
@@ -1657,6 +1781,8 @@ export default function ReactEditorKit(props) {
                     <button
                       onClick={(e) => handleOpenModel(e, "image", item)}
                       title={item?.title ? item.title : "Upload Image"}
+                      className={` ${isDisable ? Styles.disabledButton : ""}`}
+                      disabled={isDisable}
                     >
                       {item?.icon ? item.icon : <ImageIcon />}
                     </button>
@@ -1665,6 +1791,8 @@ export default function ReactEditorKit(props) {
                     <button
                       onClick={(e) => handleOpenModel(e, "link", item)}
                       title={item?.title ? item.title : "Add Link"}
+                      className={` ${isDisable ? Styles.disabledButton : ""}`}
+                      disabled={isDisable}
                     >
                       {item?.icon ? item.icon : <LinkIcon />}
                     </button>
@@ -1673,6 +1801,8 @@ export default function ReactEditorKit(props) {
                     <button
                       onClick={(e) => handleOpenModel(e, "video", item)}
                       title={item?.title ? item.title : "Upload Video"}
+                      className={` ${isDisable ? Styles.disabledButton : ""}`}
+                      disabled={isDisable}
                     >
                       {item?.icon ? item.icon : <VideoIcon />}
                     </button>
@@ -1684,7 +1814,10 @@ export default function ReactEditorKit(props) {
                       icon={<CopyIcon />}
                       title="Copy"
                       item={item}
-                      disabled={isPlaceholder && placeholder && !value}
+                      disabled={
+                        isPlaceholder && placeholder && !value && isDisable
+                      }
+                      isDisable={isDisable}
                     />
                   )}
                   {is_cut && (
@@ -1694,13 +1827,18 @@ export default function ReactEditorKit(props) {
                       icon={<CutIcon />}
                       title="Cut"
                       item={item}
-                      disabled={isPlaceholder && placeholder && !value}
+                      disabled={
+                        isPlaceholder && placeholder && !value && isDisable
+                      }
+                      isDisable={isDisable}
                     />
                   )}
                   {is_paste && (
                     <button
                       onClick={handlePaste}
                       title={item?.title ? item.title : "Paste"}
+                      className={` ${isDisable ? Styles.disabledButton : ""}`}
+                      disabled={isDisable}
                     >
                       {item?.icon ? item.icon : <PasteIcon />}
                     </button>
@@ -1710,6 +1848,8 @@ export default function ReactEditorKit(props) {
                       <button
                         onClick={handleViewSource}
                         title={item?.title || "Source Code"}
+                        className={` ${isDisable ? Styles.disabledButton : ""}`}
+                        disabled={isDisable}
                       >
                         <CodeIcon />
                       </button>
@@ -1719,6 +1859,8 @@ export default function ReactEditorKit(props) {
                     <div className={Styles.increaseIconSize}>
                       <button
                         onClick={toggleFullScreen}
+                        className={` ${isDisable ? Styles.disabledButton : ""}`}
+                        disabled={isDisable}
                         title={
                           isFullScreen
                             ? item?.title || "Exit Full Screen"
@@ -1743,6 +1885,8 @@ export default function ReactEditorKit(props) {
                       <button
                         onClick={handleInsertHRClick}
                         title={item?.title || "Horizontal Line"}
+                        className={` ${isDisable ? Styles.disabledButton : ""}`}
+                        disabled={isDisable}
                       >
                         <HorizontalLineIcon />
                       </button>
@@ -1753,6 +1897,8 @@ export default function ReactEditorKit(props) {
                       <button
                         onClick={(e) => handleOpenModel(e, "special_char")}
                         title={item?.title || "Special Char"}
+                        className={` ${isDisable ? Styles.disabledButton : ""}`}
+                        disabled={isDisable}
                       >
                         <SpecialCharIcon />
                       </button>
@@ -1764,17 +1910,29 @@ export default function ReactEditorKit(props) {
           </div>
         </div>
         <div className={`${Styles.content__editable__container}`}>
+          {isDisable && (
+            <div className={`${Styles.warning_container}`}>
+              ⚠️ Please enter a valid API key to continue{" "}
+              <a
+                href="https://6000-firebase-studio-1750316005416.cluster-73qgvk7hjjadkrjeyexca5ivva.cloudworkstations.dev/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Learn More
+              </a>
+            </div>
+          )}
           <div
             {...others}
             className={`${Styles.mlMainContentBox}`}
             autoFocus={isFullScreen}
-            contentEditable
+            contentEditable={!isDisable}
             ref={editorRef}
             onPaste={onPaste}
             spellCheck="true"
             onInput={handleInput}
             onBlur={handleBlur}
-            data-placeholder={placeholder}
+            data-placeholder={isDisable ? "" : placeholder}
             onKeyDown={handleEditorKeyDown}
             // id="editable"
             style={{ ...style, ...dynamicStyle }}
@@ -1788,6 +1946,7 @@ export default function ReactEditorKit(props) {
             selectedEvent={selectedEvent}
             handleRemoveLink={handleRemoveLink}
             selectedRange={selectedRange}
+            isDisable={isDisable}
           />
         </div>
       </div>

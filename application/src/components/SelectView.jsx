@@ -13,12 +13,16 @@ export default function SelectFileOptions(props) {
     placeholder,
     value,
     remove_from_navbar,
+    isDisable,
   } = props;
   let options = item.options;
 
   const [isShow, setIsShow] = useState(false);
 
   const handleSelect = (e, type, option) => {
+    if (isDisable) {
+      return;
+    }
     e.preventDefault();
     setIsShow(false);
     if (option?.handleClick) {
@@ -66,7 +70,9 @@ export default function SelectFileOptions(props) {
             <div key={`key${index}`}>
               {is_source_code && (
                 <div
-                  className={Styles.selectInsert}
+                  className={`${Styles.selectInsert} ${
+                    isDisable ? Styles.disabledButton : ""
+                  }`}
                   onClick={(e) => handleSelect(e, "code", option)}
                 >
                   {option?.icon ? option.icon : <CodeIcon />}
@@ -75,7 +81,9 @@ export default function SelectFileOptions(props) {
               )}
               {is_full_screen && (
                 <div
-                  className={Styles.selectInsert}
+                  className={`${Styles.selectInsert} ${
+                    isDisable ? Styles.disabledButton : ""
+                  }`}
                   onClick={(e) => handleSelect(e, "screen", option)}
                 >
                   {option?.icon ? (

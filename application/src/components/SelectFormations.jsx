@@ -18,7 +18,7 @@ import { FORMAT_OPTIONS, generateRandomID } from "./constant";
 import Styles from "../css/style.module.css";
 
 export default function SelectFileOptions(props) {
-  let { item, isFullScreen, remove_from_navbar, editorRef } = props;
+  let { item, isFullScreen, remove_from_navbar, editorRef, isDisable } = props;
   let options = item.options;
   if (!options) {
     options = FORMAT_OPTIONS;
@@ -30,6 +30,9 @@ export default function SelectFileOptions(props) {
   const random_id = generateRandomID(16);
 
   const handleShowFamily = (option, event) => {
+    if (isDisable) {
+      return;
+    }
     if (event) {
       let parent = document.getElementById(random_id);
       let parent_top = parent.getBoundingClientRect().top;
@@ -98,7 +101,9 @@ export default function SelectFileOptions(props) {
               <>
                 {is_bold && (
                   <button
-                    className={Styles.selectInsert}
+                    className={`${Styles.selectInsert} ${
+                      isDisable ? Styles.disabledButton : ""
+                    }`}
                     onClick={(e) => handleClick(e, "bold", option)}
                   >
                     {option?.icon ? option.icon : <BoldIcon />}
@@ -107,7 +112,9 @@ export default function SelectFileOptions(props) {
                 )}
                 {is_italic && (
                   <button
-                    className={Styles.selectInsert}
+                    className={`${Styles.selectInsert} ${
+                      isDisable ? Styles.disabledButton : ""
+                    }`}
                     onClick={(e) => handleClick(e, "italic", option)}
                   >
                     {option?.icon ? option.icon : <ItalicIcon />}
@@ -116,7 +123,9 @@ export default function SelectFileOptions(props) {
                 )}
                 {is_underline && (
                   <button
-                    className={Styles.selectInsert}
+                    className={`${Styles.selectInsert} ${
+                      isDisable ? Styles.disabledButton : ""
+                    }`}
                     onClick={(e) => handleClick(e, "underline", option)}
                   >
                     {option?.icon ? option.icon : <UnderlineIcon />}
@@ -125,7 +134,9 @@ export default function SelectFileOptions(props) {
                 )}
                 {is_superscript && (
                   <button
-                    className={Styles.selectInsert}
+                    className={`${Styles.selectInsert} ${
+                      isDisable ? Styles.disabledButton : ""
+                    }`}
                     onClick={(e) => handleClick(e, "superscript", option)}
                   >
                     {option?.icon ? option.icon : <SuperscriptIcon />}
@@ -134,7 +145,9 @@ export default function SelectFileOptions(props) {
                 )}
                 {is_subscript && (
                   <button
-                    className={Styles.selectInsert}
+                    className={`${Styles.selectInsert} ${
+                      isDisable ? Styles.disabledButton : ""
+                    }`}
                     onClick={(e) => handleClick(e, "subscript", option)}
                   >
                     {option?.icon ? option.icon : <SubscriptIcon />}
@@ -148,7 +161,11 @@ export default function SelectFileOptions(props) {
                     }}
                     onMouseLeave={handleHideChildOptions}
                   >
-                    <div className={Styles.selectInsert}>
+                    <div
+                      className={`${Styles.selectInsert} ${
+                        isDisable ? Styles.disabledButton : ""
+                      }`}
+                    >
                       {option?.icon ? option.icon : <FontFamilyIcon />}
                       <span>
                         {option?.title ? option.title : "Font Family"}
@@ -163,7 +180,11 @@ export default function SelectFileOptions(props) {
                     }}
                     onMouseLeave={handleHideChildOptions}
                   >
-                    <div className={Styles.selectInsert}>
+                    <div
+                      className={`${Styles.selectInsert} ${
+                        isDisable ? Styles.disabledButton : ""
+                      }`}
+                    >
                       {option?.icon ? option.icon : <FontSizeIcon />}
                       <span>{option?.title ? option.title : "Font Size"}</span>
                     </div>
@@ -176,7 +197,11 @@ export default function SelectFileOptions(props) {
                     }}
                     onMouseLeave={handleHideChildOptions}
                   >
-                    <div className={Styles.selectInsert}>
+                    <div
+                      className={`${Styles.selectInsert} ${
+                        isDisable ? Styles.disabledButton : ""
+                      }`}
+                    >
                       {option?.icon ? option.icon : <AlignLeft />}
                       <span>{option?.title ? option.title : "Align"}</span>
                     </div>

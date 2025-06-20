@@ -15,6 +15,7 @@ const RightClickLinkPopup = ({
   setImageUrl,
   handleRemoveLink,
   selectedRange,
+  isDisable,
 }) => {
   const popupRef = useRef(null);
   const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 });
@@ -29,6 +30,9 @@ const RightClickLinkPopup = ({
   };
 
   const handleRightClick = (event) => {
+    if (isDisable) {
+      return;
+    }
     event.preventDefault();
     remove_resizer();
     const target = event.target;
