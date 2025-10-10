@@ -71,7 +71,7 @@ export default function ImageModal(props) {
         setErrorMessage(error_message);
         return;
       }
-      onImageInsert(inputs);
+      onImageInsert(inputs, "_");
     } else {
       if (!inputs.image) {
         let error_message = "Please upload image";
@@ -97,7 +97,7 @@ export default function ImageModal(props) {
         setIsLoading(false);
         return;
       }
-      onImageInsert(inputs);
+      onImageInsert(inputs, "_");
     }
   };
 

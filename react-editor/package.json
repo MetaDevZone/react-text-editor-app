@@ -23,8 +23,13 @@
   ],
   "scripts": {
     "remove_nm": "rimraf node_modules package-lock.json",
-    "build": "webpack"
+    "build": "webpack",
+    "prepublishOnly": "npm run build"
   },
+  "files": [
+    "build",
+    "README.md"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/MetaDevZone/react-text-editor-app"

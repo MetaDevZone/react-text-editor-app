@@ -10,6 +10,7 @@ export default function SelectFileOptions(props) {
     handlePrint,
     item,
     remove_from_navbar,
+    isDisable,
   } = props;
 
   let options = item.options;
@@ -17,6 +18,9 @@ export default function SelectFileOptions(props) {
 
   const handleSelect = (e, type, option) => {
     e.preventDefault();
+    if (isDisable) {
+      return;
+    }
     setIsShow(false);
     if (option?.handleClick) {
       option.handleClick(option, item);
@@ -71,7 +75,9 @@ export default function SelectFileOptions(props) {
             <div key={`key${index}`}>
               {is_new_document && (
                 <div
-                  className={Styles.selectInsert}
+                  className={`${Styles.selectInsert} ${
+                    isDisable ? Styles.disabledButton : ""
+                  }`}
                   onClick={(e) => handleSelect(e, "new_document", option)}
                 >
                   {option?.icon ? option.icon : <EmptyFileIcon />}
@@ -80,7 +86,9 @@ export default function SelectFileOptions(props) {
               )}
               {is_preview && (
                 <div
-                  className={Styles.selectInsert}
+                  className={`${Styles.selectInsert} ${
+                    isDisable ? Styles.disabledButton : ""
+                  }`}
                   onClick={(e) => handleSelect(e, "preview", option)}
                 >
                   {option?.icon ? option.icon : <PreviewIcon />}
@@ -89,7 +97,9 @@ export default function SelectFileOptions(props) {
               )}
               {is_print && (
                 <div
-                  className={Styles.selectInsert}
+                  className={`${Styles.selectInsert} ${
+                    isDisable ? Styles.disabledButton : ""
+                  }`}
                   onClick={(e) => handleSelect(e, "print", option)}
                 >
                   {option?.icon ? option.icon : <PrintIcon />}

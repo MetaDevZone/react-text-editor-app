@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import ReactEditorKit from "react-text-editor-kit";
+import ReactEditorKit from "../ReactEditorKit";
+// import ReactEditorKit from "react-text-editor-kit";
 
 export default function AnOtherPage() {
   const [value, setValue] = useState("");
-
+  console.log(value, "value");
   return (
     <>
       <ReactEditorKit
@@ -11,6 +12,8 @@ export default function AnOtherPage() {
         onChange={setValue}
         mainProps={{ className: "red" }}
         placeholder="Please Write Something..."
+        apiKey={""}
+        height={"400px"}
       />
       {/* <ReactEditorKit
         value={value1}

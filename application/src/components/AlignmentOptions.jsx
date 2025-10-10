@@ -6,7 +6,7 @@ import AlignJustify from "./SVGImages/AlignJustify";
 import AlignRight from "./SVGImages/AlignRight";
 import ArrowDown from "./SVGImages/ArrowDown";
 
-function AlignmentOptions({ editorRef }) {
+function AlignmentOptions({ editorRef, isDisable }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Alignment");
   const selectRef = useRef(null);
@@ -19,6 +19,9 @@ function AlignmentOptions({ editorRef }) {
   ];
 
   const toggleSelect = (e) => {
+    if (isDisable) {
+      return;
+    }
     e.preventDefault();
     setIsOpen(!isOpen);
   };
@@ -95,9 +98,12 @@ function AlignmentOptions({ editorRef }) {
 
   return (
     <button
-      className={Styles.customSelectFormat}
+      className={`${Styles.customSelectFormat} ${
+        isDisable ? Styles.disabledButton : ""
+      }`}
       onClick={toggleSelect}
       ref={selectRef}
+      disabled={isDisable}
     >
       <div style={{ display: "flex" }}>
         {selectedOption === "Alignment" ? (

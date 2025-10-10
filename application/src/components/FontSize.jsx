@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Styles from "../css/style.module.css";
 import ArrowDown from "./SVGImages/ArrowDown";
 
-function FontSize({ editorRef }) {
+function FontSize({ editorRef, isDisable }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("16px");
   const selectRef = useRef(null);
@@ -24,6 +24,9 @@ function FontSize({ editorRef }) {
   ];
 
   const toggleSelect = (e) => {
+    if (isDisable) {
+      return;
+    }
     e.preventDefault();
     setIsOpen(!isOpen);
   };
@@ -153,9 +156,12 @@ function FontSize({ editorRef }) {
 
   return (
     <button
-      className={Styles.customSelectFormat}
+      className={`${Styles.customSelectFormat} ${
+        isDisable ? Styles.disabledButton : ""
+      }`}
       onClick={toggleSelect}
       ref={selectRef}
+      disabled={isDisable}
     >
       <div className={Styles.selectSelected}>
         {selectedOption}
