@@ -20,7 +20,7 @@ To test React Text Editor Kit on CodeSandbox, click [here](https://codesandbox.i
 
 ## Simple Usage
 
-```tsx
+````tsx
 import { useState } from "react";
 import ReactEditor from "react-text-editor-kit";
 
@@ -63,6 +63,7 @@ function App() {
         onChange={handleChange}
         mainProps={{ className: "red" }} // these props with b used to most parent div of the editor
         placeholder="Write your text here"
+        apiKey={process.env.REACT_APP_EDITOR_API_KEY} // required: set to your editor API key (see "API Key" section)
         // image_handler={image_handler} // if you want to upload image on your server
       />
     </div>
@@ -70,7 +71,25 @@ function App() {
 }
 
 export default App;
+
+### API Key
+
+The editor requires an API key to run. Pass the key via the `apiKey` prop on the `ReactEditor` component. For local development with Create React App put the key in an `.env` file:
+
+```text
+REACT_APP_EDITOR_API_KEY=your_api_key_here
+````
+
+Then use the environment variable in your code:
+
+```jsx
+<ReactEditor apiKey={process.env.REACT_APP_EDITOR_API_KEY} ... />
 ```
+
+- Keep the API key secret; don't commit it to Git. Use CI/CD secrets for automated deployments.
+- If `apiKey` is missing the editor may refuse to initialize or run with limited functionality depending on your server setup.
+
+````
 
 ## Toolbar and Navbar Customization
 
@@ -175,7 +194,7 @@ const toolbar = [
   navbar={navbar}
   toolbar={toolbar}
 />;
-```
+````
 
 if you want to show all child options in navbar you should not have to pass options array. You can use it like
 
