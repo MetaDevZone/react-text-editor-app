@@ -4,7 +4,7 @@ import ReactEditorKit from "../ReactEditorKit";
 
 export default function AnOtherPage() {
   const [value, setValue] = useState("");
-
+  console.log(value, "value");
   return (
     <>
       <ReactEditorKit
@@ -12,7 +12,8 @@ export default function AnOtherPage() {
         onChange={setValue}
         mainProps={{ className: "red" }}
         placeholder="Please Write Something..."
-        apiKey={"mysuper_key"}
+        apiKey={"a3eb9a4f-6758-4c3e-ba0f-75ddf059f3c7"}
+        height={"400px"}
       />
       {/* <ReactEditorKit
         value={value1}

@@ -1,12 +1,10 @@
 import { invokeApi } from "../bl_libs/invokeApi";
 
-export const CheckAccessDataApi = async (apiKey) => {
+export const CheckAccessDataApi = async (data) => {
   const requestObj = {
-    path: `http://192.168.1.72:8080/api/validatekey/${apiKey}`,
-    method: "GET",
-    headers: {
-      // "x-sh-auth": localStorage.getItem("token"),
-    },
+    path: `https://reacteditorapi.metadevzone.com/validate`,
+    method: "POST",
+    postData: data,
   };
   return invokeApi(requestObj);
 };

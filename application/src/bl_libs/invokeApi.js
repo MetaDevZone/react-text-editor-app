@@ -3,7 +3,6 @@ import axios from "axios";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-const _url = "https://cors-anywhere.herokuapp.com/";
 export async function invokeApi({
   path,
   method = "GET",
@@ -45,7 +44,6 @@ export async function invokeApi({
 
     if (error.response.status === 401) {
       localStorage.clear();
-      window.location.reload();
     }
     return {
       code: error.response.status,
