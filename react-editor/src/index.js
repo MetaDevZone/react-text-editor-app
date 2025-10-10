@@ -59,7 +59,11 @@ import RightClickLinkPopup from "./components/RightClickLinkPopup";
 import SelectFontFamily from "./components/SelectFontFamily";
 import AlignmentOptions from "./components/AlignmentOptions";
 import FontSize from "./components/FontSize";
+import LineHeight from "./components/LineHeight";
+
 import "react-image-crop/dist/ReactCrop.css";
+import { CheckAccessDataApi } from "./DAL/CheckAcces";
+import { getBaseDomain } from "./utils/Constants";
 
 const show_final_options = (options, remove, all_options) => {
   if (!options) {
@@ -82,7 +86,6 @@ const show_final_options = (options, remove, all_options) => {
 };
 
 const isValidURL = (str) => {
-  // Regular expression to check if the string is a valid URL
   const pattern = new RegExp(
     "^(https?:\\/\\/)?" + // protocol
       "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
@@ -91,7 +94,7 @@ const isValidURL = (str) => {
       "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
       "(\\#[-a-z\\d_]*)?$",
     "i"
-  ); // fragment locator
+  );
   return pattern.test(str);
 };
 
@@ -110,6 +113,8 @@ export default function ReactEditorKit(props) {
     remove_from_toolbar,
     remove_from_navbar,
     style,
+    apiKey,
+    height,
     ...others
   } = props;
   const editorRef = useRef(null);
@@ -124,6 +129,8 @@ export default function ReactEditorKit(props) {
   const [targetElement, setTargetElement] = useState(null);
   const [targetElementType, setTargetElementType] = useState(null);
   const [previewContent, setPreviewContent] = useState("");
+  const [isDisable, setIsDisable] = useState(false);
+  const [allowPaste, setAllowPaste] = useState(true);
   const [selectedData, setSelectedData] = useState({
     link: "",
     height: "",
@@ -132,6 +139,7 @@ export default function ReactEditorKit(props) {
     text: "",
     open_new_tab: false,
   });
+  console.log(isDisable, "isDisableisDisable");
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isPlaceholder, setIsPlaceholder] = useState(true);
   const [selectedItem, setSelectedItem] = useState({});
@@ -139,7 +147,6 @@ export default function ReactEditorKit(props) {
   const [showHR1, setShowHR1] = useState(false);
   const [showHR2, setShowHR2] = useState(false);
   const [showHR3, setShowHR3] = useState(false);
-
   const checkIfImageExists = () => {
     const editor = editorRef?.current;
     if (editor) {
@@ -152,10 +159,17 @@ export default function ReactEditorKit(props) {
     }
     return false;
   };
-
   const handleInput = () => {
-    setInit(true);
+    console.log("Input event triggered");
 
+    //if isDisable is true  set editor content to empty and  contentEditable to false
+    if (isDisable && editorRef.current) {
+      editorRef.current.innerHTML = "";
+      editorRef.current.setAttribute("contentEditable", "false");
+      return;
+    }
+
+    setInit(true);
     const editor = editorRef?.current;
     if (!editor) return;
 
@@ -206,7 +220,13 @@ export default function ReactEditorKit(props) {
         selection.addRange(range);
       };
 
-      const traverse = (node) => {
+      const traverse = (node, depth = 0) => {
+        // Prevent infinite recursion
+        if (depth > 100) {
+          console.warn("Maximum traversal depth reached");
+          return;
+        }
+
         if (node.nodeType === Node.TEXT_NODE) {
           if (offset <= node.length) {
             setCaret(node, offset);
@@ -216,7 +236,7 @@ export default function ReactEditorKit(props) {
           }
         } else {
           for (let i = 0; i < node.childNodes.length; i++) {
-            traverse(node.childNodes[i]);
+            traverse(node.childNodes[i], depth + 1);
           }
         }
       };
@@ -227,41 +247,17 @@ export default function ReactEditorKit(props) {
     }
 
     function clearEditorFormatting(editor, tempDiv) {
-      if (
-        editor.getAttribute("data-mlx-editor-empty") ||
-        editor.classList.contains("empty")
-      ) {
-        editor.setAttribute("data-mlx-editor-empty", "true");
-
-        let childdiv;
-        if (tempDiv.tagName.toLowerCase() === "div") {
-          // Create a new <p> element
-          const p = document.createElement("p");
-          // Copy the contents of tempDiv to the <p> element
-          p.innerHTML = tempDiv.innerHTML;
-          // Preserve attributes if needed
-          for (let attr of tempDiv.attributes) {
-            p.setAttribute(attr.name, attr.value);
-          }
-          childdiv = p.outerHTML;
-        } else {
-          childdiv = tempDiv.outerHTML;
-        }
-        editor.innerHTML = childdiv;
-        return;
-      }
-
+      // Always clear to truly empty string
       editor.setAttribute("data-mlx-editor-empty", "true");
       // Save current selection
       const selection = window.getSelection();
       const range = document.createRange();
       // Completely clear the editor
-
       range.selectNodeContents(editor);
       range.collapse(true);
       selection.removeAllRanges();
       selection.addRange(range);
-      editor.innerHTML = "<p><br></p>";
+      editor.innerHTML = "";
       document.execCommand("removeFormat", false, null);
       // Reset any formatting
       // Optional: Reset any CSS styles
@@ -275,34 +271,47 @@ export default function ReactEditorKit(props) {
 
     tempDiv.innerHTML = content;
 
-    let checkEditorIsEmptyAndGetTagName = isEditorEmpty(editor.innerHTML);
-    // First check if the content is "effectively empty" (if spaces exist then condition will be false)
+    let checkEditorIsEmptyAndGetTagName = isEditorEmpty(content);
+    // First check if the content is "effectively empty"
+    // Allow spaces at the beginning - don't strip them when checking for empty content
+    const hasOnlySpaces =
+      tempDiv.textContent &&
+      tempDiv.textContent.replace(/[\s\u00A0]/g, "").length === 0 &&
+      tempDiv.textContent.length > 0;
+
     const isEffectivelyEmpty =
-      (!tempDiv.textContent ||
-        tempDiv.textContent.replace(/\s/g, "").length === 0) &&
+      (!tempDiv.textContent || tempDiv.textContent.length === 0) &&
       checkEditorIsEmptyAndGetTagName.isEmpty;
 
     if (isEffectivelyEmpty) {
       clearEditorFormatting(editor, checkEditorIsEmptyAndGetTagName.tempDiv);
+      onChange?.("");
     } else {
       editor.removeAttribute("data-mlx-editor-empty");
       onChange?.(tempDiv.innerHTML);
     }
+
+    // Update placeholder state after content changes
+    handlePlaceholder();
   };
 
   function isEditorEmpty(html) {
     // Create a temporary DOM element to parse and inspect the structure
     const temp = document.createElement("div");
     temp.innerHTML = html;
-    // Remove whitespace text nodes with text type elements
+    // Remove only completely empty text nodes, but preserve those with spaces
     temp.childNodes.forEach((node) => {
-      if (node.type == Node.TEXT_NODE && !node.textContent.trim()) {
+      if (node.nodeType === Node.TEXT_NODE && node.textContent === "") {
         temp.removeChild(node);
       }
     });
 
-    // Case 1: Only a single <br>
-    if (temp.children.length === 0 || temp.innerHTML === "<br>") {
+    // Case 1: Only a single <br> or empty
+    if (
+      temp.children.length === 0 ||
+      temp.innerHTML === "<br>" ||
+      temp.innerHTML === ""
+    ) {
       let pTagDiv = document.createElement("P");
       pTagDiv.innerHTML = "<br>";
       return { tempDiv: pTagDiv, isEmpty: true };
@@ -317,8 +326,49 @@ export default function ReactEditorKit(props) {
       return { tempDiv: temp.children[0], isEmpty: true };
     }
 
+    // Case 3: Only a <p>&nbsp;</p>, <p> </p> (unicode nbsp), or <p> </p> (treat as empty)
+    if (temp.children.length === 1 && temp.children[0].tagName === "P") {
+      const inner = temp.children[0].innerHTML;
+      // Check for HTML &nbsp;, unicode nbsp, or only whitespace
+      if (inner === "&nbsp;" || inner === "\u00A0") {
+        let pTagDiv = document.createElement("P");
+        pTagDiv.innerHTML = "<br>";
+        return { tempDiv: pTagDiv, isEmpty: true };
+      }
+    }
+
     return { isEmpty: false };
   }
+
+  // Helper function to clone formatting from a text node's parent elements
+  const cloneFormatting = (textNode, textContent) => {
+    const formattingElements = [
+      "B",
+      "STRONG",
+      "I",
+      "EM",
+      "U",
+      "S",
+      "STRIKE",
+      "SUB",
+      "SUP",
+      "SPAN",
+    ];
+    let currentNode = textNode.parentNode;
+    let formattedElement = document.createTextNode(textContent);
+
+    // Traverse up the DOM tree to find formatting elements
+    while (currentNode && currentNode !== editorRef.current) {
+      if (formattingElements.includes(currentNode.nodeName)) {
+        const clonedElement = currentNode.cloneNode(false); // Clone without children
+        clonedElement.appendChild(formattedElement);
+        formattedElement = clonedElement;
+      }
+      currentNode = currentNode.parentNode;
+    }
+
+    return formattedElement;
+  };
 
   const handleEditorKeyDown = (event) => {
     if (event.key === "Enter" && !event.shiftKey) {
@@ -362,69 +412,139 @@ export default function ReactEditorKit(props) {
         return;
       }
 
-      // Step 1: Find the containing <p>
-      while (
-        currentNode &&
-        currentNode.nodeName !== "P" &&
-        currentNode !== editor
-      ) {
-        currentNode = currentNode.parentNode;
+      // Step 1: Find the containing block element (P, H1, H2, etc.)
+      let currentBlock = null;
+      let container = range.startContainer;
+
+      // Traverse up to find existing block element
+      while (container && container !== editor) {
+        if (
+          container.nodeName === "P" ||
+          container.nodeName === "H1" ||
+          container.nodeName === "H2" ||
+          container.nodeName === "H3" ||
+          container.nodeName === "H4" ||
+          container.nodeName === "H5" ||
+          container.nodeName === "H6" ||
+          container.nodeName === "DIV"
+        ) {
+          currentBlock = container;
+          break;
+        }
+        container = container.parentNode;
       }
 
-      let currentP = currentNode?.nodeName === "P" ? currentNode : null;
+      // If no block element found, create a paragraph
+      if (!currentBlock) {
+        currentBlock = document.createElement("p");
+        // Move all content into the paragraph
+        while (editor.firstChild) {
+          currentBlock.appendChild(editor.firstChild);
+        }
+        editor.appendChild(currentBlock);
 
-      // Step 2: Wrap if no <p> exists
-      if (!currentP) {
-        currentP = document.createElement("p");
-        currentP.appendChild(document.createElement("br"));
-        editor.appendChild(currentP);
+        // Set cursor at the end of the new paragraph
         const newRange = document.createRange();
-        newRange.setStart(currentP, 0);
-        newRange.collapse(true);
+        newRange.selectNodeContents(currentBlock);
+        newRange.collapse(false);
         selection.removeAllRanges();
         selection.addRange(newRange);
         return;
       }
 
-      // Step 3: Split text manually at caret position
+      // Step 2: Determine what tag to create for the new line
+      let newTagName = "p"; // Default to paragraph
+
+      // Check if current block is a heading tag
+      if (
+        currentBlock.nodeName === "H1" ||
+        currentBlock.nodeName === "H2" ||
+        currentBlock.nodeName === "H3" ||
+        currentBlock.nodeName === "H4" ||
+        currentBlock.nodeName === "H5" ||
+        currentBlock.nodeName === "H6"
+      ) {
+        // Check if there's text after the cursor position
+        const offset = range.startOffset;
+        const textContainer = range.startContainer;
+        let hasTextAfterCursor = false;
+
+        if (textContainer.nodeType === Node.TEXT_NODE) {
+          const text = textContainer.nodeValue;
+          const afterText = text.slice(offset);
+          hasTextAfterCursor = afterText.trim() !== "";
+        } else {
+          // If cursor is at element boundary, check if there are more text nodes after
+          let nextNode = textContainer.nextSibling;
+          while (nextNode) {
+            if (
+              nextNode.nodeType === Node.TEXT_NODE &&
+              nextNode.textContent.trim() !== ""
+            ) {
+              hasTextAfterCursor = true;
+              break;
+            }
+            nextNode = nextNode.nextSibling;
+          }
+        }
+
+        if (hasTextAfterCursor) {
+          // If there's text after cursor, create same type of heading
+          newTagName = currentBlock.nodeName.toLowerCase();
+        } else {
+          // If no text after cursor, always create paragraph
+          newTagName = "p";
+        }
+      }
+
+      // Step 3: Split the block at cursor position
       const offset = range.startOffset;
-      const container = range.startContainer;
+      const textContainer = range.startContainer;
 
-      const newP = document.createElement("p");
+      // Create new block element for the split content
+      const newBlock = document.createElement(newTagName);
 
-      if (container.nodeType === Node.TEXT_NODE) {
-        const text = container.nodeValue;
+      if (textContainer.nodeType === Node.TEXT_NODE) {
+        const text = textContainer.nodeValue;
         const beforeText = text.slice(0, offset);
         const afterText = text.slice(offset);
 
-        // Update current node text
-        container.nodeValue = beforeText;
+        // Update current text node with text before cursor
+        textContainer.nodeValue = beforeText;
 
-        // Insert after text into new <p>
-        if (afterText) {
-          const afterTextNode = document.createTextNode(afterText);
-          newP.appendChild(afterTextNode);
+        // Add text after cursor to new block with preserved formatting
+        if (afterText.trim()) {
+          // Clone the formatting from the current text node's parent elements
+          const formattedText = cloneFormatting(textContainer, afterText);
+          newBlock.appendChild(formattedText);
         } else {
-          newP.appendChild(document.createElement("br"));
+          newBlock.appendChild(document.createElement("br"));
         }
       } else {
-        newP.appendChild(document.createElement("br"));
+        // If cursor is at element boundary, just add a br
+        newBlock.appendChild(document.createElement("br"));
       }
 
-      // Step 4: Insert new <p> after current
-      const parent = currentP.parentNode;
-
-      // Only insert if parent is valid and accepts <p>
-      if (parent && parent.contains(currentP)) {
-        if (currentP.nextSibling) {
-          parent.insertBefore(newP, currentP.nextSibling);
+      // Step 4: Insert new block after currecnt one
+      const parent = currentBlock.parentNode;
+      if (parent && parent.contains(currentBlock)) {
+        if (currentBlock.nextSibling) {
+          parent.insertBefore(newBlock, currentBlock.nextSibling);
         } else {
-          parent.appendChild(newP);
+          parent.appendChild(newBlock);
         }
       }
-      // Step 5: Place caret in new <p>
+
+      // Step 5: Position cursor at start of new block
       const newRange = document.createRange();
-      newRange.setStart(newP, 0);
+      if (
+        newBlock.firstChild &&
+        newBlock.firstChild.nodeType === Node.TEXT_NODE
+      ) {
+        newRange.setStart(newBlock.firstChild, 0);
+      } else {
+        newRange.setStart(newBlock, 0);
+      }
       newRange.collapse(true);
       selection.removeAllRanges();
       selection.addRange(newRange);
@@ -432,6 +552,9 @@ export default function ReactEditorKit(props) {
   };
 
   const handleOpenModel = (e, type, item) => {
+    if (isDisable) {
+      return;
+    }
     e.preventDefault();
     setIsOpenModel(type);
     setSelectedItem(item);
@@ -461,23 +584,44 @@ export default function ReactEditorKit(props) {
       if (onChange) {
         onChange(trimmedSourceCode);
       }
+
+      // Update placeholder after setting content (ensure DOM is updated first)
+      setTimeout(() => {
+        handlePlaceholder();
+      }, 1000);
     }
   };
 
   const handleSelectAll = (e) => {
+    if (isDisable) {
+      return;
+    }
     e.preventDefault();
-    const selection = window.getSelection();
-    if (!selection.toString()) {
-      const range = document.createRange();
-      range.selectNodeContents(editorRef?.current);
-      selection.removeAllRanges();
-      selection.addRange(range);
-    } else {
-      selection.removeAllRanges();
+
+    if (!editorRef?.current) {
+      console.warn("Editor not available for select all");
+      return;
+    }
+
+    try {
+      const selection = window.getSelection();
+      if (!selection.toString()) {
+        const range = document.createRange();
+        range.selectNodeContents(editorRef.current);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      } else {
+        selection.removeAllRanges();
+      }
+    } catch (error) {
+      console.warn("Select all failed:", error);
     }
   };
 
   const handleInsertHRClick = () => {
+    if (isDisable) {
+      return;
+    }
     handleFocusEditor();
     document.execCommand("insertHorizontalRule");
   };
@@ -579,6 +723,8 @@ export default function ReactEditorKit(props) {
       setTimeout(() => {
         setIsLoading(false);
         handleCloseModel();
+        // Update placeholder after image update
+        handlePlaceholder();
       }, 0);
     } else {
       handleFocusEditor();
@@ -598,6 +744,8 @@ export default function ReactEditorKit(props) {
       }
       setIsLoading(false);
       handleCloseModel();
+      // Update placeholder after image insertion
+      handlePlaceholder();
     }
   };
 
@@ -675,6 +823,10 @@ export default function ReactEditorKit(props) {
 
     setTargetElement(null);
     setIsOpenModel(""); // Assuming this is setting some state related to the modal
+    // Update placeholder after embedded content is inserted/updated
+    setTimeout(() => {
+      handlePlaceholder();
+    }, 100);
   };
 
   function createIframeWrapperWithSettings(iframeHTML, type, onSettingsClick) {
@@ -705,22 +857,42 @@ export default function ReactEditorKit(props) {
     // Build DOM structure
     wrapper.appendChild(overlay);
     wrapper.appendChild(settingsBtn);
-    wrapper.appendChild(iframeElement.childNodes[0]);
+
+    // Add null check for iframe element
+    const iframeChild = iframeElement.childNodes[0];
+    if (iframeChild) {
+      wrapper.appendChild(iframeChild);
+    } else {
+      console.warn("No iframe element found to append");
+    }
 
     return wrapper;
   }
 
   const handlePrint = () => {
+    if (!editorRef.current) {
+      console.warn("Editor not available for printing");
+      return;
+    }
+
     let data = editorRef.current.innerHTML;
     const iframe = document.createElement("iframe");
     iframe.style.display = "none";
     document.body.appendChild(iframe);
     const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-    iframeDoc.write(data);
-    iframeDoc.close();
-    iframe.contentWindow.print();
+
+    try {
+      iframeDoc.write(data);
+      iframeDoc.close();
+      iframe.contentWindow.print();
+    } catch (error) {
+      console.error("Print failed:", error);
+    }
+
     setTimeout(() => {
-      document.body.removeChild(iframe);
+      if (document.body.contains(iframe)) {
+        document.body.removeChild(iframe);
+      }
     }, 100);
   };
 
@@ -731,6 +903,8 @@ export default function ReactEditorKit(props) {
       document.execCommand("insertHTML", false, char);
       setTargetElement(null);
       setIsOpenModel("");
+      // Update placeholder after character insertion
+      handlePlaceholder();
     }
   };
 
@@ -741,81 +915,184 @@ export default function ReactEditorKit(props) {
 
   const onPaste = (event) => {
     event.preventDefault();
-    navigator.clipboard
-      .read()
-      .then((clipboardItems) => {
-        clipboardItems.forEach((item) => {
-          if (
-            item.types.includes("image/png") ||
-            item.types.includes("image/jpeg")
-          ) {
-            item
-              .getType(item.types[0])
-              .then((imageBlob) => {
-                const imgElement = `<img src="${URL.createObjectURL(
-                  imageBlob
-                )}" alt="Image">`;
-                document.execCommand("insertHTML", false, imgElement);
-              })
-              .catch((error) => {
-                console.error("Error reading image content:", error);
-              });
-          } else if (item.types.includes("text/html")) {
-            item
-              .getType("text/html")
-              .then((htmlBlob) => {
-                htmlBlob
-                  .text()
-                  .then((htmlContent) => {
-                    const cleanedHTML = cleanHTML(htmlContent);
-                    const withoutComments = cleanedHTML.replace(
-                      /<!--[\s\S]*?-->/g,
-                      ""
-                    );
-                    document.execCommand("insertHTML", false, withoutComments);
-                  })
-                  .catch((error) => {
-                    console.error("Error reading HTML content:", error);
-                  });
-              })
-              .catch((error) => {
-                console.error(
-                  "Error getting HTML type from ClipboardItem:",
-                  error
-                );
-              });
-          } else if (item.types.includes("text/plain")) {
-            item
-              .getType("text/plain")
-              .then((textBlob) => {
-                textBlob
-                  .text()
-                  .then((text) => {
-                    if (isValidURL(text)) {
-                      // Insert the URL as a link
-                      const linkElement = `<a href="${text}" target="_blank">${text}</a>`;
-                      document.execCommand("insertHTML", false, linkElement);
-                    } else {
-                      // Insert plain text
-                      document.execCommand("insertText", false, text);
-                    }
-                  })
-                  .catch((error) => {
-                    console.error("Error reading text content:", error);
-                  });
-              })
-              .catch((error) => {
-                console.error(
-                  "Error getting text type from ClipboardItem:",
-                  error
-                );
-              });
-          }
+
+    // Check if modern clipboard API is available and in secure context
+    if (
+      navigator.clipboard &&
+      navigator.clipboard.read &&
+      window.isSecureContext
+    ) {
+      navigator.clipboard
+        .read()
+        .then((clipboardItems) => {
+          clipboardItems.forEach((item) => {
+            if (
+              item.types.includes("image/png") ||
+              item.types.includes("image/jpeg")
+            ) {
+              item
+                .getType(item.types[0])
+                .then((imageBlob) => {
+                  const imgElement = `<img src="${URL.createObjectURL(
+                    imageBlob
+                  )}" alt="Image">`;
+                  document.execCommand("insertHTML", false, imgElement);
+                })
+                .catch((error) => {
+                  console.error("Error reading image content:", error);
+                });
+            } else if (item.types.includes("text/html")) {
+              item
+                .getType("text/html")
+                .then((htmlBlob) => {
+                  htmlBlob
+                    .text()
+                    .then((htmlContent) => {
+                      const cleanedHTML = cleanHTML(htmlContent);
+                      const withoutComments = cleanedHTML.replace(
+                        /<!--[\s\S]*?-->/g,
+                        ""
+                      );
+                      document.execCommand(
+                        "insertHTML",
+                        false,
+                        withoutComments
+                      );
+                    })
+                    .catch((error) => {
+                      console.error("Error reading HTML content:", error);
+                    });
+                })
+                .catch((error) => {
+                  console.error(
+                    "Error getting HTML type from ClipboardItem:",
+                    error
+                  );
+                });
+            } else if (item.types.includes("text/plain")) {
+              item
+                .getType("text/plain")
+                .then((textBlob) => {
+                  textBlob
+                    .text()
+                    .then((text) => {
+                      if (isValidURL(text)) {
+                        // Insert the URL as a link
+                        const linkElement = `<a href="${text}" target="_blank">${text}</a>`;
+                        document.execCommand("insertHTML", false, linkElement);
+                      } else {
+                        // Insert plain text
+                        document.execCommand("insertText", false, text);
+                      }
+                    })
+                    .catch((error) => {
+                      console.error("Error reading text content:", error);
+                    });
+                })
+                .catch((error) => {
+                  console.error(
+                    "Error getting text type from ClipboardItem:",
+                    error
+                  );
+                });
+            }
+          });
+        })
+        .catch((error) => {
+          console.error("Error reading clipboard:", error);
+          // Fallback to traditional paste handling
+          fallbackPasteHandler(event);
         });
-      })
-      .catch((error) => {
-        console.error("Error reading clipboard:", error);
-      });
+    } else {
+      // Fallback for non-secure contexts or when modern API is not available
+      fallbackPasteHandler(event);
+    }
+  };
+
+  const fallbackPasteHandler = (event) => {
+    try {
+      // Use the traditional clipboardData API as fallback
+      const clipboardData = event.clipboardData || window.clipboardData;
+      if (clipboardData) {
+        // Check for text data
+        const text =
+          clipboardData.getData("text/plain") || clipboardData.getData("text");
+        const html = clipboardData.getData("text/html");
+
+        if (html) {
+          // Process HTML content
+          const cleanedHTML = cleanHTML(html);
+          const withoutComments = cleanedHTML.replace(/<!--[\s\S]*?-->/g, "");
+          document.execCommand("insertHTML", false, withoutComments);
+        } else if (text) {
+          // Process plain text
+          if (isValidURL(text)) {
+            // Insert the URL as a link
+            const linkElement = `<a href="${text}" target="_blank">${text}</a>`;
+            document.execCommand("insertHTML", false, linkElement);
+          } else {
+            // Insert plain text
+            document.execCommand("insertText", false, text);
+          }
+        }
+
+        // Check for files (images)
+        const files = clipboardData.files;
+        if (files && files.length > 0) {
+          for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            if (file.type.startsWith("image/")) {
+              const imgElement = `<img src="${URL.createObjectURL(
+                file
+              )}" alt="Image">`;
+              document.execCommand("insertHTML", false, imgElement);
+            }
+          }
+        }
+      } else {
+        console.warn(
+          "No clipboard data available, trying navigator.clipboard.readText as fallback"
+        );
+        // Try navigator.clipboard.readText() for text-only content
+        if (navigator.clipboard && navigator.clipboard.readText) {
+          navigator.clipboard
+            .readText()
+            .then((text) => {
+              if (text) {
+                if (isValidURL(text)) {
+                  const linkElement = `<a href="${text}" target="_blank">${text}</a>`;
+                  document.execCommand("insertHTML", false, linkElement);
+                } else {
+                  document.execCommand("insertText", false, text);
+                }
+              }
+            })
+            .catch((error) => {
+              console.warn("navigator.clipboard.readText failed:", error);
+            });
+        }
+      }
+    } catch (error) {
+      console.warn("Fallback paste handler failed:", error);
+      // Try one more fallback with readText
+      if (navigator.clipboard && navigator.clipboard.readText) {
+        navigator.clipboard
+          .readText()
+          .then((text) => {
+            if (text) {
+              if (isValidURL(text)) {
+                const linkElement = `<a href="${text}" target="_blank">${text}</a>`;
+                document.execCommand("insertHTML", false, linkElement);
+              } else {
+                document.execCommand("insertText", false, text);
+              }
+            }
+          })
+          .catch((err) => {
+            console.warn("All paste methods failed:", err);
+          });
+      }
+    }
   };
 
   const handleBlur = () => {
@@ -823,7 +1100,11 @@ export default function ReactEditorKit(props) {
   };
 
   const handleNewDocument = () => {
-    editorRef.current.innerHTML = "";
+    if (editorRef.current) {
+      editorRef.current.innerHTML = "";
+      // Update placeholder after clearing content
+      handlePlaceholder();
+    }
   };
 
   const handlePreview = () => {
@@ -832,6 +1113,9 @@ export default function ReactEditorKit(props) {
   };
 
   const handleViewSource = () => {
+    if (isDisable) {
+      return;
+    }
     if (!viewSource && editorRef?.current) {
       const content = editorRef?.current.innerHTML;
       const formattedContent = transformHTML(content);
@@ -843,6 +1127,9 @@ export default function ReactEditorKit(props) {
   };
 
   const toggleFullScreen = () => {
+    if (isDisable) {
+      return;
+    }
     setIsFullScreen(!isFullScreen);
   };
 
@@ -858,7 +1145,16 @@ export default function ReactEditorKit(props) {
       return;
     }
 
-    if (editor.innerText.trim() === "") {
+    // Check both innerText and innerHTML to handle all content types
+    const hasTextContent = editor.innerText.trim() !== "";
+    const hasHTMLContent =
+      editor.innerHTML.trim() !== "" &&
+      editor.innerHTML.trim() !== "<br>" &&
+      editor.innerHTML.trim() !== "<p><br></p>";
+
+    const hasContent = hasTextContent || hasHTMLContent;
+
+    if (!hasContent) {
       editor.classList.add("empty");
       setIsPlaceholder(true);
     } else {
@@ -868,17 +1164,27 @@ export default function ReactEditorKit(props) {
   };
 
   const handleSelection = () => {
-    const selection = window.getSelection();
-    if (selection.rangeCount > 0) {
-      setSelectedRange(selection.getRangeAt(0));
+    try {
+      const selection = window.getSelection();
+      if (selection && selection.rangeCount > 0) {
+        setSelectedRange(selection.getRangeAt(0));
+      }
+    } catch (error) {
+      console.warn("Failed to handle selection:", error);
     }
   };
 
   const restoreSelection = () => {
     if (selectedRange) {
-      const selection = window.getSelection();
-      selection.removeAllRanges();
-      selection.addRange(selectedRange);
+      try {
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(selectedRange);
+      } catch (error) {
+        console.warn("Failed to restore selection:", error);
+        // Clear invalid selection
+        setSelectedRange(null);
+      }
     }
   };
 
@@ -963,12 +1269,16 @@ export default function ReactEditorKit(props) {
   useEffect(() => {
     if (!init) {
       if (editorRef.current && value) {
-        editorRef.current.innerHTML = value;
         setInit(true);
+        // Update placeholder after setting initial content
+        setTimeout(() => handlePlaceholder(), 0);
       }
     }
-    if (!value) {
+
+    if (!value && editorRef.current) {
       editorRef.current.innerHTML = "";
+      // Update placeholder when content is cleared
+      setTimeout(() => handlePlaceholder(), 0);
     }
     if (getEditorRef) {
       getEditorRef(editorRef);
@@ -976,89 +1286,112 @@ export default function ReactEditorKit(props) {
   }, [isFullScreen, editorRef, value]);
 
   const handlePaste = (e) => {
+    if (isDisable) {
+      return;
+    }
     e.preventDefault();
+
     if (!editorRef.current) {
       setTimeout(() => {
-        editorRef.current.focus();
+        if (editorRef.current) {
+          editorRef.current.focus();
+        }
       }, 0);
     } else {
       restoreSelection();
     }
-    navigator.clipboard
-      .read()
-      .then((clipboardItems) => {
-        clipboardItems.forEach((item) => {
-          if (
-            item.types.includes("image/png") ||
-            item.types.includes("image/jpeg")
-          ) {
-            item
-              .getType(item.types[0])
-              .then((imageBlob) => {
-                const imgElement = `<img src="${URL.createObjectURL(
-                  imageBlob
-                )}" alt="Image">`;
-                document.execCommand("insertHTML", false, imgElement);
-              })
-              .catch((error) => {
-                console.error("Error reading image content:", error);
-              });
-          } else if (item.types.includes("text/html")) {
-            item
-              .getType("text/html")
-              .then((htmlBlob) => {
-                htmlBlob
-                  .text()
-                  .then((htmlContent) => {
-                    const cleanedHTML = cleanHTML(htmlContent);
-                    const withoutComments = cleanedHTML.replace(
-                      /<!--[\s\S]*?-->/g,
-                      ""
-                    );
-                    document.execCommand("insertHTML", false, withoutComments);
-                  })
-                  .catch((error) => {
-                    console.error("Error reading HTML content:", error);
-                  });
-              })
-              .catch((error) => {
-                console.error(
-                  "Error getting HTML type from ClipboardItem:",
-                  error
-                );
-              });
-          } else if (item.types.includes("text/plain")) {
-            item
-              .getType("text/plain")
-              .then((textBlob) => {
-                textBlob
-                  .text()
-                  .then((text) => {
-                    if (isValidURL(text)) {
-                      // Insert the URL as a link
-                      const linkElement = `<a href="${text}" target="_blank">${text}</a>`;
-                      document.execCommand("insertHTML", false, linkElement);
-                    } else {
-                      // Insert plain text
-                      document.execCommand("insertText", false, text);
-                    }
-                  })
-                  .catch((error) => {
-                    console.error("Error reading text content:", error);
-                  });
-              })
-              .catch((error) => {
-                console.error(
-                  "Error getting text type from ClipboardItem:",
-                  error
-                );
-              });
-          }
+
+    // Check if modern clipboard API is available and in secure context
+    if (
+      navigator.clipboard &&
+      navigator.clipboard.read &&
+      window.isSecureContext
+    ) {
+      navigator.clipboard
+        .read()
+        .then((clipboardItems) => {
+          clipboardItems.forEach((item) => {
+            if (
+              item.types.includes("image/png") ||
+              item.types.includes("image/jpeg")
+            ) {
+              item
+                .getType(item.types[0])
+                .then((imageBlob) => {
+                  const imgElement = `<img src="${URL.createObjectURL(
+                    imageBlob
+                  )}" alt="Image">`;
+                  document.execCommand("insertHTML", false, imgElement);
+                })
+                .catch((error) => {
+                  console.error("Error reading image content:", error);
+                });
+            } else if (item.types.includes("text/html")) {
+              item
+                .getType("text/html")
+                .then((htmlBlob) => {
+                  htmlBlob
+                    .text()
+                    .then((htmlContent) => {
+                      const cleanedHTML = cleanHTML(htmlContent);
+                      const withoutComments = cleanedHTML.replace(
+                        /<!--[\s\S]*?-->/g,
+                        ""
+                      );
+                      document.execCommand(
+                        "insertHTML",
+                        false,
+                        withoutComments
+                      );
+                    })
+                    .catch((error) => {
+                      console.error("Error reading HTML content:", error);
+                    });
+                })
+                .catch((error) => {
+                  console.error(
+                    "Error getting HTML type from ClipboardItem:",
+                    error
+                  );
+                });
+            } else if (item.types.includes("text/plain")) {
+              item
+                .getType("text/plain")
+                .then((textBlob) => {
+                  textBlob
+                    .text()
+                    .then((text) => {
+                      if (isValidURL(text)) {
+                        // Insert the URL as a link
+                        const linkElement = `<a href="${text}" target="_blank">${text}</a>`;
+                        document.execCommand("insertHTML", false, linkElement);
+                      } else {
+                        // Insert plain text
+                        document.execCommand("insertText", false, text);
+                      }
+                    })
+                    .catch((error) => {
+                      console.error("Error reading text content:", error);
+                    });
+                })
+                .catch((error) => {
+                  console.error(
+                    "Error getting text type from ClipboardItem:",
+                    error
+                  );
+                });
+            }
+          });
+        })
+        .catch((error) => {
+          console.error("Error reading clipboard:", error);
+          // Fallback to traditional paste handling
+          fallbackPasteHandler(e);
         });
-      })
-      .catch((error) => {
-        console.error("Error reading clipboard:", error);
-      });
+    } else {
+      // Fallback for non-secure contexts or when modern API is not available
+      fallbackPasteHandler(e);
+    }
   };
 
   const handle_resize = () => {
@@ -1101,6 +1434,13 @@ export default function ReactEditorKit(props) {
 
     let element = document.querySelector(".resizeImageWrapper");
     let image_element = document.querySelector(".resizer-image");
+
+    // Add null checks
+    if (!element || !image_element) {
+      console.warn("Required elements not found for image resize");
+      return;
+    }
+
     let startWidth = parseFloat(image_element.style.width);
     let startHeight = parseFloat(image_element.style.height);
     if (isNaN(startHeight)) {
@@ -1110,6 +1450,13 @@ export default function ReactEditorKit(props) {
     if (isNaN(startWidth)) {
       startWidth = parseFloat(image_element.offsetWidth);
     }
+
+    // Prevent division by zero
+    if (startWidth === 0) {
+      console.warn("Image width is zero, cannot resize");
+      return;
+    }
+
     let heightRatio = startHeight / startWidth;
     const handleMouseMove = (e) => {
       let newWidth = startWidth + (e.clientX - startX);
@@ -1226,7 +1573,41 @@ export default function ReactEditorKit(props) {
           }px - 22px)`,
         }
       : {};
+  const CheckAccess = async (apiKey) => {
+    try {
+      let postData = {
+        apiKey: apiKey,
+        domain: getBaseDomain(),
+        // domain: "localhost",
+      };
+      const result = await CheckAccessDataApi(postData);
+      if (result.success) {
+        if (result.access == "full") {
+          setIsDisable(false);
+          setAllowPaste(true);
+        } else {
+          setIsDisable(true);
+          setAllowPaste(true);
+        }
+      } else {
+        setIsDisable(true);
+        setAllowPaste(true);
+      }
+    } catch (error) {
+      setIsDisable(true);
+      setAllowPaste(true);
+    }
+  };
 
+  useEffect(() => {
+    if (apiKey) {
+      CheckAccess(apiKey);
+    } else {
+      // If no API key is provided, allow basic functionality
+      setIsDisable(true);
+      setAllowPaste(true);
+    }
+  }, [apiKey]);
   return (
     <>
       <div
@@ -1234,6 +1615,7 @@ export default function ReactEditorKit(props) {
         className={`${Styles.reactEditorMain} ${
           isFullScreen ? Styles.fullScreen : ""
         }`}
+        style={{ height: isFullScreen ? "100vh" : height ?? "auto" }}
         id="react-editor"
       >
         <div id="action-components" className={`${Styles.actionComponents}`}>
@@ -1270,6 +1652,7 @@ export default function ReactEditorKit(props) {
                         handlePrint={handlePrint}
                         item={item}
                         remove_from_navbar={remove_from_navbar}
+                        isDisable={isDisable}
                       />
                     )}
                     {is_view && (
@@ -1282,6 +1665,7 @@ export default function ReactEditorKit(props) {
                         placeholder={placeholder}
                         value={value}
                         remove_from_navbar={remove_from_navbar}
+                        isDisable={isDisable}
                       />
                     )}
                     {is_insert && (
@@ -1290,6 +1674,7 @@ export default function ReactEditorKit(props) {
                         handleInsertHR={handleInsertHRClick}
                         item={item}
                         remove_from_navbar={remove_from_navbar}
+                        isDisable={isDisable}
                       />
                     )}
                     {is_format && (
@@ -1298,79 +1683,121 @@ export default function ReactEditorKit(props) {
                         isFullScreen={isFullScreen}
                         remove_from_navbar={remove_from_navbar}
                         editorRef={editorRef}
+                        isDisable={isDisable}
                       />
                     )}
 
                     {is_select_all && (
-                      <div className={Styles.increaseIconSize}>
+                      <div
+                        className={`${Styles.increaseIconSize} ${
+                          isDisable ? Styles.disabledButton : ""
+                        }`}
+                      >
                         <button
                           onClick={handleSelectAll}
                           title={item?.title ? item.title : "Select All"}
-                          disabled={isPlaceholder && placeholder && !value}
+                          disabled={
+                            isPlaceholder && placeholder && !value && isDisable
+                          }
                         >
                           {item?.icon ? item.icon : <SelectAll />}
                         </button>
                       </div>
                     )}
                     {is_image && (
-                      <div className={Styles.increaseIconSize}>
+                      <div
+                        className={`${Styles.increaseIconSize} ${
+                          isDisable ? Styles.disabledButton : ""
+                        }`}
+                      >
                         <button
                           onClick={(e) => handleOpenModel(e, "image", item)}
                           title={item?.title ? item.title : "Upload Image"}
+                          disabled={isDisable}
                         >
                           {item?.icon ? item.icon : <ImageIcon />}
                         </button>
                       </div>
                     )}
                     {is_link && (
-                      <div className={Styles.increaseIconSize}>
+                      <div
+                        className={`${Styles.increaseIconSize} ${
+                          isDisable ? Styles.disabledButton : ""
+                        }`}
+                      >
                         <button
                           onClick={(e) => handleOpenModel(e, "link", item)}
                           title={item?.title ? item.title : "Add Link"}
+                          disabled={isDisable}
                         >
                           {item?.icon ? item.icon : <LinkIcon />}
                         </button>
                       </div>
                     )}
                     {is_video && (
-                      <div className={Styles.increaseIconSize}>
+                      <div
+                        className={`${Styles.increaseIconSize} ${
+                          isDisable ? Styles.disabledButton : ""
+                        }`}
+                      >
                         <button
                           onClick={(e) => handleOpenModel(e, "video", item)}
                           title={item?.title ? item.title : "Upload Video"}
+                          disabled={isDisable}
                         >
                           {item?.icon ? item.icon : <VideoIcon />}
                         </button>
                       </div>
                     )}
                     {is_copy && (
-                      <div className={Styles.increaseIconSize}>
+                      <div
+                        className={`${Styles.increaseIconSize} ${
+                          isDisable ? Styles.disabledButton : ""
+                        }`}
+                      >
                         <ButtonFunction
                           editorRef={editorRef}
                           name="copy"
                           icon={<CopyIcon />}
                           title="Copy"
                           item={item}
-                          disabled={isPlaceholder && placeholder && !value}
+                          disabled={
+                            isPlaceholder && placeholder && !value && isDisable
+                          }
                         />
                       </div>
                     )}
                     {is_cut && (
-                      <div className={Styles.increaseIconSize}>
+                      <div
+                        className={`${Styles.increaseIconSize} ${
+                          isDisable ? Styles.disabledButton : ""
+                        }`}
+                      >
                         <ButtonFunction
                           editorRef={editorRef}
                           name="cut"
                           icon={<CutIcon />}
                           title="Cut"
                           item={item}
-                          disabled={isPlaceholder && placeholder && !value}
+                          disabled={
+                            isPlaceholder && placeholder && !value && isDisable
+                          }
                         />
                       </div>
                     )}
                     {is_paste && (
-                      <div className={Styles.increaseIconSize}>
+                      <div
+                        className={`${Styles.increaseIconSize} ${
+                          isDisable ? Styles.disabledButton : ""
+                        }`}
+                      >
                         <button
                           onClick={handlePaste}
                           title={item?.title ? item.title : "Paste"}
+                          disabled={isDisable}
+                          className={` ${
+                            isDisable ? Styles.disabledButton : ""
+                          }`}
                         >
                           {item?.icon ? item.icon : <PasteIcon />}
                         </button>
@@ -1433,6 +1860,8 @@ export default function ReactEditorKit(props) {
               let is_fontfamily =
                 item === "fontfamily" || item.name === "fontfamily";
               let is_fontSize = item === "fontsize" || item.name === "fontsize";
+              let is_lineHeight =
+                item === "lineHeight" || item.name === "lineHeight";
               let is_copy = item === "copy" || item.name === "copy";
               let is_cut = item === "cut" || item.name === "cut";
               let is_paste = item === "paste" || item.name === "paste";
@@ -1462,6 +1891,7 @@ export default function ReactEditorKit(props) {
                       icon={<UndoIcon />}
                       title={item.title ? item.title : "Undo"}
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_redo && (
@@ -1471,16 +1901,28 @@ export default function ReactEditorKit(props) {
                       icon={<RedoIcon />}
                       title="Redo"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_format && (
                     <SelectFormat
                       remove_from_toolbar={remove_from_toolbar}
                       editorRef={editorRef}
+                      isDisable={isDisable}
                     />
                   )}
-                  {is_fontfamily && <SelectFontFamily editorRef={editorRef} />}
-                  {is_fontSize && <FontSize editorRef={editorRef} />}
+                  {is_fontfamily && (
+                    <SelectFontFamily
+                      editorRef={editorRef}
+                      isDisable={isDisable}
+                    />
+                  )}
+                  {is_fontSize && (
+                    <FontSize editorRef={editorRef} isDisable={isDisable} />
+                  )}
+                  {is_lineHeight && (
+                    <LineHeight editorRef={editorRef} isDisable={isDisable} />
+                  )}
                   {is_bold && (
                     <ButtonFunction
                       editorRef={editorRef}
@@ -1488,6 +1930,7 @@ export default function ReactEditorKit(props) {
                       icon={<BoldIcon />}
                       title="Bold"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_italic && (
@@ -1497,6 +1940,7 @@ export default function ReactEditorKit(props) {
                       icon={<ItalicIcon />}
                       title="Italic"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_underline && (
@@ -1506,6 +1950,7 @@ export default function ReactEditorKit(props) {
                       icon={<UnderlineIcon />}
                       title="Underline"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_superscript && (
@@ -1515,6 +1960,7 @@ export default function ReactEditorKit(props) {
                       icon={<SuperscriptIcon />}
                       title="Superscript"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_subscript && (
@@ -1524,9 +1970,15 @@ export default function ReactEditorKit(props) {
                       icon={<SubscriptIcon />}
                       title="Subscript"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
-                  {is_alignment && <AlignmentOptions editorRef={editorRef} />}
+                  {is_alignment && (
+                    <AlignmentOptions
+                      editorRef={editorRef}
+                      isDisable={isDisable}
+                    />
+                  )}
 
                   {is_alignLeft && (
                     <ButtonFunction
@@ -1535,6 +1987,7 @@ export default function ReactEditorKit(props) {
                       icon={<AlignLeft />}
                       title="Align Left"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_alignCenter && (
@@ -1544,6 +1997,7 @@ export default function ReactEditorKit(props) {
                       icon={<AlignCenter />}
                       title="Align Center"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_alignRight && (
@@ -1553,6 +2007,7 @@ export default function ReactEditorKit(props) {
                       icon={<AlignRight />}
                       title="Align Right"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_alignJustify && (
@@ -1562,6 +2017,7 @@ export default function ReactEditorKit(props) {
                       icon={<AlignJustify />}
                       title="Align Justify"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_indent && (
@@ -1571,6 +2027,7 @@ export default function ReactEditorKit(props) {
                       icon={<IncreaseIndentIcon />}
                       title="Increase IndentIcon"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_outdent && (
@@ -1580,6 +2037,7 @@ export default function ReactEditorKit(props) {
                       icon={<DecreaseIndentIcon />}
                       title="Decrease IndentIcon"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_orderedList && (
@@ -1589,6 +2047,7 @@ export default function ReactEditorKit(props) {
                       icon={<OrderdList />}
                       title="Insert/Remove Numbered List"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_unorderedList && (
@@ -1598,6 +2057,7 @@ export default function ReactEditorKit(props) {
                       icon={<UnorderdList />}
                       title="Insert/Remove Bulleted List"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_removeFormat && (
@@ -1607,6 +2067,7 @@ export default function ReactEditorKit(props) {
                       icon={<ClearFormatting />}
                       title="Remove Format"
                       item={item}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_textColor && (
@@ -1615,6 +2076,7 @@ export default function ReactEditorKit(props) {
                       title="Text Color"
                       item={item}
                       editorRef={editorRef}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_backgroundColor && (
@@ -1623,6 +2085,7 @@ export default function ReactEditorKit(props) {
                       title="Background Color"
                       item={item}
                       editorRef={editorRef}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_ltr && (
@@ -1632,6 +2095,7 @@ export default function ReactEditorKit(props) {
                       item={item}
                       icon={<LTRIcon />}
                       editorRef={editorRef}
+                      isDisable={isDisable}
                     />
                   )}
                   {is_rtl && (
@@ -1641,6 +2105,7 @@ export default function ReactEditorKit(props) {
                       item={item}
                       icon={<RTLIcon />}
                       editorRef={editorRef}
+                      isDisable={isDisable}
                     />
                   )}
 
@@ -1648,7 +2113,10 @@ export default function ReactEditorKit(props) {
                     <button
                       onClick={handleSelectAll}
                       title={item?.title ? item.title : "Select All"}
-                      disabled={isPlaceholder && placeholder && !value}
+                      disabled={
+                        isPlaceholder && placeholder && !value && isDisable
+                      }
+                      className={` ${isDisable ? Styles.disabledButton : ""}`}
                     >
                       {item?.icon ? item.icon : <SelectAll />}
                     </button>
@@ -1657,6 +2125,8 @@ export default function ReactEditorKit(props) {
                     <button
                       onClick={(e) => handleOpenModel(e, "image", item)}
                       title={item?.title ? item.title : "Upload Image"}
+                      className={` ${isDisable ? Styles.disabledButton : ""}`}
+                      disabled={isDisable}
                     >
                       {item?.icon ? item.icon : <ImageIcon />}
                     </button>
@@ -1665,6 +2135,8 @@ export default function ReactEditorKit(props) {
                     <button
                       onClick={(e) => handleOpenModel(e, "link", item)}
                       title={item?.title ? item.title : "Add Link"}
+                      className={` ${isDisable ? Styles.disabledButton : ""}`}
+                      disabled={isDisable}
                     >
                       {item?.icon ? item.icon : <LinkIcon />}
                     </button>
@@ -1673,6 +2145,8 @@ export default function ReactEditorKit(props) {
                     <button
                       onClick={(e) => handleOpenModel(e, "video", item)}
                       title={item?.title ? item.title : "Upload Video"}
+                      className={` ${isDisable ? Styles.disabledButton : ""}`}
+                      disabled={isDisable}
                     >
                       {item?.icon ? item.icon : <VideoIcon />}
                     </button>
@@ -1684,7 +2158,10 @@ export default function ReactEditorKit(props) {
                       icon={<CopyIcon />}
                       title="Copy"
                       item={item}
-                      disabled={isPlaceholder && placeholder && !value}
+                      disabled={
+                        isPlaceholder && placeholder && !value && isDisable
+                      }
+                      isDisable={isDisable}
                     />
                   )}
                   {is_cut && (
@@ -1694,13 +2171,18 @@ export default function ReactEditorKit(props) {
                       icon={<CutIcon />}
                       title="Cut"
                       item={item}
-                      disabled={isPlaceholder && placeholder && !value}
+                      disabled={
+                        isPlaceholder && placeholder && !value && isDisable
+                      }
+                      isDisable={isDisable}
                     />
                   )}
                   {is_paste && (
                     <button
                       onClick={handlePaste}
                       title={item?.title ? item.title : "Paste"}
+                      className={` ${isDisable ? Styles.disabledButton : ""}`}
+                      disabled={isDisable}
                     >
                       {item?.icon ? item.icon : <PasteIcon />}
                     </button>
@@ -1710,6 +2192,8 @@ export default function ReactEditorKit(props) {
                       <button
                         onClick={handleViewSource}
                         title={item?.title || "Source Code"}
+                        className={` ${isDisable ? Styles.disabledButton : ""}`}
+                        disabled={isDisable}
                       >
                         <CodeIcon />
                       </button>
@@ -1719,6 +2203,8 @@ export default function ReactEditorKit(props) {
                     <div className={Styles.increaseIconSize}>
                       <button
                         onClick={toggleFullScreen}
+                        className={` ${isDisable ? Styles.disabledButton : ""}`}
+                        disabled={isDisable}
                         title={
                           isFullScreen
                             ? item?.title || "Exit Full Screen"
@@ -1743,6 +2229,8 @@ export default function ReactEditorKit(props) {
                       <button
                         onClick={handleInsertHRClick}
                         title={item?.title || "Horizontal Line"}
+                        className={` ${isDisable ? Styles.disabledButton : ""}`}
+                        disabled={isDisable}
                       >
                         <HorizontalLineIcon />
                       </button>
@@ -1753,6 +2241,8 @@ export default function ReactEditorKit(props) {
                       <button
                         onClick={(e) => handleOpenModel(e, "special_char")}
                         title={item?.title || "Special Char"}
+                        className={` ${isDisable ? Styles.disabledButton : ""}`}
+                        disabled={isDisable}
                       >
                         <SpecialCharIcon />
                       </button>
@@ -1764,17 +2254,29 @@ export default function ReactEditorKit(props) {
           </div>
         </div>
         <div className={`${Styles.content__editable__container}`}>
+          {isDisable && (
+            <div className={`${Styles.warning_container}`}>
+              ⚠️ Please enter a valid API key to continue{" "}
+              <a
+                href="https://6000-firebase-studio-1750316005416.cluster-73qgvk7hjjadkrjeyexca5ivva.cloudworkstations.dev/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Learn More
+              </a>
+            </div>
+          )}
           <div
             {...others}
             className={`${Styles.mlMainContentBox}`}
             autoFocus={isFullScreen}
-            contentEditable
+            contentEditable={!isDisable}
             ref={editorRef}
             onPaste={onPaste}
             spellCheck="true"
             onInput={handleInput}
             onBlur={handleBlur}
-            data-placeholder={placeholder}
+            data-placeholder={isDisable ? "" : placeholder}
             onKeyDown={handleEditorKeyDown}
             // id="editable"
             style={{ ...style, ...dynamicStyle }}
@@ -1788,6 +2290,7 @@ export default function ReactEditorKit(props) {
             selectedEvent={selectedEvent}
             handleRemoveLink={handleRemoveLink}
             selectedRange={selectedRange}
+            isDisable={isDisable}
           />
         </div>
       </div>

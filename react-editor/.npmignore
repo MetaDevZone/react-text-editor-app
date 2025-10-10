@@ -1,6 +1,11 @@
 /src
 .babelrc
 webpack.config.js
+application
+react-editor/.git
+react-editor/node_modules
+react-editor/src
+
 
 
 
