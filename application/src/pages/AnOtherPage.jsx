@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ReactEditorKit from "../ReactEditorKit";
 export default function AnOtherPage() {
   const [value, setValue] = useState("");
-  console.log(value, "value");
+
   return (
     <>
       <ReactEditorKit

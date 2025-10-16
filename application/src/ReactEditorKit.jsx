@@ -139,7 +139,7 @@ export default function ReactEditorKit(props) {
     text: "",
     open_new_tab: false,
   });
-  console.log(isDisable, "isDisableisDisable");
+
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isPlaceholder, setIsPlaceholder] = useState(true);
   const [selectedItem, setSelectedItem] = useState({});
@@ -148,7 +148,6 @@ export default function ReactEditorKit(props) {
   const [showHR2, setShowHR2] = useState(false);
   const [showHR3, setShowHR3] = useState(false);
 
-  console.log(value, "valuevalue");
   const checkIfImageExists = () => {
     const editor = editorRef?.current;
     if (editor) {
@@ -1639,7 +1638,6 @@ export default function ReactEditorKit(props) {
     if (apiKey) {
       CheckAccess(apiKey);
     } else {
-      // If no API key is provided, allow basic functionality
       setIsDisable(true);
       setAllowPaste(true);
     }

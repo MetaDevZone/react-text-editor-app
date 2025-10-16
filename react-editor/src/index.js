@@ -1302,6 +1302,7 @@ export default function ReactEditorKit(props) {
   useEffect(() => {
     if (!init) {
       if (editorRef.current && value) {
+        editorRef.current.innerHTML = value;
         setInit(true);
         // Update placeholder after setting initial content
         setTimeout(() => handlePlaceholder(), 0);
@@ -1636,7 +1637,6 @@ export default function ReactEditorKit(props) {
     if (apiKey) {
       CheckAccess(apiKey);
     } else {
-      // If no API key is provided, allow basic functionality
       setIsDisable(true);
       setAllowPaste(true);
     }
