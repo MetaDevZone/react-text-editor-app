@@ -5,6 +5,7 @@ export const TOOLBAR_ITEMS = [
   "format",
   "fontfamily",
   "fontsize",
+  "lineHeight",
   "|",
   "bold",
   "italic",

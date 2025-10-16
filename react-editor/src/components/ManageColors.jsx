@@ -12,13 +12,16 @@ function rgbToHex(rgb) {
 }
 
 export default function ManageColors(props) {
-  const { type, item, title, editorRef } = props;
+  const { type, item, title, editorRef, isDisable } = props;
 
   const [value, setValue] = useState("#000");
   const [openColor, setOpenColor] = useState(false);
   const colorPickerRef = useRef(null);
 
   const handleChangeColor = (e, color, input) => {
+    if (isDisable) {
+      return;
+    }
     e.preventDefault();
     if (!input) {
       setOpenColor(false);
@@ -35,6 +38,9 @@ export default function ManageColors(props) {
   };
 
   const handleClick = (e) => {
+    if (isDisable) {
+      return;
+    }
     e.preventDefault();
     setOpenColor(true);
   };
@@ -84,7 +90,11 @@ export default function ManageColors(props) {
 
   return (
     <div className={Styles.mainColorComponent} ref={colorPickerRef}>
-      <button onClick={handleClick} title={item?.title ? item.title : title}>
+      <button
+        onClick={handleClick}
+        title={item?.title ? item.title : title}
+        disabled={isDisable}
+      >
         <div
           className={`${Styles.reactEditorDFlex} ${Styles.reactEditorFlexColumn}`}
         >

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Styles from "../css/style.module.css";
 import ArrowDown from "./SVGImages/ArrowDown";
 
-function SelectFontFamily({ editorRef }) {
+function SelectFontFamily({ editorRef, isDisable }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Default");
   const selectRef = useRef(null);
@@ -36,6 +36,9 @@ function SelectFontFamily({ editorRef }) {
   ];
 
   const toggleSelect = (e) => {
+    if (isDisable) {
+      return;
+    }
     e.preventDefault();
     setIsOpen(!isOpen);
   };
@@ -117,12 +120,15 @@ function SelectFontFamily({ editorRef }) {
 
   return (
     <button
-      className={Styles.customSelectFormat}
+      className={`${Styles.customSelectFormat} ${
+        isDisable ? Styles.disabledButton : ""
+      }`}
       onClick={toggleSelect}
       ref={selectRef}
       style={{
         minWidth: "120px",
       }}
+      disabled={isDisable}
     >
       <div className={Styles.selectSelected}>
         {selectedOption}

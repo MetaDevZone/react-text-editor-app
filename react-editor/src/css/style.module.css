@@ -875,3 +875,28 @@ input[type="number"] {
   height: 20px;
   fill: #fff;
 }
+
+.disabledToolbar {
+  opacity: 0.6;
+  cursor: not-allowed !important;
+}
+
+.disabledButton {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed !important;
+}
+
+.warning_container {
+  border: 1px solid #e8e8e8;
+  display: inline;
+  padding: 18px;
+  border-radius: 4px;
+  background: white;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 10px);
+  font-size: 16px;
+  font-family: system-ui;
+}

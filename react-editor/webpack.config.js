@@ -1,4 +1,5 @@
 var path = require("path");
+var TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
   mode: "production",
@@ -9,7 +10,20 @@ module.exports = {
     libraryTarget: "commonjs2",
   },
   optimization: {
-    minimize: false,
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          compress: {
+            drop_console: true,
+          },
+          output: {
+            comments: false,
+          },
+        },
+        extractComments: false,
+      }),
+    ],
   },
   module: {
     rules: [

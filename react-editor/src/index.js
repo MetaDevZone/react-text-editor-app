@@ -147,8 +147,6 @@ export default function ReactEditorKit(props) {
   const [showHR1, setShowHR1] = useState(false);
   const [showHR2, setShowHR2] = useState(false);
   const [showHR3, setShowHR3] = useState(false);
-
-  console.log(value, "valuevalue");
   const checkIfImageExists = () => {
     const editor = editorRef?.current;
     if (editor) {
@@ -1304,7 +1302,6 @@ export default function ReactEditorKit(props) {
   useEffect(() => {
     if (!init) {
       if (editorRef.current && value) {
-        editorRef.current.innerHTML = value;
         setInit(true);
         // Update placeholder after setting initial content
         setTimeout(() => handlePlaceholder(), 0);
@@ -1614,6 +1611,7 @@ export default function ReactEditorKit(props) {
       let postData = {
         apiKey: apiKey,
         domain: getBaseDomain(),
+        // domain: "localhost",
       };
       const result = await CheckAccessDataApi(postData);
       if (result.success) {

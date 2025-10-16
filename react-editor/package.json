@@ -1,6 +1,6 @@
 {
   "name": "react-text-editor-kit",
-  "version": "2.0.1",
+  "version": "3.1.1",
   "description": "React Text Editor Kit is a customizable rich text editor component for React applications. It provides a flexible and easy-to-use interface for users to create and edit content with various formatting options. And also easy to integrate in react applications",
   "main": "./build/index.js",
   "keywords": [
@@ -23,8 +23,13 @@
   ],
   "scripts": {
     "remove_nm": "rimraf node_modules package-lock.json",
-    "build": "webpack"
+    "build": "webpack",
+    "prepublishOnly": "npm run build"
   },
+  "files": [
+    "build",
+    "README.md"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/MetaDevZone/react-text-editor-app"
@@ -47,11 +52,15 @@
     "style-loader": "^1.0.1",
     "url-loader": "^4.1.1",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10"
+    "webpack-cli": "^3.3.10",
+     "axios": "^1.6.8"
   },
   "peerDependencies": {
     "prop-types": "^15.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
+  },
+  "dependencies": {
+    "axios": "^1.12.2"
   }
 }
