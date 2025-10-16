@@ -1,3 +1,6 @@
+<!-- NOTE: This repository contains a demo application in `application/` and the library package in `react-editor/`.
+The root repository is marked `private` to prevent accidental publishing of the entire repo. Publish the package from the `react-editor/` folder. -->
+
 # React Text Editor Kit
 
 React Text Editor Kit is a customizable rich text editor component for React applications. It provides a flexible and easy-to-use interface for users to create and edit content with various formatting options. And also easy to integrate in react applications.
