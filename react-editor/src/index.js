@@ -909,8 +909,41 @@ export default function ReactEditorKit(props) {
   };
 
   const cleanHTML = (html) => {
-    const cleanedHTML = html.replace(/style="[^"]*"/g, "");
-    return cleanedHTML;
+    // Create a temporary div to parse HTML
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = html;
+
+    // Function to clean styles from an element
+    const cleanStyles = (element) => {
+      if (element.style) {
+        // Get computed styles
+        const color = element.style.color;
+        const fontWeight = element.style.fontWeight;
+        const fontStyle = element.style.fontStyle;
+        const textDecoration = element.style.textDecoration;
+        const fontSize = element.style.fontSize;
+        const fontFamily = element.style.fontFamily;
+
+        // Clear all styles
+        element.removeAttribute("style");
+
+        // Re-apply only the styles we want to keep
+        if (color) element.style.color = color;
+        if (fontWeight) element.style.fontWeight = fontWeight;
+        if (fontStyle) element.style.fontStyle = fontStyle;
+        if (textDecoration) element.style.textDecoration = textDecoration;
+        if (fontSize) element.style.fontSize = fontSize;
+        if (fontFamily) element.style.fontFamily = fontFamily;
+      }
+
+      // Recursively clean child elements
+      Array.from(element.children).forEach((child) => cleanStyles(child));
+    };
+
+    // Clean all elements
+    Array.from(tempDiv.children).forEach((element) => cleanStyles(element));
+
+    return tempDiv.innerHTML;
   };
 
   const onPaste = (event) => {
