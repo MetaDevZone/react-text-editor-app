@@ -68,12 +68,14 @@ export default function MediaModal({
     <div className={Styles.mediaModal}>
       <div className={Styles.selectType}>
         <button
+          type="button"
           className={`${inputs.type === "general" ? `${Styles.selectedType}` : ""}`}
           onClick={(e) => handleChangeType(e, "general")}
         >
           General
         </button>
         <button
+          type="button"
           className={`${inputs.type === "embed" ? `${Styles.selectedType}` : ""}`}
           onClick={(e) => handleChangeType(e, "embed")}
         >
@@ -179,7 +181,11 @@ export default function MediaModal({
         )}
 
         <div className={Styles.reactEditorTextEnd}>
-          <button className={Styles.saveButton} onClick={handleSubmit}>
+          <button
+            type="button"
+            className={Styles.saveButton}
+            onClick={handleSubmit}
+          >
             Save
           </button>
         </div>

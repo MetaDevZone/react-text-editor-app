@@ -61,6 +61,7 @@ const ButtonFunction = (props) => {
 
   return (
     <button
+      type="button"
       onClick={(e) => handleClick(e, editorRef)}
       className={`${handleClasses()} ${isDisable ? Styles.disabledButton : ""}`}
       title={item?.title ? item.title : title}

@@ -32,7 +32,7 @@ function AlignmentOptions({ editorRef, isDisable }) {
     document.execCommand(
       "justify" +
         alignment.value.charAt(0).toUpperCase() +
-        alignment.value.slice(1)
+        alignment.value.slice(1),
     );
     setSelectedOption(alignment.label);
     setIsOpen(false);
@@ -98,6 +98,7 @@ function AlignmentOptions({ editorRef, isDisable }) {
 
   return (
     <button
+      type="button"
       className={`${Styles.customSelectFormat} ${
         isDisable ? Styles.disabledButton : ""
       }`}

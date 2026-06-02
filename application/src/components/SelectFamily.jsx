@@ -50,6 +50,7 @@ function SelectFamily({ handleHideChildOptions, editorRef }) {
       {fontFamilies.map((option, index) => (
         <button
           key={`key${index}`}
+          type="button"
           style={{
             fontFamily: option.style,
           }}

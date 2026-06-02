@@ -3,7 +3,7 @@ import Dashboard from "./pages/Dashboard";
 import AnOtherPage from "./pages/AnOtherPage";
 
 function App() {
-  console.log = () => {};
+  // console.log = () => {};
   return (
     <Routes>
       <Route path="/" element={<Dashboard />}></Route>

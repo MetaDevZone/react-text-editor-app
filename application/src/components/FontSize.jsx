@@ -156,6 +156,7 @@ function FontSize({ editorRef, isDisable }) {
 
   return (
     <button
+      type="button"
       className={`${Styles.customSelectFormat} ${
         isDisable ? Styles.disabledButton : ""
       }`}

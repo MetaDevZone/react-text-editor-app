@@ -81,7 +81,7 @@ function LineHeight({ editorRef, isDisable }) {
 
       // Get all block elements in the editor
       const allBlocks = editorRef.current.querySelectorAll(
-        "p, div, h1, h2, h3, h4, h5, h6, li, blockquote"
+        "p, div, h1, h2, h3, h4, h5, h6, li, blockquote",
       );
 
       // Check which blocks intersect with the selection
@@ -214,7 +214,7 @@ function LineHeight({ editorRef, isDisable }) {
       if (blockElement && blockElement.style.lineHeight) {
         const lineHeight = blockElement.style.lineHeight;
         const foundHeight = lineHeights.find(
-          (height) => height.value === lineHeight
+          (height) => height.value === lineHeight,
         );
         if (foundHeight) {
           return foundHeight.label;
@@ -227,7 +227,7 @@ function LineHeight({ editorRef, isDisable }) {
         if (node.nodeType === Node.ELEMENT_NODE && node.style.lineHeight) {
           const lineHeight = node.style.lineHeight;
           const foundHeight = lineHeights.find(
-            (height) => height.value === lineHeight
+            (height) => height.value === lineHeight,
           );
           if (foundHeight) {
             return foundHeight.label;
@@ -278,6 +278,7 @@ function LineHeight({ editorRef, isDisable }) {
 
   return (
     <button
+      type="button"
       className={`${Styles.customSelectFormat} ${
         isDisable ? Styles.disabledButton : ""
       }`}

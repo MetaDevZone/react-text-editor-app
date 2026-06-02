@@ -155,7 +155,7 @@ export default function ImageModal(props) {
     const croppedImageFile = await getCroppedImage(
       imageRef,
       completedCrop,
-      inputs.image
+      inputs.image,
     );
 
     if (!croppedImageFile) {
@@ -198,13 +198,18 @@ export default function ImageModal(props) {
           )}
           <div className={Styles.image__cropper_btn}>
             <button
+              type="button"
               onClick={applyCrop}
               disabled={!completedCrop}
               className={Styles.saveButton}
             >
               Apply Crop
             </button>
-            <button onClick={handleCancel} className={Styles.cancel__btn}>
+            <button
+              type="button"
+              onClick={handleCancel}
+              className={Styles.cancel__btn}
+            >
               Cancel
             </button>
           </div>
@@ -213,6 +218,7 @@ export default function ImageModal(props) {
         <>
           <div className={Styles.selectType}>
             <button
+              type="button"
               className={`${
                 inputs.type === "general" ? `${Styles.selectedType}` : ""
               }`}
@@ -221,6 +227,7 @@ export default function ImageModal(props) {
               General
             </button>
             <button
+              type="button"
               className={`${
                 inputs.type === "upload" ? `${Styles.selectedType}` : ""
               }`}
@@ -319,7 +326,11 @@ export default function ImageModal(props) {
                   </div>
                 )}
               </div>
-              <button className={Styles.saveButton} onClick={handleLinkInsert}>
+              <button
+                type="button"
+                className={Styles.saveButton}
+                onClick={handleLinkInsert}
+              >
                 Save
               </button>
             </div>

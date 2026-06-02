@@ -64,6 +64,7 @@ import LineHeight from "./components/LineHeight";
 import "react-image-crop/dist/ReactCrop.css";
 import { CheckAccessDataApi } from "./DAL/CheckAcces";
 import { getBaseDomain } from "./utils/Constants";
+import { use } from "react";
 
 const show_final_options = (options, remove, all_options) => {
   if (!options) {
@@ -86,16 +87,23 @@ const show_final_options = (options, remove, all_options) => {
 };
 
 const isValidURL = (str) => {
-  const pattern = new RegExp(
-    "^(https?:\\/\\/)?" + // protocol
-      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-      "(\\#[-a-z\\d_]*)?$",
-    "i"
-  );
-  return pattern.test(str);
+  try {
+    // Try to create a URL object - most reliable method
+    new URL(str);
+    return true;
+  } catch (e) {
+    // If URL constructor fails, try regex pattern
+    const pattern = new RegExp(
+      "^(https?://)?" + // protocol
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+        "(:\\d+)?(/[-a-z\\d%_.~+]*)*" + // port and path
+        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+        "(\\#[-a-z\\d_]*)?$",
+      "i",
+    );
+    return pattern.test(str);
+  }
 };
 
 export default function ReactEditorKit(props) {
@@ -187,7 +195,7 @@ export default function ReactEditorKit(props) {
     const hasOnlyTextOrBR = [...editor.childNodes].every(
       (node) =>
         node.nodeType === Node.TEXT_NODE ||
-        (node.nodeType === Node.ELEMENT_NODE && node.nodeName === "BR")
+        (node.nodeType === Node.ELEMENT_NODE && node.nodeName === "BR"),
     );
 
     if (hasOnlyTextOrBR && editor.textContent.trim() !== "") {
@@ -757,7 +765,7 @@ export default function ReactEditorKit(props) {
 
     if (type === "general") {
       // Check if it's a direct video link
-      if (link.match(/\.(mp4|mov|avi|wmv)$/)) {
+      if (link.match(/\.(mp4|mov|avi|wmv|webm|mkv|flv)$/i)) {
         iframeHTML = `<video width="${width || "640"}" height="${
           height || "360"
         }" controls><source src="${link}" type="video/mp4"></video>`;
@@ -766,6 +774,10 @@ export default function ReactEditorKit(props) {
         const youtubeRegex =
           /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
         const vimeoRegex = /(?:https?:\/\/)?(?:www\.)?vimeo.com\/(\d+)/;
+        const dailymotionRegex =
+          /(?:https?:\/\/)?(?:www\.)?dailymotion\.com\/video\/([a-z0-9]+)/i;
+        const twitchRegex =
+          /(?:https?:\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9_]+)/;
 
         if (link.match(youtubeRegex)) {
           const videoId = link.match(youtubeRegex)[1];
@@ -779,6 +791,21 @@ export default function ReactEditorKit(props) {
           }" height="${
             height || "360"
           }" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+        } else if (link.match(dailymotionRegex)) {
+          const videoId = link.match(dailymotionRegex)[1];
+          iframeHTML = `<iframe width="${width || "640"}" height="${
+            height || "360"
+          }" src="https://www.dailymotion.com/embed/video/${videoId}" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+        } else if (link.match(twitchRegex)) {
+          const channelName = link.match(twitchRegex)[1];
+          iframeHTML = `<iframe src="https://twitch.tv/embed/${channelName}/chat?parent=example.com" width="${width || "640"}" height="${
+            height || "360"
+          }" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+        } else if (isValidURL(link)) {
+          // For any other valid URL, create an iframe
+          iframeHTML = `<iframe width="${width || "640"}" height="${
+            height || "360"
+          }" src="${link}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
         } else {
           // Insert custom embed code if available
           iframeHTML = embed_code || "";
@@ -792,6 +819,13 @@ export default function ReactEditorKit(props) {
       handleFocusEditor();
       targetElement.parentNode.setAttribute("data-mtl-link-type", type);
       targetElement.outerHTML = iframeHTML;
+      // Trigger change event after updating content
+      setTimeout(() => {
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = editorNode.innerHTML;
+        onChange?.(tempDiv.innerHTML);
+        handlePlaceholder();
+      }, 0);
     } else if (editorNode && iframeHTML) {
       const wrapper = createIframeWrapperWithSettings(
         iframeHTML,
@@ -800,10 +834,10 @@ export default function ReactEditorKit(props) {
           let iframe_element = wrapper.querySelector("iframe");
           setTargetElement(iframe_element);
           setTargetElementType(
-            wrapper.getAttribute("data-mtl-link-type") || "general"
+            wrapper.getAttribute("data-mtl-link-type") || "general",
           );
           setIsOpenModel("video");
-        }
+        },
       );
 
       handleFocusEditor();
@@ -820,14 +854,18 @@ export default function ReactEditorKit(props) {
       range.setEndAfter(wrapper);
       selection.removeAllRanges();
       selection.addRange(range);
+
+      // Trigger change event after inserting content
+      setTimeout(() => {
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = editorNode.innerHTML;
+        onChange?.(tempDiv.innerHTML);
+        handlePlaceholder();
+      }, 0);
     }
 
     setTargetElement(null);
     setIsOpenModel(""); // Assuming this is setting some state related to the modal
-    // Update placeholder after embedded content is inserted/updated
-    setTimeout(() => {
-      handlePlaceholder();
-    }, 100);
   };
 
   function createIframeWrapperWithSettings(iframeHTML, type, onSettingsClick) {
@@ -968,7 +1006,7 @@ export default function ReactEditorKit(props) {
                 .getType(item.types[0])
                 .then((imageBlob) => {
                   const imgElement = `<img src="${URL.createObjectURL(
-                    imageBlob
+                    imageBlob,
                   )}" alt="Image">`;
                   document.execCommand("insertHTML", false, imgElement);
                 })
@@ -985,12 +1023,12 @@ export default function ReactEditorKit(props) {
                       const cleanedHTML = cleanHTML(htmlContent);
                       const withoutComments = cleanedHTML.replace(
                         /<!--[\s\S]*?-->/g,
-                        ""
+                        "",
                       );
                       document.execCommand(
                         "insertHTML",
                         false,
-                        withoutComments
+                        withoutComments,
                       );
                     })
                     .catch((error) => {
@@ -1000,7 +1038,7 @@ export default function ReactEditorKit(props) {
                 .catch((error) => {
                   console.error(
                     "Error getting HTML type from ClipboardItem:",
-                    error
+                    error,
                   );
                 });
             } else if (item.types.includes("text/plain")) {
@@ -1026,7 +1064,7 @@ export default function ReactEditorKit(props) {
                 .catch((error) => {
                   console.error(
                     "Error getting text type from ClipboardItem:",
-                    error
+                    error,
                   );
                 });
             }
@@ -1077,7 +1115,7 @@ export default function ReactEditorKit(props) {
             const file = files[i];
             if (file.type.startsWith("image/")) {
               const imgElement = `<img src="${URL.createObjectURL(
-                file
+                file,
               )}" alt="Image">`;
               document.execCommand("insertHTML", false, imgElement);
             }
@@ -1085,7 +1123,7 @@ export default function ReactEditorKit(props) {
         }
       } else {
         console.warn(
-          "No clipboard data available, trying navigator.clipboard.readText as fallback"
+          "No clipboard data available, trying navigator.clipboard.readText as fallback",
         );
         // Try navigator.clipboard.readText() for text-only content
         if (navigator.clipboard && navigator.clipboard.readText) {
@@ -1292,7 +1330,7 @@ export default function ReactEditorKit(props) {
     Object.keys(theme_config).forEach(function (key, index) {
       document.documentElement.style.setProperty(
         `--editor-${key}`,
-        theme_config[key]
+        theme_config[key],
       );
     });
   }
@@ -1354,7 +1392,7 @@ export default function ReactEditorKit(props) {
                 .getType(item.types[0])
                 .then((imageBlob) => {
                   const imgElement = `<img src="${URL.createObjectURL(
-                    imageBlob
+                    imageBlob,
                   )}" alt="Image">`;
                   document.execCommand("insertHTML", false, imgElement);
                 })
@@ -1371,12 +1409,12 @@ export default function ReactEditorKit(props) {
                       const cleanedHTML = cleanHTML(htmlContent);
                       const withoutComments = cleanedHTML.replace(
                         /<!--[\s\S]*?-->/g,
-                        ""
+                        "",
                       );
                       document.execCommand(
                         "insertHTML",
                         false,
-                        withoutComments
+                        withoutComments,
                       );
                     })
                     .catch((error) => {
@@ -1386,7 +1424,7 @@ export default function ReactEditorKit(props) {
                 .catch((error) => {
                   console.error(
                     "Error getting HTML type from ClipboardItem:",
-                    error
+                    error,
                   );
                 });
             } else if (item.types.includes("text/plain")) {
@@ -1412,7 +1450,7 @@ export default function ReactEditorKit(props) {
                 .catch((error) => {
                   console.error(
                     "Error getting text type from ClipboardItem:",
-                    error
+                    error,
                   );
                 });
             }
@@ -1431,13 +1469,13 @@ export default function ReactEditorKit(props) {
 
   const handle_resize = () => {
     const hr_1 = document.getElementsByClassName(
-      "style_wysiwygEditorToolbar__2W7yf"
+      "style_wysiwygEditorToolbar__2W7yf",
     )[0];
     if (hr_1) {
       setShowHR1(hr_1.offsetHeight > 34);
     }
     const hr_2 = document.getElementsByClassName(
-      "style_wysiwygEditorToolbar__2W7yf"
+      "style_wysiwygEditorToolbar__2W7yf",
     )[1];
     if (hr_2) {
       setShowHR2(hr_2.offsetHeight > 34);
@@ -1634,22 +1672,23 @@ export default function ReactEditorKit(props) {
     }
   };
 
-  useEffect(() => {
-    if (apiKey) {
-      CheckAccess(apiKey);
-    } else {
-      setIsDisable(true);
-      setAllowPaste(true);
-    }
-  }, [apiKey]);
+  // useEffect(() => {
+  //   if (apiKey) {
+  //     CheckAccess(apiKey);
+  //   } else {
+  //     setIsDisable(true);
+  //     setAllowPaste(true);
+  //   }
+  // }, [apiKey]);
+
   return (
-    <>
+    <div id="react-editor-wrapper">
       <div
         {...mainProps}
         className={`${Styles.reactEditorMain} ${
           isFullScreen ? Styles.fullScreen : ""
         }`}
-        style={{ height: isFullScreen ? "100vh" : height ?? "auto" }}
+        style={{ height: isFullScreen ? "100vh" : (height ?? "auto") }}
         id="react-editor"
       >
         <div id="action-components" className={`${Styles.actionComponents}`}>
@@ -1728,6 +1767,7 @@ export default function ReactEditorKit(props) {
                         }`}
                       >
                         <button
+                          type="button"
                           onClick={handleSelectAll}
                           title={item?.title ? item.title : "Select All"}
                           disabled={
@@ -1745,6 +1785,7 @@ export default function ReactEditorKit(props) {
                         }`}
                       >
                         <button
+                          type="button"
                           onClick={(e) => handleOpenModel(e, "image", item)}
                           title={item?.title ? item.title : "Upload Image"}
                           disabled={isDisable}
@@ -1760,6 +1801,7 @@ export default function ReactEditorKit(props) {
                         }`}
                       >
                         <button
+                          type="button"
                           onClick={(e) => handleOpenModel(e, "link", item)}
                           title={item?.title ? item.title : "Add Link"}
                           disabled={isDisable}
@@ -1775,6 +1817,7 @@ export default function ReactEditorKit(props) {
                         }`}
                       >
                         <button
+                          type="button"
                           onClick={(e) => handleOpenModel(e, "video", item)}
                           title={item?.title ? item.title : "Upload Video"}
                           disabled={isDisable}
@@ -1826,6 +1869,7 @@ export default function ReactEditorKit(props) {
                         }`}
                       >
                         <button
+                          type="button"
                           onClick={handlePaste}
                           title={item?.title ? item.title : "Paste"}
                           disabled={isDisable}
@@ -2145,6 +2189,7 @@ export default function ReactEditorKit(props) {
 
                   {is_select_all && (
                     <button
+                      type="button"
                       onClick={handleSelectAll}
                       title={item?.title ? item.title : "Select All"}
                       disabled={
@@ -2157,6 +2202,7 @@ export default function ReactEditorKit(props) {
                   )}
                   {is_image && (
                     <button
+                      type="button"
                       onClick={(e) => handleOpenModel(e, "image", item)}
                       title={item?.title ? item.title : "Upload Image"}
                       className={` ${isDisable ? Styles.disabledButton : ""}`}
@@ -2167,6 +2213,7 @@ export default function ReactEditorKit(props) {
                   )}
                   {is_link && (
                     <button
+                      type="button"
                       onClick={(e) => handleOpenModel(e, "link", item)}
                       title={item?.title ? item.title : "Add Link"}
                       className={` ${isDisable ? Styles.disabledButton : ""}`}
@@ -2177,6 +2224,7 @@ export default function ReactEditorKit(props) {
                   )}
                   {is_video && (
                     <button
+                      type="button"
                       onClick={(e) => handleOpenModel(e, "video", item)}
                       title={item?.title ? item.title : "Upload Video"}
                       className={` ${isDisable ? Styles.disabledButton : ""}`}
@@ -2213,6 +2261,7 @@ export default function ReactEditorKit(props) {
                   )}
                   {is_paste && (
                     <button
+                      type="button"
                       onClick={handlePaste}
                       title={item?.title ? item.title : "Paste"}
                       className={` ${isDisable ? Styles.disabledButton : ""}`}
@@ -2224,6 +2273,7 @@ export default function ReactEditorKit(props) {
                   {source_code && (
                     <div className={Styles.increaseIconSize}>
                       <button
+                        type="button"
                         onClick={handleViewSource}
                         title={item?.title || "Source Code"}
                         className={` ${isDisable ? Styles.disabledButton : ""}`}
@@ -2236,6 +2286,7 @@ export default function ReactEditorKit(props) {
                   {is_fullscreen && (
                     <div className={Styles.increaseIconSize}>
                       <button
+                        type="button"
                         onClick={toggleFullScreen}
                         className={` ${isDisable ? Styles.disabledButton : ""}`}
                         disabled={isDisable}
@@ -2261,6 +2312,7 @@ export default function ReactEditorKit(props) {
                   {is_hr_line && (
                     <div className={Styles.increaseIconSize}>
                       <button
+                        type="button"
                         onClick={handleInsertHRClick}
                         title={item?.title || "Horizontal Line"}
                         className={` ${isDisable ? Styles.disabledButton : ""}`}
@@ -2273,6 +2325,7 @@ export default function ReactEditorKit(props) {
                   {is_special_char && (
                     <div className={Styles.increaseIconSize}>
                       <button
+                        type="button"
                         onClick={(e) => handleOpenModel(e, "special_char")}
                         title={item?.title || "Special Char"}
                         className={` ${isDisable ? Styles.disabledButton : ""}`}
@@ -2364,6 +2417,6 @@ export default function ReactEditorKit(props) {
       )}
       <div id="modal-root"></div>
       <div id="full-screen-overlay"></div>
-    </>
+    </div>
   );
 }
