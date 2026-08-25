@@ -37,6 +37,7 @@ function SelectAlignment({ handleHideChildOptions }) {
       {alignments.map((option, index) => (
         <button
           key={`key${index}`}
+          type="button"
           onClick={(e) => handleOptionClick(e, option)}
           className={`${Styles.selectOption} ${Styles.reactEditorTextLeft}`}
         >

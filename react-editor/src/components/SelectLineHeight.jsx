@@ -74,6 +74,7 @@ function SelectLineHeight({
       {lineHeightOptions.map((option, index) => (
         <button
           key={`key${index}`}
+          type="button"
           onClick={(e) => handleOptionClick(e, option.value)}
           className={`${Styles.selectOption} ${
             currentLineHeight === option.value ? Styles.selectedOption : ""

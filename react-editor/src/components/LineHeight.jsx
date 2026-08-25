@@ -4,10 +4,11 @@ import ArrowDown from "./SVGImages/ArrowDown";
 
 function LineHeight({ editorRef, isDisable }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("1.5");
+  const [selectedOption, setSelectedOption] = useState("default");
   const selectRef = useRef(null);
 
   const lineHeights = [
+    { label: "Default", value: "default" },
     { label: "1.0", value: "1" },
     { label: "1.1", value: "1.1" },
     { label: "1.2", value: "1.2" },
@@ -81,7 +82,7 @@ function LineHeight({ editorRef, isDisable }) {
 
       // Get all block elements in the editor
       const allBlocks = editorRef.current.querySelectorAll(
-        "p, div, h1, h2, h3, h4, h5, h6, li, blockquote"
+        "p, div, h1, h2, h3, h4, h5, h6, li, blockquote",
       );
 
       // Check which blocks intersect with the selection
@@ -214,7 +215,7 @@ function LineHeight({ editorRef, isDisable }) {
       if (blockElement && blockElement.style.lineHeight) {
         const lineHeight = blockElement.style.lineHeight;
         const foundHeight = lineHeights.find(
-          (height) => height.value === lineHeight
+          (height) => height.value === lineHeight,
         );
         if (foundHeight) {
           return foundHeight.label;
@@ -227,7 +228,7 @@ function LineHeight({ editorRef, isDisable }) {
         if (node.nodeType === Node.ELEMENT_NODE && node.style.lineHeight) {
           const lineHeight = node.style.lineHeight;
           const foundHeight = lineHeights.find(
-            (height) => height.value === lineHeight
+            (height) => height.value === lineHeight,
           );
           if (foundHeight) {
             return foundHeight.label;
@@ -261,7 +262,7 @@ function LineHeight({ editorRef, isDisable }) {
         if (currentHeight) {
           setSelectedOption(currentHeight);
         } else {
-          setSelectedOption("1.5");
+          setSelectedOption("default");
         }
       }
     };
@@ -278,6 +279,7 @@ function LineHeight({ editorRef, isDisable }) {
 
   return (
     <button
+      type="button"
       className={`${Styles.customSelectFormat} ${
         isDisable ? Styles.disabledButton : ""
       }`}

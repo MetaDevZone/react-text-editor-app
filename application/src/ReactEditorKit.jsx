@@ -275,7 +275,6 @@ export default function ReactEditorKit(props) {
 
     // Usage:
     let content = editor.innerHTML;
-    content = transformHTML(content);
     const tempDiv = document.createElement("div");
 
     tempDiv.innerHTML = content;
@@ -583,21 +582,14 @@ export default function ReactEditorKit(props) {
   const handleSaveSource = (e) => {
     e.preventDefault();
     if (editorRef?.current) {
-      const trimmedSourceCode = sourceCode
-        .replace(/\n\s*\n/g, "\n")
-        .replace(/\s+/g, " ")
-        .trim();
+      const trimmedSourceCode = (sourceCode || "").trim();
 
       editorRef.current.innerHTML = trimmedSourceCode;
+      handlePlaceholder();
       setViewSource(false);
       if (onChange) {
         onChange(trimmedSourceCode);
       }
-
-      // Update placeholder after setting content (ensure DOM is updated first)
-      setTimeout(() => {
-        handlePlaceholder();
-      }, 1000);
     }
   };
 
@@ -1228,9 +1220,11 @@ export default function ReactEditorKit(props) {
 
     if (!hasContent) {
       editor.classList.add("empty");
+      editor.setAttribute("data-mlx-editor-empty", "true");
       setIsPlaceholder(true);
     } else {
       editor.classList.remove("empty");
+      editor.removeAttribute("data-mlx-editor-empty");
       setIsPlaceholder(false);
     }
   };
@@ -1650,8 +1644,8 @@ export default function ReactEditorKit(props) {
     try {
       let postData = {
         apiKey: apiKey,
-        // domain: getBaseDomain(),
-        domain: "localhost",
+        domain: getBaseDomain(),
+        // domain: "localhost",
       };
       const result = await CheckAccessDataApi(postData);
       if (result.success) {
@@ -1672,14 +1666,16 @@ export default function ReactEditorKit(props) {
     }
   };
 
-  // useEffect(() => {
-  //   if (apiKey) {
-  //     CheckAccess(apiKey);
-  //   } else {
-  //     setIsDisable(true);
-  //     setAllowPaste(true);
-  //   }
-  // }, [apiKey]);
+  useEffect(() => {
+    if (apiKey) {
+      CheckAccess(apiKey);
+    } else {
+      setIsDisable(true);
+      setAllowPaste(true);
+    }
+  }, [apiKey]);
+
+  console.log(isDisable, "isDisableisDisableisDisableisDisable");
 
   return (
     <div id="react-editor-wrapper">
@@ -2345,7 +2341,7 @@ export default function ReactEditorKit(props) {
             <div className={`${Styles.warning_container}`}>
               ⚠️ Please enter a valid API key to continue{" "}
               <a
-                href="https://6000-firebase-studio-1750316005416.cluster-73qgvk7hjjadkrjeyexca5ivva.cloudworkstations.dev/"
+                href="https://reacteditor.metadevzone.com/"
                 target="_blank"
                 rel="noopener noreferrer"
               >

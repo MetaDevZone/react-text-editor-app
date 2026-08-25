@@ -100,36 +100,58 @@ export function generateRandomID(length) {
 }
 
 export function transformHTML(htmlString) {
-  let parser = new DOMParser();
-  if (htmlString) {
-    let doc = parser.parseFromString(htmlString, "text/html");
+  if (!htmlString) return "";
 
-    doc.querySelectorAll("div").forEach((divElement) => {
-      let pElement = doc.createElement("p");
-      pElement.innerHTML = divElement.innerHTML;
-      divElement.replaceWith(pElement);
-    });
+  let formatted = "";
+  let indent = "";
+  const tab = "  ";
 
-    let transformedHTML = doc.body.innerHTML;
+  // Split tokens into tags and text without mutating any elements or attributes
+  const tokens =
+    htmlString.replace(/>\s*</g, "><").match(/(<[^>]+>|[^<]+)/g) || [];
 
-    transformedHTML = transformedHTML.replace(/<br\s*\/?>/g, "&nbsp;");
-    transformedHTML = transformedHTML.replace(
-      /<(?=[^/])/g,
-      (match) => `\n${match}`
-    );
-    transformedHTML = transformedHTML.trim();
+  const voidTags = new Set([
+    "area",
+    "base",
+    "br",
+    "col",
+    "embed",
+    "hr",
+    "img",
+    "input",
+    "link",
+    "meta",
+    "param",
+    "source",
+    "track",
+    "wbr",
+  ]);
 
-    const lines = transformedHTML.split("\n");
-    const processedLines = lines.map((line) => {
-      const hasLeading = /^<.*?>|<.*?>$/.test(line);
-      if (!hasLeading && line.trim()) {
-        return `<p>${line}</p>`;
+  tokens.forEach((token) => {
+    token = token.trim();
+    if (!token) return;
+
+    if (token.startsWith("</")) {
+      if (indent.length >= tab.length) {
+        indent = indent.slice(tab.length);
       }
-      return line;
-    });
-    return processedLines.join("\n").trim();
-  }
-  return "";
+      formatted += `${indent}${token}\n`;
+    } else if (token.startsWith("<") && !token.startsWith("<!")) {
+      const isSelfClosing = token.endsWith("/>");
+      const tagNameMatch = token.match(/^<([a-zA-Z0-9_-]+)/);
+      const tagName = tagNameMatch ? tagNameMatch[1].toLowerCase() : "";
+      const isVoid = voidTags.has(tagName) || isSelfClosing;
+
+      formatted += `${indent}${token}\n`;
+      if (!isVoid && !token.startsWith("<!--")) {
+        indent += tab;
+      }
+    } else {
+      formatted += `${indent}${token}\n`;
+    }
+  });
+
+  return formatted.trim();
 }
 
 export const remove_resizer = () => {

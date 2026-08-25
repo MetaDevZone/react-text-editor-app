@@ -60,7 +60,7 @@ export default function SelectFileOptions(props) {
   };
   if (remove_from_navbar?.length > 0) {
     let find_remove = remove_from_navbar.find(
-      (toolbar) => toolbar.name === "format"
+      (toolbar) => toolbar.name === "format",
     );
 
     if (find_remove?.options?.length > 0) {
@@ -101,6 +101,7 @@ export default function SelectFileOptions(props) {
               <>
                 {is_bold && (
                   <button
+                    type="button"
                     className={`${Styles.selectInsert} ${
                       isDisable ? Styles.disabledButton : ""
                     }`}
@@ -112,6 +113,7 @@ export default function SelectFileOptions(props) {
                 )}
                 {is_italic && (
                   <button
+                    type="button"
                     className={`${Styles.selectInsert} ${
                       isDisable ? Styles.disabledButton : ""
                     }`}
@@ -123,6 +125,7 @@ export default function SelectFileOptions(props) {
                 )}
                 {is_underline && (
                   <button
+                    type="button"
                     className={`${Styles.selectInsert} ${
                       isDisable ? Styles.disabledButton : ""
                     }`}
@@ -134,6 +137,7 @@ export default function SelectFileOptions(props) {
                 )}
                 {is_superscript && (
                   <button
+                    type="button"
                     className={`${Styles.selectInsert} ${
                       isDisable ? Styles.disabledButton : ""
                     }`}
@@ -145,6 +149,7 @@ export default function SelectFileOptions(props) {
                 )}
                 {is_subscript && (
                   <button
+                    type="button"
                     className={`${Styles.selectInsert} ${
                       isDisable ? Styles.disabledButton : ""
                     }`}

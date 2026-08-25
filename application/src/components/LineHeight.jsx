@@ -4,10 +4,11 @@ import ArrowDown from "./SVGImages/ArrowDown";
 
 function LineHeight({ editorRef, isDisable }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("1.5");
+  const [selectedOption, setSelectedOption] = useState("default");
   const selectRef = useRef(null);
 
   const lineHeights = [
+    { label: "Default", value: "default" },
     { label: "1.0", value: "1" },
     { label: "1.1", value: "1.1" },
     { label: "1.2", value: "1.2" },
@@ -261,7 +262,7 @@ function LineHeight({ editorRef, isDisable }) {
         if (currentHeight) {
           setSelectedOption(currentHeight);
         } else {
-          setSelectedOption("1.5");
+          setSelectedOption("default");
         }
       }
     };

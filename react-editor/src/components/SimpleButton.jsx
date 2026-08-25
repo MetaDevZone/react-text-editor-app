@@ -20,6 +20,7 @@ export default function SimpleButton(props) {
 
   return (
     <button
+      type="button"
       onClick={handleClick}
       title={item?.title ? item.title : title}
       disabled={isDisable}

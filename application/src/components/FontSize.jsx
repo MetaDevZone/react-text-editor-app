@@ -47,14 +47,22 @@ function FontSize({ editorRef, isDisable }) {
 
     const findParentSpan = (node) => {
       while (node && node !== editorRef.current) {
-        if (node.nodeType === 1 && node.tagName === "SPAN") {
-          if (
-            node.textContent == selectedText ||
-            node.innerText == selectedText
-          ) {
-            return node;
-          } else {
-            return null;
+        if (node.nodeType === 1) {
+          // Check any element that has fontSize (SPAN, P, DIV, etc.)
+          if (node.style && node.style.fontSize) {
+            const nodeText = (node.textContent || node.innerText || "").trim();
+            const selText = (selectedText || "").trim();
+            if (nodeText === selText) {
+              return node;
+            }
+          }
+          // Also check SPAN without fontSize (might have other styles)
+          if (node.tagName === "SPAN") {
+            const nodeText = (node.textContent || node.innerText || "").trim();
+            const selText = (selectedText || "").trim();
+            if (nodeText === selText) {
+              return node;
+            }
           }
         }
         node = node.parentNode;
@@ -73,6 +81,24 @@ function FontSize({ editorRef, isDisable }) {
 
         // To safely wrap the selection without breaking HTML structure
         const content = range.extractContents();
+
+        // Remove fontSize from all child elements so the new span's font-size takes effect
+        const childElements = content.querySelectorAll("[style]");
+        childElements.forEach((el) => {
+          if (el.style.fontSize) {
+            el.style.removeProperty("font-size");
+            // If no styles left, unwrap the element (replace with its children)
+            if (!el.getAttribute("style") || el.getAttribute("style").trim() === "") {
+              if (el.tagName === "SPAN") {
+                while (el.firstChild) {
+                  el.parentNode.insertBefore(el.firstChild, el);
+                }
+                el.parentNode.removeChild(el);
+              }
+            }
+          }
+        });
+
         span.appendChild(content);
         range.insertNode(span);
       }
