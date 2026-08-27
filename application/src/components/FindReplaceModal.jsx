@@ -16,6 +16,9 @@ export default function FindReplaceModal({
   initialFindText = "",
   initialPosition = null,
 }) {
+  const widgetRef = useRef(null);
+  const findInputRef = useRef(null);
+
   const getInitialText = () => {
     if (initialFindText && initialFindText.trim()) {
       return initialFindText.trim();
@@ -35,58 +38,6 @@ export default function FindReplaceModal({
     return "";
   };
 
-  const calculateInitialPos = () => {
-    // 0. If explicit initial position is provided (e.g. from right-click context menu)
-    if (initialPosition && (initialPosition.top != null || initialPosition.y != null)) {
-      const pTop = initialPosition.top != null ? initialPosition.top : initialPosition.y;
-      const pLeft = initialPosition.left != null ? initialPosition.left : initialPosition.x;
-      let top = Math.min(window.innerHeight - 220, Math.max(10, pTop + 4));
-      let left = Math.min(window.innerWidth - 440, Math.max(10, pLeft));
-      return { top, left };
-    }
-
-    // 1. Check if user selected a range
-    if (selectedRange) {
-      try {
-        const rect = selectedRange.getBoundingClientRect();
-        if (rect && rect.width > 0 && rect.height > 0) {
-          let top = rect.bottom + 8;
-          let left = Math.max(10, Math.min(window.innerWidth - 440, rect.left));
-          if (top + 160 > window.innerHeight) {
-            top = Math.max(10, rect.top - 160);
-          }
-          return { top, left };
-        }
-      } catch (e) {}
-    }
-    // 2. Check window.getSelection()
-    try {
-      const sel = window.getSelection();
-      if (sel && sel.rangeCount > 0) {
-        const r = sel.getRangeAt(0);
-        const rect = r.getBoundingClientRect();
-        if (rect && rect.width > 0 && rect.height > 0) {
-          let top = rect.bottom + 8;
-          let left = Math.max(10, Math.min(window.innerWidth - 440, rect.left));
-          if (top + 160 > window.innerHeight) {
-            top = Math.max(10, rect.top - 160);
-          }
-          return { top, left };
-        }
-      }
-    } catch (e) {}
-
-    // 3. Position relative to top of editor if no selection
-    if (editorRef?.current) {
-      const eRect = editorRef.current.getBoundingClientRect();
-      let top = Math.max(60, eRect.top + 10);
-      let left = Math.max(10, Math.min(window.innerWidth - 440, eRect.right - 440));
-      return { top, left };
-    }
-
-    return { top: 80, left: Math.max(10, window.innerWidth - 460) };
-  };
-
   const [findText, setFindText] = useState(getInitialText);
   const [replaceText, setReplaceText] = useState("");
   const [matchCase, setMatchCase] = useState(false);
@@ -95,10 +46,9 @@ export default function FindReplaceModal({
   const [matchElements, setMatchElements] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [statusMessage, setStatusMessage] = useState("");
-  const [position, setPosition] = useState({ top: 80, right: 28, left: null });
+  const [position, setPosition] = useState({ top: 8, right: 12, left: null });
   const [isDragging, setIsDragging] = useState(false);
-  const dragStartRef = useRef({ mouseX: 0, mouseY: 0, posX: 0, posY: 0 });
-  const findInputRef = useRef(null);
+  const dragStartRef = useRef({ mouseX: 0, mouseY: 0, posX: 0, posY: 0, parentWidth: 0, parentHeight: 0, widgetWidth: 0, widgetHeight: 0 });
 
   // Focus find input on mount and select text for easy overwrite/search
   useEffect(() => {
@@ -114,28 +64,38 @@ export default function FindReplaceModal({
     };
   }, [editorRef]);
 
-  // Handle Dragging
+  // Handle Dragging strictly bounded inside the editor container
   const handleMouseDown = (e) => {
     if (e.target.tagName === "INPUT" || e.target.tagName === "BUTTON") return;
-    const widget = e.currentTarget.parentElement;
+    const widget = widgetRef.current;
+    if (!widget) return;
+    const parent = widget.offsetParent || widget.parentElement;
+    const parentRect = parent ? parent.getBoundingClientRect() : { left: 0, top: 0, width: 800, height: 600 };
     const rect = widget.getBoundingClientRect();
     setIsDragging(true);
     dragStartRef.current = {
       mouseX: e.clientX,
       mouseY: e.clientY,
-      posX: rect.left,
-      posY: rect.top,
+      posX: rect.left - parentRect.left,
+      posY: rect.top - parentRect.top,
+      parentWidth: parentRect.width,
+      parentHeight: parentRect.height,
+      widgetWidth: rect.width,
+      widgetHeight: rect.height,
     };
   };
 
   useEffect(() => {
     const handleMouseMove = (e) => {
       if (!isDragging) return;
-      const dx = e.clientX - dragStartRef.current.mouseX;
-      const dy = e.clientY - dragStartRef.current.mouseY;
-      const newTop = Math.max(10, Math.min(window.innerHeight - 100, dragStartRef.current.posY + dy));
-      const newLeft = Math.max(10, Math.min(window.innerWidth - 300, dragStartRef.current.posX + dx));
-      setPosition({ top: newTop, left: newLeft });
+      const { mouseX, mouseY, posX, posY, parentWidth, parentHeight, widgetWidth, widgetHeight } = dragStartRef.current;
+      const dx = e.clientX - mouseX;
+      const dy = e.clientY - mouseY;
+      const maxLeft = Math.max(0, parentWidth - widgetWidth - 8);
+      const maxTop = Math.max(0, parentHeight - widgetHeight - 8);
+      const newLeft = Math.max(8, Math.min(maxLeft, posX + dx));
+      const newTop = Math.max(8, Math.min(maxTop, posY + dy));
+      setPosition({ top: newTop, left: newLeft, right: null });
     };
 
     const handleMouseUp = () => {
@@ -284,11 +244,12 @@ export default function FindReplaceModal({
 
   return (
     <div
+      ref={widgetRef}
       className={Styles.findReplaceFloatingWidget}
       style={{
-        top: position.top,
-        left: position.left != null ? position.left : "auto",
-        right: position.left != null ? "auto" : 28,
+        top: `${position.top}px`,
+        left: position.left != null ? `${position.left}px` : "auto",
+        right: position.right != null ? `${position.right}px` : (position.left != null ? "auto" : "12px"),
       }}
     >
       {/* Header Bar with drag support, collapse & close */}

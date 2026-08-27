@@ -82,6 +82,7 @@ import {
   getActiveTable,
 } from "./utils/tableUtils";
 import { initTableResizer } from "./utils/tableResizer";
+import { sanitizeDangerousScripts } from "./security/ScriptSanitizer";
 
 import "react-image-crop/dist/ReactCrop.css";
 import { CheckAccessDataApi } from "./DAL/CheckAcces";
@@ -451,6 +452,9 @@ export default function ReactEditorKit(props) {
   };
 
   const handleEditorClick = (e) => {
+    if (e.target && e.target.tagName === "BUTTON") {
+      e.preventDefault();
+    }
     const spellErrorSpan = e.target.closest("span.mlx-spell-error");
     if (spellErrorSpan && editorRef?.current) {
       e.stopPropagation();
@@ -737,13 +741,22 @@ export default function ReactEditorKit(props) {
   const handleSaveSource = (e) => {
     e.preventDefault();
     if (editorRef?.current) {
-      const trimmedSourceCode = (sourceCode || "").trim();
+      const rawSource = (sourceCode || "").trim();
+      const { sanitizedHtml, removedCount, violations } =
+        sanitizeDangerousScripts(rawSource);
 
-      editorRef.current.innerHTML = trimmedSourceCode;
+      if (removedCount > 0) {
+        console.warn(
+          `[Security Alert] Auto-removed ${removedCount} malicious script payload(s):`,
+          violations,
+        );
+      }
+
+      editorRef.current.innerHTML = sanitizedHtml;
       handlePlaceholder();
       setViewSource(false);
       if (onChange) {
-        onChange(trimmedSourceCode);
+        onChange(sanitizedHtml);
       }
     }
   };
@@ -1095,9 +1108,10 @@ export default function ReactEditorKit(props) {
   };
 
   const cleanHTML = (html) => {
+    const { sanitizedHtml } = sanitizeDangerousScripts(html);
     // Create a temporary div to parse HTML
     const tempDiv = document.createElement("div");
-    tempDiv.innerHTML = html;
+    tempDiv.innerHTML = sanitizedHtml;
 
     // Function to clean styles from an element
     const cleanStyles = (element) => {
@@ -1337,7 +1351,8 @@ export default function ReactEditorKit(props) {
     }
     if (!viewSource && editorRef?.current) {
       const content = editorRef?.current.innerHTML;
-      const formattedContent = transformHTML(content);
+      const { sanitizedHtml } = sanitizeDangerousScripts(content);
+      const formattedContent = transformHTML(sanitizedHtml);
       setSourceCode(formattedContent);
     } else {
       setSourceCode("");
@@ -1544,7 +1559,8 @@ export default function ReactEditorKit(props) {
   useEffect(() => {
     if (!init) {
       if (editorRef.current && value) {
-        editorRef.current.innerHTML = value;
+        const { sanitizedHtml } = sanitizeDangerousScripts(value);
+        editorRef.current.innerHTML = sanitizedHtml;
         setInit(true);
         // Update placeholder after setting initial content
         setTimeout(() => handlePlaceholder(), 0);
@@ -1819,7 +1835,17 @@ export default function ReactEditorKit(props) {
     setCursorAtStart();
     const editor = editorRef.current;
     let cleanupResizer = () => {};
+    let handleEditorCaptureClick = () => {};
+
     if (editor) {
+      handleEditorCaptureClick = (e) => {
+        const clickable = e.target.closest("button, [onclick]");
+        if (clickable && editor.contains(clickable)) {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+        }
+      };
+      editor.addEventListener("click", handleEditorCaptureClick, true);
       window.addEventListener("click", handleClickImage);
       editor.addEventListener("mouseup", handleSelection);
       editor.addEventListener("keyup", handleSelection);
@@ -1832,6 +1858,7 @@ export default function ReactEditorKit(props) {
       window.removeEventListener("resize", handle_resize);
       cleanupResizer();
       if (editor) {
+        editor.removeEventListener("click", handleEditorCaptureClick, true);
         window.removeEventListener("click", handleClickImage);
         editor.removeEventListener("mouseup", handleSelection);
         editor.removeEventListener("keyup", handleSelection);
@@ -2713,6 +2740,18 @@ export default function ReactEditorKit(props) {
               }}
             />
           )}
+          {isOpenModel === "find_replace" && (
+            <FindReplaceModal
+              editorRef={editorRef}
+              onClose={() => {
+                handleCloseModel();
+                setFindReplacePos(null);
+              }}
+              onInput={handleInput}
+              selectedRange={selectedRange}
+              initialPosition={findReplacePos}
+            />
+          )}
         </div>
       </div>
       {isLoading && (
@@ -2722,18 +2761,6 @@ export default function ReactEditorKit(props) {
           sourceCode={sourceCode}
           setSourceCode={setSourceCode}
           handleSaveSource={handleSaveSource}
-        />
-      )}
-      {isOpenModel === "find_replace" && (
-        <FindReplaceModal
-          editorRef={editorRef}
-          onClose={() => {
-            handleCloseModel();
-            setFindReplacePos(null);
-          }}
-          onInput={handleInput}
-          selectedRange={selectedRange}
-          initialPosition={findReplacePos}
         />
       )}
       {isOpenModel && isOpenModel !== "find_replace" && (

@@ -36,6 +36,7 @@ body {
 }
 
 .reactEditorMain {
+  position: relative;
   background-color: var(--editor-background-color);
   border: 2px solid var(--editor-border-color);
   color: var(--editor-text-color);
@@ -1084,8 +1085,8 @@ input[type="number"] {
    ========================================================================== */
 
 .findReplaceFloatingWidget {
-  position: fixed;
-  z-index: 99999;
+  position: absolute;
+  z-index: 1000;
   background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 8px;

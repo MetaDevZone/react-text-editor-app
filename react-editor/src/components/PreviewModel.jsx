@@ -1,6 +1,7 @@
 import React from "react";
 import Modal from "./Model";
 import Styles from "../css/style.module.css";
+import SafeSandboxedRenderer from "./SafeSandboxedRenderer";
 
 export default function PreviewModel(props) {
   const { openPreview, setOpenPreview, previewContent } = props;
@@ -12,10 +13,9 @@ export default function PreviewModel(props) {
         title="Preview"
         className={Styles.fullScreenModel}
       >
-        <div
-          className={Styles.reactEditorMt10}
-          dangerouslySetInnerHTML={{ __html: previewContent }}
-        ></div>
+        <div className={Styles.reactEditorMt10}>
+          <SafeSandboxedRenderer htmlContent={previewContent} />
+        </div>
       </Modal>
     </div>
   );
