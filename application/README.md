@@ -9,19 +9,6 @@
 
 ---
 
-## ⚡ Quick Comparison: Why React Editor Kit?
-
-| Capability | React Editor Kit | TinyMCE | React-Quill |
-| :--- | :---: | :---: | :---: |
-| **Architecture** | ⚛️ **Pure React DOM** | 📦 Heavy Iframe | 📜 Wrapper on Quill |
-| **Bundle Size** | 🚀 **~65 KB** | 🐢 ~800 KB - 1.2 MB | ⚖️ ~180 KB |
-| **Advanced Tables** | ✅ **10x10 Grid + Hover Actions** | 🔒 Paid Plugin | ❌ Very Basic |
-| **Find & Replace** | ✅ **Draggable Non-Blocking Widget** | ❌ Full Modal Dialog | ❌ Missing |
-| **Spell Checker** | ✅ **Offline 50,000+ Words Engine** | 🔒 Paid Cloud API | ❌ Browser Default Only |
-| **Pricing / License** | 🆓 **100% Free & Open Source** | 💰 $40 - $300+/month | 🆓 Free |
-
----
-
 ## 🌟 Top 3 Standout Super-Features
 
 ### 1. 📊 Next-Gen Advanced Table Suite
