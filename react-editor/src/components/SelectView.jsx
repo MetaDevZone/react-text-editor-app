@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { CodeIcon, FullscreenExit, FullscreenIcon } from ".";
+import {
+  CodeIcon,
+  FullscreenExit,
+  FullscreenIcon,
+  FindReplaceIcon,
+  SpellCheckIcon,
+} from ".";
 import { VIEW_OPTIONS } from "./constant";
 import Styles from "../css/style.module.css";
 
@@ -8,6 +14,9 @@ export default function SelectFileOptions(props) {
     handleViewSource,
     isFullScreen,
     toggleFullScreen,
+    handleOpenFindReplace,
+    toggleSpellCheck,
+    isSpellCheckActive = true,
     item,
     isPlaceholder,
     placeholder,
@@ -33,6 +42,10 @@ export default function SelectFileOptions(props) {
       handleViewSource();
     } else if (type === "screen") {
       toggleFullScreen();
+    } else if (type === "find_replace") {
+      handleOpenFindReplace?.();
+    } else if (type === "spellcheck") {
+      toggleSpellCheck?.();
     }
   };
 
@@ -65,6 +78,10 @@ export default function SelectFileOptions(props) {
             option === "source_code" || option.name === "source_code";
           let is_full_screen =
             option === "full_screen" || option.name === "full_screen";
+          let is_find_replace =
+            option === "find_replace" || option.name === "find_replace";
+          let is_spellcheck =
+            option === "spellcheck" || option.name === "spellcheck";
 
           return (
             <div key={`key${index}`}>
@@ -103,6 +120,36 @@ export default function SelectFileOptions(props) {
                       </span>
                     </>
                   )}
+                </div>
+              )}
+              {is_find_replace && (
+                <div
+                  className={`${Styles.selectInsert} ${
+                    isDisable ? Styles.disabledButton : ""
+                  }`}
+                  onClick={(e) => handleSelect(e, "find_replace", option)}
+                >
+                  {option?.icon ? option.icon : <FindReplaceIcon />}
+                  <span>
+                    {option?.title ? option.title : "Find and Replace"}
+                  </span>
+                </div>
+              )}
+              {is_spellcheck && (
+                <div
+                  className={`${Styles.selectInsert} ${
+                    isDisable ? Styles.disabledButton : ""
+                  }`}
+                  onClick={(e) => handleSelect(e, "spellcheck", option)}
+                >
+                  {option?.icon ? option.icon : <SpellCheckIcon />}
+                  <span>
+                    {option?.title
+                      ? option.title
+                      : isSpellCheckActive
+                      ? "Spell Check: ON"
+                      : "Spell Check: OFF"}
+                  </span>
                 </div>
               )}
             </div>

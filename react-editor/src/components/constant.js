@@ -37,6 +37,8 @@ export const TOOLBAR_ITEMS = [
   "cut",
   "paste",
   "select_all",
+  "find_replace",
+  "spellcheck",
   "|",
   "image",
   "link",
@@ -55,6 +57,7 @@ export const NAVBAR_ITEMS = [
   "format",
   "|",
   "select_all",
+  "find_replace",
   "|",
   "image",
   "link",
@@ -78,6 +81,7 @@ export const FORMAT_OPTIONS = [
 ];
 
 export const INSER_OPTIONS = [
+  "table",
   "image",
   "link",
   "video",
@@ -86,7 +90,12 @@ export const INSER_OPTIONS = [
 ];
 
 export const FILE_OPTIONS = ["new_document", "preview", "print"];
-export const VIEW_OPTIONS = ["source_code", "full_screen"];
+export const VIEW_OPTIONS = [
+  "source_code",
+  "full_screen",
+  "find_replace",
+  "spellcheck",
+];
 
 export function generateRandomID(length) {
   const characters =

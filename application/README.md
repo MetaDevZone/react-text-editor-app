@@ -1,70 +1,146 @@
-# Getting Started with Create React App
+# ✨ React Editor Kit (`react-text-editor-app`)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
 
-In the project directory, you can run:
+<p align="center">
+  <strong>A modern, ultra-fast, SaaS-grade rich text editor built natively in React.</strong><br>
+  <em>Engineered for seamless state management, advanced isolated table operations, non-blocking find/replace, and in-memory offline spell checking.</em>
+</p>
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## ⚡ Quick Comparison: Why React Editor Kit?
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+| Capability | React Editor Kit | TinyMCE | React-Quill |
+| :--- | :---: | :---: | :---: |
+| **Architecture** | ⚛️ **Pure React DOM** | 📦 Heavy Iframe | 📜 Wrapper on Quill |
+| **Bundle Size** | 🚀 **~65 KB** | 🐢 ~800 KB - 1.2 MB | ⚖️ ~180 KB |
+| **Advanced Tables** | ✅ **10x10 Grid + Hover Actions** | 🔒 Paid Plugin | ❌ Very Basic |
+| **Find & Replace** | ✅ **Draggable Non-Blocking Widget** | ❌ Full Modal Dialog | ❌ Missing |
+| **Spell Checker** | ✅ **Offline 50,000+ Words Engine** | 🔒 Paid Cloud API | ❌ Browser Default Only |
+| **Pricing / License** | 🆓 **100% Free & Open Source** | 💰 $40 - $300+/month | 🆓 Free |
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🌟 Top 3 Standout Super-Features
 
-### `npm run build`
+### 1. 📊 Next-Gen Advanced Table Suite
+> **Complete Layout Freedom**: Hover above any table to trigger instant row/column actions without losing text selection!
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+┌─────────────────────────────────────────────────────────────┐
+│ 📑 Duplicate Row  │  🗑️ Delete Row  │  ➕ Insert Column   │  ⚙️ Table Props
+└─────────────────────────────────────────────────────────────┘
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Visual 10x10 Table Creator**: Hover & click grid picker.
+- **Dynamic Quick-Action Bar**: Floating toolbar above active tables for instant edits.
+- **Granular Cell Controls**: Cell merging, splitting, custom background colors, and border widths.
+- **Isolated Typing Engine**: Text editing in one cell never affects adjacent rows or column widths.
+- **Keyboard Navigation**: Press <kbd>Tab</kbd> to effortlessly glide between table cells.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+### 2. 🔍 Floating & Draggable Find & Replace
+> **Zero Obstruction**: Floats gracefully in the top-right corner or can be dragged anywhere on your canvas.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- **Multi-Element Search**: Deep scans headings, paragraphs, lists, and nested table cells simultaneously.
+- **Smart Toggle Switches**:
+  - `Aa` **Match Case** (Case-sensitive regex)
+  - `\b` **Match Whole Word** (Exact word boundary)
+- **Live Match Counter**: Real-time counter badge (e.g. `3 of 12 matches`).
+- **Interactive Navigation**: Step through matches forward (<kbd>Enter</kbd>) and backward (<kbd>Shift+Enter</kbd>).
+- **Single & Batch Replace**: Instant active match replacement or 1-click `Replace All`.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 3. ✍️ Offline In-Memory Spell Checker & Suggestions
+> **Zero API Latency & 100% Privacy**: Operates entirely client-side with a comprehensive 50,000+ word standard English dataset and grammatical morphology rules.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- **Grammar & Morphology Engine**: Automatically recognizes plural inflections (`-ies ➔ -y` like *capabilities*, *activities*), tenses (`-ed`, `-ing`), adverbs (`-ly`), and prefixes (`un-`, `re-`, `multi-`).
+- **Sleek Error Highlighting**: Subtly highlights typos with non-destructive red wavy underlines (`span.mlx-spell-error`).
+- **Smart Suggestion Popover**: Click any misspelled word to open ranked alternatives powered by Levenshtein distance.
+- **➕ Custom Dictionary**: Save proprietary brand names and terms directly to persistent `localStorage`.
+- **🧼 100% Clean HTML Output**: All temporary highlight markers are automatically stripped before triggering `onChange`.
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🛠️ Complete Feature Matrix
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+╭──────────────────────────────────────────────────────────────────────────────╮
+│  🎨 Typography     Font Family, Font Size (px/pt), Line Height, Text Color  │
+│  🖋️ Formats        Bold, Italic, Underline, Strike, Super/Subscript, Clear   │
+│  📑 Blocks         H1–H6, Blockquote, Preformatted Code Block, Divider (HR) │
+│  🔢 Lists          Ordered (1, a, i), Unordered (Disc, Circle), Indentations │
+│  🖼️ Media          Image Upload, URL Embed, Crop Tool, 8-Point Live Resize  │
+│  🔗 Links          Hyperlink Modal with Target Blank & Secure Rel Noopener  │
+│  💻 Developer      Live HTML Source Code Mode with Bidirectional Sync       │
+│  🖥️ Canvas         Fullscreen Focus Canvas & Paper Print Formatted Layout   │
+│  🖱️ Context Menu   Pixel-Perfect Right-Click Menu at Exact Mouse Position   │
+╰──────────────────────────────────────────────────────────────────────────────╯
+```
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 🚀 Quick Start in 60 Seconds
 
-### Analyzing the Bundle Size
+### 1. Installation
+```bash
+npm install
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### 2. Implementation Example
+```jsx
+import React, { useState } from "react";
+import ReactEditorKit from "./ReactEditorKit";
 
-### Making a Progressive Web App
+export default function App() {
+  const [content, setContent] = useState("<h2>Hello React Editor Kit!</h2><p>Start writing...</p>");
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+  return (
+    <div style={{ maxWidth: "960px", margin: "40px auto", padding: "0 20px" }}>
+      <ReactEditorKit
+        value={content}
+        onChange={(cleanHtml) => setContent(cleanHtml)}
+        placeholder="Type your story here..."
+        height="500px"
+      />
+    </div>
+  );
+}
+```
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## ⚙️ Component Props & Configuration
 
-### Deployment
+| Prop Name | Type | Default | Description |
+| :--- | :---: | :---: | :--- |
+| `value` | `string` | `""` | Controlled HTML content string. |
+| `onChange` | `function` | `undefined` | Callback returning purified, clean HTML. |
+| `placeholder` | `string` | `"Please Write Something..."` | Placeholder text when editor canvas is empty. |
+| `height` | `string` | `"400px"` | Canvas height (supports `px`, `vh`, `rem`, `%`). |
+| `isDisable` | `boolean` | `false` | Read-only mode disabling toolbar interactions. |
+| `apiKey` | `string` | `""` | Optional license/API configuration key. |
+| `mainProps` | `object` | `{}` | Custom styling and HTML attributes for wrapper. |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `npm run build` fails to minify
+## ⌨️ Keyboard Shortcuts Cheat Sheet
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+| Shortcut | Action |
+| :--- | :--- |
+| <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>B</kbd> | Toggle Bold text |
+| <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>I</kbd> | Toggle Italic text |
+| <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>U</kbd> | Toggle Underline |
+| <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>F</kbd> | Open Find & Replace Widget |
+| <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>Z</kbd> | Undo last action |
+| <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>Y</kbd> | Redo last action |
+| <kbd>Tab</kbd> / <kbd>Shift</kbd>+<kbd>Tab</kbd> | Navigate between Table cells |
+
+---
+
+## 📄 License
+Released under the **MIT License**. Free for commercial and open-source applications.

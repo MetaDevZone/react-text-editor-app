@@ -29,7 +29,15 @@ import {
   UndoIcon,
   UnorderdList,
   VideoIcon,
+  FindReplaceIcon,
+  SpellCheckIcon,
 } from "./components";
+import FindReplaceModal from "./components/FindReplaceModal";
+import SpellSuggestionPopup from "./components/SpellSuggestionPopup";
+import {
+  runSpellCheckOnEditor,
+  removeSpellCheckMarkers,
+} from "./utils/spellCheckerUtils";
 import SpecialChars from "./components/SpecialChars";
 import SelectFormat from "./components/SelectFormat";
 import ButtonFunction from "./components/ButtonFunction";
@@ -60,6 +68,20 @@ import SelectFontFamily from "./components/SelectFontFamily";
 import AlignmentOptions from "./components/AlignmentOptions";
 import FontSize from "./components/FontSize";
 import LineHeight from "./components/LineHeight";
+import SelectTable from "./components/SelectTable";
+import TablePropertiesModal from "./components/TablePropertiesModal";
+import CellPropertiesModal from "./components/CellPropertiesModal";
+import TableHoverToolbar from "./components/TableHoverToolbar";
+import {
+  findParentTableCell,
+  findParentTable,
+  insertRowBelow,
+  applyTableProperties,
+  applyCellProperties,
+  getActiveTableCell,
+  getActiveTable,
+} from "./utils/tableUtils";
+import { initTableResizer } from "./utils/tableResizer";
 
 import "react-image-crop/dist/ReactCrop.css";
 import { CheckAccessDataApi } from "./DAL/CheckAcces";
@@ -149,12 +171,30 @@ export default function ReactEditorKit(props) {
   });
 
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [selectedTableCell, setSelectedTableCell] = useState(null);
+  const [selectedTableElement, setSelectedTableElement] = useState(null);
   const [isPlaceholder, setIsPlaceholder] = useState(true);
   const [selectedItem, setSelectedItem] = useState({});
   const [selectedRange, setSelectedRange] = useState(null);
   const [showHR1, setShowHR1] = useState(false);
   const [showHR2, setShowHR2] = useState(false);
   const [showHR3, setShowHR3] = useState(false);
+  const [isSpellCheckActive, setIsSpellCheckActive] = useState(true);
+  const [activeSpellError, setActiveSpellError] = useState(null);
+  const [findReplacePos, setFindReplacePos] = useState(null);
+  const spellCheckTimeoutRef = useRef(null);
+
+  const triggerSpellCheck = (delay = 400) => {
+    if (!isSpellCheckActive || !editorRef?.current) return;
+    if (spellCheckTimeoutRef.current) {
+      clearTimeout(spellCheckTimeoutRef.current);
+    }
+    spellCheckTimeoutRef.current = setTimeout(() => {
+      if (editorRef.current && isSpellCheckActive) {
+        runSpellCheckOnEditor(editorRef.current);
+      }
+    }, delay);
+  };
 
   const checkIfImageExists = () => {
     const editor = editorRef?.current;
@@ -279,7 +319,25 @@ export default function ReactEditorKit(props) {
 
     tempDiv.innerHTML = content;
 
-    let checkEditorIsEmptyAndGetTagName = isEditorEmpty(content);
+    // Clean any transient markers (spellcheck spans & search marks) before sending clean HTML to onChange
+    tempDiv.querySelectorAll("span.mlx-spell-error").forEach((span) => {
+      const p = span.parentNode;
+      if (p) {
+        while (span.firstChild) p.insertBefore(span.firstChild, span);
+        p.removeChild(span);
+      }
+    });
+    tempDiv
+      .querySelectorAll("mark.mlx-find-highlight, mark.mlx-find-current")
+      .forEach((mark) => {
+        const p = mark.parentNode;
+        if (p) {
+          while (mark.firstChild) p.insertBefore(mark.firstChild, mark);
+          p.removeChild(mark);
+        }
+      });
+
+    let checkEditorIsEmptyAndGetTagName = isEditorEmpty(tempDiv.innerHTML);
     // First check if the content is "effectively empty"
     // Allow spaces at the beginning - don't strip them when checking for empty content
     const hasOnlySpaces =
@@ -299,6 +357,9 @@ export default function ReactEditorKit(props) {
       onChange?.(tempDiv.innerHTML);
     }
 
+    // Trigger debounced spell check
+    triggerSpellCheck(500);
+
     // Update placeholder state after content changes
     handlePlaceholder();
   };
@@ -307,6 +368,17 @@ export default function ReactEditorKit(props) {
     // Create a temporary DOM element to parse and inspect the structure
     const temp = document.createElement("div");
     temp.innerHTML = html;
+
+    // If table or media exists, editor is NOT empty
+    if (
+      temp.querySelector("table") ||
+      temp.querySelector("img") ||
+      temp.querySelector("iframe") ||
+      temp.querySelector("video")
+    ) {
+      return { isEmpty: false };
+    }
+
     // Remove only completely empty text nodes, but preserve those with spaces
     temp.childNodes.forEach((node) => {
       if (node.nodeType === Node.TEXT_NODE && node.textContent === "") {
@@ -378,15 +450,98 @@ export default function ReactEditorKit(props) {
     return formattedElement;
   };
 
+  const handleEditorClick = (e) => {
+    const spellErrorSpan = e.target.closest("span.mlx-spell-error");
+    if (spellErrorSpan && editorRef?.current) {
+      e.stopPropagation();
+      const rect = spellErrorSpan.getBoundingClientRect();
+      // Calculate viewport coordinates for position: fixed popup
+      const top = Math.min(window.innerHeight - 200, rect.bottom + 4);
+      const left = Math.min(window.innerWidth - 250, Math.max(10, rect.left));
+      setActiveSpellError({
+        targetElement: spellErrorSpan,
+        word:
+          spellErrorSpan.getAttribute("data-spell-word") ||
+          spellErrorSpan.textContent,
+        position: {
+          top,
+          left,
+        },
+      });
+    } else {
+      setActiveSpellError(null);
+    }
+  };
+
   const handleEditorKeyDown = (event) => {
+    const editor = editorRef.current;
+    const selection = window.getSelection();
+    if (!selection || !selection.rangeCount || !editor) return;
+    const range = selection.getRangeAt(0);
+
+    // Table cell handling for Tab key navigation
+    if (event.key === "Tab") {
+      const cell = findParentTableCell(range.startContainer, editor);
+      if (cell) {
+        event.preventDefault();
+        const table = findParentTable(cell, editor);
+        if (table) {
+          const cellsInTable = Array.from(table.querySelectorAll("td, th"));
+          const currentIndex = cellsInTable.indexOf(cell);
+          if (!event.shiftKey) {
+            if (currentIndex < cellsInTable.length - 1) {
+              const nextCell = cellsInTable[currentIndex + 1];
+              const newRange = document.createRange();
+              newRange.selectNodeContents(nextCell);
+              newRange.collapse(false);
+              selection.removeAllRanges();
+              selection.addRange(newRange);
+            } else {
+              // Last cell: insert row below and move cursor to first cell of new row
+              insertRowBelow(editor, cell);
+              const updatedCells = Array.from(table.querySelectorAll("td, th"));
+              if (updatedCells.length > cellsInTable.length) {
+                const firstNewCell = updatedCells[cellsInTable.length];
+                const newRange = document.createRange();
+                newRange.selectNodeContents(firstNewCell);
+                newRange.collapse(true);
+                selection.removeAllRanges();
+                selection.addRange(newRange);
+              }
+            }
+          } else {
+            if (currentIndex > 0) {
+              const prevCell = cellsInTable[currentIndex - 1];
+              const newRange = document.createRange();
+              newRange.selectNodeContents(prevCell);
+              newRange.collapse(false);
+              selection.removeAllRanges();
+              selection.addRange(newRange);
+            }
+          }
+        }
+        return;
+      }
+    }
+
     if (event.key === "Enter" && !event.shiftKey) {
+      // Check if inside table cell
+      const cell = findParentTableCell(range.startContainer, editor);
+      if (cell) {
+        event.preventDefault();
+        const br = document.createElement("br");
+        range.deleteContents();
+        range.insertNode(br);
+        range.setStartAfter(br);
+        range.setEndAfter(br);
+        selection.removeAllRanges();
+        selection.addRange(range);
+        handleInput();
+        return;
+      }
+
       event.preventDefault();
 
-      const editor = editorRef.current;
-      const selection = window.getSelection();
-      if (!selection.rangeCount || !editor) return;
-
-      const range = selection.getRangeAt(0);
       let currentNode = range.startContainer;
 
       let listItemNode = null;
@@ -1201,6 +1356,19 @@ export default function ReactEditorKit(props) {
     if (event.key === "Escape") {
       setIsFullScreen(false);
     }
+    if (
+      (event.ctrlKey || event.metaKey) &&
+      (event.key === "f" || event.key === "F" || event.key === "h" || event.key === "H")
+    ) {
+      if (
+        editorRef?.current &&
+        (editorRef.current.contains(document.activeElement) ||
+          document.activeElement === document.body)
+      ) {
+        event.preventDefault();
+        setIsOpenModel("find_replace");
+      }
+    }
   };
 
   const handlePlaceholder = () => {
@@ -1215,8 +1383,11 @@ export default function ReactEditorKit(props) {
       editor.innerHTML.trim() !== "" &&
       editor.innerHTML.trim() !== "<br>" &&
       editor.innerHTML.trim() !== "<p><br></p>";
+    const hasTableOrMedia = Boolean(
+      editor.querySelector("table, img, iframe, video"),
+    );
 
-    const hasContent = hasTextContent || hasHTMLContent;
+    const hasContent = hasTextContent || hasHTMLContent || hasTableOrMedia;
 
     if (!hasContent) {
       editor.classList.add("empty");
@@ -1317,6 +1488,44 @@ export default function ReactEditorKit(props) {
         component: <SpecialChars handleCharSelect={handleCharSelect} />,
         title: "Insert Special Characters",
       };
+    } else if (isOpenModel === "table_properties") {
+      return {
+        component: (
+          <TablePropertiesModal
+            tableElement={selectedTableElement}
+            onSave={(props) => {
+              applyTableProperties(selectedTableElement, props);
+              handleInput();
+            }}
+            onClose={handleCloseModel}
+          />
+        ),
+        title: "Table Properties",
+      };
+    } else if (isOpenModel === "cell_properties") {
+      return {
+        component: (
+          <CellPropertiesModal
+            cellElement={selectedTableCell}
+            onSave={(props) => {
+              applyCellProperties(selectedTableCell, props);
+              handleInput();
+            }}
+            onClose={handleCloseModel}
+          />
+        ),
+        title: "Cell Properties",
+      };
+    } else if (isOpenModel === "find_replace") {
+      return {
+        component: (
+          <FindReplaceModal
+            editorRef={editorRef}
+            onClose={handleCloseModel}
+          />
+        ),
+        title: "Find and Replace",
+      };
     }
   };
 
@@ -1339,6 +1548,7 @@ export default function ReactEditorKit(props) {
         setInit(true);
         // Update placeholder after setting initial content
         setTimeout(() => handlePlaceholder(), 0);
+        setTimeout(() => triggerSpellCheck(300), 300);
       }
     }
 
@@ -1608,14 +1818,19 @@ export default function ReactEditorKit(props) {
     handle_resize();
     setCursorAtStart();
     const editor = editorRef.current;
+    let cleanupResizer = () => {};
     if (editor) {
       window.addEventListener("click", handleClickImage);
       editor.addEventListener("mouseup", handleSelection);
       editor.addEventListener("keyup", handleSelection);
+      cleanupResizer = initTableResizer(editor, () => {
+        handleInput();
+      });
     }
     window.addEventListener("resize", handle_resize);
     return () => {
       window.removeEventListener("resize", handle_resize);
+      cleanupResizer();
       if (editor) {
         window.removeEventListener("click", handleClickImage);
         editor.removeEventListener("mouseup", handleSelection);
@@ -1708,6 +1923,8 @@ export default function ReactEditorKit(props) {
                 let is_paste = item === "paste" || item.name === "paste";
                 let is_select_all =
                   item === "select_all" || item.name === "select_all";
+                let is_find_replace =
+                  item === "find_replace" || item.name === "find_replace";
                 let is_image = item === "image" || item.name === "image";
                 let is_link = item === "link" || item.name === "link";
                 let is_video = item === "video" || item.name === "video";
@@ -1729,6 +1946,20 @@ export default function ReactEditorKit(props) {
                         isFullScreen={isFullScreen}
                         handleViewSource={handleViewSource}
                         toggleFullScreen={toggleFullScreen}
+                        handleOpenFindReplace={() =>
+                          setIsOpenModel("find_replace")
+                        }
+                        toggleSpellCheck={() => {
+                          const nextState = !isSpellCheckActive;
+                          setIsSpellCheckActive(nextState);
+                          if (!nextState && editorRef.current) {
+                            removeSpellCheckMarkers(editorRef.current);
+                            setActiveSpellError(null);
+                          } else if (nextState && editorRef.current) {
+                            runSpellCheckOnEditor(editorRef.current);
+                          }
+                        }}
+                        isSpellCheckActive={isSpellCheckActive}
                         item={item}
                         isPlaceholder={isPlaceholder}
                         placeholder={placeholder}
@@ -1744,6 +1975,8 @@ export default function ReactEditorKit(props) {
                         item={item}
                         remove_from_navbar={remove_from_navbar}
                         isDisable={isDisable}
+                        editorRef={editorRef}
+                        isFullScreen={isFullScreen}
                       />
                     )}
                     {is_format && (
@@ -1771,6 +2004,26 @@ export default function ReactEditorKit(props) {
                           }
                         >
                           {item?.icon ? item.icon : <SelectAll />}
+                        </button>
+                      </div>
+                    )}
+                    {is_find_replace && (
+                      <div
+                        className={`${Styles.increaseIconSize} ${
+                          isDisable ? Styles.disabledButton : ""
+                        }`}
+                      >
+                        <button
+                          type="button"
+                          onClick={() => setIsOpenModel("find_replace")}
+                          title={
+                            item?.title
+                              ? item.title
+                              : "Find and Replace (Ctrl+F)"
+                          }
+                          disabled={isDisable}
+                        >
+                          {item?.icon ? item.icon : <FindReplaceIcon />}
                         </button>
                       </div>
                     )}
@@ -1941,6 +2194,10 @@ export default function ReactEditorKit(props) {
               let is_paste = item === "paste" || item.name === "paste";
               let is_select_all =
                 item === "select_all" || item.name === "select_all";
+              let is_find_replace =
+                item === "find_replace" || item.name === "find_replace";
+              let is_spellcheck =
+                item === "spellcheck" || item.name === "spellcheck";
               let is_image = item === "image" || item.name === "image";
               let is_link = item === "link" || item.name === "link";
               let is_video = item === "video" || item.name === "video";
@@ -2196,6 +2453,45 @@ export default function ReactEditorKit(props) {
                       {item?.icon ? item.icon : <SelectAll />}
                     </button>
                   )}
+                  {is_find_replace && (
+                    <button
+                      type="button"
+                      onClick={() => setIsOpenModel("find_replace")}
+                      title={
+                        item?.title ? item.title : "Find and Replace (Ctrl+F)"
+                      }
+                      className={` ${isDisable ? Styles.disabledButton : ""}`}
+                      disabled={isDisable}
+                    >
+                      {item?.icon ? item.icon : <FindReplaceIcon />}
+                    </button>
+                  )}
+                  {is_spellcheck && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const nextState = !isSpellCheckActive;
+                        setIsSpellCheckActive(nextState);
+                        if (!nextState && editorRef.current) {
+                          removeSpellCheckMarkers(editorRef.current);
+                          setActiveSpellError(null);
+                        } else if (nextState && editorRef.current) {
+                          runSpellCheckOnEditor(editorRef.current);
+                        }
+                      }}
+                      title={
+                        isSpellCheckActive
+                          ? "Spell Check (ON) - Click to Turn OFF"
+                          : "Spell Check (OFF) - Click to Turn ON"
+                      }
+                      className={`${
+                        isSpellCheckActive ? Styles.spellCheckActiveBtn : ""
+                      } ${isDisable ? Styles.disabledButton : ""}`}
+                      disabled={isDisable}
+                    >
+                      {item?.icon ? item.icon : <SpellCheckIcon />}
+                    </button>
+                  )}
                   {is_image && (
                     <button
                       type="button"
@@ -2359,11 +2655,28 @@ export default function ReactEditorKit(props) {
             spellCheck="true"
             onInput={handleInput}
             onBlur={handleBlur}
+            onClick={handleEditorClick}
             data-placeholder={isDisable ? "" : placeholder}
             onKeyDown={handleEditorKeyDown}
             // id="editable"
             style={{ ...style, ...dynamicStyle }}
           ></div>
+          <TableHoverToolbar
+            editorRef={editorRef}
+            isDisable={isDisable}
+            onOpenTableProps={(tbl) => {
+              setSelectedTableElement(
+                tbl || getActiveTable(editorRef.current),
+              );
+              setIsOpenModel("table_properties");
+            }}
+            onOpenCellProps={(cell) => {
+              setSelectedTableCell(
+                cell || getActiveTableCell(editorRef.current),
+              );
+              setIsOpenModel("cell_properties");
+            }}
+          />
           <RightClickLinkPopup
             editorRef={editorRef}
             setIsOpenModel={setIsOpenModel}
@@ -2374,7 +2687,36 @@ export default function ReactEditorKit(props) {
             handleRemoveLink={handleRemoveLink}
             selectedRange={selectedRange}
             isDisable={isDisable}
+            setSelectedTableCell={setSelectedTableCell}
+            setSelectedTableElement={setSelectedTableElement}
+            setFindReplacePos={setFindReplacePos}
+            onOpenTableProps={(tbl) => {
+              setSelectedTableElement(
+                tbl || getActiveTable(editorRef.current),
+              );
+              setIsOpenModel("table_properties");
+            }}
+            onOpenCellProps={(cell) => {
+              setSelectedTableCell(
+                cell || getActiveTableCell(editorRef.current),
+              );
+              setIsOpenModel("cell_properties");
+            }}
           />
+          {activeSpellError && (
+            <SpellSuggestionPopup
+              targetElement={activeSpellError.targetElement}
+              word={activeSpellError.word}
+              position={activeSpellError.position}
+              onClose={() => setActiveSpellError(null)}
+              onInput={handleInput}
+              onRefreshSpellCheck={() => {
+                if (editorRef.current && isSpellCheckActive) {
+                  runSpellCheckOnEditor(editorRef.current);
+                }
+              }}
+            />
+          )}
         </div>
       </div>
       {isLoading && (
@@ -2386,13 +2728,25 @@ export default function ReactEditorKit(props) {
           handleSaveSource={handleSaveSource}
         />
       )}
-      {isOpenModel && (
+      {isOpenModel === "find_replace" && (
+        <FindReplaceModal
+          editorRef={editorRef}
+          onClose={() => {
+            handleCloseModel();
+            setFindReplacePos(null);
+          }}
+          onInput={handleInput}
+          selectedRange={selectedRange}
+          initialPosition={findReplacePos}
+        />
+      )}
+      {isOpenModel && isOpenModel !== "find_replace" && (
         <Modal
           isOpen={isOpenModel}
           onClose={handleCloseModel}
-          title={model_component().title}
+          title={model_component()?.title}
         >
-          {model_component().component}
+          {model_component()?.component}
         </Modal>
       )}
       {viewSource && (
