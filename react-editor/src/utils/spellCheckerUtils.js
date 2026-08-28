@@ -240,9 +240,131 @@ export const spellChecker = new SpellCheckerEngine();
 /**
  * Clean all temporary spellcheck marker spans from editorRoot
  */
-export const removeSpellCheckMarkers = (editorRoot) => {
+export const saveEditorSelection = (root) => {
+  if (!root) return null;
+  const sel = window.getSelection();
+  if (!sel || sel.rangeCount === 0) return null;
+  const range = sel.getRangeAt(0);
+
+  if (!root.contains(range.startContainer) && root !== range.startContainer) {
+    return null;
+  }
+
+  let start = 0;
+  let end = 0;
+
+  try {
+    const preCaretRange = range.cloneRange();
+    preCaretRange.selectNodeContents(root);
+    preCaretRange.setEnd(range.startContainer, range.startOffset);
+    start = preCaretRange.toString().length;
+
+    if (range.collapsed) {
+      end = start;
+    } else {
+      const preEndRange = range.cloneRange();
+      preEndRange.selectNodeContents(root);
+      preEndRange.setEnd(range.endContainer, range.endOffset);
+      end = preEndRange.toString().length;
+    }
+
+    return { start, end, collapsed: range.collapsed };
+  } catch (e) {
+    return null;
+  }
+};
+
+export const restoreEditorSelection = (root, saved) => {
+  if (!saved || !root) return;
+  const sel = window.getSelection();
+  if (!sel) return;
+
+  const { start, end, collapsed } = saved;
+
+  let currentOffset = 0;
+  let startNode = null;
+  let startOffset = 0;
+  let endNode = null;
+  let endOffset = 0;
+
+  const walker = document.createTreeWalker(
+    root,
+    NodeFilter.SHOW_TEXT,
+    null,
+    false
+  );
+
+  let node;
+  let lastNode = null;
+
+  while ((node = walker.nextNode())) {
+    lastNode = node;
+    const len = node.nodeValue.length;
+
+    if (!startNode && currentOffset + len >= start) {
+      startNode = node;
+      startOffset = start - currentOffset;
+    }
+
+    if (!endNode && currentOffset + len >= end) {
+      endNode = node;
+      endOffset = end - currentOffset;
+      break;
+    }
+
+    currentOffset += len;
+  }
+
+  if (!startNode) {
+    if (lastNode) {
+      startNode = lastNode;
+      startOffset = lastNode.nodeValue.length;
+    } else {
+      startNode = root;
+      startOffset = 0;
+    }
+  }
+
+  if (collapsed || !endNode) {
+    if (!endNode) {
+      endNode = startNode;
+      endOffset = startOffset;
+    }
+  }
+
+  try {
+    const range = document.createRange();
+    const safeStartOffset =
+      startNode.nodeType === Node.TEXT_NODE
+        ? Math.min(Math.max(0, startOffset), startNode.nodeValue.length)
+        : Math.min(Math.max(0, startOffset), startNode.childNodes.length);
+
+    const safeEndOffset =
+      endNode.nodeType === Node.TEXT_NODE
+        ? Math.min(Math.max(0, endOffset), endNode.nodeValue.length)
+        : Math.min(Math.max(0, endOffset), endNode.childNodes.length);
+
+    range.setStart(startNode, safeStartOffset);
+    if (collapsed) {
+      range.collapse(true);
+    } else {
+      range.setEnd(endNode, safeEndOffset);
+    }
+
+    sel.removeAllRanges();
+    sel.addRange(range);
+  } catch (e) {
+    console.warn("Could not restore selection range:", e);
+  }
+};
+
+export const removeSpellCheckMarkers = (editorRoot, preserveSelection = false) => {
   if (!editorRoot) return;
   const markers = editorRoot.querySelectorAll("span.mlx-spell-error");
+  if (markers.length === 0) return;
+
+  const savedSelection = preserveSelection ? saveEditorSelection(editorRoot) : null;
+
   markers.forEach((span) => {
     const parent = span.parentNode;
     if (parent) {
@@ -253,6 +375,10 @@ export const removeSpellCheckMarkers = (editorRoot) => {
       parent.normalize();
     }
   });
+
+  if (savedSelection) {
+    restoreEditorSelection(editorRoot, savedSelection);
+  }
 };
 
 /**
@@ -262,8 +388,11 @@ export const removeSpellCheckMarkers = (editorRoot) => {
 export const runSpellCheckOnEditor = (editorRoot) => {
   if (!editorRoot) return [];
 
+  // Save selection/caret position before modifying DOM nodes
+  const savedSelection = saveEditorSelection(editorRoot);
+
   // Remove previous markers first to keep pure text nodes
-  removeSpellCheckMarkers(editorRoot);
+  removeSpellCheckMarkers(editorRoot, false);
 
   const walker = document.createTreeWalker(
     editorRoot,
@@ -351,6 +480,11 @@ export const runSpellCheckOnEditor = (editorRoot) => {
     parent.replaceChild(fragment, node);
   });
 
+  // Restore caret/selection position to exact original location
+  if (savedSelection) {
+    restoreEditorSelection(editorRoot, savedSelection);
+  }
+
   return errorElements;
 };
 
@@ -365,8 +499,21 @@ export const replaceSpellWord = (spanElement, replacementWord, onInput) => {
   parent.replaceChild(textNode, spanElement);
   parent.normalize();
 
+  // Position caret right after the replaced text
+  try {
+    const sel = window.getSelection();
+    if (sel) {
+      const range = document.createRange();
+      range.setStart(textNode, textNode.nodeValue.length);
+      range.collapse(true);
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+  } catch (e) {}
+
   if (onInput) {
     onInput();
   }
   return true;
 };
+
