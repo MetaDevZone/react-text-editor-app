@@ -3,12 +3,17 @@ import { BackgroundColorIcon, TextColorUpperIcon } from ".";
 import Styles from "../css/style.module.css";
 
 function rgbToHex(rgb) {
-  const [r, g, b] = rgb.match(/\d+/g);
+  if (!rgb || typeof rgb !== "string") return "#000000";
+  if (rgb.startsWith("#")) return rgb;
+  if (rgb === "transparent" || rgb.includes("rgba(0, 0, 0, 0)"))
+    return "#000000";
+  const matches = rgb.match(/\d+/g);
+  if (!matches || matches.length < 3) return "#000000";
+  const [r, g, b] = matches;
   const hexR = parseInt(r).toString(16).padStart(2, "0");
   const hexG = parseInt(g).toString(16).padStart(2, "0");
   const hexB = parseInt(b).toString(16).padStart(2, "0");
-  const hexColor = `#${hexR}${hexG}${hexB}`;
-  return hexColor;
+  return `#${hexR}${hexG}${hexB}`;
 }
 
 export default function ManageColors(props) {
@@ -138,7 +143,7 @@ export default function ManageColors(props) {
               backgroundColor: "#F8CAC6",
             }}
             title="Light Red"
-            onClick={(e) => handleChangeColor(e, "#BFEDD2")}
+            onClick={(e) => handleChangeColor(e, "#F8CAC6")}
           ></button>
           <button
             className={Styles.colorBox}

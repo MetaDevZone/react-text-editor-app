@@ -98,7 +98,7 @@ export default function SelectFileOptions(props) {
               option === "alignment" || option.name === "alignment";
 
             return (
-              <>
+              <React.Fragment key={`format-opt-${index}`}>
                 {is_bold && (
                   <button
                     type="button"
@@ -212,7 +212,7 @@ export default function SelectFileOptions(props) {
                     </div>
                   </div>
                 )}
-              </>
+              </React.Fragment>
             );
           })}
 
@@ -263,7 +263,10 @@ export default function SelectFileOptions(props) {
         onMouseLeave={() => setShowChildOptions(false)}
         style={{ top: dropdownTop }}
       >
-        <SelectAlignment handleHideChildOptions={handleHideChildOptions} />
+        <SelectAlignment
+          handleHideChildOptions={handleHideChildOptions}
+          editorRef={editorRef}
+        />
       </div>
       <div
         className={`${Styles.selectFormationDropdown} ${

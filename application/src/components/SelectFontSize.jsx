@@ -21,19 +21,39 @@ function SelectFontSize({ handleHideChildOptions }) {
   const handleOptionClick = (e, option) => {
     e.preventDefault();
     const selection = window.getSelection();
+    if (!selection || !selection.rangeCount) return;
+
+    const range = selection.getRangeAt(0);
+    const value = option + "px";
+
     if (!selection.isCollapsed) {
-      // If there's a text selection, apply font size to selected text
-      document.execCommand("styleWithCSS", false, true);
-      document.execCommand("fontSize", false, "1"); // Required for compatibility
-      const range = selection.getRangeAt(0);
       const span = document.createElement("span");
-      span.style.fontSize = option + "px";
-      range.surroundContents(span);
+      span.style.fontSize = value;
+
+      const content = range.extractContents();
+
+      // Remove nested fontSize from child elements so parent font-size takes full effect
+      const childElements = content.querySelectorAll("[style]");
+      childElements.forEach((el) => {
+        if (el.style.fontSize) {
+          el.style.removeProperty("font-size");
+          if (!el.getAttribute("style") || el.getAttribute("style").trim() === "") {
+            if (el.tagName === "SPAN") {
+              while (el.firstChild) {
+                el.parentNode.insertBefore(el.firstChild, el);
+              }
+              el.parentNode.removeChild(el);
+            }
+          }
+        }
+      });
+
+      span.appendChild(content);
+      range.insertNode(span);
     } else {
       // If there's no selection, insert a styled span at caret position
-      const range = selection.getRangeAt(0);
       const span = document.createElement("span");
-      span.style.fontSize = option + "px";
+      span.style.fontSize = value;
       span.innerHTML = "\u200B"; // Zero-width space to keep the span visible
       range.insertNode(span);
       // Move caret inside the span

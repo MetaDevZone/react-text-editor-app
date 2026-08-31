@@ -140,7 +140,12 @@ const RightClickLinkPopup = ({
     ) {
       link = selectedEvent?.parentElement?.href;
     }
-    window.open(link);
+    if (link) {
+      const fullUrl = /^(https?:\/\/|mailto:|tel:|\/|#)/i.test(link)
+        ? link
+        : `https://${link}`;
+      window.open(fullUrl, "_blank", "noopener,noreferrer");
+    }
     setPopupVisible(false);
   };
 

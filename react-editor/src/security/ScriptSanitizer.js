@@ -143,8 +143,12 @@ export function sanitizeDangerousScripts(htmlContent) {
       return;
     }
 
-    // Allow trusted video embeds (youtube, vimeo, dailymotion), remove raw unknown iframes
-    const isTrustedEmbed = /(?:youtube\.com\/embed|player\.vimeo\.com|dailymotion\.com\/embed)/i.test(src);
+    // Allow trusted video embeds and safe https iframes
+    const isTrustedEmbed =
+      /(?:youtube\.com|youtube-nocookie\.com|youtu\.be|vimeo\.com|player\.vimeo\.com|dailymotion\.com|twitch\.tv|google\.com\/maps)/i.test(
+        src,
+      ) || /^https?:\/\//i.test(src);
+
     if (!isTrustedEmbed && src) {
       allViolations.push(`Removed unauthorized iframe: ${src}`);
       iframe.remove();

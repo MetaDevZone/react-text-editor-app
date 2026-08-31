@@ -87,7 +87,7 @@ import { sanitizeDangerousScripts } from "./security/ScriptSanitizer";
 import "react-image-crop/dist/ReactCrop.css";
 import { CheckAccessDataApi } from "./DAL/CheckAcces";
 import { getBaseDomain } from "./utils/Constants";
-import { use } from "react";
+
 
 const show_final_options = (options, remove, all_options) => {
   if (!options) {
@@ -209,10 +209,86 @@ export default function ReactEditorKit(props) {
     }
     return false;
   };
-  const handleInput = () => {
-    console.log("Input event triggered");
+  const getCleanEditorHTML = (rawHtml) => {
+    if (!rawHtml || typeof rawHtml !== "string") return "";
+    const { sanitizedHtml } = sanitizeDangerousScripts(rawHtml);
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = sanitizedHtml;
 
-    //if isDisable is true  set editor content to empty and  contentEditable to false
+    // 1. Remove spellcheck spans (unwrap them so pure text remains)
+    tempDiv.querySelectorAll("span.mlx-spell-error").forEach((span) => {
+      const parent = span.parentNode;
+      if (parent) {
+        while (span.firstChild) {
+          parent.insertBefore(span.firstChild, span);
+        }
+        parent.removeChild(span);
+      }
+    });
+
+    // 2. Remove find & replace highlight marks
+    tempDiv
+      .querySelectorAll("mark.mlx-find-highlight, mark.mlx-find-current")
+      .forEach((mark) => {
+        const parent = mark.parentNode;
+        if (parent) {
+          while (mark.firstChild) {
+            parent.insertBefore(mark.firstChild, mark);
+          }
+          parent.removeChild(mark);
+        }
+      });
+
+    // 3. Remove temporary selection bookmark markers
+    tempDiv
+      .querySelectorAll(
+        "span#mlx-sel-start-marker, span#mlx-sel-end-marker, span#mlx-merge-marker",
+      )
+      .forEach((el) => el.remove());
+
+    // 4. Remove empty formatting tags (e.g. <u></u>, <b></b>, <i></i>, <span></span>)
+    tempDiv
+      .querySelectorAll("u, b, strong, i, em, s, strike, span, font")
+      .forEach((el) => {
+        if (
+          el.childNodes.length === 0 ||
+          (el.textContent === "" &&
+            !el.querySelector("img, br, iframe, video, audio"))
+        ) {
+          el.remove();
+        }
+      });
+
+    // 5. Unwrap plain span elements that have no styling or class attributes
+    tempDiv.querySelectorAll("span").forEach((span) => {
+      if (
+        (!span.getAttribute("style") ||
+          span.getAttribute("style").trim() === "") &&
+        (!span.getAttribute("class") ||
+          span.getAttribute("class").trim() === "") &&
+        span.attributes.length === 0
+      ) {
+        const parent = span.parentNode;
+        if (parent) {
+          while (span.firstChild) {
+            parent.insertBefore(span.firstChild, span);
+          }
+          parent.removeChild(span);
+        }
+      }
+    });
+
+    // 6. Check if editor is truly empty
+    const emptyCheck = isEditorEmpty(tempDiv.innerHTML);
+    if (emptyCheck.isEmpty) {
+      return "";
+    }
+
+    return tempDiv.innerHTML;
+  };
+
+  const handleInput = () => {
+    // If isDisable is true set editor content to empty and contentEditable to false
     if (isDisable && editorRef.current) {
       editorRef.current.innerHTML = "";
       editorRef.current.setAttribute("contentEditable", "false");
@@ -271,16 +347,11 @@ export default function ReactEditorKit(props) {
       };
 
       const traverse = (node, depth = 0) => {
-        // Prevent infinite recursion
-        if (depth > 100) {
-          console.warn("Maximum traversal depth reached");
-          return;
-        }
-
+        if (depth > 100) return;
         if (node.nodeType === Node.TEXT_NODE) {
           if (offset <= node.length) {
             setCaret(node, offset);
-            throw "done"; // stop traversal
+            throw "done";
           } else {
             offset -= node.length;
           }
@@ -296,66 +367,30 @@ export default function ReactEditorKit(props) {
       } catch (e) {}
     }
 
-    function clearEditorFormatting(editor, tempDiv) {
-      // Always clear to truly empty string
-      editor.setAttribute("data-mlx-editor-empty", "true");
-      // Save current selection
-      const selection = window.getSelection();
-      const range = document.createRange();
-      // Completely clear the editor
-      range.selectNodeContents(editor);
-      range.collapse(true);
-      selection.removeAllRanges();
-      selection.addRange(range);
-      editor.innerHTML = "";
-      document.execCommand("removeFormat", false, null);
-      // Reset any formatting
-      // Optional: Reset any CSS styles
-      editor.style.cssText = "";
-    }
+    const cleanContent = getCleanEditorHTML(editor.innerHTML);
 
-    // Usage:
-    let content = editor.innerHTML;
-    const tempDiv = document.createElement("div");
-
-    tempDiv.innerHTML = content;
-
-    // Clean any transient markers (spellcheck spans & search marks) before sending clean HTML to onChange
-    tempDiv.querySelectorAll("span.mlx-spell-error").forEach((span) => {
-      const p = span.parentNode;
-      if (p) {
-        while (span.firstChild) p.insertBefore(span.firstChild, span);
-        p.removeChild(span);
-      }
-    });
-    tempDiv
-      .querySelectorAll("mark.mlx-find-highlight, mark.mlx-find-current")
-      .forEach((mark) => {
-        const p = mark.parentNode;
-        if (p) {
-          while (mark.firstChild) p.insertBefore(mark.firstChild, mark);
-          p.removeChild(mark);
+    if (!cleanContent) {
+      // If editor DOM has messy leftover empty tags, clean it to standard clean paragraph
+      if (
+        editor.children.length > 1 ||
+        (editor.children.length === 1 &&
+          editor.children[0].attributes.length > 0)
+      ) {
+        editor.innerHTML = "<p><br></p>";
+        const sel = window.getSelection();
+        if (sel) {
+          const range = document.createRange();
+          range.setStart(editor.firstChild, 0);
+          range.collapse(true);
+          sel.removeAllRanges();
+          sel.addRange(range);
         }
-      });
-
-    let checkEditorIsEmptyAndGetTagName = isEditorEmpty(tempDiv.innerHTML);
-    // First check if the content is "effectively empty"
-    // Allow spaces at the beginning - don't strip them when checking for empty content
-    const hasOnlySpaces =
-      tempDiv.textContent &&
-      tempDiv.textContent.replace(/[\s\u00A0]/g, "").length === 0 &&
-      tempDiv.textContent.length > 0;
-
-    const isEffectivelyEmpty =
-      (!tempDiv.textContent || tempDiv.textContent.length === 0) &&
-      checkEditorIsEmptyAndGetTagName.isEmpty;
-
-    if (isEffectivelyEmpty) {
-      clearEditorFormatting(editor, checkEditorIsEmptyAndGetTagName.tempDiv);
+      }
+      editor.setAttribute("data-mlx-editor-empty", "true");
       onChange?.("");
     } else {
       editor.removeAttribute("data-mlx-editor-empty");
-      onChange?.(tempDiv.innerHTML);
+      onChange?.(cleanContent);
     }
 
     // Trigger debounced spell check
@@ -366,59 +401,36 @@ export default function ReactEditorKit(props) {
   };
 
   function isEditorEmpty(html) {
+    if (!html || typeof html !== "string") {
+      let pTagDiv = document.createElement("P");
+      pTagDiv.innerHTML = "<br>";
+      return { tempDiv: pTagDiv, isEmpty: true };
+    }
+
     // Create a temporary DOM element to parse and inspect the structure
     const temp = document.createElement("div");
     temp.innerHTML = html;
 
     // If table or media exists, editor is NOT empty
     if (
-      temp.querySelector("table") ||
-      temp.querySelector("img") ||
-      temp.querySelector("iframe") ||
-      temp.querySelector("video")
+      temp.querySelector("table, img, iframe, video, audio, hr, button, input")
     ) {
       return { isEmpty: false };
     }
 
-    // Remove only completely empty text nodes, but preserve those with spaces
-    temp.childNodes.forEach((node) => {
-      if (node.nodeType === Node.TEXT_NODE && node.textContent === "") {
-        temp.removeChild(node);
-      }
-    });
-
-    // Case 1: Only a single <br> or empty
-    if (
-      temp.children.length === 0 ||
-      temp.innerHTML === "<br>" ||
-      temp.innerHTML === ""
-    ) {
-      let pTagDiv = document.createElement("P");
-      pTagDiv.innerHTML = "<br>";
-      return { tempDiv: pTagDiv, isEmpty: true };
+    // Check if there is any visible text content (ignoring all whitespace, nbsp, zero-width spaces)
+    const rawText = (temp.textContent || "").replace(
+      /[\s\u00A0\u200B\uFEFF]/g,
+      "",
+    );
+    if (rawText.length > 0) {
+      return { isEmpty: false };
     }
 
-    // Case 2: Only a <p> with a <br> inside (ignore styles)
-    if (
-      temp.children.length === 1 &&
-      temp.children[0].children.length === 1 &&
-      temp.children[0].children[0].tagName === "BR"
-    ) {
-      return { tempDiv: temp.children[0], isEmpty: true };
-    }
-
-    // Case 3: Only a <p>&nbsp;</p>, <p> </p> (unicode nbsp), or <p> </p> (treat as empty)
-    if (temp.children.length === 1 && temp.children[0].tagName === "P") {
-      const inner = temp.children[0].innerHTML;
-      // Check for HTML &nbsp;, unicode nbsp, or only whitespace
-      if (inner === "&nbsp;" || inner === "\u00A0") {
-        let pTagDiv = document.createElement("P");
-        pTagDiv.innerHTML = "<br>";
-        return { tempDiv: pTagDiv, isEmpty: true };
-      }
-    }
-
-    return { isEmpty: false };
+    // If there is no text and no media, all remaining tags are just empty containers
+    let pTagDiv = document.createElement("P");
+    pTagDiv.innerHTML = "<br>";
+    return { tempDiv: pTagDiv, isEmpty: true };
   }
 
   // Helper function to clone formatting from a text node's parent elements
@@ -528,6 +540,436 @@ export default function ReactEditorKit(props) {
       }
     }
 
+    // Handle image deletion when Backspace or Delete is pressed
+    if (event.key === "Backspace" || event.key === "Delete") {
+      // 1. If an image is currently clicked / active in resize wrapper, delete it
+      const activeWrapper = editor.querySelector(".resizeImageWrapper");
+      if (activeWrapper) {
+        const isWrapperSelected =
+          selectedEvent === activeWrapper ||
+          (selectedEvent && activeWrapper.contains(selectedEvent)) ||
+          activeWrapper.contains(range.startContainer) ||
+          activeWrapper === range.startContainer;
+
+        if (isWrapperSelected || activeWrapper.querySelector(".resizer")) {
+          event.preventDefault();
+          const parentBlock = activeWrapper.parentNode;
+          activeWrapper.remove();
+          setSelectedEvent(null);
+
+          if (parentBlock) {
+            if (parentBlock.childNodes.length === 0) {
+              parentBlock.appendChild(document.createElement("br"));
+            }
+            const newRange = document.createRange();
+            newRange.selectNodeContents(parentBlock);
+            newRange.collapse(true);
+            selection.removeAllRanges();
+            selection.addRange(newRange);
+          }
+
+          handleInput();
+          return;
+        }
+      }
+
+      // 2. If node directly before caret is an image (Backspace)
+      if (event.key === "Backspace" && range.collapsed) {
+        let nodeBeforeCaret = null;
+        if (range.startContainer.nodeType === Node.ELEMENT_NODE) {
+          if (range.startOffset > 0) {
+            nodeBeforeCaret =
+              range.startContainer.childNodes[range.startOffset - 1];
+          }
+        } else if (range.startContainer.nodeType === Node.TEXT_NODE) {
+          if (range.startOffset === 0) {
+            nodeBeforeCaret = range.startContainer.previousSibling;
+          }
+        }
+
+        if (
+          nodeBeforeCaret &&
+          (nodeBeforeCaret.nodeName === "IMG" ||
+            (nodeBeforeCaret.nodeType === Node.ELEMENT_NODE &&
+              (nodeBeforeCaret.classList.contains("resizeImageWrapper") ||
+                nodeBeforeCaret.querySelector("img"))))
+        ) {
+          event.preventDefault();
+          nodeBeforeCaret.remove();
+          setSelectedEvent(null);
+          handleInput();
+          return;
+        }
+      }
+
+      // 3. If node directly after caret is an image (Delete)
+      if (event.key === "Delete" && range.collapsed) {
+        let nodeAfterCaret = null;
+        if (range.startContainer.nodeType === Node.ELEMENT_NODE) {
+          if (range.startOffset < range.startContainer.childNodes.length) {
+            nodeAfterCaret = range.startContainer.childNodes[range.startOffset];
+          }
+        } else if (range.startContainer.nodeType === Node.TEXT_NODE) {
+          if (range.startOffset === range.startContainer.nodeValue.length) {
+            nodeAfterCaret = range.startContainer.nextSibling;
+          }
+        }
+
+        if (
+          nodeAfterCaret &&
+          (nodeAfterCaret.nodeName === "IMG" ||
+            (nodeAfterCaret.nodeType === Node.ELEMENT_NODE &&
+              (nodeAfterCaret.classList.contains("resizeImageWrapper") ||
+                nodeAfterCaret.querySelector("img"))))
+        ) {
+          event.preventDefault();
+          nodeAfterCaret.remove();
+          setSelectedEvent(null);
+          handleInput();
+          return;
+        }
+      }
+    }
+
+    // Backspace handling to correctly merge blocks and shift to previous lines
+    if (event.key === "Backspace" || event.key === "Delete") {
+      // If there is an active selection (highlighted text range)
+      if (!range.collapsed) {
+        const editorText = (editor.textContent || "").replace(
+          /[\s\u00A0\u200B]/g,
+          "",
+        );
+        const selText = (range.toString() || "").replace(
+          /[\s\u00A0\u200B]/g,
+          "",
+        );
+
+        if (
+          selText.length >= editorText.length &&
+          !editor.querySelector("table, img, iframe, video")
+        ) {
+          event.preventDefault();
+          editor.innerHTML = "<p><br></p>";
+          const newRange = document.createRange();
+          newRange.setStart(editor.firstChild, 0);
+          newRange.collapse(true);
+          selection.removeAllRanges();
+          selection.addRange(newRange);
+          handleInput();
+          return;
+        }
+        return;
+      }
+    }
+
+    if (event.key === "Backspace") {
+
+      // Check if inside table cell
+      const cell = findParentTableCell(range.startContainer, editor);
+      if (cell) {
+        // If cursor is at the start of a cell with only <br> or empty, prevent destroying the cell
+        const preRange = document.createRange();
+        preRange.selectNodeContents(cell);
+        preRange.setEnd(range.startContainer, range.startOffset);
+        if (preRange.toString().length === 0 && cell.textContent.trim() === "") {
+          event.preventDefault();
+          return;
+        }
+        return;
+      }
+
+      // Find nearest LI element if in a list
+      let currentNode = range.startContainer;
+      let listItemNode = null;
+      while (currentNode && currentNode !== editor) {
+        if (currentNode.nodeName === "LI") {
+          listItemNode = currentNode;
+          break;
+        }
+        currentNode = currentNode.parentNode;
+      }
+
+      if (listItemNode) {
+        // Check if caret is at the start of the LI
+        const preRange = document.createRange();
+        preRange.selectNodeContents(listItemNode);
+        preRange.setEnd(range.startContainer, range.startOffset);
+        if (preRange.toString().length === 0) {
+          event.preventDefault();
+          const listParent = listItemNode.parentNode;
+          const prevLI = listItemNode.previousElementSibling;
+
+          if (prevLI) {
+            // Merge into previous LI
+            const mergeMarker = document.createElement("span");
+            mergeMarker.id = "mlx-merge-marker";
+            prevLI.appendChild(mergeMarker);
+
+            while (listItemNode.firstChild) {
+              const child = listItemNode.firstChild;
+              if (
+                child.nodeName === "BR" &&
+                !listItemNode.childNodes[1] &&
+                prevLI.childNodes.length > 1
+              ) {
+                listItemNode.removeChild(child);
+              } else {
+                prevLI.appendChild(child);
+              }
+            }
+            listItemNode.remove();
+
+            // Place caret at mergeMarker and remove it
+            const newRange = document.createRange();
+            newRange.setStartBefore(mergeMarker);
+            newRange.collapse(true);
+            mergeMarker.remove();
+            selection.removeAllRanges();
+            selection.addRange(newRange);
+            handleInput();
+            return;
+          } else {
+            // First LI in list -> Outdent / convert to paragraph before the list
+            const p = document.createElement("p");
+            while (listItemNode.firstChild) {
+              p.appendChild(listItemNode.firstChild);
+            }
+            if (
+              p.childNodes.length === 0 ||
+              (p.childNodes.length === 1 && p.firstChild.nodeName === "BR")
+            ) {
+              p.innerHTML = "<br>";
+            }
+            listParent.parentNode.insertBefore(p, listParent);
+            listItemNode.remove();
+            if (listParent.children.length === 0) {
+              listParent.remove();
+            }
+
+            const newRange = document.createRange();
+            newRange.setStart(p, 0);
+            newRange.collapse(true);
+            selection.removeAllRanges();
+            selection.addRange(newRange);
+            handleInput();
+            return;
+          }
+        }
+        return;
+      }
+
+      // Find current block element (P, H1-H6, BLOCKQUOTE, PRE, DIV)
+      let currentBlock = null;
+      let container = range.startContainer;
+      while (container && container !== editor) {
+        if (/^(P|H[1-6]|BLOCKQUOTE|PRE|DIV)$/i.test(container.nodeName)) {
+          currentBlock = container;
+          break;
+        }
+        container = container.parentNode;
+      }
+
+      if (currentBlock && currentBlock !== editor) {
+        // Check if cursor is at the very beginning of the block
+        const preRange = document.createRange();
+        preRange.selectNodeContents(currentBlock);
+        preRange.setEnd(range.startContainer, range.startOffset);
+
+        const preContents = preRange.cloneContents();
+        const hasMediaBefore = preContents.querySelector(
+          "img, .resizeImageWrapper, iframe, video",
+        );
+
+        if (hasMediaBefore) {
+          // If there is an image before cursor in this block, delete the image
+          event.preventDefault();
+          const imgToDelete = currentBlock.querySelector(
+            "img, .resizeImageWrapper",
+          );
+          if (imgToDelete) {
+            imgToDelete.remove();
+            setSelectedEvent(null);
+            handleInput();
+            return;
+          }
+        }
+
+        // If there's no text or characters before cursor in this block and no media
+        if (preRange.toString().length === 0 && !hasMediaBefore) {
+          event.preventDefault();
+
+          // Helper to find the actual preceding leaf block in document order
+          const getPreviousBlock = (block, editorRoot) => {
+            let node = block;
+            while (node && node !== editorRoot) {
+              if (node.previousElementSibling) {
+                let candidate = node.previousElementSibling;
+                while (
+                  candidate &&
+                  candidate.lastElementChild &&
+                  !/^(IMG|TABLE|UL|OL|HR|IFRAME|VIDEO|AUDIO|BR)$/i.test(
+                    candidate.tagName,
+                  )
+                ) {
+                  if (
+                    /^(P|H[1-6]|LI|BLOCKQUOTE|PRE|TD|TH)$/i.test(
+                      candidate.tagName,
+                    ) &&
+                    !candidate.querySelector("p, h1, h2, h3, h4, h5, h6, li")
+                  ) {
+                    break;
+                  }
+                  candidate = candidate.lastElementChild;
+                }
+                return candidate;
+              }
+              node = node.parentElement;
+            }
+            return null;
+          };
+
+          let prevBlock = getPreviousBlock(currentBlock, editor);
+
+          // If no previous block (it is the first block in the editor)
+          if (!prevBlock) {
+            // If it's a heading or blockquote, convert to normal paragraph <p>
+            if (currentBlock.nodeName !== "P") {
+              const p = document.createElement("p");
+              while (currentBlock.firstChild) {
+                p.appendChild(currentBlock.firstChild);
+              }
+              currentBlock.parentNode.replaceChild(p, currentBlock);
+              const newRange = document.createRange();
+              newRange.setStart(p, 0);
+              newRange.collapse(true);
+              selection.removeAllRanges();
+              selection.addRange(newRange);
+              handleInput();
+            }
+            return;
+          }
+
+          // If previous sibling is a table
+          if (prevBlock.tagName === "TABLE") {
+            const cells = prevBlock.querySelectorAll("td, th");
+            if (cells.length > 0) {
+              const lastCell = cells[cells.length - 1];
+              // If current block is empty, delete it
+              if (currentBlock.textContent.trim() === "") {
+                currentBlock.remove();
+              }
+              const newRange = document.createRange();
+              newRange.selectNodeContents(lastCell);
+              newRange.collapse(false);
+              selection.removeAllRanges();
+              selection.addRange(newRange);
+              handleInput();
+              return;
+            }
+          }
+
+          // If previous sibling is a List (UL/OL)
+          if (prevBlock.tagName === "UL" || prevBlock.tagName === "OL") {
+            const lastLI = prevBlock.lastElementChild;
+            if (lastLI) {
+              const mergeMarker = document.createElement("span");
+              lastLI.appendChild(mergeMarker);
+
+              while (currentBlock.firstChild) {
+                const child = currentBlock.firstChild;
+                if (child.nodeName === "BR" && !currentBlock.childNodes[1]) {
+                  currentBlock.removeChild(child);
+                } else {
+                  lastLI.appendChild(child);
+                }
+              }
+              const blockParent = currentBlock.parentElement;
+              currentBlock.remove();
+
+              // Clean up any empty parent wrappers left behind
+              let emptyParent = blockParent;
+              while (
+                emptyParent &&
+                emptyParent !== editor &&
+                emptyParent.childNodes.length === 0
+              ) {
+                const nextParent = emptyParent.parentElement;
+                emptyParent.remove();
+                emptyParent = nextParent;
+              }
+
+              const newRange = document.createRange();
+              newRange.setStartBefore(mergeMarker);
+              newRange.collapse(true);
+              mergeMarker.remove();
+              selection.removeAllRanges();
+              selection.addRange(newRange);
+              handleInput();
+              return;
+            }
+          }
+
+          // Standard block merge (e.g. into previous <p>, <h1>-<h6>, <blockquote>, <div>)
+          // If prevBlock only has a single placeholder <br>, remove it before merging
+          if (
+            prevBlock.childNodes.length === 1 &&
+            prevBlock.firstChild.nodeName === "BR"
+          ) {
+            prevBlock.removeChild(prevBlock.firstChild);
+          }
+
+          // Place merge marker at the end of prevBlock
+          const mergeMarker = document.createElement("span");
+          mergeMarker.id = "mlx-merge-marker";
+          prevBlock.appendChild(mergeMarker);
+
+          // Move all children of currentBlock into prevBlock
+          while (currentBlock.firstChild) {
+            const child = currentBlock.firstChild;
+            // Skip redundant placeholder <br> if prevBlock already has content
+            if (
+              child.nodeName === "BR" &&
+              !currentBlock.childNodes[1] &&
+              prevBlock.childNodes.length > 1
+            ) {
+              currentBlock.removeChild(child);
+            } else {
+              prevBlock.appendChild(child);
+            }
+          }
+
+          const blockParent = currentBlock.parentElement;
+          // Remove the merged currentBlock
+          currentBlock.remove();
+
+          // Clean up any empty parent wrappers left behind
+          let emptyParent = blockParent;
+          while (
+            emptyParent &&
+            emptyParent !== editor &&
+            emptyParent.childNodes.length === 0
+          ) {
+            const nextParent = emptyParent.parentElement;
+            emptyParent.remove();
+            emptyParent = nextParent;
+          }
+
+          // Set caret at the exact merge position
+          const newRange = document.createRange();
+          newRange.setStartBefore(mergeMarker);
+          newRange.collapse(true);
+          mergeMarker.remove();
+
+          selection.removeAllRanges();
+          selection.addRange(newRange);
+
+          // Notify input handler
+          handleInput();
+          return;
+        }
+      }
+    }
+
     if (event.key === "Enter" && !event.shiftKey) {
       // Check if inside table cell
       const cell = findParentTableCell(range.startContainer, editor);
@@ -559,10 +1001,78 @@ export default function ReactEditorKit(props) {
       }
 
       if (listItemNode) {
-        // Create new LI
+        // 1. Check if the current LI is empty (user pressing Enter to exit list)
+        const isLiEmpty =
+          listItemNode.textContent.trim() === "" ||
+          (listItemNode.childNodes.length === 1 &&
+            listItemNode.firstChild.nodeName === "BR");
+
+        if (isLiEmpty) {
+          const listParent = listItemNode.parentNode;
+          const p = document.createElement("p");
+          p.appendChild(document.createElement("br"));
+
+          // Check if there are subsequent LIs -> split list
+          const nextLIs = [];
+          let sibling = listItemNode.nextElementSibling;
+          while (sibling) {
+            nextLIs.push(sibling);
+            sibling = sibling.nextElementSibling;
+          }
+
+          if (listParent && listParent.parentNode) {
+            // Insert <p> after the list
+            listParent.parentNode.insertBefore(p, listParent.nextSibling);
+
+            // If there were subsequent items, place them in a new list after <p>
+            if (nextLIs.length > 0) {
+              const nextList = document.createElement(
+                listParent.tagName.toLowerCase(),
+              );
+              nextLIs.forEach((li) => nextList.appendChild(li));
+              p.parentNode.insertBefore(nextList, p.nextSibling);
+            }
+
+            listItemNode.remove();
+            if (listParent.children.length === 0) {
+              listParent.remove();
+            }
+
+            // Set cursor inside the new <p>
+            const newRange = document.createRange();
+            newRange.setStart(p, 0);
+            newRange.collapse(true);
+            selection.removeAllRanges();
+            selection.addRange(newRange);
+
+            handleInput();
+            return;
+          }
+        }
+
+        // 2. Current LI has text -> Split LI at cursor position or create new LI
         const newLI = document.createElement("li");
-        newLI.appendChild(document.createElement("br"));
-        // Insert after current LI
+        const offset = range.startOffset;
+        const textContainer = range.startContainer;
+
+        if (textContainer.nodeType === Node.TEXT_NODE) {
+          const text = textContainer.nodeValue;
+          const beforeText = text.slice(0, offset);
+          const afterText = text.slice(offset);
+
+          textContainer.nodeValue = beforeText;
+
+          if (afterText.trim()) {
+            const formattedText = cloneFormatting(textContainer, afterText);
+            newLI.appendChild(formattedText);
+          } else {
+            newLI.appendChild(document.createElement("br"));
+          }
+        } else {
+          newLI.appendChild(document.createElement("br"));
+        }
+
+        // Insert new LI after current LI
         if (listItemNode.nextSibling) {
           listItemNode.parentNode.insertBefore(newLI, listItemNode.nextSibling);
         } else {
@@ -570,12 +1080,20 @@ export default function ReactEditorKit(props) {
         }
 
         // Move cursor into new LI
-        const selection = window.getSelection();
-        const range = document.createRange();
-        range.selectNodeContents(newLI);
-        range.collapse(true);
+        const newRange = document.createRange();
+        if (
+          newLI.firstChild &&
+          newLI.firstChild.nodeType === Node.TEXT_NODE
+        ) {
+          newRange.setStart(newLI.firstChild, 0);
+        } else {
+          newRange.setStart(newLI, 0);
+        }
+        newRange.collapse(true);
         selection.removeAllRanges();
-        selection.addRange(range);
+        selection.addRange(newRange);
+
+        handleInput();
         return;
       }
 
@@ -621,78 +1139,54 @@ export default function ReactEditorKit(props) {
 
       // Step 2: Determine what tag to create for the new line
       let newTagName = "p"; // Default to paragraph
+      const isHeading = /^H[1-6]$/i.test(currentBlock.nodeName);
 
-      // Check if current block is a heading tag
-      if (
-        currentBlock.nodeName === "H1" ||
-        currentBlock.nodeName === "H2" ||
-        currentBlock.nodeName === "H3" ||
-        currentBlock.nodeName === "H4" ||
-        currentBlock.nodeName === "H5" ||
-        currentBlock.nodeName === "H6"
-      ) {
-        // Check if there's text after the cursor position
-        const offset = range.startOffset;
-        const textContainer = range.startContainer;
-        let hasTextAfterCursor = false;
+      // Extract all content after the cursor using a DOM Range
+      const extractRange = document.createRange();
+      extractRange.setStart(range.startContainer, range.startOffset);
+      extractRange.setEnd(currentBlock, currentBlock.childNodes.length);
+      const extractedContent = extractRange.extractContents();
 
-        if (textContainer.nodeType === Node.TEXT_NODE) {
-          const text = textContainer.nodeValue;
-          const afterText = text.slice(offset);
-          hasTextAfterCursor = afterText.trim() !== "";
-        } else {
-          // If cursor is at element boundary, check if there are more text nodes after
-          let nextNode = textContainer.nextSibling;
-          while (nextNode) {
-            if (
-              nextNode.nodeType === Node.TEXT_NODE &&
-              nextNode.textContent.trim() !== ""
-            ) {
-              hasTextAfterCursor = true;
-              break;
-            }
-            nextNode = nextNode.nextSibling;
-          }
-        }
+      // Check if there was actual visible text or media after the cursor
+      const tempCheck = document.createElement("div");
+      tempCheck.appendChild(extractedContent.cloneNode(true));
+      const hasContentAfterCursor =
+        tempCheck.textContent.trim() !== "" ||
+        tempCheck.querySelector("img, table, iframe, video, audio, hr");
 
-        if (hasTextAfterCursor) {
-          // If there's text after cursor, create same type of heading
+      if (isHeading) {
+        if (hasContentAfterCursor) {
+          // If splitting in the middle of a heading, continue as the same heading
           newTagName = currentBlock.nodeName.toLowerCase();
         } else {
-          // If no text after cursor, always create paragraph
+          // If pressing Enter at the end of a heading, new line is a normal paragraph
           newTagName = "p";
         }
       }
 
-      // Step 3: Split the block at cursor position
-      const offset = range.startOffset;
-      const textContainer = range.startContainer;
-
-      // Create new block element for the split content
+      // Step 3: Create new block with the extracted content
       const newBlock = document.createElement(newTagName);
+      newBlock.appendChild(extractedContent);
 
-      if (textContainer.nodeType === Node.TEXT_NODE) {
-        const text = textContainer.nodeValue;
-        const beforeText = text.slice(0, offset);
-        const afterText = text.slice(offset);
-
-        // Update current text node with text before cursor
-        textContainer.nodeValue = beforeText;
-
-        // Add text after cursor to new block with preserved formatting
-        if (afterText.trim()) {
-          // Clone the formatting from the current text node's parent elements
-          const formattedText = cloneFormatting(textContainer, afterText);
-          newBlock.appendChild(formattedText);
-        } else {
-          newBlock.appendChild(document.createElement("br"));
-        }
-      } else {
-        // If cursor is at element boundary, just add a br
-        newBlock.appendChild(document.createElement("br"));
+      // Ensure newBlock has at least a <br> if empty
+      if (
+        newBlock.childNodes.length === 0 ||
+        newBlock.textContent.trim() === "" &&
+          !newBlock.querySelector("img, table, iframe, video, br")
+      ) {
+        newBlock.innerHTML = "<br>";
       }
 
-      // Step 4: Insert new block after currecnt one
+      // Ensure currentBlock has at least a <br> if it became empty
+      if (
+        currentBlock.childNodes.length === 0 ||
+        (currentBlock.textContent.trim() === "" &&
+          !currentBlock.querySelector("img, table, iframe, video, br"))
+      ) {
+        currentBlock.innerHTML = "<br>";
+      }
+
+      // Step 4: Insert new block after current block
       const parent = currentBlock.parentNode;
       if (parent && parent.contains(currentBlock)) {
         if (currentBlock.nextSibling) {
@@ -715,6 +1209,9 @@ export default function ReactEditorKit(props) {
       newRange.collapse(true);
       selection.removeAllRanges();
       selection.addRange(newRange);
+
+      handleInput();
+      return;
     }
   };
 
@@ -742,10 +1239,14 @@ export default function ReactEditorKit(props) {
     e.preventDefault();
     if (editorRef?.current) {
       const rawSource = (sourceCode || "").trim();
-      const { sanitizedHtml, removedCount, violations } = sanitizeDangerousScripts(rawSource);
+      const { sanitizedHtml, removedCount, violations } =
+        sanitizeDangerousScripts(rawSource);
 
       if (removedCount > 0) {
-        console.warn(`[Security Alert] Auto-removed ${removedCount} malicious script payload(s):`, violations);
+        console.warn(
+          `[Security Alert] Auto-removed ${removedCount} malicious script payload(s):`,
+          violations,
+        );
       }
 
       editorRef.current.innerHTML = sanitizedHtml;
@@ -769,15 +1270,12 @@ export default function ReactEditorKit(props) {
     }
 
     try {
+      editorRef.current.focus();
       const selection = window.getSelection();
-      if (!selection.toString()) {
-        const range = document.createRange();
-        range.selectNodeContents(editorRef.current);
-        selection.removeAllRanges();
-        selection.addRange(range);
-      } else {
-        selection.removeAllRanges();
-      }
+      const range = document.createRange();
+      range.selectNodeContents(editorRef.current);
+      selection.removeAllRanges();
+      selection.addRange(range);
     } catch (error) {
       console.warn("Select all failed:", error);
     }
@@ -919,56 +1417,58 @@ export default function ReactEditorKit(props) {
     const editorNode = editorRef.current;
     let iframeHTML = "";
 
-    if (type === "general") {
-      // Check if it's a direct video link
-      if (link.match(/\.(mp4|mov|avi|wmv|webm|mkv|flv)$/i)) {
-        iframeHTML = `<video width="${width || "640"}" height="${
-          height || "360"
-        }" controls><source src="${link}" type="video/mp4"></video>`;
-      } else {
-        // Check for specific video platforms
-        const youtubeRegex =
-          /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-        const vimeoRegex = /(?:https?:\/\/)?(?:www\.)?vimeo.com\/(\d+)/;
-        const dailymotionRegex =
-          /(?:https?:\/\/)?(?:www\.)?dailymotion\.com\/video\/([a-z0-9]+)/i;
-        const twitchRegex =
-          /(?:https?:\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9_]+)/;
+    const rawInput =
+      type === "embed" && embed_code ? embed_code : link || embed_code || "";
+    const w = width || "640";
+    const h = height || "360";
 
-        if (link.match(youtubeRegex)) {
-          const videoId = link.match(youtubeRegex)[1];
-          iframeHTML = `<iframe width="${width || "640"}" height="${
-            height || "360"
-          }" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-        } else if (link.match(vimeoRegex)) {
-          const videoId = link.match(vimeoRegex)[1];
-          iframeHTML = `<iframe src="https://player.vimeo.com/video/${videoId}" width="${
-            width || "640"
-          }" height="${
-            height || "360"
-          }" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
-        } else if (link.match(dailymotionRegex)) {
-          const videoId = link.match(dailymotionRegex)[1];
-          iframeHTML = `<iframe width="${width || "640"}" height="${
-            height || "360"
-          }" src="https://www.dailymotion.com/embed/video/${videoId}" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
-        } else if (link.match(twitchRegex)) {
-          const channelName = link.match(twitchRegex)[1];
-          iframeHTML = `<iframe src="https://twitch.tv/embed/${channelName}/chat?parent=example.com" width="${width || "640"}" height="${
-            height || "360"
-          }" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
-        } else if (isValidURL(link)) {
-          // For any other valid URL, create an iframe
-          iframeHTML = `<iframe width="${width || "640"}" height="${
-            height || "360"
-          }" src="${link}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+    // 1. Check for raw <iframe> embed snippet
+    if (
+      rawInput.trim().startsWith("<iframe") ||
+      /<iframe[\s\S]*?>/i.test(rawInput)
+    ) {
+      const srcMatch = rawInput.match(/src=["']([^"']+)["']/i);
+      if (srcMatch) {
+        const srcUrl = srcMatch[1];
+        const ytMatch = srcUrl.match(
+          /(?:youtube\.com\/(?:watch\?.*v=|embed\/|shorts\/|v\/|live\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/i,
+        );
+        if (ytMatch) {
+          iframeHTML = `<iframe width="${w}" height="${h}" src="https://www.youtube.com/embed/${ytMatch[1]}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
         } else {
-          // Insert custom embed code if available
-          iframeHTML = embed_code || "";
+          iframeHTML = rawInput;
+        }
+      } else {
+        iframeHTML = rawInput;
+      }
+    } else if (
+      rawInput.match(/\.(mp4|mov|avi|wmv|webm|mkv|flv|m4v)(\?.*)?$/i)
+    ) {
+      // 2. Direct video file
+      iframeHTML = `<video width="${w}" height="${h}" controls><source src="${rawInput}" type="video/mp4"></video>`;
+    } else {
+      // 3. YouTube URL (watch, shorts, youtu.be, embed, live)
+      const ytMatch = rawInput.match(
+        /(?:youtube\.com\/(?:watch\?.*v=|embed\/|shorts\/|v\/|live\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/i,
+      );
+      if (ytMatch) {
+        const videoId = ytMatch[1];
+        iframeHTML = `<iframe width="${w}" height="${h}" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+      } else {
+        // 4. Vimeo
+        const vimeoMatch = rawInput.match(
+          /(?:vimeo\.com\/(?:video\/)?|player\.vimeo\.com\/video\/)(\d+)/i,
+        );
+        if (vimeoMatch) {
+          const videoId = vimeoMatch[1];
+          iframeHTML = `<iframe src="https://player.vimeo.com/video/${videoId}" width="${w}" height="${h}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+        } else if (isValidURL(rawInput)) {
+          // 5. Generic URL
+          iframeHTML = `<iframe width="${w}" height="${h}" src="${rawInput}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+        } else {
+          iframeHTML = rawInput;
         }
       }
-    } else if (type === "embed" && embed_code && editorNode) {
-      iframeHTML = embed_code;
     }
 
     if (targetElement && editorNode && iframeHTML) {
@@ -1070,7 +1570,7 @@ export default function ReactEditorKit(props) {
       return;
     }
 
-    let data = editorRef.current.innerHTML;
+    let data = getCleanEditorHTML(editorRef.current.innerHTML);
     const iframe = document.createElement("iframe");
     iframe.style.display = "none";
     document.body.appendChild(iframe);
@@ -1109,27 +1609,37 @@ export default function ReactEditorKit(props) {
     const tempDiv = document.createElement("div");
     tempDiv.innerHTML = sanitizedHtml;
 
+    // Remove legacy color / bgcolor attributes on font, td, th, table, div, p, span
+    tempDiv.querySelectorAll("font").forEach((fontEl) => {
+      fontEl.removeAttribute("color");
+      fontEl.removeAttribute("bgcolor");
+    });
+    tempDiv.querySelectorAll("[bgcolor], [color]").forEach((el) => {
+      el.removeAttribute("bgcolor");
+      el.removeAttribute("color");
+    });
+
     // Function to clean styles from an element
     const cleanStyles = (element) => {
       if (element.style) {
-        // Get computed styles
-        const color = element.style.color;
+        // Get formatting styles while explicitly ignoring color & background
         const fontWeight = element.style.fontWeight;
         const fontStyle = element.style.fontStyle;
         const textDecoration = element.style.textDecoration;
         const fontSize = element.style.fontSize;
         const fontFamily = element.style.fontFamily;
+        const textAlign = element.style.textAlign;
 
-        // Clear all styles
+        // Clear all styles (including color and background-color)
         element.removeAttribute("style");
 
-        // Re-apply only the styles we want to keep
-        if (color) element.style.color = color;
+        // Re-apply only desired formatting styles
         if (fontWeight) element.style.fontWeight = fontWeight;
         if (fontStyle) element.style.fontStyle = fontStyle;
         if (textDecoration) element.style.textDecoration = textDecoration;
         if (fontSize) element.style.fontSize = fontSize;
         if (fontFamily) element.style.fontFamily = fontFamily;
+        if (textAlign) element.style.textAlign = textAlign;
       }
 
       // Recursively clean child elements
@@ -1138,6 +1648,63 @@ export default function ReactEditorKit(props) {
 
     // Clean all elements
     Array.from(tempDiv.children).forEach((element) => cleanStyles(element));
+
+    // Unwrap plain and redundant spans/font tags (e.g. per-word spans from web copies)
+    tempDiv.querySelectorAll("span, font").forEach((el) => {
+      const hasMeaningfulStyle =
+        el.style.fontWeight === "bold" ||
+        el.style.fontWeight >= 600 ||
+        el.style.fontStyle === "italic" ||
+        el.style.textDecoration?.includes("underline") ||
+        el.style.textDecoration?.includes("line-through");
+
+      const hasClass =
+        el.getAttribute("class") && el.getAttribute("class").trim() !== "";
+
+      if (!hasMeaningfulStyle && !hasClass) {
+        const parent = el.parentNode;
+        if (parent) {
+          while (el.firstChild) {
+            parent.insertBefore(el.firstChild, el);
+          }
+          parent.removeChild(el);
+        }
+      }
+    });
+
+    // Unwrap invalid block children inside headings (H1-H6 cannot wrap DIV/P per W3C)
+    tempDiv.querySelectorAll("h1, h2, h3, h4, h5, h6").forEach((heading) => {
+      const hasBlockChildren = heading.querySelector(
+        "p, div, h1, h2, h3, h4, h5, h6, ul, ol, table, blockquote, pre",
+      );
+      if (hasBlockChildren) {
+        const parent = heading.parentNode;
+        if (parent) {
+          while (heading.firstChild) {
+            parent.insertBefore(heading.firstChild, heading);
+          }
+          parent.removeChild(heading);
+        }
+      }
+    });
+
+    // Unwrap redundant wrapper divs that only wrap a single block element
+    tempDiv.querySelectorAll("div").forEach((div) => {
+      if (
+        div.children.length === 1 &&
+        /^(P|H[1-6]|DIV|BLOCKQUOTE|PRE|UL|OL|TABLE)$/i.test(
+          div.children[0].tagName,
+        ) &&
+        (!div.getAttribute("style") ||
+          div.getAttribute("style").trim() === "") &&
+        (!div.getAttribute("class") || div.getAttribute("class").trim() === "")
+      ) {
+        const parent = div.parentNode;
+        if (parent) {
+          parent.replaceChild(div.children[0], div);
+        }
+      }
+    });
 
     return tempDiv.innerHTML;
   };
@@ -1162,10 +1729,13 @@ export default function ReactEditorKit(props) {
               item
                 .getType(item.types[0])
                 .then((imageBlob) => {
-                  const imgElement = `<img src="${URL.createObjectURL(
-                    imageBlob,
-                  )}" alt="Image">`;
-                  document.execCommand("insertHTML", false, imgElement);
+                  const reader = new FileReader();
+                  reader.onload = (e) => {
+                    const base64Src = e.target.result;
+                    const imgElement = `<img src="${base64Src}" alt="Image">`;
+                    document.execCommand("insertHTML", false, imgElement);
+                  };
+                  reader.readAsDataURL(imageBlob);
                 })
                 .catch((error) => {
                   console.error("Error reading image content:", error);
@@ -1271,10 +1841,13 @@ export default function ReactEditorKit(props) {
           for (let i = 0; i < files.length; i++) {
             const file = files[i];
             if (file.type.startsWith("image/")) {
-              const imgElement = `<img src="${URL.createObjectURL(
-                file,
-              )}" alt="Image">`;
-              document.execCommand("insertHTML", false, imgElement);
+              const reader = new FileReader();
+              reader.onload = (e) => {
+                const base64Src = e.target.result;
+                const imgElement = `<img src="${base64Src}" alt="Image">`;
+                document.execCommand("insertHTML", false, imgElement);
+              };
+              reader.readAsDataURL(file);
             }
           }
         }
@@ -1337,7 +1910,10 @@ export default function ReactEditorKit(props) {
   };
 
   const handlePreview = () => {
-    setPreviewContent(editorRef?.current.innerHTML);
+    const cleanContent = getCleanEditorHTML(
+      editorRef?.current?.innerHTML || "",
+    );
+    setPreviewContent(cleanContent);
     setOpenPreview(true);
   };
 
@@ -1346,10 +1922,13 @@ export default function ReactEditorKit(props) {
       return;
     }
     if (!viewSource && editorRef?.current) {
-      const content = editorRef?.current.innerHTML;
-      const { sanitizedHtml } = sanitizeDangerousScripts(content);
-      const formattedContent = transformHTML(sanitizedHtml);
-      setSourceCode(formattedContent);
+      const cleanContent = getCleanEditorHTML(editorRef.current.innerHTML);
+      if (!cleanContent) {
+        setSourceCode("");
+      } else {
+        const formattedContent = transformHTML(cleanContent);
+        setSourceCode(formattedContent);
+      }
     } else {
       setSourceCode("");
     }
@@ -1369,7 +1948,10 @@ export default function ReactEditorKit(props) {
     }
     if (
       (event.ctrlKey || event.metaKey) &&
-      (event.key === "f" || event.key === "F" || event.key === "h" || event.key === "H")
+      (event.key === "f" ||
+        event.key === "F" ||
+        event.key === "h" ||
+        event.key === "H")
     ) {
       if (
         editorRef?.current &&
@@ -1389,7 +1971,8 @@ export default function ReactEditorKit(props) {
     }
 
     // Check both innerText and innerHTML to handle all content types
-    const hasTextContent = editor.innerText.trim() !== "";
+    const hasTextContent =
+      (editor.innerText || editor.textContent || "").trim() !== "";
     const hasHTMLContent =
       editor.innerHTML.trim() !== "" &&
       editor.innerHTML.trim() !== "<br>" &&
@@ -1530,10 +2113,7 @@ export default function ReactEditorKit(props) {
     } else if (isOpenModel === "find_replace") {
       return {
         component: (
-          <FindReplaceModal
-            editorRef={editorRef}
-            onClose={handleCloseModel}
-          />
+          <FindReplaceModal editorRef={editorRef} onClose={handleCloseModel} />
         ),
         title: "Find and Replace",
       };
@@ -1607,10 +2187,13 @@ export default function ReactEditorKit(props) {
               item
                 .getType(item.types[0])
                 .then((imageBlob) => {
-                  const imgElement = `<img src="${URL.createObjectURL(
-                    imageBlob,
-                  )}" alt="Image">`;
-                  document.execCommand("insertHTML", false, imgElement);
+                  const reader = new FileReader();
+                  reader.onload = (e) => {
+                    const base64Src = e.target.result;
+                    const imgElement = `<img src="${base64Src}" alt="Image">`;
+                    document.execCommand("insertHTML", false, imgElement);
+                  };
+                  reader.readAsDataURL(imageBlob);
                 })
                 .catch((error) => {
                   console.error("Error reading image content:", error);
@@ -1835,6 +2418,20 @@ export default function ReactEditorKit(props) {
 
     if (editor) {
       handleEditorCaptureClick = (e) => {
+        // Check if an anchor link was clicked
+        const anchor = e.target.closest("a[href]");
+        if (anchor && editor.contains(anchor)) {
+          const href = anchor.getAttribute("href");
+          if (href && href.trim() !== "" && href !== "#") {
+            const target = anchor.getAttribute("target") || "_blank";
+            const fullUrl = /^(https?:\/\/|mailto:|tel:|\/|#)/i.test(href)
+              ? href
+              : `https://${href}`;
+            window.open(fullUrl, target, "noopener,noreferrer");
+            return;
+          }
+        }
+
         const clickable = e.target.closest("button, [onclick]");
         if (clickable && editor.contains(clickable)) {
           e.preventDefault();
@@ -1904,16 +2501,16 @@ export default function ReactEditorKit(props) {
     }
   };
 
-  useEffect(() => {
-    if (apiKey) {
-      CheckAccess(apiKey);
-    } else {
-      setIsDisable(true);
-      setAllowPaste(true);
-    }
-  }, [apiKey]);
+  // useEffect(() => {
+  //   if (apiKey) {
+  //     CheckAccess(apiKey);
+  //   } else {
+  //     setIsDisable(true);
+  //     setAllowPaste(true);
+  //   }
+  // }, [apiKey]);
 
-  console.log(isDisable, "isDisableisDisableisDisableisDisable");
+
 
   return (
     <div id="react-editor-wrapper">
@@ -2379,7 +2976,7 @@ export default function ReactEditorKit(props) {
                       editorRef={editorRef}
                       name="indent"
                       icon={<IncreaseIndentIcon />}
-                      title="Increase IndentIcon"
+                      title="Increase Indent"
                       item={item}
                       isDisable={isDisable}
                     />
@@ -2389,7 +2986,7 @@ export default function ReactEditorKit(props) {
                       editorRef={editorRef}
                       name="outdent"
                       icon={<DecreaseIndentIcon />}
-                      title="Decrease IndentIcon"
+                      title="Decrease Indent"
                       item={item}
                       isDisable={isDisable}
                     />
@@ -2688,9 +3285,7 @@ export default function ReactEditorKit(props) {
             editorRef={editorRef}
             isDisable={isDisable}
             onOpenTableProps={(tbl) => {
-              setSelectedTableElement(
-                tbl || getActiveTable(editorRef.current),
-              );
+              setSelectedTableElement(tbl || getActiveTable(editorRef.current));
               setIsOpenModel("table_properties");
             }}
             onOpenCellProps={(cell) => {
@@ -2714,9 +3309,7 @@ export default function ReactEditorKit(props) {
             setSelectedTableElement={setSelectedTableElement}
             setFindReplacePos={setFindReplacePos}
             onOpenTableProps={(tbl) => {
-              setSelectedTableElement(
-                tbl || getActiveTable(editorRef.current),
-              );
+              setSelectedTableElement(tbl || getActiveTable(editorRef.current));
               setIsOpenModel("table_properties");
             }}
             onOpenCellProps={(cell) => {

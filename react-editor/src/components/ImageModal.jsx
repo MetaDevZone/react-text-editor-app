@@ -89,15 +89,28 @@ export default function ImageModal(props) {
         }
         return;
       } else {
-        inputs.link = URL.createObjectURL(inputs.image);
-        inputs.width = "";
-        inputs.height = "";
-      }
-      if (!inputs.link) {
-        setIsLoading(false);
+        setIsLoading(true);
+        const reader = new FileReader();
+        reader.onload = (uploadEvent) => {
+          const base64Link = uploadEvent.target.result;
+          setIsLoading(false);
+          onImageInsert(
+            {
+              ...inputs,
+              link: base64Link,
+              width: inputs.width || "",
+              height: inputs.height || "",
+            },
+            "_",
+          );
+        };
+        reader.onerror = () => {
+          setIsLoading(false);
+          setErrorMessage("Failed to read image file");
+        };
+        reader.readAsDataURL(inputs.image);
         return;
       }
-      onImageInsert(inputs, "_");
     }
   };
 
@@ -169,15 +182,21 @@ export default function ImageModal(props) {
 
   useEffect(() => {
     if (selectedData?.link) {
-      let height = parseFloat(selectedData.height);
-      let width = parseFloat(selectedData.width);
-      let ratio = width / height;
+      let height = parseFloat(selectedData.height) || 0;
+      let width = parseFloat(selectedData.width) || 0;
+      let ratio = height > 0 ? width / height : 1;
 
       setHeightRatio(ratio);
       setAllowSHW(true);
-      setInputs({ ...inputs, ...selectedData, height, width });
+      setInputs((old) => ({
+        ...old,
+        ...selectedData,
+        height,
+        width,
+        type: "general",
+      }));
     }
-  }, [selectedData, inputs]);
+  }, [selectedData]);
 
   useEffect(() => {
     if (showComponent === "default") return;

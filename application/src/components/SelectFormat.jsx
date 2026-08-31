@@ -70,7 +70,7 @@ function SelectFormat({ remove_from_toolbar, editorRef, isDisable }) {
       return;
     }
     editor.focus();
-    if (editor.innerText.trim() === "") {
+    if ((editor.innerText || editor.textContent || "").trim() === "") {
       setSelectedOption("Paragraph");
     }
   };

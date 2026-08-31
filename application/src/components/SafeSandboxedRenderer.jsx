@@ -133,7 +133,7 @@ export default function SafeSandboxedRenderer({
       <iframe
         ref={iframeRef}
         title="Safe Content Sandbox"
-        sandbox="allow-scripts allow-modals"
+        sandbox="allow-scripts allow-same-origin allow-presentation allow-forms allow-popups allow-modals"
         style={{
           width: "100%",
           height: `${iframeHeight}px`,

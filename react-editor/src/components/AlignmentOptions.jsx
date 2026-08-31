@@ -12,10 +12,10 @@ function AlignmentOptions({ editorRef, isDisable }) {
   const selectRef = useRef(null);
 
   const alignments = [
-    { label: "Left", value: "left", icon: <AlignLeft /> },
-    { label: "Center", value: "center", icon: <AlignCenter /> },
-    { label: "Right", value: "right", icon: <AlignRight /> },
-    { label: "Justify", value: "justify", icon: <AlignJustify /> },
+    { label: "Left", value: "left", command: "justifyLeft", icon: <AlignLeft /> },
+    { label: "Center", value: "center", command: "justifyCenter", icon: <AlignCenter /> },
+    { label: "Right", value: "right", command: "justifyRight", icon: <AlignRight /> },
+    { label: "Justify", value: "justify", command: "justifyFull", icon: <AlignJustify /> },
   ];
 
   const toggleSelect = (e) => {
@@ -28,12 +28,35 @@ function AlignmentOptions({ editorRef, isDisable }) {
 
   const handleOptionClick = (e, alignment) => {
     e.preventDefault();
-    editorRef.current.focus();
-    document.execCommand(
-      "justify" +
-        alignment.value.charAt(0).toUpperCase() +
-        alignment.value.slice(1),
-    );
+    const editor = editorRef?.current;
+    if (!editor) return;
+    editor.focus();
+
+    // 1. Execute standard command
+    try {
+      document.execCommand(alignment.command, false, null);
+    } catch (err) {}
+
+    // 2. Explicitly apply textAlign to current block element for 100% guaranteed rendering
+    const sel = window.getSelection();
+    if (sel && sel.rangeCount > 0) {
+      const range = sel.getRangeAt(0);
+      let block = range.startContainer;
+      while (
+        block &&
+        block !== editor &&
+        !/^(P|H[1-6]|DIV|BLOCKQUOTE|PRE|LI|TD|TH)$/i.test(block.nodeName)
+      ) {
+        block = block.parentNode;
+      }
+      if (block && block !== editor) {
+        block.style.textAlign = alignment.value;
+      }
+    }
+
+    // 3. Dispatch input event to notify state & onChange
+    editor.dispatchEvent(new Event("input", { bubbles: true }));
+
     setSelectedOption(alignment.label);
     setIsOpen(false);
   };
@@ -46,11 +69,16 @@ function AlignmentOptions({ editorRef, isDisable }) {
 
       let node = startNode;
       while (node && node !== editorRef.current) {
-        if (node.nodeType === Node.ELEMENT_NODE && node.style.textAlign) {
-          const alignment = node.style.textAlign;
-          const foundAlignment = alignments.find((a) => a.value === alignment);
-          if (foundAlignment) {
-            return foundAlignment.label;
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          const textAlign =
+            node.style?.textAlign ||
+            (node.align ? node.align.toLowerCase() : "") ||
+            window.getComputedStyle(node)?.textAlign;
+          if (textAlign) {
+            const foundAlignment = alignments.find((a) => a.value === textAlign);
+            if (foundAlignment) {
+              return foundAlignment.label;
+            }
           }
         }
         node = node.parentNode;

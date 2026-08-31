@@ -237,6 +237,9 @@ class SpellCheckerEngine {
 
 export const spellChecker = new SpellCheckerEngine();
 
+const MARKER_START_ID = "mlx-sel-start-marker";
+const MARKER_END_ID = "mlx-sel-end-marker";
+
 /**
  * Clean all temporary spellcheck marker spans from editorRoot
  */
@@ -250,26 +253,40 @@ export const saveEditorSelection = (root) => {
     return null;
   }
 
-  let start = 0;
-  let end = 0;
+  // Remove any lingering selection markers
+  root.querySelectorAll(`span#${MARKER_START_ID}, span#${MARKER_END_ID}`).forEach((m) => m.remove());
+
+  const isCollapsed = range.collapsed;
+
+  const startMarker = document.createElement("span");
+  startMarker.id = MARKER_START_ID;
+  startMarker.className = "mlx-selection-marker";
+  startMarker.style.display = "none";
+  startMarker.style.lineHeight = "0";
+
+  let endMarker = null;
+  if (!isCollapsed) {
+    endMarker = document.createElement("span");
+    endMarker.id = MARKER_END_ID;
+    endMarker.className = "mlx-selection-marker";
+    endMarker.style.display = "none";
+    endMarker.style.lineHeight = "0";
+  }
 
   try {
-    const preCaretRange = range.cloneRange();
-    preCaretRange.selectNodeContents(root);
-    preCaretRange.setEnd(range.startContainer, range.startOffset);
-    start = preCaretRange.toString().length;
-
-    if (range.collapsed) {
-      end = start;
-    } else {
-      const preEndRange = range.cloneRange();
-      preEndRange.selectNodeContents(root);
-      preEndRange.setEnd(range.endContainer, range.endOffset);
-      end = preEndRange.toString().length;
+    if (!isCollapsed && endMarker) {
+      const endRange = range.cloneRange();
+      endRange.collapse(false);
+      endRange.insertNode(endMarker);
     }
 
-    return { start, end, collapsed: range.collapsed };
+    const startRange = range.cloneRange();
+    startRange.collapse(true);
+    startRange.insertNode(startMarker);
+
+    return { isCollapsed, active: true };
   } catch (e) {
+    console.warn("saveEditorSelection failed:", e);
     return null;
   }
 };
@@ -279,82 +296,73 @@ export const restoreEditorSelection = (root, saved) => {
   const sel = window.getSelection();
   if (!sel) return;
 
-  const { start, end, collapsed } = saved;
+  const startMarker = root.querySelector(`span#${MARKER_START_ID}`);
+  const endMarker = root.querySelector(`span#${MARKER_END_ID}`);
 
-  let currentOffset = 0;
-  let startNode = null;
-  let startOffset = 0;
-  let endNode = null;
-  let endOffset = 0;
-
-  const walker = document.createTreeWalker(
-    root,
-    NodeFilter.SHOW_TEXT,
-    null,
-    false
-  );
-
-  let node;
-  let lastNode = null;
-
-  while ((node = walker.nextNode())) {
-    lastNode = node;
-    const len = node.nodeValue.length;
-
-    if (!startNode && currentOffset + len >= start) {
-      startNode = node;
-      startOffset = start - currentOffset;
-    }
-
-    if (!endNode && currentOffset + len >= end) {
-      endNode = node;
-      endOffset = end - currentOffset;
-      break;
-    }
-
-    currentOffset += len;
-  }
-
-  if (!startNode) {
-    if (lastNode) {
-      startNode = lastNode;
-      startOffset = lastNode.nodeValue.length;
-    } else {
-      startNode = root;
-      startOffset = 0;
-    }
-  }
-
-  if (collapsed || !endNode) {
-    if (!endNode) {
-      endNode = startNode;
-      endOffset = startOffset;
-    }
-  }
+  if (!startMarker) return;
 
   try {
     const range = document.createRange();
-    const safeStartOffset =
-      startNode.nodeType === Node.TEXT_NODE
-        ? Math.min(Math.max(0, startOffset), startNode.nodeValue.length)
-        : Math.min(Math.max(0, startOffset), startNode.childNodes.length);
 
-    const safeEndOffset =
-      endNode.nodeType === Node.TEXT_NODE
-        ? Math.min(Math.max(0, endOffset), endNode.nodeValue.length)
-        : Math.min(Math.max(0, endOffset), endNode.childNodes.length);
+    // Determine start position
+    const startParent = startMarker.parentNode;
+    if (startParent) {
+      const prev = startMarker.previousSibling;
+      const next = startMarker.nextSibling;
+      const index = Array.from(startParent.childNodes).indexOf(startMarker);
+      startMarker.remove();
 
-    range.setStart(startNode, safeStartOffset);
-    if (collapsed) {
-      range.collapse(true);
+      if (prev && prev.nodeType === Node.TEXT_NODE) {
+        range.setStart(prev, prev.nodeValue.length);
+      } else if (next && next.nodeType === Node.TEXT_NODE) {
+        range.setStart(next, 0);
+      } else if (next) {
+        range.setStartBefore(next);
+      } else if (prev) {
+        range.setStartAfter(prev);
+      } else {
+        range.setStart(
+          startParent,
+          Math.max(0, Math.min(index, startParent.childNodes.length))
+        );
+      }
+    }
+
+    // Determine end position
+    if (!saved.isCollapsed && endMarker && endMarker.parentNode) {
+      const endParent = endMarker.parentNode;
+      const prev = endMarker.previousSibling;
+      const next = endMarker.nextSibling;
+      const index = Array.from(endParent.childNodes).indexOf(endMarker);
+      endMarker.remove();
+
+      if (prev && prev.nodeType === Node.TEXT_NODE) {
+        range.setEnd(prev, prev.nodeValue.length);
+      } else if (next && next.nodeType === Node.TEXT_NODE) {
+        range.setEnd(next, 0);
+      } else if (next) {
+        range.setEndBefore(next);
+      } else if (prev) {
+        range.setEndAfter(prev);
+      } else {
+        range.setEnd(
+          endParent,
+          Math.max(0, Math.min(index, endParent.childNodes.length))
+        );
+      }
     } else {
-      range.setEnd(endNode, safeEndOffset);
+      range.collapse(true);
     }
 
     sel.removeAllRanges();
     sel.addRange(range);
   } catch (e) {
-    console.warn("Could not restore selection range:", e);
+    console.warn("restoreEditorSelection failed:", e);
+  } finally {
+    // Cleanup any lingering markers
+    root
+      .querySelectorAll(`span#${MARKER_START_ID}, span#${MARKER_END_ID}`)
+      .forEach((m) => m.remove());
   }
 };
 
@@ -372,7 +380,6 @@ export const removeSpellCheckMarkers = (editorRoot, preserveSelection = false) =
         parent.insertBefore(span.firstChild, span);
       }
       parent.removeChild(span);
-      parent.normalize();
     }
   });
 
@@ -409,7 +416,10 @@ export const runSpellCheckOnEditor = (editorRoot) => {
           parentTag === "CODE" ||
           parentTag === "PRE" ||
           node.parentNode?.classList?.contains("no-spellcheck") ||
-          node.parentNode?.classList?.contains("mlx-find-highlight")
+          node.parentNode?.classList?.contains("mlx-find-highlight") ||
+          node.parentNode?.classList?.contains("mlx-selection-marker") ||
+          node.parentNode?.id === MARKER_START_ID ||
+          node.parentNode?.id === MARKER_END_ID
         ) {
           return NodeFilter.FILTER_REJECT;
         }

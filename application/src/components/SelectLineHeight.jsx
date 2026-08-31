@@ -26,43 +26,26 @@ function SelectLineHeight({
     if (onLineHeightChange) {
       onLineHeightChange(value);
     } else {
-      // Fallback to original implementation if onLineHeightChange is not provided
       const selection = window.getSelection();
-
-      if (
-        selection &&
-        selection.rangeCount > 0 &&
-        selection.toString().trim() !== ""
-      ) {
+      if (selection && selection.rangeCount > 0) {
         const range = selection.getRangeAt(0);
-        const lineHeightStyle = `line-height: ${value};`;
-
-        const applyLineHeight = (node) => {
-          if (node.nodeType === Node.TEXT_NODE) {
-            const wrapperSpan = document.createElement("span");
-            wrapperSpan.style.cssText = lineHeightStyle;
-            wrapperSpan.appendChild(node.cloneNode(true));
-            return wrapperSpan;
-          } else if (
-            node.nodeType === Node.ELEMENT_NODE &&
-            node.tagName.toLowerCase() === "p"
-          ) {
-            const newNode = node.cloneNode(false);
-            [...node.childNodes].forEach((childNode) => {
-              newNode.appendChild(applyLineHeight(childNode));
-            });
-            return newNode;
-          } else {
-            return node.cloneNode(true);
+        let node = range.startContainer;
+        while (
+          node &&
+          node !== document.body &&
+          !/^(P|DIV|H[1-6]|LI|BLOCKQUOTE|TD|TH)$/i.test(node.nodeName)
+        ) {
+          node = node.parentNode;
+        }
+        if (node && node !== document.body) {
+          node.style.lineHeight = value;
+          const editor = node.closest
+            ? node.closest('[contenteditable="true"]')
+            : null;
+          if (editor) {
+            editor.dispatchEvent(new Event("input", { bubbles: true }));
           }
-        };
-
-        const modifiedContents = applyLineHeight(range.cloneContents());
-        range.deleteContents();
-        range.insertNode(modifiedContents);
-
-        selection.removeAllRanges();
-        selection.addRange(range);
+        }
       }
     }
 
