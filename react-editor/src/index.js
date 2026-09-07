@@ -2537,14 +2537,14 @@ export default function ReactEditorKit(props) {
     }
   };
 
-  // useEffect(() => {
-  //   if (apiKey) {
-  //     CheckAccess(apiKey);
-  //   } else {
-  //     setIsDisable(true);
-  //     setAllowPaste(true);
-  //   }
-  // }, [apiKey]);
+  useEffect(() => {
+    if (apiKey) {
+      CheckAccess(apiKey);
+    } else {
+      setIsDisable(true);
+      setAllowPaste(true);
+    }
+  }, [apiKey]);
 
   return (
     <div id="react-editor-wrapper">

@@ -1,18 +1,18 @@
 # ✨ React Editor Kit (`react-text-editor-kit`)
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/talha-dev/assets/main/react-editor-kit-banner.png" alt="React Editor Kit Banner" width="100%" onerror="this.style.display='none'" />
-</p>
-
-<p align="center">
   <strong>A modern, enterprise-grade, ultra-fast Rich Text WYSIWYG Editor built natively for React.</strong><br>
   <em>Engineered with an isolated typing table engine, floating find & replace widget, offline in-memory spell checker, image cropping & live 8-point resizing, XSS-safe sandboxed rendering, and full theme customization.</em>
 </p>
+
+> [!IMPORTANT]
+> **🔑 API Key Required**: An `apiKey` is required to use **React Editor Kit**. Please visit [**https://reacteditor.metadevzone.com/**](https://reacteditor.metadevzone.com/) to log in / sign up and create your API key. Pass it to `<ReactEditorKit apiKey="YOUR_API_KEY" />` to activate the editor canvas and all its features.
 
 ---
 
 ## 📖 Table of Contents
 
+- [🔑 Getting Your API Key (Required)](#-getting-your-api-key-required)
 - [✨ Key Highlights & Super-Features](#-key-highlights--super-features)
   - [1. 📊 Advanced Isolated Table Suite](#1--advanced-isolated-table-suite)
   - [2. 🔍 Floating & Draggable Find & Replace](#2--floating--draggable-find--replace)
@@ -34,6 +34,27 @@
 - [⌨️ Keyboard Shortcuts](#️-keyboard-shortcuts)
 - [🧼 Clean HTML Output Guarantee](#-clean-html-output-guarantee)
 - [📄 License](#-license)
+
+---
+
+## 🔑 Getting Your API Key (Required)
+
+To use **React Editor Kit**, providing an `apiKey` is **mandatory**. Without a valid API key, the editor controls and editing canvas will remain disabled.
+
+### Quick Setup Steps:
+
+1. Visit [**https://reacteditor.metadevzone.com/**](https://reacteditor.metadevzone.com/)
+2. Log in or sign up for a developer account.
+3. Generate your **API Key** from the dashboard.
+4. Pass the API key to `<ReactEditorKit apiKey="your_api_key_here" />`.
+
+```jsx
+<ReactEditorKit
+  apiKey="your_api_key_here"
+  value={content}
+  onChange={setContent}
+/>
+```
 
 ---
 
@@ -166,6 +187,7 @@ export default function MyEditorPage() {
   return (
     <div style={{ maxWidth: "1000px", margin: "40px auto", padding: "0 20px" }}>
       <ReactEditorKit
+        apiKey="your_api_key_here" // Required: Get free key at https://reacteditor.metadevzone.com/
         value={content}
         onChange={(cleanHtml) => setContent(cleanHtml)}
         placeholder="Type your story here..."
@@ -199,7 +221,7 @@ Here is the complete, comprehensive list of all props accepted by `<ReactEditorK
 | `getEditorRef`        |       `(ref: React.RefObject<HTMLDivElement>) => void`        |          `undefined`          | Callback returning the `editorRef` to directly access the `contentEditable` DOM element.                                                                                                          |
 | `mainProps`           |            `React.HTMLAttributes<HTMLDivElement>`             |             `{}`              | HTML attributes passed directly to the outer editor wrapper element (e.g. `className`, `id`, `data-*`).                                                                                           |
 | `style`               |                     `React.CSSProperties`                     |             `{}`              | Inline styles applied directly to the inner `contentEditable` editing canvas.                                                                                                                     |
-| `apiKey`              |                           `string`                            |             `""`              | Optional API key for remote backend function execution or enterprise access control.                                                                                                              |
+| `apiKey`              |                    `string` **(Required)**                    |             `""`              | **Required**. Your API key obtained from [reacteditor.metadevzone.com](https://reacteditor.metadevzone.com/). Required to activate the editor canvas and enable full editing functionality.       |
 | `...others`           |                             `any`                             |               —               | All remaining props (e.g. `aria-*`, `onFocus`, `onBlur`, `tabIndex`) are spread onto the inner `contentEditable` element.                                                                         |
 
 ---
@@ -229,6 +251,7 @@ export default function DarkModeEditor() {
 
   return (
     <ReactEditorKit
+      apiKey="your_api_key_here"
       value={content}
       onChange={setContent}
       theme_config={darkTheme}
@@ -348,6 +371,7 @@ To easily remove specific tools without rewriting the whole toolbar array, pass 
 
 ```jsx
 <ReactEditorKit
+  apiKey="your_api_key_here"
   value={content}
   onChange={setContent}
   remove_from_toolbar={["video", "ltr", "rtl", "source_code"]}
@@ -359,6 +383,7 @@ To easily remove specific tools without rewriting the whole toolbar array, pass 
 
 ```jsx
 <ReactEditorKit
+  apiKey="your_api_key_here"
   value={content}
   onChange={setContent}
   toolbar={[
@@ -422,6 +447,7 @@ export default function CloudUploadEditor() {
 
   return (
     <ReactEditorKit
+      apiKey="your_api_key_here"
       value={content}
       onChange={setContent}
       image_handler={handleCloudImageUpload}
