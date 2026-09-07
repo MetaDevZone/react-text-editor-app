@@ -42,6 +42,7 @@ export default function AnOtherPage() {
           placeholder="Please Write Something..."
           apiKey={"f2a84881-3ad9-4707-a26b-039b5bb179d7"}
           height={"420px"}
+          enable_spell_check={true}
         />
       </form>
 

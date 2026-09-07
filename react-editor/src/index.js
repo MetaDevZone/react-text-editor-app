@@ -145,8 +145,11 @@ export default function ReactEditorKit(props) {
     style,
     apiKey,
     height,
+
+    enable_spell_check = false,
     ...others
   } = props;
+  const isSpellCheckEnabled = Boolean(enable_spell_check);
   const editorRef = useRef(null);
   const [viewSource, setViewSource] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -179,18 +182,28 @@ export default function ReactEditorKit(props) {
   const [showHR1, setShowHR1] = useState(false);
   const [showHR2, setShowHR2] = useState(false);
   const [showHR3, setShowHR3] = useState(false);
-  const [isSpellCheckActive, setIsSpellCheckActive] = useState(true);
+  const [isSpellCheckActive, setIsSpellCheckActive] =
+    useState(isSpellCheckEnabled);
   const [activeSpellError, setActiveSpellError] = useState(null);
   const [findReplacePos, setFindReplacePos] = useState(null);
   const spellCheckTimeoutRef = useRef(null);
 
+  useEffect(() => {
+    setIsSpellCheckActive(isSpellCheckEnabled);
+    if (!isSpellCheckEnabled && editorRef.current) {
+      removeSpellCheckMarkers(editorRef.current);
+      setActiveSpellError(null);
+    }
+  }, [isSpellCheckEnabled]);
+
   const triggerSpellCheck = (delay = 400) => {
-    if (!isSpellCheckActive || !editorRef?.current) return;
+    if (!isSpellCheckEnabled || !isSpellCheckActive || !editorRef?.current)
+      return;
     if (spellCheckTimeoutRef.current) {
       clearTimeout(spellCheckTimeoutRef.current);
     }
     spellCheckTimeoutRef.current = setTimeout(() => {
-      if (editorRef.current && isSpellCheckActive) {
+      if (editorRef.current && isSpellCheckEnabled && isSpellCheckActive) {
         runSpellCheckOnEditor(editorRef.current);
       }
     }, delay);
@@ -466,7 +479,10 @@ export default function ReactEditorKit(props) {
     if (e.target && e.target.tagName === "BUTTON") {
       e.preventDefault();
     }
-    const spellErrorSpan = e.target.closest("span.mlx-spell-error");
+    const spellErrorSpan =
+      isSpellCheckEnabled && isSpellCheckActive
+        ? e.target.closest("span.mlx-spell-error")
+        : null;
     if (spellErrorSpan && editorRef?.current) {
       e.stopPropagation();
       const rect = spellErrorSpan.getBoundingClientRect();
@@ -2130,6 +2146,26 @@ export default function ReactEditorKit(props) {
   toolbar = show_final_options(toolbar, remove_from_toolbar, TOOLBAR_ITEMS);
   navbar = show_final_options(navbar, remove_from_navbar, NAVBAR_ITEMS);
 
+  if (!isSpellCheckEnabled) {
+    toolbar = toolbar.filter((item) =>
+      typeof item === "string"
+        ? item !== "spellcheck"
+        : item?.name !== "spellcheck",
+    );
+    toolbar = toolbar.filter((item, index) => {
+      return item !== "|" || index === 0 || toolbar[index - 1] !== "|";
+    });
+
+    navbar = navbar.filter((item) =>
+      typeof item === "string"
+        ? item !== "spellcheck"
+        : item?.name !== "spellcheck",
+    );
+    navbar = navbar.filter((item, index) => {
+      return item !== "|" || index === 0 || navbar[index - 1] !== "|";
+    });
+  }
+
   useEffect(() => {
     if (!init) {
       if (editorRef.current && value) {
@@ -2138,7 +2174,9 @@ export default function ReactEditorKit(props) {
         setInit(true);
         // Update placeholder after setting initial content
         setTimeout(() => handlePlaceholder(), 0);
-        setTimeout(() => triggerSpellCheck(300), 300);
+        if (isSpellCheckEnabled && isSpellCheckActive) {
+          setTimeout(() => triggerSpellCheck(300), 300);
+        }
       }
     }
 
@@ -2499,14 +2537,14 @@ export default function ReactEditorKit(props) {
     }
   };
 
-  useEffect(() => {
-    if (apiKey) {
-      CheckAccess(apiKey);
-    } else {
-      setIsDisable(true);
-      setAllowPaste(true);
-    }
-  }, [apiKey]);
+  // useEffect(() => {
+  //   if (apiKey) {
+  //     CheckAccess(apiKey);
+  //   } else {
+  //     setIsDisable(true);
+  //     setAllowPaste(true);
+  //   }
+  // }, [apiKey]);
 
   return (
     <div id="react-editor-wrapper">
@@ -2576,6 +2614,7 @@ export default function ReactEditorKit(props) {
                           }
                         }}
                         isSpellCheckActive={isSpellCheckActive}
+                        isSpellCheckEnabled={isSpellCheckEnabled}
                         item={item}
                         isPlaceholder={isPlaceholder}
                         placeholder={placeholder}
@@ -3082,7 +3121,7 @@ export default function ReactEditorKit(props) {
                       {item?.icon ? item.icon : <FindReplaceIcon />}
                     </button>
                   )}
-                  {is_spellcheck && (
+                  {is_spellcheck && isSpellCheckEnabled && (
                     <button
                       type="button"
                       onClick={() => {
@@ -3268,7 +3307,9 @@ export default function ReactEditorKit(props) {
             contentEditable={!isDisable}
             ref={editorRef}
             onPaste={onPaste}
-            spellCheck="true"
+            spellCheck={
+              isSpellCheckEnabled && isSpellCheckActive ? "true" : "false"
+            }
             onInput={handleInput}
             onBlur={handleBlur}
             onClick={handleEditorClick}
@@ -3315,7 +3356,7 @@ export default function ReactEditorKit(props) {
               setIsOpenModel("cell_properties");
             }}
           />
-          {activeSpellError && (
+          {isSpellCheckEnabled && isSpellCheckActive && activeSpellError && (
             <SpellSuggestionPopup
               targetElement={activeSpellError.targetElement}
               word={activeSpellError.word}

@@ -88,7 +88,6 @@ import "react-image-crop/dist/ReactCrop.css";
 import { CheckAccessDataApi } from "./DAL/CheckAcces";
 import { getBaseDomain } from "./utils/Constants";
 
-
 const show_final_options = (options, remove, all_options) => {
   if (!options) {
     options = all_options;
@@ -146,8 +145,11 @@ export default function ReactEditorKit(props) {
     style,
     apiKey,
     height,
+
+    enable_spell_check = false,
     ...others
   } = props;
+  const isSpellCheckEnabled = Boolean(enable_spell_check);
   const editorRef = useRef(null);
   const [viewSource, setViewSource] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -180,18 +182,28 @@ export default function ReactEditorKit(props) {
   const [showHR1, setShowHR1] = useState(false);
   const [showHR2, setShowHR2] = useState(false);
   const [showHR3, setShowHR3] = useState(false);
-  const [isSpellCheckActive, setIsSpellCheckActive] = useState(true);
+  const [isSpellCheckActive, setIsSpellCheckActive] =
+    useState(isSpellCheckEnabled);
   const [activeSpellError, setActiveSpellError] = useState(null);
   const [findReplacePos, setFindReplacePos] = useState(null);
   const spellCheckTimeoutRef = useRef(null);
 
+  useEffect(() => {
+    setIsSpellCheckActive(isSpellCheckEnabled);
+    if (!isSpellCheckEnabled && editorRef.current) {
+      removeSpellCheckMarkers(editorRef.current);
+      setActiveSpellError(null);
+    }
+  }, [isSpellCheckEnabled]);
+
   const triggerSpellCheck = (delay = 400) => {
-    if (!isSpellCheckActive || !editorRef?.current) return;
+    if (!isSpellCheckEnabled || !isSpellCheckActive || !editorRef?.current)
+      return;
     if (spellCheckTimeoutRef.current) {
       clearTimeout(spellCheckTimeoutRef.current);
     }
     spellCheckTimeoutRef.current = setTimeout(() => {
-      if (editorRef.current && isSpellCheckActive) {
+      if (editorRef.current && isSpellCheckEnabled && isSpellCheckActive) {
         runSpellCheckOnEditor(editorRef.current);
       }
     }, delay);
@@ -467,7 +479,10 @@ export default function ReactEditorKit(props) {
     if (e.target && e.target.tagName === "BUTTON") {
       e.preventDefault();
     }
-    const spellErrorSpan = e.target.closest("span.mlx-spell-error");
+    const spellErrorSpan =
+      isSpellCheckEnabled && isSpellCheckActive
+        ? e.target.closest("span.mlx-spell-error")
+        : null;
     if (spellErrorSpan && editorRef?.current) {
       e.stopPropagation();
       const rect = spellErrorSpan.getBoundingClientRect();
@@ -663,7 +678,6 @@ export default function ReactEditorKit(props) {
     }
 
     if (event.key === "Backspace") {
-
       // Check if inside table cell
       const cell = findParentTableCell(range.startContainer, editor);
       if (cell) {
@@ -671,7 +685,10 @@ export default function ReactEditorKit(props) {
         const preRange = document.createRange();
         preRange.selectNodeContents(cell);
         preRange.setEnd(range.startContainer, range.startOffset);
-        if (preRange.toString().length === 0 && cell.textContent.trim() === "") {
+        if (
+          preRange.toString().length === 0 &&
+          cell.textContent.trim() === ""
+        ) {
           event.preventDefault();
           return;
         }
@@ -1081,10 +1098,7 @@ export default function ReactEditorKit(props) {
 
         // Move cursor into new LI
         const newRange = document.createRange();
-        if (
-          newLI.firstChild &&
-          newLI.firstChild.nodeType === Node.TEXT_NODE
-        ) {
+        if (newLI.firstChild && newLI.firstChild.nodeType === Node.TEXT_NODE) {
           newRange.setStart(newLI.firstChild, 0);
         } else {
           newRange.setStart(newLI, 0);
@@ -1171,8 +1185,8 @@ export default function ReactEditorKit(props) {
       // Ensure newBlock has at least a <br> if empty
       if (
         newBlock.childNodes.length === 0 ||
-        newBlock.textContent.trim() === "" &&
-          !newBlock.querySelector("img, table, iframe, video, br")
+        (newBlock.textContent.trim() === "" &&
+          !newBlock.querySelector("img, table, iframe, video, br"))
       ) {
         newBlock.innerHTML = "<br>";
       }
@@ -2132,6 +2146,26 @@ export default function ReactEditorKit(props) {
   toolbar = show_final_options(toolbar, remove_from_toolbar, TOOLBAR_ITEMS);
   navbar = show_final_options(navbar, remove_from_navbar, NAVBAR_ITEMS);
 
+  if (!isSpellCheckEnabled) {
+    toolbar = toolbar.filter((item) =>
+      typeof item === "string"
+        ? item !== "spellcheck"
+        : item?.name !== "spellcheck",
+    );
+    toolbar = toolbar.filter((item, index) => {
+      return item !== "|" || index === 0 || toolbar[index - 1] !== "|";
+    });
+
+    navbar = navbar.filter((item) =>
+      typeof item === "string"
+        ? item !== "spellcheck"
+        : item?.name !== "spellcheck",
+    );
+    navbar = navbar.filter((item, index) => {
+      return item !== "|" || index === 0 || navbar[index - 1] !== "|";
+    });
+  }
+
   useEffect(() => {
     if (!init) {
       if (editorRef.current && value) {
@@ -2140,7 +2174,9 @@ export default function ReactEditorKit(props) {
         setInit(true);
         // Update placeholder after setting initial content
         setTimeout(() => handlePlaceholder(), 0);
-        setTimeout(() => triggerSpellCheck(300), 300);
+        if (isSpellCheckEnabled && isSpellCheckActive) {
+          setTimeout(() => triggerSpellCheck(300), 300);
+        }
       }
     }
 
@@ -2510,8 +2546,6 @@ export default function ReactEditorKit(props) {
   //   }
   // }, [apiKey]);
 
-
-
   return (
     <div id="react-editor-wrapper">
       <div
@@ -2580,6 +2614,7 @@ export default function ReactEditorKit(props) {
                           }
                         }}
                         isSpellCheckActive={isSpellCheckActive}
+                        isSpellCheckEnabled={isSpellCheckEnabled}
                         item={item}
                         isPlaceholder={isPlaceholder}
                         placeholder={placeholder}
@@ -3086,7 +3121,7 @@ export default function ReactEditorKit(props) {
                       {item?.icon ? item.icon : <FindReplaceIcon />}
                     </button>
                   )}
-                  {is_spellcheck && (
+                  {is_spellcheck && isSpellCheckEnabled && (
                     <button
                       type="button"
                       onClick={() => {
@@ -3272,7 +3307,9 @@ export default function ReactEditorKit(props) {
             contentEditable={!isDisable}
             ref={editorRef}
             onPaste={onPaste}
-            spellCheck="true"
+            spellCheck={
+              isSpellCheckEnabled && isSpellCheckActive ? "true" : "false"
+            }
             onInput={handleInput}
             onBlur={handleBlur}
             onClick={handleEditorClick}
@@ -3319,7 +3356,7 @@ export default function ReactEditorKit(props) {
               setIsOpenModel("cell_properties");
             }}
           />
-          {activeSpellError && (
+          {isSpellCheckEnabled && isSpellCheckActive && activeSpellError && (
             <SpellSuggestionPopup
               targetElement={activeSpellError.targetElement}
               word={activeSpellError.word}

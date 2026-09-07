@@ -17,6 +17,7 @@ export default function SelectFileOptions(props) {
     handleOpenFindReplace,
     toggleSpellCheck,
     isSpellCheckActive = true,
+    isSpellCheckEnabled = false,
     item,
     isPlaceholder,
     placeholder,
@@ -51,6 +52,12 @@ export default function SelectFileOptions(props) {
 
   if (!options) {
     options = VIEW_OPTIONS;
+  }
+
+  if (!isSpellCheckEnabled) {
+    options = options.filter(
+      (opt) => (typeof opt === "string" ? opt !== "spellcheck" : opt?.name !== "spellcheck")
+    );
   }
 
   if (remove_from_navbar?.length > 0) {
