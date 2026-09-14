@@ -20,6 +20,7 @@
   - [4. 🖼️ Media Management, Image Cropping & 8-Point Resizing](#4-️-media-management-image-cropping--8-point-resizing)
   - [5. 🛡️ Built-in Security & Safe Sandboxed Renderer](#5-️-built-in-security--safe-sandboxed-renderer)
   - [6. 🖱️ Context Menu (Right-Click Suite)](#6-️-context-menu-right-click-suite)
+  - [7. ✅ Checklist, Strikethrough, Emoji Picker & Word Count](#7--checklist-strikethrough-emoji-picker--word-count)
 - [📦 Installation](#-installation)
 - [🚀 Quick Start Guide](#-quick-start-guide)
 - [⚙️ Props & Configuration Reference](#️-props--configuration-reference)
@@ -146,6 +147,38 @@ Operates 100% client-side with zero network requests, zero API latency, and comp
 
 ---
 
+### 7. ✅ Checklist, Strikethrough, Emoji Picker & Word Count
+
+New editor tools for task lists, text decoration, emoji insertion, and live writing stats.
+
+- **Checklist (`checklist`)**: Insert an interactive todo list. Click the checkbox to mark an item done (checked state is preserved in HTML via `mlx-checklist-checked` / `data-checked="true"` and also renders in `<SafeSandboxedRenderer />`).
+- **Strikethrough (`strikethrough`)**: Toggle line-through formatting on the selected text from the toolbar or Format menu.
+- **Emoji Picker (`emoticons`)**: Searchable emoji dialog with categories (Smileys, Gestures, Hearts, Objects). Search by name or keyword (e.g. `smile`, `heart`, `fire`).
+- **Word / Character Count (`enable_word_count`)**: Live status bar under the canvas showing accurate word and character totals. List and checklist items are counted as separate blocks so items are not merged into one word.
+
+```jsx
+<ReactEditorKit
+  apiKey="your_api_key_here"
+  value={content}
+  onChange={setContent}
+  enable_word_count={true}
+  toolbar={[
+    "bold",
+    "italic",
+    "underline",
+    "strikethrough",
+    "|",
+    "orderedList",
+    "unorderedList",
+    "checklist",
+    "|",
+    "emoticons",
+  ]}
+/>
+```
+
+---
+
 ## 📦 Installation
 
 Install via npm, yarn, or pnpm:
@@ -212,6 +245,7 @@ Here is the complete, comprehensive list of all props accepted by `<ReactEditorK
 | `placeholder`         |                           `string`                            | `"Please Write Something..."` | Placeholder text displayed when the editor canvas is empty.                                                                                                                                       |
 | `height`              |                           `string`                            |           `"auto"`            | CSS height for the editor container (e.g. `"450px"`, `"70vh"`, `"100%"`).                                                                                                                         |
 | `enable_spell_check`  |                           `boolean`                           |            `false`            | Enables the in-memory offline spell checker, grammar morphology engine, red wavy underlines, and interactive typo suggestion popup.                                                               |
+| `enable_word_count`   |                           `boolean`                           |            `true`             | Shows a live **words / characters** status bar under the editor. Counts list and checklist items as separate blocks. Set to `false` to hide the status bar.                                       |
 | `toolbar`             |                   `Array<string \| object>`                   |        `TOOLBAR_ITEMS`        | Custom list of toolbar items, buttons, and separator dividers (`"\|"`).                                                                                                                           |
 | `navbar`              |                   `Array<string \| object>`                   |        `NAVBAR_ITEMS`         | Custom list of top menu navbar options (e.g., `["file", "view", "insert", "format"]`).                                                                                                            |
 | `remove_from_toolbar` |                          `string[]`                           |             `[]`              | Array of item names to exclude from the toolbar (e.g. `["video", "source_code"]`).                                                                                                                |
@@ -298,6 +332,7 @@ The default `TOOLBAR_ITEMS` array includes:
   "bold",
   "italic",
   "underline",
+  "strikethrough",
   "superscript",
   "subscript",
   "|",
@@ -308,6 +343,7 @@ The default `TOOLBAR_ITEMS` array includes:
   "|",
   "orderedList",
   "unorderedList",
+  "checklist",
   "|",
   "removeFormat",
   "|",
@@ -331,6 +367,7 @@ The default `TOOLBAR_ITEMS` array includes:
   "source_code",
   "full_screen",
   "special_character",
+  "emoticons",
   "horizontal_line",
 ];
 ```
@@ -362,8 +399,8 @@ The default `NAVBAR_ITEMS` array includes:
 
 - **`file` menu options**: `new_document`, `preview`, `print`
 - **`view` menu options**: `source_code`, `full_screen`, `find_replace`, `spellcheck`
-- **`insert` menu options**: `table`, `image`, `link`, `video`, `hr_line`, `special_char`
-- **`format` menu options**: `bold`, `italic`, `underline`, `superscript`, `subscript`, `font`, `font_size`, `alignment`
+- **`insert` menu options**: `table`, `image`, `link`, `video`, `hr_line`, `special_char`, `checklist`, `emoticons`
+- **`format` menu options**: `bold`, `italic`, `underline`, `strikethrough`, `superscript`, `subscript`, `font`, `font_size`, `alignment`
 
 ### Excluding Tools
 

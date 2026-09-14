@@ -10,6 +10,7 @@ export const TOOLBAR_ITEMS = [
   "bold",
   "italic",
   "underline",
+  "strikethrough",
   "superscript",
   "subscript",
   "|",
@@ -24,6 +25,7 @@ export const TOOLBAR_ITEMS = [
   "|",
   "orderedList",
   "unorderedList",
+  "checklist",
   "|",
   "removeFormat",
   "|",
@@ -47,6 +49,7 @@ export const TOOLBAR_ITEMS = [
   "source_code",
   "full_screen",
   "special_character",
+  "emoticons",
   "horizontal_line",
 ];
 
@@ -73,6 +76,7 @@ export const FORMAT_OPTIONS = [
   "bold",
   "italic",
   "underline",
+  "strikethrough",
   "superscript",
   "subscript",
   "font",
@@ -87,6 +91,8 @@ export const INSER_OPTIONS = [
   "video",
   "hr_line",
   "special_char",
+  "checklist",
+  "emoticons",
 ];
 
 export const FILE_OPTIONS = ["new_document", "preview", "print"];

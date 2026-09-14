@@ -9,6 +9,7 @@ import {
   SubscriptIcon,
   SuperscriptIcon,
   UnderlineIcon,
+  StrikeThroughIcon,
 } from ".";
 import SelectFamily from "./SelectFamily";
 import SelectFontSize from "./SelectFontSize";
@@ -87,6 +88,8 @@ export default function SelectFileOptions(props) {
             let is_italic = option === "italic" || option.name === "italic";
             let is_underline =
               option === "underline" || option.name === "underline";
+            let is_strikethrough =
+              option === "strikethrough" || option.name === "strikethrough";
             let is_superscript =
               option === "superscript" || option.name === "superscript";
             let is_subscript =
@@ -133,6 +136,20 @@ export default function SelectFileOptions(props) {
                   >
                     {option?.icon ? option.icon : <UnderlineIcon />}
                     <span>{option?.title ? option.title : "Underline"}</span>
+                  </button>
+                )}
+                {is_strikethrough && (
+                  <button
+                    type="button"
+                    className={`${Styles.selectInsert} ${
+                      isDisable ? Styles.disabledButton : ""
+                    }`}
+                    onClick={(e) => handleClick(e, "strikeThrough", option)}
+                  >
+                    {option?.icon ? option.icon : <StrikeThroughIcon />}
+                    <span>
+                      {option?.title ? option.title : "Strikethrough"}
+                    </span>
                   </button>
                 )}
                 {is_superscript && (

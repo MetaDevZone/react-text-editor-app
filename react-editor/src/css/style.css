@@ -72,4 +72,62 @@
   display: block;
 }
 
+ul.mlx-checklist {
+  list-style: none !important;
+  padding-left: 2px;
+  margin: 0.65em 0;
+}
+
+ul.mlx-checklist > li {
+  position: relative;
+  padding: 3px 6px 3px 28px;
+  margin: 2px 0;
+  min-height: 24px;
+  line-height: 1.55;
+  list-style: none !important;
+  border-radius: 6px;
+}
+
+ul.mlx-checklist > li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid #9ca3af;
+  border-radius: 4px;
+  background: #fff;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-block;
+  text-decoration: none !important;
+  box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.02);
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+ul.mlx-checklist > li:hover::before {
+  border-color: #2563eb;
+}
+
+ul.mlx-checklist > li.mlx-checklist-checked,
+ul.mlx-checklist > li[data-checked="true"] {
+  color: #6b7280;
+  text-decoration: line-through;
+  text-decoration-color: #9ca3af;
+}
+
+ul.mlx-checklist > li.mlx-checklist-checked::before,
+ul.mlx-checklist > li[data-checked="true"]::before {
+  background: #2563eb;
+  border-color: #2563eb;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23ffffff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' d='M3.6 8.3 L6.6 11.2 L12.4 4.7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px 12px;
+  box-shadow: none;
+  text-decoration: none !important;
+}
+
 

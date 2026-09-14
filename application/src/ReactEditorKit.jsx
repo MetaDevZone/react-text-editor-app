@@ -31,7 +31,12 @@ import {
   VideoIcon,
   FindReplaceIcon,
   SpellCheckIcon,
+  StrikeThroughIcon,
+  EmojiIcon,
 } from "./components";
+import EmojiPicker from "./components/EmojiPicker";
+import ChecklistButton from "./components/ChecklistButton";
+import EditorStatusBar from "./components/EditorStatusBar";
 import FindReplaceModal from "./components/FindReplaceModal";
 import SpellSuggestionPopup from "./components/SpellSuggestionPopup";
 import {
@@ -83,6 +88,13 @@ import {
 } from "./utils/tableUtils";
 import { initTableResizer } from "./utils/tableResizer";
 import { sanitizeDangerousScripts } from "./security/ScriptSanitizer";
+import {
+  CHECKLIST_CLASS,
+  CHECKLIST_CONTENT_STYLES,
+  isClickOnChecklistBox,
+  toggleChecklist,
+  toggleChecklistItem,
+} from "./utils/checklistUtils";
 
 import "react-image-crop/dist/ReactCrop.css";
 import { CheckAccessDataApi } from "./DAL/CheckAcces";
@@ -147,9 +159,11 @@ export default function ReactEditorKit(props) {
     height,
 
     enable_spell_check = false,
+    enable_word_count = true,
     ...others
   } = props;
   const isSpellCheckEnabled = Boolean(enable_spell_check);
+  const isWordCountEnabled = Boolean(enable_word_count);
   const editorRef = useRef(null);
   const [viewSource, setViewSource] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -425,7 +439,9 @@ export default function ReactEditorKit(props) {
 
     // If table or media exists, editor is NOT empty
     if (
-      temp.querySelector("table, img, iframe, video, audio, hr, button, input")
+      temp.querySelector(
+        "table, img, iframe, video, audio, hr, button, input, ul.mlx-checklist",
+      )
     ) {
       return { isEmpty: false };
     }
@@ -478,6 +494,22 @@ export default function ReactEditorKit(props) {
   const handleEditorClick = (e) => {
     if (e.target && e.target.tagName === "BUTTON") {
       e.preventDefault();
+    }
+    const editor = editorRef?.current;
+    if (editor && !isDisable) {
+      const checklistItem = e.target.closest?.("ul.mlx-checklist > li");
+      if (
+        checklistItem &&
+        editor.contains(checklistItem) &&
+        isClickOnChecklistBox(e, checklistItem)
+      ) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleChecklistItem(checklistItem);
+        handleInput();
+        setActiveSpellError(null);
+        return;
+      }
     }
     const spellErrorSpan =
       isSpellCheckEnabled && isSpellCheckActive
@@ -1046,6 +1078,9 @@ export default function ReactEditorKit(props) {
               const nextList = document.createElement(
                 listParent.tagName.toLowerCase(),
               );
+              if (listParent.classList.contains(CHECKLIST_CLASS)) {
+                nextList.className = CHECKLIST_CLASS;
+              }
               nextLIs.forEach((li) => nextList.appendChild(li));
               p.parentNode.insertBefore(nextList, p.nextSibling);
             }
@@ -1301,6 +1336,16 @@ export default function ReactEditorKit(props) {
     }
     handleFocusEditor();
     document.execCommand("insertHorizontalRule");
+  };
+
+  const handleToggleChecklist = () => {
+    if (isDisable || !editorRef.current) {
+      return;
+    }
+    handleFocusEditor();
+    editorRef.current.focus();
+    toggleChecklist(editorRef.current);
+    handleInput();
   };
 
   const handleFocusEditor = () => {
@@ -1591,7 +1636,9 @@ export default function ReactEditorKit(props) {
     const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
 
     try {
-      iframeDoc.write(data);
+      iframeDoc.write(
+        `<style>${CHECKLIST_CONTENT_STYLES}</style>${data || ""}`,
+      );
       iframeDoc.close();
       iframe.contentWindow.print();
     } catch (error) {
@@ -1612,8 +1659,7 @@ export default function ReactEditorKit(props) {
       document.execCommand("insertHTML", false, char);
       setTargetElement(null);
       setIsOpenModel("");
-      // Update placeholder after character insertion
-      handlePlaceholder();
+      handleInput();
     }
   };
 
@@ -1992,7 +2038,7 @@ export default function ReactEditorKit(props) {
       editor.innerHTML.trim() !== "<br>" &&
       editor.innerHTML.trim() !== "<p><br></p>";
     const hasTableOrMedia = Boolean(
-      editor.querySelector("table, img, iframe, video"),
+      editor.querySelector("table, img, iframe, video, ul.mlx-checklist"),
     );
 
     const hasContent = hasTextContent || hasHTMLContent || hasTableOrMedia;
@@ -2032,6 +2078,17 @@ export default function ReactEditorKit(props) {
       }
     }
   };
+
+  useEffect(() => {
+    const styleId = "mlx-checklist-styles";
+    let styleEl = document.getElementById(styleId);
+    if (!styleEl) {
+      styleEl = document.createElement("style");
+      styleEl.id = styleId;
+      document.head.appendChild(styleEl);
+    }
+    styleEl.textContent = CHECKLIST_CONTENT_STYLES;
+  }, []);
 
   useEffect(() => {
     const handleFullScreenChange = () => {
@@ -2095,6 +2152,11 @@ export default function ReactEditorKit(props) {
       return {
         component: <SpecialChars handleCharSelect={handleCharSelect} />,
         title: "Insert Special Characters",
+      };
+    } else if (isOpenModel === "emoticons") {
+      return {
+        component: <EmojiPicker handleEmojiSelect={handleCharSelect} />,
+        title: "Insert Emoji",
       };
     } else if (isOpenModel === "table_properties") {
       return {
@@ -2508,7 +2570,7 @@ export default function ReactEditorKit(props) {
       ? {
           height: `calc(100vh - ${
             document.getElementById("action-components").offsetHeight
-          }px - 22px)`,
+          }px - 54px)`,
         }
       : {};
   const CheckAccess = async (apiKey) => {
@@ -2627,6 +2689,7 @@ export default function ReactEditorKit(props) {
                       <SelectInsert
                         onSelectOption={handleOpenModel}
                         handleInsertHR={handleInsertHRClick}
+                        handleToggleChecklist={handleToggleChecklist}
                         item={item}
                         remove_from_navbar={remove_from_navbar}
                         isDisable={isDisable}
@@ -2810,6 +2873,8 @@ export default function ReactEditorKit(props) {
               let is_italic = item === "italic" || item.name === "italic";
               let is_underline =
                 item === "underline" || item.name === "underline";
+              let is_strikethrough =
+                item === "strikethrough" || item.name === "strikethrough";
               let is_superscript =
                 item === "superscript" || item.name === "superscript";
               let is_subscript =
@@ -2830,6 +2895,8 @@ export default function ReactEditorKit(props) {
                 item === "orderedList" || item.name === "orderedList";
               let is_unorderedList =
                 item === "unorderedList" || item.name === "unorderedList";
+              let is_checklist =
+                item === "checklist" || item.name === "checklist";
               let is_removeFormat =
                 item === "removeFormat" || item.name === "removeFormat";
               let is_textColor =
@@ -2866,6 +2933,8 @@ export default function ReactEditorKit(props) {
               let is_special_char =
                 item === "special_character" ||
                 item.name === "special_character";
+              let is_emoticons =
+                item === "emoticons" || item.name === "emoticons";
 
               return (
                 <div key={`key${index}`}>
@@ -2935,6 +3004,16 @@ export default function ReactEditorKit(props) {
                       name="underline"
                       icon={<UnderlineIcon />}
                       title="Underline"
+                      item={item}
+                      isDisable={isDisable}
+                    />
+                  )}
+                  {is_strikethrough && (
+                    <ButtonFunction
+                      editorRef={editorRef}
+                      name="strikeThrough"
+                      icon={<StrikeThroughIcon />}
+                      title="Strikethrough"
                       item={item}
                       isDisable={isDisable}
                     />
@@ -3044,6 +3123,14 @@ export default function ReactEditorKit(props) {
                       title="Insert/Remove Bulleted List"
                       item={item}
                       isDisable={isDisable}
+                    />
+                  )}
+                  {is_checklist && (
+                    <ChecklistButton
+                      editorRef={editorRef}
+                      item={item}
+                      isDisable={isDisable}
+                      onToggle={handleToggleChecklist}
                     />
                   )}
                   {is_removeFormat && (
@@ -3282,6 +3369,19 @@ export default function ReactEditorKit(props) {
                       </button>
                     </div>
                   )}
+                  {is_emoticons && (
+                    <div className={Styles.increaseIconSize}>
+                      <button
+                        type="button"
+                        onClick={(e) => handleOpenModel(e, "emoticons")}
+                        title={item?.title || "Emoji"}
+                        className={` ${isDisable ? Styles.disabledButton : ""}`}
+                        disabled={isDisable}
+                      >
+                        {item?.icon ? item.icon : <EmojiIcon />}
+                      </button>
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -3318,6 +3418,7 @@ export default function ReactEditorKit(props) {
             // id="editable"
             style={{ ...style, ...dynamicStyle }}
           ></div>
+          {isWordCountEnabled && <EditorStatusBar html={value} />}
           <TableHoverToolbar
             editorRef={editorRef}
             isDisable={isDisable}
@@ -3398,6 +3499,9 @@ export default function ReactEditorKit(props) {
           isOpen={isOpenModel}
           onClose={handleCloseModel}
           title={model_component()?.title}
+          className={
+            isOpenModel === "emoticons" ? Styles.emojiModal : undefined
+          }
         >
           {model_component()?.component}
         </Modal>

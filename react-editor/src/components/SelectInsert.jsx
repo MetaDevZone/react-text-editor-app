@@ -6,6 +6,8 @@ import {
   SpecialCharIcon,
   TableIcon,
   VideoIcon,
+  ChecklistIcon,
+  EmojiIcon,
 } from ".";
 import { INSER_OPTIONS, generateRandomID } from "./constant";
 import Styles from "../css/style.module.css";
@@ -16,6 +18,7 @@ export default function SelectFileOptions(props) {
   const {
     onSelectOption,
     handleInsertHR,
+    handleToggleChecklist,
     item,
     remove_from_navbar,
     isDisable,
@@ -61,6 +64,8 @@ export default function SelectFileOptions(props) {
     setShowTableGrid(false);
     if (type === "hr_line") {
       handleInsertHR(e);
+    } else if (type === "checklist") {
+      handleToggleChecklist?.();
     } else {
       onSelectOption(e, type);
     }
@@ -97,6 +102,10 @@ export default function SelectFileOptions(props) {
             let is_hr_line = option === "hr_line" || option.name === "hr_line";
             let is_special_char =
               option === "special_char" || option.name === "special_char";
+            let is_checklist =
+              option === "checklist" || option.name === "checklist";
+            let is_emoticons =
+              option === "emoticons" || option.name === "emoticons";
 
             return (
               <div key={`key${index}`}>
@@ -171,6 +180,29 @@ export default function SelectFileOptions(props) {
                   >
                     {option?.icon ? option.icon : <SpecialCharIcon />}
                     <span>{option?.title ? option.title : "Special Char"}</span>
+                  </div>
+                )}
+                {is_checklist && (
+                  <div
+                    className={`${Styles.selectInsert} ${
+                      isDisable ? Styles.disabledButton : ""
+                    }`}
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={(e) => handleSelect(e, "checklist")}
+                  >
+                    {option?.icon ? option.icon : <ChecklistIcon />}
+                    <span>{option?.title ? option.title : "Checklist"}</span>
+                  </div>
+                )}
+                {is_emoticons && (
+                  <div
+                    className={`${Styles.selectInsert} ${
+                      isDisable ? Styles.disabledButton : ""
+                    }`}
+                    onClick={(e) => handleSelect(e, "emoticons")}
+                  >
+                    {option?.icon ? option.icon : <EmojiIcon />}
+                    <span>{option?.title ? option.title : "Emoji"}</span>
                   </div>
                 )}
               </div>

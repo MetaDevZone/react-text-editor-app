@@ -48,6 +48,37 @@ const ButtonFunction = (props) => {
       }
 
       if (selectedLIs.length > 0) {
+        const checklistParents = Array.from(
+          new Set(
+            selectedLIs
+              .map((li) => li.parentNode)
+              .filter(
+                (parent) =>
+                  parent && parent.classList?.contains("mlx-checklist"),
+              ),
+          ),
+        );
+
+        if (checklistParents.length > 0) {
+          checklistParents.forEach((parentList) => {
+            if (!parentList || !parentList.parentNode) return;
+            parentList.classList.remove("mlx-checklist");
+            Array.from(parentList.children).forEach((childLi) => {
+              childLi.classList?.remove("mlx-checklist-checked");
+              childLi.removeAttribute?.("data-checked");
+            });
+            if (parentList.tagName !== targetTag) {
+              const newList = document.createElement(targetTag.toLowerCase());
+              while (parentList.firstChild) {
+                newList.appendChild(parentList.firstChild);
+              }
+              parentList.parentNode.replaceChild(newList, parentList);
+            }
+          });
+          editor.dispatchEvent(new Event("input", { bubbles: true }));
+          return;
+        }
+
         // Check if all or any selected LIs belong to the target list type (e.g. OL)
         const sameTypeLIs = selectedLIs.filter(
           (li) => li.parentNode && li.parentNode.tagName === targetTag,

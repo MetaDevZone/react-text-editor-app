@@ -46,4 +46,7 @@ export { default as CropIcon } from "./SVGImages/CropIcon";
 export { default as TableIcon } from "./SVGImages/TableIcon";
 export { default as FindReplaceIcon } from "./SVGImages/FindReplaceIcon";
 export { default as SpellCheckIcon } from "./SVGImages/SpellCheckIcon";
+export { default as StrikeThroughIcon } from "./SVGImages/StrikeThroughIcon";
+export { default as ChecklistIcon } from "./SVGImages/ChecklistIcon";
+export { default as EmojiIcon } from "./SVGImages/EmojiIcon";
 export { default as loader_img } from "./SVGImages/loader.gif";

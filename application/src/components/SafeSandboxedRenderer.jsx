@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { sanitizeDangerousScripts } from "../security/ScriptSanitizer";
+import { CHECKLIST_CONTENT_STYLES } from "../utils/checklistUtils";
 
 export default function SafeSandboxedRenderer({
   htmlContent = "",
@@ -45,6 +46,7 @@ export default function SafeSandboxedRenderer({
               cursor: pointer;
               font-family: inherit;
             }
+            ${CHECKLIST_CONTENT_STYLES}
           </style>
         </head>
         <body>
