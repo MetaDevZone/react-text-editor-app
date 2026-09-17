@@ -140,6 +140,11 @@ const isValidURL = (str) => {
   }
 };
 
+const ACCESS_RETRY_DELAYS_MS = [
+  3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000,
+];
+const ACCESS_REQUEST_TIMEOUT_MS = 30000;
+
 export default function ReactEditorKit(props) {
   let {
     theme_config,
@@ -2573,39 +2578,86 @@ export default function ReactEditorKit(props) {
           }px - 54px)`,
         }
       : {};
-  const CheckAccess = async (apiKey) => {
-    try {
-      let postData = {
+  useEffect(() => {
+    if (!apiKey) {
+      setIsDisable(true);
+      setAllowPaste(true);
+      return;
+    }
+
+    let cancelled = false;
+    let timeoutId = null;
+    let waitResolve = null;
+
+    const wait = (ms) =>
+      new Promise((resolve) => {
+        waitResolve = resolve;
+        timeoutId = setTimeout(resolve, ms);
+      });
+
+    const fetchAccess = async (postData) => {
+      let requestTimeoutId = null;
+      try {
+        return await Promise.race([
+          CheckAccessDataApi(postData),
+          new Promise((_, reject) => {
+            requestTimeoutId = setTimeout(() => {
+              reject(new Error("timeout"));
+            }, ACCESS_REQUEST_TIMEOUT_MS);
+            timeoutId = requestTimeoutId;
+          }),
+        ]);
+      } finally {
+        if (requestTimeoutId) clearTimeout(requestTimeoutId);
+      }
+    };
+
+    const CheckAccess = async () => {
+      const postData = {
         apiKey: apiKey,
         domain: getBaseDomain(),
         // domain: "localhost",
       };
-      const result = await CheckAccessDataApi(postData);
-      if (result.success) {
-        if (result.access == "full") {
-          setIsDisable(false);
-          setAllowPaste(true);
-        } else {
+
+      for (
+        let attempt = 0;
+        attempt <= ACCESS_RETRY_DELAYS_MS.length;
+        attempt += 1
+      ) {
+        if (cancelled) return;
+        try {
+          const result = await fetchAccess(postData);
+          if (cancelled) return;
+
+          if (result?.success && result.access === "full") {
+            setIsDisable(false);
+            setAllowPaste(true);
+            return;
+          }
+
           setIsDisable(true);
           setAllowPaste(true);
+          return;
+        } catch (error) {
+          // No HTTP response (timeout / network). Retry after delay.
+          if (cancelled) return;
+          setIsDisable(true);
+          setAllowPaste(true);
+          if (attempt < ACCESS_RETRY_DELAYS_MS.length) {
+            await wait(ACCESS_RETRY_DELAYS_MS[attempt]);
+            continue;
+          }
         }
-      } else {
-        setIsDisable(true);
-        setAllowPaste(true);
       }
-    } catch (error) {
-      setIsDisable(true);
-      setAllowPaste(true);
-    }
-  };
+    };
 
-  useEffect(() => {
-    if (apiKey) {
-      CheckAccess(apiKey);
-    } else {
-      setIsDisable(true);
-      setAllowPaste(true);
-    }
+    CheckAccess();
+
+    return () => {
+      cancelled = true;
+      if (timeoutId) clearTimeout(timeoutId);
+      if (waitResolve) waitResolve();
+    };
   }, [apiKey]);
 
   return (
