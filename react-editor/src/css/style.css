@@ -31,10 +31,26 @@
   cursor: se-resize;
 }
 
-/* Wrapper for iframe and overlay */
+/* Wrapper for iframe and overlay.
+   Must be block + full width so Vimeo-style padding-% responsive
+   embeds get a real containing width (inline-block collapses to 0). */
 .iframe-wrapper {
   position: relative;
-  display: inline-block;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 0.5em 0;
+  box-sizing: border-box;
+}
+
+.iframe-wrapper iframe,
+.iframe-wrapper video {
+  max-width: 100%;
+}
+
+/* Direct-child absolute iframe (responsive embeds lifted onto wrapper) */
+.iframe-wrapper > iframe {
+  max-width: none;
 }
 
 /* Overlay shown on hover */

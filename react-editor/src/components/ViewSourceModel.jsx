@@ -21,7 +21,7 @@ export default function ViewSourceModal(props) {
       >
         <textarea
           className={Styles.wysiwygEditorSource}
-          value={sourceCode}
+          value={sourceCode ?? ""}
           onChange={(e) => setSourceCode(e.target.value)}
         />
         <div className={Styles.reactEditorTextEnd}>

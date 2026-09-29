@@ -145,6 +145,41 @@ const ACCESS_RETRY_DELAYS_MS = [
 ];
 const ACCESS_REQUEST_TIMEOUT_MS = 30000;
 
+const normalizeEmbedHTML = (html) => {
+  if (!html || typeof html !== "string") return "";
+  const temp = document.createElement("div");
+  temp.innerHTML = html;
+  temp.querySelectorAll("script").forEach((el) => el.remove());
+  return temp.innerHTML.trim();
+};
+
+// base64 is safer than encodeURIComponent in HTML attrs (padding % breaks decode)
+const encodeEmbedPayload = (html) => {
+  if (!html) return "";
+  try {
+    return btoa(unescape(encodeURIComponent(html)));
+  } catch (e) {
+    try {
+      return encodeURIComponent(html);
+    } catch (e2) {
+      return "";
+    }
+  }
+};
+
+const decodeEmbedPayload = (stored) => {
+  if (!stored) return "";
+  try {
+    return decodeURIComponent(escape(atob(stored)));
+  } catch (e) {
+    try {
+      return decodeURIComponent(stored);
+    } catch (e2) {
+      return "";
+    }
+  }
+};
+
 export default function ReactEditorKit(props) {
   let {
     theme_config,
@@ -174,7 +209,7 @@ export default function ReactEditorKit(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [openPreview, setOpenPreview] = useState(false);
   const [init, setInit] = useState(false);
-  const [sourceCode, setSourceCode] = useState(null);
+  const [sourceCode, setSourceCode] = useState("");
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [isOpenModel, setIsOpenModel] = useState("");
@@ -246,6 +281,48 @@ export default function ReactEditorKit(props) {
     const tempDiv = document.createElement("div");
     tempDiv.innerHTML = sanitizedHtml;
 
+    // 0. Export original embed snippets (not editor chrome / broken <br> shells)
+    tempDiv.querySelectorAll(".iframe-wrapper").forEach((wrapper) => {
+      let original = decodeEmbedPayload(
+        wrapper.getAttribute("data-mtl-embed-html"),
+      );
+      if (!original) {
+        // Fallback: keep live iframe/video markup if storage is missing
+        const media = wrapper.querySelector("iframe, video");
+        if (media) {
+          const pad = media.parentElement;
+          if (
+            pad &&
+            pad !== wrapper &&
+            pad.tagName === "DIV" &&
+            /padding\s*:/i.test(pad.getAttribute("style") || "")
+          ) {
+            original = pad.outerHTML;
+          } else {
+            original = media.outerHTML;
+          }
+        }
+      }
+      if (!original) {
+        // Last resort: do not delete silently — keep whatever media markup remains
+        const media = wrapper.querySelector("iframe, video");
+        if (media) {
+          original = media.outerHTML;
+        } else {
+          return; // leave wrapper; better than wiping content
+        }
+      }
+      const holder = document.createElement("div");
+      holder.innerHTML = original;
+      if (!holder.firstChild) return;
+      const parent = wrapper.parentNode;
+      if (!parent) return;
+      while (holder.firstChild) {
+        parent.insertBefore(holder.firstChild, wrapper);
+      }
+      wrapper.remove();
+    });
+
     // 1. Remove spellcheck spans (unwrap them so pure text remains)
     tempDiv.querySelectorAll("span.mlx-spell-error").forEach((span) => {
       const parent = span.parentNode;
@@ -309,13 +386,24 @@ export default function ReactEditorKit(props) {
       }
     });
 
+    const resultHtml = tempDiv.innerHTML;
+
+    // Never treat media / embed-only documents as empty
+    if (
+      tempDiv.querySelector(
+        "iframe, video, img, table, audio, hr, .iframe-wrapper",
+      )
+    ) {
+      return resultHtml;
+    }
+
     // 6. Check if editor is truly empty
-    const emptyCheck = isEditorEmpty(tempDiv.innerHTML);
+    const emptyCheck = isEditorEmpty(resultHtml);
     if (emptyCheck.isEmpty) {
       return "";
     }
 
-    return tempDiv.innerHTML;
+    return resultHtml;
   };
 
   const handleInput = () => {
@@ -502,6 +590,20 @@ export default function ReactEditorKit(props) {
     }
     const editor = editorRef?.current;
     if (editor && !isDisable) {
+      // Click on / after non-editable embed → select it + keep a typable paragraph
+      const embedIsland = e.target.closest?.(".iframe-wrapper");
+      if (embedIsland && editor.contains(embedIsland)) {
+        // Don't steal clicks from Settings button
+        if (!e.target.closest?.(".iframe-settings-btn")) {
+          setSelectedEvent(embedIsland);
+          ensureEditableTrailer(editor, embedIsland, true);
+        }
+      } else if (e.target === editor) {
+        // Clicked empty editor chrome below content
+        setSelectedEvent(null);
+        ensureEditableTrailer(editor, editor.lastElementChild, true);
+      }
+
       const checklistItem = e.target.closest?.("ul.mlx-checklist > li");
       if (
         checklistItem &&
@@ -546,6 +648,52 @@ export default function ReactEditorKit(props) {
     const selection = window.getSelection();
     if (!selection || !selection.rangeCount || !editor) return;
     const range = selection.getRangeAt(0);
+
+    // If caret is stuck on a non-editable embed
+    const anchorEl =
+      range.startContainer.nodeType === 1
+        ? range.startContainer
+        : range.startContainer.parentElement;
+    const stuckInEmbed = anchorEl?.closest?.(".iframe-wrapper");
+    if (stuckInEmbed && editor.contains(stuckInEmbed)) {
+      // Backspace / Delete on the embed removes it
+      if (event.key === "Backspace" || event.key === "Delete") {
+        event.preventDefault();
+        const trailer = ensureEditableTrailer(editor, stuckInEmbed, false);
+        stuckInEmbed.remove();
+        if (trailer && editor.contains(trailer)) {
+          placeCaretIn(trailer);
+        } else {
+          ensureEditableTrailer(editor, null, true);
+        }
+        setSelectedEvent(null);
+        handleInput();
+        return;
+      }
+      if (
+        event.key.length === 1 &&
+        !event.ctrlKey &&
+        !event.metaKey &&
+        !event.altKey
+      ) {
+        event.preventDefault();
+        const trailer = ensureEditableTrailer(editor, stuckInEmbed, true);
+        if (trailer) {
+          document.execCommand("insertText", false, event.key);
+          handleInput();
+        }
+        return;
+      }
+      if (
+        event.key === "Enter" ||
+        event.key === "ArrowDown" ||
+        event.key === "ArrowRight"
+      ) {
+        event.preventDefault();
+        ensureEditableTrailer(editor, stuckInEmbed, true);
+        return;
+      }
+    }
 
     // Table cell handling for Tab key navigation
     if (event.key === "Tab") {
@@ -592,8 +740,41 @@ export default function ReactEditorKit(props) {
       }
     }
 
-    // Handle image deletion when Backspace or Delete is pressed
+    // Handle image / video-embed deletion when Backspace or Delete is pressed
     if (event.key === "Backspace" || event.key === "Delete") {
+      const isMediaNode = (node) => {
+        if (!node || node.nodeType !== Node.ELEMENT_NODE) return false;
+        return (
+          node.nodeName === "IMG" ||
+          node.nodeName === "IFRAME" ||
+          node.nodeName === "VIDEO" ||
+          node.classList.contains("resizeImageWrapper") ||
+          node.classList.contains("iframe-wrapper") ||
+          !!node.querySelector?.(
+            ":scope > img, :scope > iframe, :scope > video",
+          )
+        );
+      };
+
+      const removeMediaNode = (node) => {
+        event.preventDefault();
+        const parent = node.parentNode;
+        const nextFocus =
+          node.nextElementSibling || node.previousElementSibling || parent;
+        node.remove();
+        setSelectedEvent(null);
+        if (nextFocus && editor.contains(nextFocus)) {
+          if (nextFocus.classList?.contains("iframe-wrapper")) {
+            ensureEditableTrailer(editor, nextFocus, true);
+          } else {
+            placeCaretIn(nextFocus);
+          }
+        } else {
+          ensureEditableTrailer(editor, null, true);
+        }
+        handleInput();
+      };
+
       // 1. If an image is currently clicked / active in resize wrapper, delete it
       const activeWrapper = editor.querySelector(".resizeImageWrapper");
       if (activeWrapper) {
@@ -604,80 +785,129 @@ export default function ReactEditorKit(props) {
           activeWrapper === range.startContainer;
 
         if (isWrapperSelected || activeWrapper.querySelector(".resizer")) {
-          event.preventDefault();
-          const parentBlock = activeWrapper.parentNode;
-          activeWrapper.remove();
-          setSelectedEvent(null);
-
-          if (parentBlock) {
-            if (parentBlock.childNodes.length === 0) {
-              parentBlock.appendChild(document.createElement("br"));
-            }
-            const newRange = document.createRange();
-            newRange.selectNodeContents(parentBlock);
-            newRange.collapse(true);
-            selection.removeAllRanges();
-            selection.addRange(newRange);
-          }
-
-          handleInput();
+          removeMediaNode(activeWrapper);
           return;
         }
       }
 
-      // 2. If node directly before caret is an image (Backspace)
+      // 2. If node directly before caret is media (Backspace)
       if (event.key === "Backspace" && range.collapsed) {
         let nodeBeforeCaret = null;
         if (range.startContainer.nodeType === Node.ELEMENT_NODE) {
           if (range.startOffset > 0) {
             nodeBeforeCaret =
               range.startContainer.childNodes[range.startOffset - 1];
+          } else if (range.startContainer !== editor) {
+            // At start of element — look at previous sibling of nearest block
+            let block = range.startContainer;
+            while (
+              block &&
+              block !== editor &&
+              block.parentNode !== editor
+            ) {
+              block = block.parentNode;
+            }
+            if (block && block.parentNode === editor) {
+              nodeBeforeCaret = block.previousSibling;
+            } else if (range.startContainer.parentNode === editor) {
+              nodeBeforeCaret = range.startContainer.previousSibling;
+            }
           }
         } else if (range.startContainer.nodeType === Node.TEXT_NODE) {
           if (range.startOffset === 0) {
             nodeBeforeCaret = range.startContainer.previousSibling;
+            if (!nodeBeforeCaret) {
+              let block = range.startContainer.parentNode;
+              while (
+                block &&
+                block !== editor &&
+                block.parentNode !== editor
+              ) {
+                block = block.parentNode;
+              }
+              if (block && block.parentNode === editor) {
+                // Only if caret is at very start of this block
+                const pre = document.createRange();
+                pre.selectNodeContents(block);
+                pre.setEnd(range.startContainer, range.startOffset);
+                if (pre.toString().length === 0) {
+                  nodeBeforeCaret = block.previousSibling;
+                }
+              }
+            }
           }
         }
 
-        if (
+        // Skip empty text nodes
+        while (
           nodeBeforeCaret &&
-          (nodeBeforeCaret.nodeName === "IMG" ||
-            (nodeBeforeCaret.nodeType === Node.ELEMENT_NODE &&
-              (nodeBeforeCaret.classList.contains("resizeImageWrapper") ||
-                nodeBeforeCaret.querySelector("img"))))
+          nodeBeforeCaret.nodeType === Node.TEXT_NODE &&
+          !(nodeBeforeCaret.textContent || "").trim()
         ) {
-          event.preventDefault();
-          nodeBeforeCaret.remove();
-          setSelectedEvent(null);
-          handleInput();
+          nodeBeforeCaret = nodeBeforeCaret.previousSibling;
+        }
+
+        if (isMediaNode(nodeBeforeCaret)) {
+          removeMediaNode(nodeBeforeCaret);
           return;
         }
       }
 
-      // 3. If node directly after caret is an image (Delete)
+      // 3. If node directly after caret is media (Delete)
       if (event.key === "Delete" && range.collapsed) {
         let nodeAfterCaret = null;
         if (range.startContainer.nodeType === Node.ELEMENT_NODE) {
           if (range.startOffset < range.startContainer.childNodes.length) {
             nodeAfterCaret = range.startContainer.childNodes[range.startOffset];
+          } else if (range.startContainer !== editor) {
+            let block = range.startContainer;
+            while (
+              block &&
+              block !== editor &&
+              block.parentNode !== editor
+            ) {
+              block = block.parentNode;
+            }
+            if (block && block.parentNode === editor) {
+              nodeAfterCaret = block.nextSibling;
+            } else if (range.startContainer.parentNode === editor) {
+              nodeAfterCaret = range.startContainer.nextSibling;
+            }
           }
         } else if (range.startContainer.nodeType === Node.TEXT_NODE) {
           if (range.startOffset === range.startContainer.nodeValue.length) {
             nodeAfterCaret = range.startContainer.nextSibling;
+            if (!nodeAfterCaret) {
+              let block = range.startContainer.parentNode;
+              while (
+                block &&
+                block !== editor &&
+                block.parentNode !== editor
+              ) {
+                block = block.parentNode;
+              }
+              if (block && block.parentNode === editor) {
+                const post = document.createRange();
+                post.selectNodeContents(block);
+                post.setStart(range.startContainer, range.startOffset);
+                if (post.toString().length === 0) {
+                  nodeAfterCaret = block.nextSibling;
+                }
+              }
+            }
           }
         }
 
-        if (
+        while (
           nodeAfterCaret &&
-          (nodeAfterCaret.nodeName === "IMG" ||
-            (nodeAfterCaret.nodeType === Node.ELEMENT_NODE &&
-              (nodeAfterCaret.classList.contains("resizeImageWrapper") ||
-                nodeAfterCaret.querySelector("img"))))
+          nodeAfterCaret.nodeType === Node.TEXT_NODE &&
+          !(nodeAfterCaret.textContent || "").trim()
         ) {
-          event.preventDefault();
-          nodeAfterCaret.remove();
-          setSelectedEvent(null);
-          handleInput();
+          nodeAfterCaret = nodeAfterCaret.nextSibling;
+        }
+
+        if (isMediaNode(nodeAfterCaret)) {
+          removeMediaNode(nodeAfterCaret);
           return;
         }
       }
@@ -698,7 +928,9 @@ export default function ReactEditorKit(props) {
 
         if (
           selText.length >= editorText.length &&
-          !editor.querySelector("table, img, iframe, video")
+          !editor.querySelector(
+            "table, img, iframe, video, .iframe-wrapper, .resizeImageWrapper",
+          )
         ) {
           event.preventDefault();
           editor.innerHTML = "<p><br></p>";
@@ -850,6 +1082,22 @@ export default function ReactEditorKit(props) {
 
         // If there's no text or characters before cursor in this block and no media
         if (preRange.toString().length === 0 && !hasMediaBefore) {
+          // Previous sibling is a video/embed island → remove it
+          const prevEl = currentBlock.previousElementSibling;
+          if (
+            prevEl &&
+            (prevEl.classList.contains("iframe-wrapper") ||
+              prevEl.nodeName === "IFRAME" ||
+              prevEl.nodeName === "VIDEO")
+          ) {
+            event.preventDefault();
+            prevEl.remove();
+            setSelectedEvent(null);
+            placeCaretIn(currentBlock);
+            handleInput();
+            return;
+          }
+
           event.preventDefault();
 
           // Helper to find the actual preceding leaf block in document order
@@ -1304,10 +1552,11 @@ export default function ReactEditorKit(props) {
       }
 
       editorRef.current.innerHTML = sanitizedHtml;
+      enhanceMediaEmbeds(editorRef.current);
       handlePlaceholder();
       setViewSource(false);
       if (onChange) {
-        onChange(sanitizedHtml);
+        onChange(getCleanEditorHTML(editorRef.current.innerHTML));
       }
     }
   };
@@ -1476,6 +1725,235 @@ export default function ReactEditorKit(props) {
     }
   };
 
+  const placeCaretIn = (node) => {
+    if (!node) return;
+    const selection = window.getSelection();
+    if (!selection) return;
+    const range = document.createRange();
+    range.selectNodeContents(node);
+    range.collapse(true);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  };
+
+  // After contentEditable=false embeds, browsers cannot place a caret — add a typable <p>
+  const ensureEditableTrailer = (editorNode, afterNode = null, focus = false) => {
+    if (!editorNode) return null;
+
+    const isEmptyPara = (el) =>
+      el &&
+      el.nodeType === 1 &&
+      /^(P|DIV|H[1-6])$/i.test(el.tagName) &&
+      el.contentEditable !== "false" &&
+      !el.classList?.contains("iframe-wrapper") &&
+      (el.textContent || "").replace(/\u00A0/g, "").trim() === "" &&
+      !el.querySelector("iframe, video, img, table, audio");
+
+    const createTrailer = () => {
+      const p = document.createElement("p");
+      p.appendChild(document.createElement("br"));
+      return p;
+    };
+
+    let trailer = null;
+
+    if (afterNode && editorNode.contains(afterNode)) {
+      let next = afterNode.nextSibling;
+      while (next && next.nodeType === 3 && !(next.textContent || "").trim()) {
+        next = next.nextSibling;
+      }
+      if (isEmptyPara(next)) {
+        trailer = next;
+      } else if (
+        next &&
+        next.nodeType === 1 &&
+        next.contentEditable !== "false" &&
+        !next.classList?.contains("iframe-wrapper")
+      ) {
+        trailer = next;
+      } else {
+        trailer = createTrailer();
+        if (afterNode.nextSibling) {
+          editorNode.insertBefore(trailer, afterNode.nextSibling);
+        } else {
+          editorNode.appendChild(trailer);
+        }
+      }
+    }
+
+    // Always keep a typable block at the end of the editor after any media
+    const lastEl = editorNode.lastElementChild;
+    if (
+      lastEl &&
+      (lastEl.classList?.contains("iframe-wrapper") ||
+        lastEl.contentEditable === "false" ||
+        /^(IFRAME|VIDEO|IMG|HR|TABLE)$/i.test(lastEl.tagName))
+    ) {
+      trailer = createTrailer();
+      editorNode.appendChild(trailer);
+    } else if (!lastEl) {
+      trailer = createTrailer();
+      editorNode.appendChild(trailer);
+    } else if (!trailer && isEmptyPara(lastEl)) {
+      trailer = lastEl;
+    }
+
+    if (focus && trailer) {
+      placeCaretIn(trailer);
+      try {
+        editorNode.focus({ preventScroll: true });
+      } catch (e) {
+        editorNode.focus();
+      }
+    }
+
+    return trailer;
+  };
+
+  // Strip scripts from provider embed snippets; keep iframe/video markup intact.
+  const openVideoSettingsForWrapper = (wrapperEl) => {
+    const mediaEl =
+      wrapperEl.querySelector("iframe") || wrapperEl.querySelector("video");
+    setTargetElement(mediaEl);
+    setTargetElementType(
+      wrapperEl.getAttribute("data-mtl-link-type") || "general",
+    );
+    setIsOpenModel("video");
+  };
+
+  // Replace media nodes inside an existing iframe-wrapper (keep overlay + settings).
+  const replaceWrapperMediaContent = (wrapper, mediaHTML) => {
+    const normalized = normalizeEmbedHTML(mediaHTML);
+    wrapper.setAttribute("data-mtl-embed-html", encodeEmbedPayload(normalized));
+
+    Array.from(wrapper.children).forEach((child) => {
+      if (
+        !child.classList.contains("iframe-overlay") &&
+        !child.classList.contains("iframe-settings-btn")
+      ) {
+        child.remove();
+      }
+    });
+
+    const temp = document.createElement("div");
+    temp.innerHTML = normalized;
+    const media = temp.querySelector("iframe, video");
+    if (!media) return;
+
+    const responsiveParent = media.parentElement;
+    if (
+      responsiveParent &&
+      responsiveParent !== temp &&
+      responsiveParent.tagName === "DIV" &&
+      /padding\s*:/i.test(responsiveParent.getAttribute("style") || "")
+    ) {
+      wrapper.setAttribute("style", responsiveParent.getAttribute("style"));
+      if (media.tagName === "IFRAME") {
+        media.style.position = "absolute";
+        media.style.top = "0";
+        media.style.left = "0";
+        media.style.width = "100%";
+        media.style.height = "100%";
+        media.style.border = "0";
+      }
+    } else {
+      wrapper.removeAttribute("style");
+    }
+    wrapper.appendChild(media);
+  };
+
+  // Wrap bare embeds / repair wrappers that lost their iframe (browser contenteditable).
+  const enhanceMediaEmbeds = (editorNode) => {
+    if (!editorNode) return;
+
+    // Repair existing wrappers that lost iframe/video
+    editorNode.querySelectorAll(".iframe-wrapper").forEach((wrapper) => {
+      wrapper.contentEditable = "false";
+      if (wrapper.querySelector("iframe, video")) return;
+
+      const stored = wrapper.getAttribute("data-mtl-embed-html");
+      const original = decodeEmbedPayload(stored);
+      if (!original) {
+        // Keep wrapper if we cannot restore — never silently delete embeds
+        return;
+      }
+      try {
+        const rebuilt = createIframeWrapperWithSettings(
+          original,
+          wrapper.getAttribute("data-mtl-link-type") || "embed",
+          openVideoSettingsForWrapper,
+        );
+        wrapper.replaceWith(rebuilt);
+      } catch (e) {
+        console.warn("Failed to repair embed wrapper", e);
+      }
+    });
+
+    // Wrap bare iframes / videos (e.g. after source-code save)
+    const bareMedia = Array.from(
+      editorNode.querySelectorAll("iframe, video"),
+    ).filter((el) => !el.closest(".iframe-wrapper"));
+
+    bareMedia.forEach((media) => {
+      let nodeToWrap = media;
+      const parent = media.parentElement;
+      if (
+        parent &&
+        parent !== editorNode &&
+        parent.tagName === "DIV" &&
+        !parent.classList.contains("iframe-wrapper") &&
+        /padding\s*:/i.test(parent.getAttribute("style") || "") &&
+        parent.querySelectorAll("iframe, video").length === 1
+      ) {
+        nodeToWrap = parent;
+      }
+
+      const embedHTML = nodeToWrap.outerHTML;
+      const rebuilt = createIframeWrapperWithSettings(
+        embedHTML,
+        "embed",
+        openVideoSettingsForWrapper,
+      );
+      nodeToWrap.replaceWith(rebuilt);
+    });
+
+    // Re-bind settings buttons (lost after innerHTML assignment)
+    editorNode.querySelectorAll(".iframe-wrapper").forEach((wrapper) => {
+      const btn = wrapper.querySelector(".iframe-settings-btn");
+      if (!btn || btn.dataset.mlxBound === "1") return;
+      btn.dataset.mlxBound = "1";
+      btn.type = "button";
+      btn.contentEditable = "false";
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        openVideoSettingsForWrapper(wrapper);
+      });
+    });
+
+    // Make sure user can type after non-editable embeds
+    ensureEditableTrailer(editorNode);
+  };
+
+  const notifyEditorContentChanged = () => {
+    const editorNode = editorRef.current;
+    if (!editorNode) return;
+    enhanceMediaEmbeds(editorNode);
+    const cleanContent = getCleanEditorHTML(editorNode.innerHTML);
+    // Do not wipe parent state if clean pipeline failed while editor still has media
+    if (cleanContent) {
+      editorNode.removeAttribute("data-mlx-editor-empty");
+      onChange?.(cleanContent);
+    } else if (
+      !editorNode.querySelector(
+        "iframe, video, img, table, .iframe-wrapper, audio",
+      )
+    ) {
+      onChange?.("");
+    }
+    handlePlaceholder();
+  };
+
   const handleMediaInsert = (data, targetElement) => {
     let { link, height, width, type, embed_code } = data;
     const editorNode = editorRef.current;
@@ -1486,12 +1964,13 @@ export default function ReactEditorKit(props) {
     const w = width || "640";
     const h = height || "360";
 
-    // 1. Check for raw <iframe> embed snippet
+    // 1. Check for raw <iframe> embed snippet (including responsive wrappers e.g. Vimeo)
     if (
       rawInput.trim().startsWith("<iframe") ||
       /<iframe[\s\S]*?>/i.test(rawInput)
     ) {
-      const srcMatch = rawInput.match(/src=["']([^"']+)["']/i);
+      const normalized = normalizeEmbedHTML(rawInput);
+      const srcMatch = normalized.match(/src=["']([^"']+)["']/i);
       if (srcMatch) {
         const srcUrl = srcMatch[1];
         const ytMatch = srcUrl.match(
@@ -1500,10 +1979,11 @@ export default function ReactEditorKit(props) {
         if (ytMatch) {
           iframeHTML = `<iframe width="${w}" height="${h}" src="https://www.youtube.com/embed/${ytMatch[1]}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
         } else {
-          iframeHTML = rawInput;
+          // Keep original embed structure (e.g. Vimeo padding wrapper + iframe)
+          iframeHTML = normalized;
         }
       } else {
-        iframeHTML = rawInput;
+        iframeHTML = normalized;
       }
     } else if (
       rawInput.match(/\.(mp4|mov|avi|wmv|webm|mkv|flv|m4v)(\?.*)?$/i)
@@ -1530,99 +2010,118 @@ export default function ReactEditorKit(props) {
           // 5. Generic URL
           iframeHTML = `<iframe width="${w}" height="${h}" src="${rawInput}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
         } else {
-          iframeHTML = rawInput;
+          iframeHTML = normalizeEmbedHTML(rawInput);
         }
       }
     }
 
     if (targetElement && editorNode && iframeHTML) {
       handleFocusEditor();
-      targetElement.parentNode.setAttribute("data-mtl-link-type", type);
-      targetElement.outerHTML = iframeHTML;
-      // Trigger change event after updating content
-      setTimeout(() => {
-        const tempDiv = document.createElement("div");
-        tempDiv.innerHTML = editorNode.innerHTML;
-        onChange?.(tempDiv.innerHTML);
-        handlePlaceholder();
-      }, 0);
+      const parentWrapper = targetElement.closest?.(".iframe-wrapper");
+      let focusAfter = parentWrapper;
+      if (parentWrapper) {
+        parentWrapper.setAttribute("data-mtl-link-type", type);
+        replaceWrapperMediaContent(parentWrapper, iframeHTML);
+      } else if (targetElement.parentNode) {
+        const rebuilt = createIframeWrapperWithSettings(
+          iframeHTML,
+          type,
+          openVideoSettingsForWrapper,
+        );
+        targetElement.replaceWith(rebuilt);
+        focusAfter = rebuilt;
+      }
+      ensureEditableTrailer(editorNode, focusAfter, true);
+      setTimeout(notifyEditorContentChanged, 0);
     } else if (editorNode && iframeHTML) {
       const wrapper = createIframeWrapperWithSettings(
         iframeHTML,
         type,
-        (wrapper) => {
-          let iframe_element = wrapper.querySelector("iframe");
-          setTargetElement(iframe_element);
-          setTargetElementType(
-            wrapper.getAttribute("data-mtl-link-type") || "general",
-          );
-          setIsOpenModel("video");
-        },
+        openVideoSettingsForWrapper,
       );
 
       handleFocusEditor();
-      // document.execCommand("insertHTML", false, wrapper.outerHTML);
       const selection = window.getSelection();
-      if (!selection.rangeCount) return;
-
-      const range = selection.getRangeAt(0);
-      range.deleteContents();
-      range.insertNode(wrapper);
-
-      // Move cursor after the inserted element
-      range.setStartAfter(wrapper);
-      range.setEndAfter(wrapper);
-      selection.removeAllRanges();
-      selection.addRange(range);
-
-      // Trigger change event after inserting content
-      setTimeout(() => {
-        const tempDiv = document.createElement("div");
-        tempDiv.innerHTML = editorNode.innerHTML;
-        onChange?.(tempDiv.innerHTML);
-        handlePlaceholder();
-      }, 0);
+      if (!selection.rangeCount) {
+        editorNode.appendChild(wrapper);
+      } else {
+        const range = selection.getRangeAt(0);
+        range.deleteContents();
+        range.insertNode(wrapper);
+      }
+      ensureEditableTrailer(editorNode, wrapper, true);
+      setTimeout(notifyEditorContentChanged, 0);
     }
 
     setTargetElement(null);
-    setIsOpenModel(""); // Assuming this is setting some state related to the modal
+    setIsOpenModel("");
   };
 
   function createIframeWrapperWithSettings(iframeHTML, type, onSettingsClick) {
+    const normalized = normalizeEmbedHTML(iframeHTML);
     const iframeElement = document.createElement("div");
-    iframeElement.innerHTML = iframeHTML;
-    // Create wrapper
+    iframeElement.innerHTML = normalized;
+
+    const media =
+      iframeElement.querySelector("iframe, video") ||
+      iframeElement.firstElementChild;
+
+    // Non-editable island — prevents browser from turning absolute iframes into <br>
     const wrapper = document.createElement("div");
     wrapper.className = "iframe-wrapper";
-    wrapper.contentEditable = "true";
-    wrapper.setAttribute("data-mtl-link-type", type);
+    wrapper.contentEditable = "false";
+    wrapper.setAttribute("data-mtl-link-type", type || "embed");
+    // Exact snippet to restore on source/export (what the user pasted, minus scripts)
+    wrapper.setAttribute("data-mtl-embed-html", encodeEmbedPayload(normalized));
 
     const overlay = document.createElement("div");
     overlay.className = "iframe-overlay";
 
     const settingsBtn = document.createElement("button");
     settingsBtn.className = "iframe-settings-btn";
+    settingsBtn.type = "button";
     settingsBtn.contentEditable = "false";
+    settingsBtn.dataset.mlxBound = "1";
 
     settingsBtn.innerHTML = `<div style="display: flex; align-items: center;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M10.275 22q-.425 0-.75-.275t-.375-.7l-.3-2.225q-.325-.125-.612-.3t-.563-.375l-1.55.65q-.625.275-1.25.05t-.975-.8l-1.175-2.05q-.35-.575-.2-1.225t.675-1.075l1.325-1Q4.5 12.5 4.5 12.337v-.675q0-.162.025-.337l-1.325-1Q2.675 9.9 2.525 9.25t.2-1.225L3.9 5.975q.35-.575.975-.8t1.25.05l1.55.65q.275-.2.575-.375t.6-.3l.2-1.65q.075-.675.575-1.113T10.8 2h2.4q.675 0 1.175.438t.575 1.112l.2 1.65q.325.125.613.3t.562.375l1.5-.65q.625-.275 1.263-.05t.987.8l1.175 2.05q.35.575.213 1.225t-.663 1.075L19.125 11.6q-.275.2-.562.3t-.638.1h-2.35q0-1.45-1.037-2.475T12.05 8.5q-1.475 0-2.488 1.013T8.55 12q0 1.2.688 2.1T11 15.35v5.8q0 .35-.2.6t-.525.25M20 22h-6q-.425 0-.712-.288T13 21v-6q0-.425.288-.712T14 14h6q.425 0 .713.288T21 15v2l1.575-1.575q.125-.125.275-.062t.15.237v4.8q0 .175-.15.238t-.275-.063L21 19v2q0 .425-.288.713T20 22"/></svg> <span style="margin-inline: 8px;">Settings</span></div>`;
 
     settingsBtn.addEventListener("click", (e) => {
+      e.preventDefault();
       e.stopPropagation();
       if (typeof onSettingsClick === "function") {
         onSettingsClick(wrapper);
       }
     });
 
-    // Build DOM structure
     wrapper.appendChild(overlay);
     wrapper.appendChild(settingsBtn);
 
-    // Add null check for iframe element
-    const iframeChild = iframeElement.childNodes[0];
-    if (iframeChild) {
-      wrapper.appendChild(iframeChild);
+    if (!media) {
+      console.warn("No iframe/video element found to append");
+      return wrapper;
+    }
+
+    // Lift Vimeo-style padding wrapper onto iframe-wrapper so iframe is a direct child
+    // (nested empty-looking padding divs get turned into <br> by contenteditable)
+    const responsiveParent = media.parentElement;
+    if (
+      responsiveParent &&
+      responsiveParent !== iframeElement &&
+      responsiveParent.tagName === "DIV" &&
+      /padding\s*:/i.test(responsiveParent.getAttribute("style") || "")
+    ) {
+      wrapper.setAttribute("style", responsiveParent.getAttribute("style"));
+      if (media.tagName === "IFRAME") {
+        media.style.position = "absolute";
+        media.style.top = "0";
+        media.style.left = "0";
+        media.style.width = "100%";
+        media.style.height = "100%";
+        media.style.border = "0";
+      }
+      wrapper.appendChild(media);
     } else {
-      console.warn("No iframe element found to append");
+      wrapper.appendChild(media);
     }
 
     return wrapper;
@@ -1987,12 +2486,42 @@ export default function ReactEditorKit(props) {
       return;
     }
     if (!viewSource && editorRef?.current) {
-      const cleanContent = getCleanEditorHTML(editorRef.current.innerHTML);
-      if (!cleanContent) {
-        setSourceCode("");
-      } else {
-        const formattedContent = transformHTML(cleanContent);
-        setSourceCode(formattedContent);
+      try {
+        let cleanContent = getCleanEditorHTML(editorRef.current.innerHTML);
+
+        // Fallback if clean pipeline returned empty but editor still has embeds/content
+        if (!cleanContent) {
+          const live = editorRef.current;
+          const parts = [];
+          live.querySelectorAll(".iframe-wrapper").forEach((wrapper) => {
+            const stored = decodeEmbedPayload(
+              wrapper.getAttribute("data-mtl-embed-html"),
+            );
+            if (stored) {
+              parts.push(stored);
+              return;
+            }
+            const media = wrapper.querySelector("iframe, video");
+            if (media) parts.push(media.outerHTML);
+          });
+          live.querySelectorAll("iframe, video").forEach((media) => {
+            if (!media.closest(".iframe-wrapper")) {
+              parts.push(media.outerHTML);
+            }
+          });
+          if (parts.length) {
+            cleanContent = parts.join("\n");
+          } else if ((live.innerHTML || "").trim()) {
+            cleanContent = live.innerHTML;
+          }
+        }
+
+        setSourceCode(
+          cleanContent ? transformHTML(cleanContent) || cleanContent : "",
+        );
+      } catch (err) {
+        console.warn("Source view failed, falling back to raw HTML", err);
+        setSourceCode(editorRef.current.innerHTML || "");
       }
     } else {
       setSourceCode("");
@@ -2238,6 +2767,7 @@ export default function ReactEditorKit(props) {
       if (editorRef.current && value) {
         const { sanitizedHtml } = sanitizeDangerousScripts(value);
         editorRef.current.innerHTML = sanitizedHtml;
+        enhanceMediaEmbeds(editorRef.current);
         setInit(true);
         // Update placeholder after setting initial content
         setTimeout(() => handlePlaceholder(), 0);
@@ -2247,10 +2777,15 @@ export default function ReactEditorKit(props) {
       }
     }
 
+    // Only clear when parent explicitly clears value — never wipe if embeds still exist
     if (!value && editorRef.current) {
-      editorRef.current.innerHTML = "";
-      // Update placeholder when content is cleared
-      setTimeout(() => handlePlaceholder(), 0);
+      const hasMedia = editorRef.current.querySelector(
+        "iframe, video, img, table, .iframe-wrapper, audio",
+      );
+      if (!hasMedia) {
+        editorRef.current.innerHTML = "";
+        setTimeout(() => handlePlaceholder(), 0);
+      }
     }
     if (getEditorRef) {
       getEditorRef(editorRef);

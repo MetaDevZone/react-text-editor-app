@@ -51,12 +51,33 @@ export default function MediaModal({
 
   useEffect(() => {
     if (targetElement) {
+      let embedFromStore = "";
+      try {
+        const wrapper = targetElement.closest?.(".iframe-wrapper");
+        const stored = wrapper?.getAttribute("data-mtl-embed-html");
+        if (stored) {
+          try {
+            embedFromStore = decodeURIComponent(escape(atob(stored)));
+          } catch (e1) {
+            try {
+              embedFromStore = decodeURIComponent(stored);
+            } catch (e2) {
+              embedFromStore = "";
+            }
+          }
+        }
+      } catch (e) {
+        embedFromStore = "";
+      }
+
       const newInputs = {
         link: targetElement.getAttribute("src") || "",
         height: targetElement.getAttribute("height") || "",
         width: targetElement.getAttribute("width") || "",
         embed_code:
-          targetElementType == "general" ? "" : targetElement.outerHTML || "",
+          targetElementType == "general"
+            ? ""
+            : embedFromStore || targetElement.outerHTML || "",
         type: targetElementType || "general",
       };
 
